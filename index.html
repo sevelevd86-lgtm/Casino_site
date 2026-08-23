@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Casino</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;user-select:none;font-family:'Segoe UI',sans-serif}
+        body{background:#0a0a0f;color:#fff;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px}
+        h1{font-size:48px;font-weight:900;color:#f0b90b;text-shadow:0 0 40px rgba(240,185,11,0.4)}
+        .subtitle{color:#aaa;font-size:16px;margin-top:8px}
+        .balance{background:#1a1a24;padding:16px 30px;border-radius:16px;border:1px solid #2a2a3a;font-size:28px;color:#f0b90b;font-weight:700;margin-top:30px}
+        .btn{display:inline-block;padding:16px 40px;border-radius:12px;font-weight:600;font-size:18px;border:none;cursor:pointer;background:#f0b90b;color:#0a0a0f;margin-top:30px}
+        .btn:active{background:#d4a40a}
+        .footer{color:#555;font-size:13px;margin-top:40px}
+        .nav{position:fixed;bottom:0;left:0;right:0;background:#0d0d14;border-top:1px solid #1a1a24;display:flex;justify-content:space-around;padding:10px 0;z-index:100}
+        .nav-item{display:flex;flex-direction:column;align-items:center;color:#666;font-size:11px;cursor:pointer;background:none;border:none;font-family:inherit}
+        .nav-item .icon{font-size:24px;margin-bottom:2px}
+        .nav-item.active{color:#f0b90b}
+    </style>
+</head>
+<body>
+    <h1>🎰 CASINO</h1>
+    <div style="font-size:56px;margin:16px 0;">🔥</div>
+    <div class="subtitle">Добро пожаловать в казино</div>
+    <div class="balance" id="balance">🪙 1000</div>
+    <button class="btn" onclick="alert('Игра скоро будет доступна!')">🎰 Играть</button>
+    <div class="footer">Выберите раздел внизу</div>
+
+    <div class="nav">
+        <button class="nav-item" onclick="alert('Инвентарь скоро будет доступен')">
+            <span class="icon">🎒</span>
+            <span>Инвентарь</span>
+        </button>
+        <button class="nav-item active" onclick="location.reload()">
+            <span class="icon">🏠</span>
+            <span>Меню</span>
+        </button>
+        <button class="nav-item" onclick="alert('Профиль скоро будет доступен')">
+            <span class="icon">👤</span>
+            <span>Профиль</span>
+        </button>
+    </div>
+
+    <script>
+        console.log('Casino site ready!');
+    </script>
+</body>
+</html>
