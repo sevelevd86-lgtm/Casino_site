@@ -6,44 +6,201 @@
     <title>Casino</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;user-select:none;font-family:'Segoe UI',sans-serif}
-        body{background:#0a0a0f;color:#fff;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px}
-        h1{font-size:48px;font-weight:900;color:#f0b90b;text-shadow:0 0 40px rgba(240,185,11,0.4)}
-        .subtitle{color:#aaa;font-size:16px;margin-top:8px}
-        .balance{background:#1a1a24;padding:16px 30px;border-radius:16px;border:1px solid #2a2a3a;font-size:28px;color:#f0b90b;font-weight:700;margin-top:30px}
-        .btn{display:inline-block;padding:16px 40px;border-radius:12px;font-weight:600;font-size:18px;border:none;cursor:pointer;background:#f0b90b;color:#0a0a0f;margin-top:30px}
-        .btn:active{background:#d4a40a}
-        .footer{color:#555;font-size:13px;margin-top:40px}
-        .nav{position:fixed;bottom:0;left:0;right:0;background:#0d0d14;border-top:1px solid #1a1a24;display:flex;justify-content:space-around;padding:10px 0;z-index:100}
-        .nav-item{display:flex;flex-direction:column;align-items:center;color:#666;font-size:11px;cursor:pointer;background:none;border:none;font-family:inherit}
-        .nav-item .icon{font-size:24px;margin-bottom:2px}
+        body{background:#0a0a0f;color:#fff;min-height:100vh;display:flex;flex-direction:column;padding-bottom:70px}
+        
+        /* Верхняя панель с балансом */
+        .top-bar{background:#0d0d14;padding:10px 16px;border-bottom:1px solid #1a1a24;display:flex;justify-content:space-between;align-items:center}
+        .top-bar .logo{font-weight:700;color:#f0b90b;font-size:16px}
+        .top-bar .balance{color:#f0b90b;font-weight:600;font-size:16px}
+        
+        /* Страницы */
+        .page{display:none;flex-direction:column;flex:1;padding:20px}
+        .page.active{display:flex}
+        .page-title{font-size:22px;font-weight:700;margin-bottom:16px;color:#f0b90b}
+        
+        /* Меню (главная) */
+        .menu-hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+        .menu-hero h1{font-size:48px;font-weight:900;color:#f0b90b;text-shadow:0 0 40px rgba(240,185,11,0.4)}
+        .menu-hero .subtitle{color:#aaa;font-size:16px;margin-top:8px}
+        .menu-hero .big-balance{background:#1a1a24;padding:16px 30px;border-radius:16px;border:1px solid #2a2a3a;font-size:28px;color:#f0b90b;font-weight:700;margin-top:30px}
+        .menu-hero .play-btn{background:#f0b90b;color:#0a0a0f;padding:16px 50px;border-radius:12px;font-size:20px;font-weight:700;border:none;cursor:pointer;margin-top:30px}
+        .menu-hero .play-btn:active{background:#d4a40a}
+        
+        /* Инвентарь */
+        .inventory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+        .inv-item{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px;padding:16px 8px;text-align:center}
+        .inv-item .icon{font-size:32px}
+        .inv-item .name{font-size:13px;color:#ccc;margin-top:4px}
+        .inv-item .count{font-size:12px;color:#888;margin-top:2px}
+        .inv-actions{display:flex;gap:10px;margin-top:16px}
+        .inv-actions .btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:600;font-size:15px;cursor:pointer;background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
+        .inv-actions .btn:active{background:#2a2a3a}
+        
+        /* Профиль */
+        .profile-card{background:#1a1a24;border-radius:16px;padding:16px 18px;margin-bottom:10px;border:1px solid #2a2a3a}
+        .profile-card .label{color:#888;font-size:12px;text-transform:uppercase}
+        .profile-card .value{font-size:18px;font-weight:600;color:#fff;margin-top:2px}
+        .profile-card .balance-num{font-size:26px;font-weight:700;color:#f0b90b}
+        .wallet-row{display:flex;gap:10px;margin-top:6px}
+        .wallet-row input{flex:1;background:#0a0a0f;border:1px solid #2a2a3a;border-radius:12px;padding:12px 14px;color:#fff;font-size:14px;outline:none}
+        .wallet-row input:focus{border-color:#f0b90b}
+        .wallet-row button{padding:12px 18px;border-radius:12px;border:none;font-weight:600;cursor:pointer;background:#f0b90b;color:#0a0a0f}
+        .wallet-row button:active{background:#d4a40a}
+        .profile-btn{width:100%;padding:12px;border-radius:12px;border:none;font-weight:600;font-size:15px;cursor:pointer;margin-top:6px}
+        .profile-btn.primary{background:#f0b90b;color:#0a0a0f}
+        .profile-btn.primary:active{background:#d4a40a}
+        .profile-btn.secondary{background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
+        .profile-btn.secondary:active{background:#2a2a3a}
+        .profile-btn.outline{background:transparent;border:1px solid #444;color:#aaa}
+        .profile-btn.outline:active{background:#1a1a24}
+        .ref-link{background:#0a0a0f;padding:10px 14px;border-radius:10px;font-size:13px;color:#aaa;word-break:break-all;margin-top:6px;border:1px solid #1a1a24}
+        
+        /* Нижняя навигация */
+        .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0d0d14;border-top:1px solid #1a1a24;display:flex;justify-content:space-around;padding:6px 0 10px;z-index:100}
+        .nav-item{display:flex;flex-direction:column;align-items:center;color:#666;font-size:11px;cursor:pointer;padding:4px 12px;background:none;border:none;font-family:inherit;flex:1;max-width:80px;transition:color .15s ease}
+        .nav-item .icon{font-size:26px;margin-bottom:2px}
         .nav-item.active{color:#f0b90b}
+        
+        .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1a1a24;border:1px solid #f0b90b;padding:12px 20px;border-radius:12px;color:#fff;font-weight:500;z-index:200;opacity:0;transition:opacity .3s ease;pointer-events:none;max-width:90%;text-align:center;font-size:14px}
+        .toast.show{opacity:1}
+        .toast.error{border-color:#ff4444}
+        .toast.success{border-color:#44ff88}
     </style>
 </head>
 <body>
-    <h1>🎰 CASINO</h1>
-    <div style="font-size:56px;margin:16px 0;">🔥</div>
-    <div class="subtitle">Добро пожаловать в казино</div>
-    <div class="balance" id="balance">🪙 1000</div>
-    <button class="btn" onclick="alert('Игра скоро будет доступна!')">🎰 Играть</button>
-    <div class="footer">Выберите раздел внизу</div>
 
-    <div class="nav">
-        <button class="nav-item" onclick="alert('Инвентарь скоро будет доступен')">
+    <div id="toast" class="toast"></div>
+
+    <!-- Верхняя панель -->
+    <div class="top-bar">
+        <span class="logo">🎰 CASINO</span>
+        <span class="balance" id="top-balance">🪙 1000</span>
+    </div>
+
+    <!-- СТРАНИЦА: МЕНЮ -->
+    <div id="page-menu" class="page active">
+        <div class="menu-hero">
+            <h1>🔥 DROP</h1>
+            <div style="font-size:56px;margin:16px 0;">🎰</div>
+            <div class="subtitle">Добро пожаловать в казино</div>
+            <div class="big-balance" id="menu-balance">🪙 1000</div>
+            <button class="play-btn" onclick="showToast('🎰 Игра скоро будет доступна!', 'info', 3000)">🎰 Играть</button>
+            <div style="margin-top:20px;color:#555;font-size:13px;">Выберите раздел внизу</div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА: ИНВЕНТАРЬ -->
+    <div id="page-inventory" class="page">
+        <div class="page-title">🎒 Инвентарь</div>
+        <div class="inventory-grid">
+            <div class="inv-item"><div class="icon">🃏</div><div class="name">Карты</div><div class="count">x0</div></div>
+            <div class="inv-item"><div class="icon">🎲</div><div class="name">Кубики</div><div class="count">x0</div></div>
+            <div class="inv-item"><div class="icon">💰</div><div class="name">Монеты</div><div class="count">x0</div></div>
+            <div class="inv-item"><div class="icon">🎁</div><div class="name">Бонусы</div><div class="count">x0</div></div>
+            <div class="inv-item"><div class="icon">⭐</div><div class="name">Звёзды</div><div class="count">x0</div></div>
+            <div class="inv-item"><div class="icon">🏆</div><div class="name">Трофеи</div><div class="count">x0</div></div>
+        </div>
+        <div class="inv-actions">
+            <button class="btn" onclick="showToast('🛒 Магазин скоро откроется!', 'info', 2000)">🛒 Магазин</button>
+            <button class="btn" onclick="showToast('📦 У вас пока нет предметов для открытия', 'info', 2000)">📦 Открыть</button>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА: ПРОФИЛЬ -->
+    <div id="page-profile" class="page">
+        <div class="page-title">👤 Профиль</div>
+        <div class="profile-card"><div class="label">Имя</div><div class="value" id="profile-name">Игрок</div></div>
+        <div class="profile-card"><div class="label">ID</div><div class="value" id="profile-id">---</div></div>
+        <div class="profile-card"><div class="label">Баланс</div><div class="balance-num" id="profile-balance">1000 🪙</div></div>
+        <div class="profile-card">
+            <div class="label">USDT (TRC20)</div>
+            <div class="wallet-row">
+                <input type="text" id="wallet-input" placeholder="T...">
+                <button onclick="showToast('✅ Кошелек привязан!', 'success', 2000)">Привязать</button>
+            </div>
+        </div>
+        <button class="profile-btn primary" onclick="showToast('💰 Пополнение через TRC20.\nАдрес: T9yD14Nj9j7xso4e8LG8k7u4LmE9qX8kZ9', 'info', 5000)">💰 Пополнить</button>
+        <button class="profile-btn secondary" onclick="showToast('💸 Заявка на вывод отправлена!', 'success', 3000)">💸 Вывести</button>
+        <div style="margin-top:16px;">
+            <div style="color:#888;font-size:12px;text-transform:uppercase;">Реферальная ссылка</div>
+            <div class="ref-link" id="ref-link">https://t.me/MusorDrop_ROBOT?start=ref123</div>
+            <button class="profile-btn outline" onclick="copyRef()" style="margin-top:6px;">📋 Копировать</button>
+        </div>
+    </div>
+
+    <!-- Нижняя навигация -->
+    <div class="bottom-nav">
+        <button class="nav-item" data-page="page-inventory" onclick="switchPage('page-inventory')">
             <span class="icon">🎒</span>
             <span>Инвентарь</span>
         </button>
-        <button class="nav-item active" onclick="location.reload()">
+        <button class="nav-item active" data-page="page-menu" onclick="switchPage('page-menu')">
             <span class="icon">🏠</span>
             <span>Меню</span>
         </button>
-        <button class="nav-item" onclick="alert('Профиль скоро будет доступен')">
+        <button class="nav-item" data-page="page-profile" onclick="switchPage('page-profile')">
             <span class="icon">👤</span>
             <span>Профиль</span>
         </button>
     </div>
 
     <script>
-        console.log('Casino site ready!');
+        // ---------- БАЛАНС ----------
+        let currentBalance = 1000;
+
+        function updateBalanceUI() {
+            document.getElementById('top-balance').textContent = '🪙 ' + currentBalance;
+            document.getElementById('menu-balance').textContent = '🪙 ' + currentBalance;
+            document.getElementById('profile-balance').textContent = currentBalance + ' 🪙';
+        }
+
+        // ---------- ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ----------
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
+            updateBalanceUI();
+        }
+
+        // ---------- ТОСТ ----------
+        function showToast(msg, type = 'info', duration = 3000) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast ' + type;
+            t.classList.add('show');
+            clearTimeout(t._timer);
+            t._timer = setTimeout(() => { t.classList.remove('show'); }, duration);
+        }
+
+        // ---------- КОПИРОВАТЬ РЕФЕРАЛКУ ----------
+        function copyRef() {
+            const link = document.getElementById('ref-link').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(link).then(() => {
+                    showToast('✅ Ссылка скопирована!', 'success', 2000);
+                }).catch(() => fallbackCopy(link));
+            } else {
+                fallbackCopy(link);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+            showToast('✅ Ссылка скопирована!', 'success', 2000);
+        }
+
+        // ---------- ИНИЦИАЛИЗАЦИЯ ----------
+        window.Telegram?.WebApp?.ready();
+        updateBalanceUI();
+
+        // Пример: баланс обновляется каждые 5 секунд (для демонстрации)
+        // setInterval(() => { currentBalance += 10; updateBalanceUI(); }, 5000);
     </script>
 </body>
 </html>
