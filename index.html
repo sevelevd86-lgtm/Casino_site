@@ -8,35 +8,71 @@
         *{margin:0;padding:0;box-sizing:border-box;user-select:none;font-family:'Segoe UI',sans-serif}
         body{background:#0a0a0f;color:#fff;min-height:100vh;display:flex;flex-direction:column;padding-bottom:70px}
         
-        /* Верхняя панель с балансом */
         .top-bar{background:#0d0d14;padding:10px 16px;border-bottom:1px solid #1a1a24;display:flex;justify-content:space-between;align-items:center}
         .top-bar .logo{font-weight:700;color:#f0b90b;font-size:16px}
         .top-bar .balance{color:#f0b90b;font-weight:600;font-size:16px}
         
-        /* Страницы */
         .page{display:none;flex-direction:column;flex:1;padding:20px}
         .page.active{display:flex}
         .page-title{font-size:22px;font-weight:700;margin-bottom:16px;color:#f0b90b}
         
-        /* Меню (главная) */
+        /* МЕНЮ */
         .menu-hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
         .menu-hero h1{font-size:48px;font-weight:900;color:#f0b90b;text-shadow:0 0 40px rgba(240,185,11,0.4)}
         .menu-hero .subtitle{color:#aaa;font-size:16px;margin-top:8px}
-        .menu-hero .big-balance{background:#1a1a24;padding:16px 30px;border-radius:16px;border:1px solid #2a2a3a;font-size:28px;color:#f0b90b;font-weight:700;margin-top:30px}
-        .menu-hero .play-btn{background:#f0b90b;color:#0a0a0f;padding:16px 50px;border-radius:12px;font-size:20px;font-weight:700;border:none;cursor:pointer;margin-top:30px}
-        .menu-hero .play-btn:active{background:#d4a40a}
+        .menu-hero .game-btn{background:#f0b90b;color:#0a0a0f;padding:16px 40px;border-radius:12px;font-size:18px;font-weight:700;border:none;cursor:pointer;margin-top:20px;width:80%;max-width:300px}
+        .menu-hero .game-btn:active{background:#d4a40a}
+        .menu-hero .game-btn.secondary{background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
+        .menu-hero .game-btn.secondary:active{background:#2a2a3a}
         
-        /* Инвентарь */
-        .inventory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
-        .inv-item{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px;padding:16px 8px;text-align:center}
-        .inv-item .icon{font-size:32px}
-        .inv-item .name{font-size:13px;color:#ccc;margin-top:4px}
-        .inv-item .count{font-size:12px;color:#888;margin-top:2px}
-        .inv-actions{display:flex;gap:10px;margin-top:16px}
-        .inv-actions .btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:600;font-size:15px;cursor:pointer;background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
-        .inv-actions .btn:active{background:#2a2a3a}
+        /* ИНВЕНТАРЬ */
+        .empty-inventory{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#666;text-align:center}
+        .empty-inventory .icon{font-size:64px;margin-bottom:16px;opacity:0.5}
+        .empty-inventory h2{color:#888;font-weight:400}
         
-        /* Профиль */
+        /* КЕЙСЫ */
+        .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px}
+        .case-item{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px;padding:16px;text-align:center;cursor:pointer;transition:all .2s}
+        .case-item:active{transform:scale(0.95);border-color:#f0b90b}
+        .case-item .icon{font-size:40px;margin-bottom:6px}
+        .case-item .name{font-size:14px;font-weight:600;color:#fff}
+        .case-item .price{font-size:13px;color:#f0b90b;margin-top:4px}
+        .case-item .count{font-size:12px;color:#888;margin-top:2px}
+        
+        /* АНИМАЦИЯ КЕЙСА */
+        .case-animation{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);display:none;flex-direction:column;justify-content:center;align-items:center;z-index:300}
+        .case-animation.active{display:flex}
+        .case-animation .spinning-items{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:400px}
+        .case-animation .spinning-item{background:#1a1a24;border:1px solid #2a2a3a;border-radius:12px;padding:12px;text-align:center;width:80px;opacity:0;transition:all .3s}
+        .case-animation .spinning-item.show{opacity:1}
+        .case-animation .spinning-item .icon{font-size:32px}
+        .case-animation .spinning-item .name{font-size:11px;color:#ccc;margin-top:4px}
+        .case-animation .result-item{background:#1a1a24;border:2px solid #f0b90b;border-radius:16px;padding:20px;text-align:center;margin-top:20px;display:none}
+        .case-animation .result-item.show{display:block}
+        .case-animation .result-item .icon{font-size:56px}
+        .case-animation .result-item .name{font-size:20px;color:#f0b90b;font-weight:700;margin-top:8px}
+        .case-animation .close-btn{background:#f0b90b;color:#0a0a0f;padding:12px 30px;border-radius:12px;border:none;font-weight:700;font-size:16px;cursor:pointer;margin-top:20px}
+        .case-animation .close-btn:active{background:#d4a40a}
+        
+        /* АПГРЕЙД КОЛЕСО */
+        .wheel-container{display:flex;flex-direction:column;align-items:center;margin-top:10px}
+        .wheel{position:relative;width:200px;height:200px;border-radius:50%;border:4px solid #f0b90b;overflow:hidden;transition:transform 4s cubic-bezier(0.17,0.67,0.12,0.99)}
+        .wheel-half{position:absolute;top:0;left:0;width:100%;height:100%;clip-path:polygon(0 0,100% 0,50% 100%)}
+        .wheel-green{background:#2ecc71;clip-path:polygon(0 0,100% 0,50% 100%)}
+        .wheel-red{background:#e74c3c;clip-path:polygon(100% 0,100% 100%,50% 100%)}
+        .wheel-arrow{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:30px;color:#f0b90b;z-index:10}
+        .wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;background:#0a0a0f;border-radius:50%;border:3px solid #f0b90b;z-index:5}
+        
+        .upgrade-controls{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center}
+        .upgrade-controls .btn{padding:12px 20px;border-radius:12px;border:none;font-weight:600;font-size:14px;cursor:pointer;background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
+        .upgrade-controls .btn:active{background:#2a2a3a}
+        .upgrade-controls .btn.primary{background:#f0b90b;color:#0a0a0f}
+        .upgrade-controls .btn.primary:active{background:#d4a40a}
+        .upgrade-info{text-align:center;margin-top:10px;color:#aaa;font-size:14px}
+        .upgrade-info .green{color:#2ecc71}
+        .upgrade-info .red{color:#e74c3c}
+        
+        /* ПРОФИЛЬ */
         .profile-card{background:#1a1a24;border-radius:16px;padding:16px 18px;margin-bottom:10px;border:1px solid #2a2a3a}
         .profile-card .label{color:#888;font-size:12px;text-transform:uppercase}
         .profile-card .value{font-size:18px;font-weight:600;color:#fff;margin-top:2px}
@@ -55,7 +91,6 @@
         .profile-btn.outline:active{background:#1a1a24}
         .ref-link{background:#0a0a0f;padding:10px 14px;border-radius:10px;font-size:13px;color:#aaa;word-break:break-all;margin-top:6px;border:1px solid #1a1a24}
         
-        /* Нижняя навигация */
         .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0d0d14;border-top:1px solid #1a1a24;display:flex;justify-content:space-around;padding:6px 0 10px;z-index:100}
         .nav-item{display:flex;flex-direction:column;align-items:center;color:#666;font-size:11px;cursor:pointer;padding:4px 12px;background:none;border:none;font-family:inherit;flex:1;max-width:80px;transition:color .15s ease}
         .nav-item .icon{font-size:26px;margin-bottom:2px}
@@ -83,26 +118,24 @@
             <h1>🔥 DROP</h1>
             <div style="font-size:56px;margin:16px 0;">🎰</div>
             <div class="subtitle">Добро пожаловать в казино</div>
-            <div class="big-balance" id="menu-balance">🪙 1000</div>
-            <button class="play-btn" onclick="showToast('🎰 Игра скоро будет доступна!', 'info', 3000)">🎰 Играть</button>
-            <div style="margin-top:20px;color:#555;font-size:13px;">Выберите раздел внизу</div>
+            <button class="game-btn" onclick="switchToGame('cases')">📦 Кейсы</button>
+            <button class="game-btn secondary" onclick="switchToGame('upgrade')">⚡ Апгрейд</button>
         </div>
+    </div>
+
+    <!-- СТРАНИЦА: ИГРЫ -->
+    <div id="page-games" class="page">
+        <div class="page-title" id="game-title">🎮 Игры</div>
+        <div id="game-content"></div>
     </div>
 
     <!-- СТРАНИЦА: ИНВЕНТАРЬ -->
     <div id="page-inventory" class="page">
         <div class="page-title">🎒 Инвентарь</div>
-        <div class="inventory-grid">
-            <div class="inv-item"><div class="icon">🃏</div><div class="name">Карты</div><div class="count">x0</div></div>
-            <div class="inv-item"><div class="icon">🎲</div><div class="name">Кубики</div><div class="count">x0</div></div>
-            <div class="inv-item"><div class="icon">💰</div><div class="name">Монеты</div><div class="count">x0</div></div>
-            <div class="inv-item"><div class="icon">🎁</div><div class="name">Бонусы</div><div class="count">x0</div></div>
-            <div class="inv-item"><div class="icon">⭐</div><div class="name">Звёзды</div><div class="count">x0</div></div>
-            <div class="inv-item"><div class="icon">🏆</div><div class="name">Трофеи</div><div class="count">x0</div></div>
-        </div>
-        <div class="inv-actions">
-            <button class="btn" onclick="showToast('🛒 Магазин скоро откроется!', 'info', 2000)">🛒 Магазин</button>
-            <button class="btn" onclick="showToast('📦 У вас пока нет предметов для открытия', 'info', 2000)">📦 Открыть</button>
+        <div class="empty-inventory" id="inventory-content">
+            <div class="icon">🎒</div>
+            <h2>Пока ничего нет</h2>
+            <p style="color:#555;margin-top:8px;">Открой кейс, чтобы получить предметы</p>
         </div>
     </div>
 
@@ -121,11 +154,22 @@
         </div>
         <button class="profile-btn primary" onclick="showToast('💰 Пополнение через TRC20.\nАдрес: T9yD14Nj9j7xso4e8LG8k7u4LmE9qX8kZ9', 'info', 5000)">💰 Пополнить</button>
         <button class="profile-btn secondary" onclick="showToast('💸 Заявка на вывод отправлена!', 'success', 3000)">💸 Вывести</button>
+        <button class="profile-btn primary" onclick="applyPromoCode()" style="margin-top:10px;">🎁 Промокод</button>
         <div style="margin-top:16px;">
             <div style="color:#888;font-size:12px;text-transform:uppercase;">Реферальная ссылка</div>
             <div class="ref-link" id="ref-link">https://t.me/MusorDrop_ROBOT?start=ref123</div>
             <button class="profile-btn outline" onclick="copyRef()" style="margin-top:6px;">📋 Копировать</button>
         </div>
+    </div>
+
+    <!-- АНИМАЦИЯ КЕЙСА -->
+    <div class="case-animation" id="case-animation">
+        <div class="spinning-items" id="spinning-items"></div>
+        <div class="result-item" id="result-item">
+            <div class="icon" id="result-icon">🎁</div>
+            <div class="name" id="result-name">Предмет</div>
+        </div>
+        <button class="close-btn" onclick="closeCaseAnimation()">✖ Закрыть</button>
     </div>
 
     <!-- Нижняя навигация -->
@@ -142,28 +186,300 @@
             <span class="icon">👤</span>
             <span>Профиль</span>
         </button>
+        <button class="nav-item" data-page="page-games" onclick="switchPage('page-games')">
+            <span class="icon">🎮</span>
+            <span>Игры</span>
+        </button>
     </div>
 
     <script>
-        // ---------- БАЛАНС ----------
+        // ==================== НАСТРОЙКИ ====================
         let currentBalance = 1000;
+        let inventory = [];
+        let currentGame = 'cases';
 
+        // ==================== ПРЕДМЕТЫ ====================
+        const giftItems = [
+            { id: 'bear', name: 'Мишка 🧸', value: 15 },
+            { id: 'heart', name: 'Сердечко ❤️', value: 15 },
+            { id: 'rose', name: 'Роза 🌹', value: 20 },
+            { id: 'cake', name: 'Торт 🎂', value: 25 },
+            { id: 'star', name: 'Звезда ⭐', value: 30 },
+            { id: 'diamond', name: 'Алмаз 💎', value: 50 },
+            { id: 'crown', name: 'Корона 👑', value: 75 },
+            { id: 'rocket', name: 'Ракета 🚀', value: 100 },
+            { id: 'unicorn', name: 'Единорог 🦄', value: 150 },
+            { id: 'dragon', name: 'Дракон 🐉', value: 200 },
+            { id: 'phoenix', name: 'Феникс 🔥', value: 300 },
+            { id: 'golden', name: 'Золотой 🏆', value: 500 },
+            { id: 'legendary', name: 'Легендарный ⚡', value: 1000 },
+            { id: 'mythic', name: 'Мифический 🌟', value: 2500 },
+            { id: 'godly', name: 'Божественный 👼', value: 5000 },
+        ];
+
+        // ==================== КЕЙСЫ ====================
+        const cases = [
+            { id: 'case1', name: 'Обычный', price: 100, icon: '📦', items: giftItems.slice(0, 5) },
+            { id: 'case2', name: 'Редкий', price: 500, icon: '📦', items: giftItems.slice(0, 8) },
+            { id: 'case3', name: 'Эпический', price: 1000, icon: '📦', items: giftItems.slice(0, 10) },
+            { id: 'case4', name: 'Легендарный', price: 2500, icon: '📦', items: giftItems.slice(0, 12) },
+            { id: 'case5', name: 'Мифический', price: 5000, icon: '📦', items: giftItems },
+        ];
+
+        // ==================== ФУНКЦИИ ====================
         function updateBalanceUI() {
             document.getElementById('top-balance').textContent = '🪙 ' + currentBalance;
-            document.getElementById('menu-balance').textContent = '🪙 ' + currentBalance;
             document.getElementById('profile-balance').textContent = currentBalance + ' 🪙';
+            document.getElementById('menu-balance')?.textContent = '🪙 ' + currentBalance;
         }
 
-        // ---------- ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ----------
         function switchPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-            document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
+            document.querySelector(`.nav-item[data-page="${pageId}"]`)?.classList.add('active');
+            if (pageId === 'page-inventory') renderInventory();
             updateBalanceUI();
         }
 
-        // ---------- ТОСТ ----------
+        function switchToGame(game) {
+            currentGame = game;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-games').classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.nav-item[data-page="page-games"]`).classList.add('active');
+            renderGame(game);
+        }
+
+        function renderGame(game) {
+            const content = document.getElementById('game-content');
+            if (game === 'cases') {
+                renderCases(content);
+            } else if (game === 'upgrade') {
+                renderUpgrade(content);
+            }
+        }
+
+        // ==================== КЕЙСЫ ====================
+        function renderCases(content) {
+            let html = '<div class="page-title">📦 Кейсы</div><div class="cases-grid">';
+            cases.forEach(c => {
+                html += `
+                    <div class="case-item" onclick="openCase('${c.id}')">
+                        <div class="icon">${c.icon}</div>
+                        <div class="name">${c.name}</div>
+                        <div class="price">${c.price} 🪙</div>
+                        <div class="count">${c.items.length} предметов</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        function openCase(caseId) {
+            const caseData = cases.find(c => c.id === caseId);
+            if (!caseData) return;
+            if (currentBalance < caseData.price) {
+                showToast('❌ Недостаточно монет!', 'error', 2000);
+                return;
+            }
+            currentBalance -= caseData.price;
+            updateBalanceUI();
+
+            // Выбор предмета (честный для 1го кейса, взвешенный для остальных)
+            let selectedItem;
+            if (caseData.id === 'case1') {
+                // Честный шанс
+                const randomIndex = Math.floor(Math.random() * caseData.items.length);
+                selectedItem = caseData.items[randomIndex];
+            } else {
+                // Взвешенный: 5 дешевле (больше шанс), 9 дороже (меньше шанс)
+                const cheap = caseData.items.slice(0, 5);
+                const expensive = caseData.items.slice(5);
+                const totalCheap = cheap.length * 2; // x2 шанс
+                const totalExpensive = expensive.length * 1;
+                const rand = Math.random() * (totalCheap + totalExpensive);
+                if (rand < totalCheap) {
+                    selectedItem = cheap[Math.floor(Math.random() * cheap.length)];
+                } else {
+                    selectedItem = expensive[Math.floor(Math.random() * expensive.length)];
+                }
+            }
+
+            // Анимация
+            showCaseAnimation(caseData, selectedItem);
+        }
+
+        function showCaseAnimation(caseData, selectedItem) {
+            const overlay = document.getElementById('case-animation');
+            const container = document.getElementById('spinning-items');
+            const resultDiv = document.getElementById('result-item');
+            const resultIcon = document.getElementById('result-icon');
+            const resultName = document.getElementById('result-name');
+
+            overlay.classList.add('active');
+            resultDiv.classList.remove('show');
+            container.innerHTML = '';
+
+            // Показываем все предметы из кейса
+            const allItems = caseData.items;
+            allItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'spinning-item';
+                div.innerHTML = `<div class="icon">${item.icon || '🎁'}</div><div class="name">${item.name}</div>`;
+                container.appendChild(div);
+                setTimeout(() => div.classList.add('show'), index * 100);
+            });
+
+            // Через 2 секунды показываем результат
+            setTimeout(() => {
+                // Добавляем в инвентарь
+                inventory.push(selectedItem);
+                resultIcon.textContent = selectedItem.icon || '🎁';
+                resultName.textContent = selectedItem.name;
+                resultDiv.classList.add('show');
+                showToast(`🎉 Вы получили: ${selectedItem.name}!`, 'success', 3000);
+                renderInventory();
+            }, 2000);
+        }
+
+        function closeCaseAnimation() {
+            document.getElementById('case-animation').classList.remove('active');
+        }
+
+        // ==================== АПГРЕЙД ====================
+        function renderUpgrade(content) {
+            const inventoryItems = inventory.length > 0 ? inventory : [{ id: 'none', name: 'Нет предметов', icon: '❌' }];
+            let html = `
+                <div class="page-title">⚡ Апгрейд</div>
+                <div class="wheel-container">
+                    <div style="position:relative;width:200px;margin:0 auto;">
+                        <div class="wheel" id="upgrade-wheel">
+                            <div class="wheel-half wheel-green" style="transform:rotate(0deg)"></div>
+                            <div class="wheel-half wheel-red" style="transform:rotate(180deg)"></div>
+                        </div>
+                        <div class="wheel-arrow">▼</div>
+                        <div class="wheel-center"></div>
+                    </div>
+                    <div class="upgrade-info" id="upgrade-info">
+                        <span class="green">🟢 Победа: ${getWinChance()}%</span> | 
+                        <span class="red">🔴 Поражение: ${100 - getWinChance()}%</span>
+                    </div>
+                    <div class="upgrade-controls">
+                        <button class="btn" onclick="selectSkin()">🎯 Выбрать скин</button>
+                        <button class="btn primary" onclick="spinUpgrade()">🎰 Крутить</button>
+                        <button class="btn" onclick="setMultiplier(2)">x2</button>
+                        <button class="btn" onclick="setMultiplier(5)">x5</button>
+                        <button class="btn" onclick="setMultiplier(10)">x10</button>
+                    </div>
+                    <div style="margin-top:10px;color:#aaa;font-size:13px;" id="selected-skin">Выбран: Нет</div>
+                </div>
+            `;
+            content.innerHTML = html;
+        }
+
+        let selectedSkin = null;
+        let multiplier = 2;
+
+        function getWinChance() {
+            // Чем выше множитель, тем меньше шанс
+            return Math.max(10, 60 - multiplier * 5);
+        }
+
+        function setMultiplier(m) {
+            multiplier = m;
+            document.getElementById('upgrade-info').innerHTML = `
+                <span class="green">🟢 Победа: ${getWinChance()}%</span> | 
+                <span class="red">🔴 Поражение: ${100 - getWinChance()}%</span>
+            `;
+            showToast(`Множитель: x${m}`, 'info', 1500);
+        }
+
+        function selectSkin() {
+            if (inventory.length === 0) {
+                showToast('❌ У вас нет предметов для апгрейда!', 'error', 2000);
+                return;
+            }
+            // Простой выбор первого предмета
+            selectedSkin = inventory[0];
+            document.getElementById('selected-skin').textContent = `Выбран: ${selectedSkin.name}`;
+            showToast(`✅ Выбран: ${selectedSkin.name}`, 'success', 1500);
+        }
+
+        function spinUpgrade() {
+            if (!selectedSkin) {
+                showToast('❌ Сначала выберите скин!', 'error', 2000);
+                return;
+            }
+            const wheel = document.getElementById('upgrade-wheel');
+            const winChance = getWinChance();
+            const isWin = Math.random() * 100 < winChance;
+
+            // Анимация вращения
+            const rotations = 3 + Math.random() * 2;
+            const degrees = rotations * 360 + (isWin ? 0 : 180);
+            wheel.style.transform = `rotate(${degrees}deg)`;
+
+            setTimeout(() => {
+                if (isWin) {
+                    // Улучшаем скин
+                    const upgraded = { ...selectedSkin, value: Math.round(selectedSkin.value * multiplier) };
+                    inventory = inventory.filter(item => item.id !== selectedSkin.id);
+                    inventory.push(upgraded);
+                    showToast(`🎉 Апгрейд успешен! +${multiplier}x`, 'success', 3000);
+                } else {
+                    // Скин сгорает
+                    inventory = inventory.filter(item => item.id !== selectedSkin.id);
+                    showToast('💥 Скин сгорел!', 'error', 3000);
+                }
+                selectedSkin = null;
+                document.getElementById('selected-skin').textContent = 'Выбран: Нет';
+                renderInventory();
+                renderGame('upgrade');
+            }, 4000);
+        }
+
+        // ==================== ИНВЕНТАРЬ ====================
+        function renderInventory() {
+            const container = document.getElementById('inventory-content');
+            if (inventory.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-inventory">
+                        <div class="icon">🎒</div>
+                        <h2>Пока ничего нет</h2>
+                        <p style="color:#555;margin-top:8px;">Открой кейс, чтобы получить предметы</p>
+                    </div>
+                `;
+                return;
+            }
+            let html = '<div class="inventory-grid">';
+            inventory.forEach(item => {
+                html += `
+                    <div class="inv-item">
+                        <div class="icon">${item.icon || '🎁'}</div>
+                        <div class="name">${item.name}</div>
+                        <div class="count">${item.value || 0} 🪙</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // ==================== ПРОМОКОД ====================
+        function applyPromoCode() {
+            const code = prompt('Введите промокод:');
+            if (code === '200') {
+                currentBalance += 100000;
+                updateBalanceUI();
+                showToast('🎉 Промокод активирован! +100 000 монет', 'success', 4000);
+            } else if (code !== null) {
+                showToast('❌ Неверный промокод', 'error', 2000);
+            }
+        }
+
+        // ==================== ТОСТ ====================
         function showToast(msg, type = 'info', duration = 3000) {
             const t = document.getElementById('toast');
             t.textContent = msg;
@@ -173,13 +489,12 @@
             t._timer = setTimeout(() => { t.classList.remove('show'); }, duration);
         }
 
-        // ---------- КОПИРОВАТЬ РЕФЕРАЛКУ ----------
+        // ==================== КОПИРОВАТЬ ====================
         function copyRef() {
             const link = document.getElementById('ref-link').textContent;
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(link).then(() => {
-                    showToast('✅ Ссылка скопирована!', 'success', 2000);
-                }).catch(() => fallbackCopy(link));
+                navigator.clipboard.writeText(link).then(() => showToast('✅ Ссылка скопирована!', 'success', 2000))
+                    .catch(() => fallbackCopy(link));
             } else {
                 fallbackCopy(link);
             }
@@ -195,12 +510,10 @@
             showToast('✅ Ссылка скопирована!', 'success', 2000);
         }
 
-        // ---------- ИНИЦИАЛИЗАЦИЯ ----------
+        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
         window.Telegram?.WebApp?.ready();
         updateBalanceUI();
-
-        // Пример: баланс обновляется каждые 5 секунд (для демонстрации)
-        // setInterval(() => { currentBalance += 10; updateBalanceUI(); }, 5000);
+        renderInventory();
     </script>
 </body>
 </html>
