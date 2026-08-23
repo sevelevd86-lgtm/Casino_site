@@ -7,15 +7,12 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box;user-select:none;font-family:'Segoe UI',sans-serif}
         body{background:#0a0a0f;color:#fff;min-height:100vh;display:flex;flex-direction:column;padding-bottom:70px}
-        
         .top-bar{background:#0d0d14;padding:10px 16px;border-bottom:1px solid #1a1a24;display:flex;justify-content:space-between;align-items:center}
         .top-bar .logo{font-weight:700;color:#f0b90b;font-size:16px}
         .top-bar .balance{color:#f0b90b;font-weight:600;font-size:16px}
-        
         .page{display:none;flex-direction:column;flex:1;padding:20px}
         .page.active{display:flex}
         .page-title{font-size:22px;font-weight:700;margin-bottom:16px;color:#f0b90b}
-        
         .menu-hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
         .menu-hero h1{font-size:48px;font-weight:900;color:#f0b90b;text-shadow:0 0 40px rgba(240,185,11,0.4)}
         .menu-hero .subtitle{color:#aaa;font-size:16px;margin-top:8px}
@@ -23,7 +20,6 @@
         .menu-hero .game-btn:active{background:#d4a40a}
         .menu-hero .game-btn.secondary{background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
         .menu-hero .game-btn.secondary:active{background:#2a2a3a}
-        
         .empty-inventory{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#666;text-align:center}
         .empty-inventory .icon{font-size:64px;margin-bottom:16px;opacity:0.5}
         .empty-inventory h2{color:#888;font-weight:400}
@@ -39,7 +35,6 @@
         .inv-actions .btn:active{background:#2a2a3a}
         .inv-actions .btn.primary{background:#f0b90b;color:#0a0a0f}
         .inv-actions .btn.primary:active{background:#d4a40a}
-        
         .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px}
         .case-item{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px;padding:16px;text-align:center;cursor:pointer;transition:all .2s}
         .case-item:active{transform:scale(0.95);border-color:#f0b90b}
@@ -47,6 +42,18 @@
         .case-item .name{font-size:14px;font-weight:600;color:#fff}
         .case-item .price{font-size:13px;color:#f0b90b;margin-top:4px}
         .case-item .count{font-size:12px;color:#888;margin-top:2px}
+        .case-preview{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px;padding:16px;margin-top:10px}
+        .case-preview .items-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+        .case-preview .preview-item{background:#0d0d14;border-radius:10px;padding:10px;text-align:center;border:1px solid #1a1a24}
+        .case-preview .preview-item .icon{font-size:24px}
+        .case-preview .preview-item .name{font-size:10px;color:#aaa;margin-top:2px}
+        .case-preview .preview-item .price{font-size:9px;color:#f0b90b}
+        .case-preview .case-actions{display:flex;gap:10px;margin-top:12px}
+        .case-preview .case-actions .btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:600;font-size:15px;cursor:pointer}
+        .case-preview .case-actions .btn.open{background:#f0b90b;color:#0a0a0f}
+        .case-preview .case-actions .btn.open:active{background:#d4a40a}
+        .case-preview .case-actions .btn.back{background:#1a1a24;border:1px solid #444;color:#aaa}
+        .case-preview .case-actions .btn.back:active{background:#2a2a3a}
         
         .case-animation{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.95);display:none;flex-direction:column;justify-content:center;align-items:center;z-index:300;padding:20px}
         .case-animation.active{display:flex}
@@ -176,6 +183,16 @@
         </div>
     </div>
 
+    <!-- ПРЕДПРОСМОТР КЕЙСА -->
+    <div class="case-preview" id="case-preview" style="display:none;">
+        <div class="page-title" id="preview-title">📦 Кейс</div>
+        <div class="items-preview" id="preview-items"></div>
+        <div class="case-actions">
+            <button class="btn open" id="preview-open">🎲 Открыть за X💎</button>
+            <button class="btn back" onclick="closeCasePreview()">🔙 Назад</button>
+        </div>
+    </div>
+
     <div class="case-animation" id="case-animation">
         <div class="slot-machine" id="slot-machine"></div>
         <div class="case-result" id="case-result">
@@ -215,9 +232,11 @@
         let selectedSkinForUpgrade = null;
         let multiplier = 2;
         let isSpinning = false;
+        let currentSelectedCase = null;
 
-        // ==================== ПРЕДМЕТЫ ====================
+        // ==================== ПРЕДМЕТЫ (ДОРОГИЕ) ====================
         const allItems = [
+            // Дешёвые (для обычных кейсов)
             { id: 'bear', name: 'Мишка', icon: '🧸', value: 15 },
             { id: 'heart', name: 'Сердечко', icon: '❤️', value: 15 },
             { id: 'rose', name: 'Роза', icon: '🌹', value: 20 },
@@ -230,21 +249,40 @@
             { id: 'dragon', name: 'Дракон', icon: '🐉', value: 200 },
             { id: 'phoenix', name: 'Феникс', icon: '🔥', value: 300 },
             { id: 'golden', name: 'Золотой', icon: '🏆', value: 500 },
+            // Дорогие (для легендарных кейсов)
             { id: 'legendary', name: 'Легендарный', icon: '⚡', value: 1000 },
             { id: 'mythic', name: 'Мифический', icon: '🌟', value: 2500 },
             { id: 'godly', name: 'Божественный', icon: '👼', value: 5000 },
             { id: 'cosmic', name: 'Космический', icon: '🌌', value: 10000 },
             { id: 'void', name: 'Войд', icon: '🕳️', value: 25000 },
             { id: 'eternal', name: 'Вечный', icon: '♾️', value: 50000 },
+            { id: 'celestial', name: 'Небесный', icon: '☀️', value: 75000 },
+            { id: 'divine', name: 'Божественный', icon: '✨', value: 100000 },
         ];
 
         // ==================== КЕЙСЫ ====================
         const cases = [
-            { id: 'case1', name: 'Обычный', price: 100, icon: '📦', items: allItems.slice(0, 5) },
-            { id: 'case2', name: 'Редкий', price: 500, icon: '📦', items: allItems.slice(0, 8) },
-            { id: 'case3', name: 'Эпический', price: 1000, icon: '📦', items: allItems.slice(0, 10) },
-            { id: 'case4', name: 'Легендарный', price: 2500, icon: '📦', items: allItems.slice(0, 12) },
-            { id: 'case5', name: 'Мифический', price: 5000, icon: '📦', items: allItems.slice(0, 15) },
+            { 
+                id: 'case1', name: 'Обычный', price: 100, icon: '📦', 
+                items: allItems.slice(0, 7) 
+            },
+            { 
+                id: 'case2', name: 'Редкий', price: 500, icon: '📦', 
+                items: allItems.slice(0, 9) 
+            },
+            { 
+                id: 'case3', name: 'Эпический', price: 1000, icon: '📦', 
+                items: allItems.slice(0, 11) 
+            },
+            { 
+                id: 'case4', name: 'Легендарный', price: 2500, icon: '📦', 
+                items: allItems.slice(0, 14) 
+            },
+            { 
+                id: 'case5', name: 'Мифический', price: 5000, icon: '📦', 
+                // Только дорогие скины от 1000+
+                items: allItems.filter(item => item.value >= 1000)
+            },
         ];
 
         // ==================== ФУНКЦИИ ====================
@@ -304,7 +342,7 @@
         function renderCases(content) {
             let html = '<div class="page-title">📦 Кейсы</div><div class="cases-grid">';
             cases.forEach(c => {
-                html += `<div class="case-item" onclick="openCase('${c.id}')">
+                html += `<div class="case-item" onclick="showCasePreview('${c.id}')">
                     <div class="icon">${c.icon}</div>
                     <div class="name">${c.name}</div>
                     <div class="price">${c.price} 💎</div>
@@ -312,20 +350,70 @@
                 </div>`;
             });
             html += '</div>';
+            // Скрываем предпросмотр
+            document.getElementById('case-preview').style.display = 'none';
             content.innerHTML = html;
         }
 
+        function showCasePreview(caseId) {
+            const caseData = cases.find(c => c.id === caseId);
+            if (!caseData) return;
+            currentSelectedCase = caseData;
+
+            const preview = document.getElementById('case-preview');
+            preview.style.display = 'block';
+            document.getElementById('preview-title').textContent = `📦 ${caseData.name}`;
+            
+            const itemsContainer = document.getElementById('preview-items');
+            itemsContainer.innerHTML = '';
+            caseData.items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.innerHTML = `
+                    <div class="icon">${item.icon || '🎁'}</div>
+                    <div class="name">${item.name}</div>
+                    <div class="price">${item.value}💎</div>
+                `;
+                itemsContainer.appendChild(div);
+            });
+
+            document.getElementById('preview-open').textContent = `🎲 Открыть за ${caseData.price}💎`;
+            document.getElementById('preview-open').onclick = () => openCase(caseData.id);
+            
+            // Прокручиваем к предпросмотру
+            preview.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeCasePreview() {
+            document.getElementById('case-preview').style.display = 'none';
+            currentSelectedCase = null;
+        }
+
         function getWeightedRandom(items) {
-            // Шансы: чем дороже предмет, тем меньше шанс
-            // Базовая формула: шанс = 1 / (value/100 + 0.5)
+            // 35% шанс на окуп (предмет дороже или равен цене кейса)
+            // Остальные 65% - случайные предметы с весом
+            const casePrice = currentSelectedCase ? currentSelectedCase.price : 100;
+            
+            // Сначала проверяем, есть ли предметы дороже цены кейса
+            const profitableItems = items.filter(item => item.value >= casePrice);
+            const regularItems = items.filter(item => item.value < casePrice);
+            
+            // 35% шанс на окуп
+            if (Math.random() < 0.35 && profitableItems.length > 0) {
+                // Выбираем случайный окупаемый предмет
+                return profitableItems[Math.floor(Math.random() * profitableItems.length)];
+            }
+            
+            // Иначе взвешенный выбор из всех предметов
+            // Чем дороже предмет, тем меньше шанс
             const weights = items.map(item => {
-                if (item.value <= 50) return 100;      // Очень высокий шанс
-                if (item.value <= 200) return 40;
-                if (item.value <= 500) return 15;
-                if (item.value <= 1000) return 5;
-                if (item.value <= 5000) return 1.5;
-                if (item.value <= 25000) return 0.3;
-                return 0.05; // 50000+
+                if (item.value <= 50) return 100;
+                if (item.value <= 200) return 50;
+                if (item.value <= 500) return 20;
+                if (item.value <= 1000) return 8;
+                if (item.value <= 5000) return 2;
+                if (item.value <= 25000) return 0.5;
+                return 0.1;
             });
             const totalWeight = weights.reduce((a, b) => a + b, 0);
             let rand = Math.random() * totalWeight;
@@ -346,6 +434,7 @@
             currentBalance -= caseData.price;
             updateBalanceUI();
             saveData();
+            closeCasePreview();
 
             const selectedItem = getWeightedRandom(caseData.items);
             showCaseAnimation(caseData.items, selectedItem);
@@ -368,11 +457,10 @@
                 const randItem = allItems[Math.floor(Math.random() * allItems.length)];
                 slotItems.push(randItem);
             }
-            // Вставляем выигрышный предмет в центр
-            const winIndex = Math.floor(totalSlots / 2);
+            // Вставляем выигрышный предмет в СЛУЧАЙНУЮ позицию
+            const winIndex = Math.floor(Math.random() * totalSlots);
             slotItems[winIndex] = selectedItem;
 
-            // Создаём ячейки
             slotItems.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'slot-item';
@@ -406,7 +494,6 @@
                 const winEl = document.querySelector(`.slot-item[data-index="${winIndex}"]`);
                 if (winEl) {
                     winEl.classList.add('winner');
-                    // Плавное увеличение
                     winEl.style.transition = 'all 0.3s ease';
                 }
 
@@ -561,29 +648,31 @@
             const w = canvas.width, h = canvas.height;
             const cx = w/2, cy = h/2, r = 100;
 
-            let angle = 0;
-            const totalRotation = 4 * Math.PI + (isWin ? 0 : Math.PI);
-            const duration = 2000;
+            // СЛУЧАЙНОЕ начальное смещение
+            const randomOffset = Math.random() * 2 * Math.PI;
+            let currentAngle = randomOffset;
+            const totalRotation = 4 * Math.PI + (isWin ? 0 : Math.PI) + Math.random() * 0.5;
+            const duration = 2000 + Math.random() * 1000;
             const startTime = Date.now();
 
             function animateWheel() {
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 const ease = 1 - Math.pow(1 - progress, 3);
-                const currentAngle = totalRotation * ease;
+                const angle = currentAngle + totalRotation * ease;
 
                 ctx.clearRect(0, 0, w, h);
 
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
-                ctx.arc(cx, cy, r, -Math.PI/2 + currentAngle, -Math.PI/2 + (winChance/100) * 2 * Math.PI + currentAngle);
+                ctx.arc(cx, cy, r, -Math.PI/2 + angle, -Math.PI/2 + (winChance/100) * 2 * Math.PI + angle);
                 ctx.closePath();
                 ctx.fillStyle = '#2ecc71';
                 ctx.fill();
 
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
-                ctx.arc(cx, cy, r, -Math.PI/2 + (winChance/100) * 2 * Math.PI + currentAngle, -Math.PI/2 + 2 * Math.PI + currentAngle);
+                ctx.arc(cx, cy, r, -Math.PI/2 + (winChance/100) * 2 * Math.PI + angle, -Math.PI/2 + 2 * Math.PI + angle);
                 ctx.closePath();
                 ctx.fillStyle = '#e74c3c';
                 ctx.fill();
@@ -598,12 +687,12 @@
                 ctx.font = 'bold 16px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                const midAngle = -Math.PI/2 + currentAngle + (winChance/100) * Math.PI;
+                const midAngle = -Math.PI/2 + angle + (winChance/100) * Math.PI;
                 const pX = cx + r * 0.6 * Math.cos(midAngle);
                 const pY = cy + r * 0.6 * Math.sin(midAngle);
                 ctx.fillText(`${winChance}%`, pX, pY);
 
-                const loseAngle = -Math.PI/2 + currentAngle + (winChance/100) * 2 * Math.PI + ((100-winChance)/100) * Math.PI;
+                const loseAngle = -Math.PI/2 + angle + (winChance/100) * 2 * Math.PI + ((100-winChance)/100) * Math.PI;
                 const lX = cx + r * 0.6 * Math.cos(loseAngle);
                 const lY = cy + r * 0.6 * Math.sin(loseAngle);
                 ctx.fillText(`${100-winChance}%`, lX, lY);
