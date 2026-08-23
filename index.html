@@ -24,7 +24,6 @@
         .menu-hero .game-btn.secondary{background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
         .menu-hero .game-btn.secondary:active{background:#2a2a3a}
         
-        /* ИНВЕНТАРЬ */
         .empty-inventory{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#666;text-align:center}
         .empty-inventory .icon{font-size:64px;margin-bottom:16px;opacity:0.5}
         .empty-inventory h2{color:#888;font-weight:400}
@@ -35,8 +34,12 @@
         .inv-item .value{font-size:12px;color:#f0b90b;margin-top:2px}
         .inv-item .sell-btn{background:#e74c3c;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;margin-top:6px;width:100%}
         .inv-item .sell-btn:active{background:#c0392b}
+        .inv-actions{display:flex;gap:10px;margin-top:16px}
+        .inv-actions .btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:600;font-size:14px;cursor:pointer;background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
+        .inv-actions .btn:active{background:#2a2a3a}
+        .inv-actions .btn.primary{background:#f0b90b;color:#0a0a0f}
+        .inv-actions .btn.primary:active{background:#d4a40a}
         
-        /* КЕЙСЫ */
         .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px}
         .case-item{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px;padding:16px;text-align:center;cursor:pointer;transition:all .2s}
         .case-item:active{transform:scale(0.95);border-color:#f0b90b}
@@ -45,23 +48,22 @@
         .case-item .price{font-size:13px;color:#f0b90b;margin-top:4px}
         .case-item .count{font-size:12px;color:#888;margin-top:2px}
         
-        /* АНИМАЦИЯ КЕЙСА */
         .case-animation{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.95);display:none;flex-direction:column;justify-content:center;align-items:center;z-index:300;padding:20px}
         .case-animation.active{display:flex}
-        .slot-machine{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:400px;padding:20px;background:#0d0d14;border-radius:16px;border:1px solid #2a2a3a}
-        .slot-item{background:#1a1a24;border:1px solid #333;border-radius:12px;padding:12px;text-align:center;width:70px;transition:all .15s}
-        .slot-item .icon{font-size:28px}
-        .slot-item .name{font-size:10px;color:#888;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60px}
-        .slot-item.winner{border-color:#f0b90b;box-shadow:0 0 20px rgba(240,185,11,0.6);transform:scale(1.05)}
+        .slot-machine{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:420px;padding:16px;background:#0d0d14;border-radius:16px;border:1px solid #2a2a3a}
+        .slot-item{background:#1a1a24;border:2px solid #333;border-radius:12px;padding:10px;text-align:center;width:62px;transition:all .2s ease}
+        .slot-item .icon{font-size:26px}
+        .slot-item .name{font-size:9px;color:#888;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:50px}
+        .slot-item .slot-price{font-size:8px;color:#555;margin-top:1px}
+        .slot-item.winner{border-color:#f0b90b;box-shadow:0 0 25px rgba(240,185,11,0.7);transform:scale(1.08);background:#1a1a24}
         .slot-item.winner .name{color:#f0b90b}
-        .case-result{margin-top:20px;text-align:center;display:none}
+        .case-result{margin-top:16px;text-align:center;display:none}
         .case-result.show{display:block}
         .case-result .icon{font-size:56px}
         .case-result .name{font-size:22px;color:#f0b90b;font-weight:700;margin-top:8px}
-        .case-close-btn{background:#f0b90b;color:#0a0a0f;padding:12px 30px;border-radius:12px;border:none;font-weight:700;font-size:16px;cursor:pointer;margin-top:20px}
+        .case-close-btn{background:#f0b90b;color:#0a0a0f;padding:12px 30px;border-radius:12px;border:none;font-weight:700;font-size:16px;cursor:pointer;margin-top:16px}
         .case-close-btn:active{background:#d4a40a}
         
-        /* АПГРЕЙД */
         .upgrade-container{display:flex;flex-direction:column;align-items:center;gap:16px}
         .wheel-wrapper{position:relative;width:220px;height:220px;margin:0 auto}
         .wheel-canvas{width:220px;height:220px;border-radius:50%;border:4px solid #f0b90b}
@@ -78,7 +80,6 @@
         .selected-skin-info{color:#aaa;font-size:13px;margin-top:4px}
         .selected-skin-info span{color:#f0b90b;font-weight:600}
         
-        /* МЕНЮ ВЫБОРА СКИНА */
         .skin-select-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);display:none;flex-direction:column;justify-content:center;align-items:center;z-index:400;padding:20px}
         .skin-select-overlay.active{display:flex}
         .skin-select-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:400px;max-height:400px;overflow-y:auto;padding:10px}
@@ -122,13 +123,11 @@
 
     <div id="toast" class="toast"></div>
 
-    <!-- Верхняя панель -->
     <div class="top-bar">
         <span class="logo">🎰 CASINO</span>
-        <span class="balance" id="top-balance">🪙 1000</span>
+        <span class="balance" id="top-balance">💎 1000</span>
     </div>
 
-    <!-- СТРАНИЦА: МЕНЮ -->
     <div id="page-menu" class="page active">
         <div class="menu-hero">
             <h1>🔥 DROP</h1>
@@ -139,13 +138,11 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА: ИГРЫ -->
     <div id="page-games" class="page">
         <div class="page-title" id="game-title">🎮 Игры</div>
         <div id="game-content"></div>
     </div>
 
-    <!-- СТРАНИЦА: ИНВЕНТАРЬ -->
     <div id="page-inventory" class="page">
         <div class="page-title">🎒 Инвентарь</div>
         <div id="inventory-content">
@@ -157,12 +154,11 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА: ПРОФИЛЬ -->
     <div id="page-profile" class="page">
         <div class="page-title">👤 Профиль</div>
         <div class="profile-card"><div class="label">Имя</div><div class="value" id="profile-name">Игрок</div></div>
         <div class="profile-card"><div class="label">ID</div><div class="value" id="profile-id">---</div></div>
-        <div class="profile-card"><div class="label">Баланс</div><div class="balance-num" id="profile-balance">1000 🪙</div></div>
+        <div class="profile-card"><div class="label">Баланс</div><div class="balance-num" id="profile-balance">💎 1000</div></div>
         <div class="profile-card">
             <div class="label">USDT (TRC20)</div>
             <div class="wallet-row">
@@ -180,7 +176,6 @@
         </div>
     </div>
 
-    <!-- АНИМАЦИЯ КЕЙСА -->
     <div class="case-animation" id="case-animation">
         <div class="slot-machine" id="slot-machine"></div>
         <div class="case-result" id="case-result">
@@ -190,14 +185,12 @@
         <button class="case-close-btn" onclick="closeCaseAnimation()">✖ Закрыть</button>
     </div>
 
-    <!-- МЕНЮ ВЫБОРА СКИНА -->
     <div class="skin-select-overlay" id="skin-select-overlay">
         <h2 style="color:#f0b90b;margin-bottom:12px;">🎯 Выбери скин</h2>
         <div class="skin-select-grid" id="skin-select-grid"></div>
         <button class="skin-select-close" onclick="closeSkinSelect()">✖ Закрыть</button>
     </div>
 
-    <!-- НИЖНЯЯ НАВИГАЦИЯ (БЕЗ КНОПКИ ИГРЫ) -->
     <div class="bottom-nav">
         <button class="nav-item" data-page="page-inventory" onclick="switchPage('page-inventory')">
             <span class="icon">🎒</span>
@@ -224,7 +217,7 @@
         let isSpinning = false;
 
         // ==================== ПРЕДМЕТЫ ====================
-        const giftItems = [
+        const allItems = [
             { id: 'bear', name: 'Мишка', icon: '🧸', value: 15 },
             { id: 'heart', name: 'Сердечко', icon: '❤️', value: 15 },
             { id: 'rose', name: 'Роза', icon: '🌹', value: 20 },
@@ -240,22 +233,25 @@
             { id: 'legendary', name: 'Легендарный', icon: '⚡', value: 1000 },
             { id: 'mythic', name: 'Мифический', icon: '🌟', value: 2500 },
             { id: 'godly', name: 'Божественный', icon: '👼', value: 5000 },
+            { id: 'cosmic', name: 'Космический', icon: '🌌', value: 10000 },
+            { id: 'void', name: 'Войд', icon: '🕳️', value: 25000 },
+            { id: 'eternal', name: 'Вечный', icon: '♾️', value: 50000 },
         ];
 
         // ==================== КЕЙСЫ ====================
         const cases = [
-            { id: 'case1', name: 'Обычный', price: 100, icon: '📦', items: giftItems.slice(0, 5) },
-            { id: 'case2', name: 'Редкий', price: 500, icon: '📦', items: giftItems.slice(0, 8) },
-            { id: 'case3', name: 'Эпический', price: 1000, icon: '📦', items: giftItems.slice(0, 10) },
-            { id: 'case4', name: 'Легендарный', price: 2500, icon: '📦', items: giftItems.slice(0, 12) },
-            { id: 'case5', name: 'Мифический', price: 5000, icon: '📦', items: giftItems },
+            { id: 'case1', name: 'Обычный', price: 100, icon: '📦', items: allItems.slice(0, 5) },
+            { id: 'case2', name: 'Редкий', price: 500, icon: '📦', items: allItems.slice(0, 8) },
+            { id: 'case3', name: 'Эпический', price: 1000, icon: '📦', items: allItems.slice(0, 10) },
+            { id: 'case4', name: 'Легендарный', price: 2500, icon: '📦', items: allItems.slice(0, 12) },
+            { id: 'case5', name: 'Мифический', price: 5000, icon: '📦', items: allItems.slice(0, 15) },
         ];
 
         // ==================== ФУНКЦИИ ====================
         function updateBalanceUI() {
-            document.getElementById('top-balance').textContent = '🪙 ' + currentBalance;
+            document.getElementById('top-balance').textContent = '💎 ' + currentBalance;
             const pb = document.getElementById('profile-balance');
-            if (pb) pb.textContent = currentBalance + ' 🪙';
+            if (pb) pb.textContent = '💎 ' + currentBalance;
         }
 
         function saveData() {
@@ -311,7 +307,7 @@
                 html += `<div class="case-item" onclick="openCase('${c.id}')">
                     <div class="icon">${c.icon}</div>
                     <div class="name">${c.name}</div>
-                    <div class="price">${c.price} 🪙</div>
+                    <div class="price">${c.price} 💎</div>
                     <div class="count">${c.items.length} предметов</div>
                 </div>`;
             });
@@ -319,36 +315,43 @@
             content.innerHTML = html;
         }
 
+        function getWeightedRandom(items) {
+            // Шансы: чем дороже предмет, тем меньше шанс
+            // Базовая формула: шанс = 1 / (value/100 + 0.5)
+            const weights = items.map(item => {
+                if (item.value <= 50) return 100;      // Очень высокий шанс
+                if (item.value <= 200) return 40;
+                if (item.value <= 500) return 15;
+                if (item.value <= 1000) return 5;
+                if (item.value <= 5000) return 1.5;
+                if (item.value <= 25000) return 0.3;
+                return 0.05; // 50000+
+            });
+            const totalWeight = weights.reduce((a, b) => a + b, 0);
+            let rand = Math.random() * totalWeight;
+            for (let i = 0; i < items.length; i++) {
+                rand -= weights[i];
+                if (rand <= 0) return items[i];
+            }
+            return items[items.length - 1];
+        }
+
         function openCase(caseId) {
             const caseData = cases.find(c => c.id === caseId);
             if (!caseData) return;
             if (currentBalance < caseData.price) {
-                showToast('❌ Недостаточно монет!', 'error');
+                showToast('❌ Недостаточно алмазов!', 'error');
                 return;
             }
             currentBalance -= caseData.price;
             updateBalanceUI();
             saveData();
 
-            // Выбор предмета
-            let selectedItem;
-            if (caseData.id === 'case1') {
-                selectedItem = caseData.items[Math.floor(Math.random() * caseData.items.length)];
-            } else {
-                const cheap = caseData.items.slice(0, 5);
-                const expensive = caseData.items.slice(5);
-                const rand = Math.random() * (cheap.length * 2 + expensive.length);
-                if (rand < cheap.length * 2) {
-                    selectedItem = cheap[Math.floor(Math.random() * cheap.length)];
-                } else {
-                    selectedItem = expensive[Math.floor(Math.random() * expensive.length)];
-                }
-            }
-
+            const selectedItem = getWeightedRandom(caseData.items);
             showCaseAnimation(caseData.items, selectedItem);
         }
 
-        function showCaseAnimation(items, selectedItem) {
+        function showCaseAnimation(allItems, selectedItem) {
             const overlay = document.getElementById('case-animation');
             const machine = document.getElementById('slot-machine');
             const resultDiv = document.getElementById('case-result');
@@ -359,49 +362,60 @@
             resultDiv.classList.remove('show');
             machine.innerHTML = '';
 
-            // Создаём слоты
-            const displayItems = [];
-            const totalSlots = 14;
+            const totalSlots = 15;
+            const slotItems = [];
             for (let i = 0; i < totalSlots; i++) {
-                const randItem = items[Math.floor(Math.random() * items.length)];
-                displayItems.push(randItem);
+                const randItem = allItems[Math.floor(Math.random() * allItems.length)];
+                slotItems.push(randItem);
             }
-            // Вставляем выигрышный предмет в середину
+            // Вставляем выигрышный предмет в центр
             const winIndex = Math.floor(totalSlots / 2);
-            displayItems[winIndex] = selectedItem;
+            slotItems[winIndex] = selectedItem;
 
-            displayItems.forEach((item, index) => {
+            // Создаём ячейки
+            slotItems.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'slot-item';
                 div.dataset.index = index;
-                div.innerHTML = `<div class="icon">${item.icon || '🎁'}</div><div class="name">${item.name}</div>`;
+                div.innerHTML = `
+                    <div class="icon">${item.icon || '🎁'}</div>
+                    <div class="name">${item.name}</div>
+                    <div class="slot-price">${item.value}💎</div>
+                `;
                 machine.appendChild(div);
             });
 
-            // Анимация подсветки
-            let currentHighlight = 0;
-            const highlightInterval = setInterval(() => {
-                document.querySelectorAll('.slot-item').forEach(el => el.classList.remove('winner'));
-                const items = document.querySelectorAll('.slot-item');
-                if (items.length > 0) {
-                    items[currentHighlight % items.length].classList.add('winner');
-                    currentHighlight++;
-                }
-            }, 120);
+            const items = document.querySelectorAll('.slot-item');
+            let highlightIndex = 0;
+            let highlightDirection = 1;
 
-            // Через 2.5 секунды показываем результат
+            const highlightInterval = setInterval(() => {
+                items.forEach(el => el.classList.remove('winner'));
+                if (items.length > 0) {
+                    items[highlightIndex % items.length].classList.add('winner');
+                    highlightIndex += highlightDirection;
+                    if (highlightIndex >= items.length - 1 || highlightIndex <= 0) {
+                        highlightDirection *= -1;
+                    }
+                }
+            }, 100);
+
             setTimeout(() => {
                 clearInterval(highlightInterval);
-                document.querySelectorAll('.slot-item').forEach(el => el.classList.remove('winner'));
+                items.forEach(el => el.classList.remove('winner'));
                 const winEl = document.querySelector(`.slot-item[data-index="${winIndex}"]`);
-                if (winEl) winEl.classList.add('winner');
+                if (winEl) {
+                    winEl.classList.add('winner');
+                    // Плавное увеличение
+                    winEl.style.transition = 'all 0.3s ease';
+                }
 
                 inventory.push(selectedItem);
                 saveData();
                 resultIcon.textContent = selectedItem.icon || '🎁';
                 resultName.textContent = selectedItem.name;
                 resultDiv.classList.add('show');
-                showToast(`🎉 Вы получили: ${selectedItem.name}!`, 'success');
+                showToast(`🎉 Вы получили: ${selectedItem.name}! (${selectedItem.value}💎)`, 'success');
                 renderInventory();
             }, 2500);
         }
@@ -450,7 +464,6 @@
             const winChance = getWinChance();
             const loseChance = 100 - winChance;
 
-            // Зелёная зона (победа)
             ctx.beginPath();
             ctx.moveTo(cx, cy);
             ctx.arc(cx, cy, r, -Math.PI/2, -Math.PI/2 + (winChance/100) * 2 * Math.PI);
@@ -458,7 +471,6 @@
             ctx.fillStyle = '#2ecc71';
             ctx.fill();
 
-            // Красная зона (поражение)
             ctx.beginPath();
             ctx.moveTo(cx, cy);
             ctx.arc(cx, cy, r, -Math.PI/2 + (winChance/100) * 2 * Math.PI, -Math.PI/2 + 2 * Math.PI);
@@ -466,14 +478,12 @@
             ctx.fillStyle = '#e74c3c';
             ctx.fill();
 
-            // Граница
             ctx.beginPath();
             ctx.arc(cx, cy, r, 0, 2 * Math.PI);
             ctx.strokeStyle = '#f0b90b';
             ctx.lineWidth = 3;
             ctx.stroke();
 
-            // Проценты
             ctx.fillStyle = '#fff';
             ctx.font = 'bold 16px sans-serif';
             ctx.textAlign = 'center';
@@ -483,7 +493,6 @@
             const pY = cy + r * 0.6 * Math.sin(midAngle);
             ctx.fillText(`${winChance}%`, pX, pY);
 
-            // Процент поражения
             const loseAngle = -Math.PI/2 + (winChance/100) * 2 * Math.PI + (loseChance/100) * Math.PI;
             const lX = cx + r * 0.6 * Math.cos(loseAngle);
             const lY = cy + r * 0.6 * Math.sin(loseAngle);
@@ -548,13 +557,11 @@
             const winChance = getWinChance();
             const isWin = Math.random() * 100 < winChance;
 
-            // Анимация вращения стрелки (рисуем поверх canvas)
             const ctx = canvas.getContext('2d');
             const w = canvas.width, h = canvas.height;
             const cx = w/2, cy = h/2, r = 100;
 
             let angle = 0;
-            const targetAngle = isWin ? 0 : Math.PI;
             const totalRotation = 4 * Math.PI + (isWin ? 0 : Math.PI);
             const duration = 2000;
             const startTime = Date.now();
@@ -565,10 +572,8 @@
                 const ease = 1 - Math.pow(1 - progress, 3);
                 const currentAngle = totalRotation * ease;
 
-                // Перерисовываем колесо
                 ctx.clearRect(0, 0, w, h);
 
-                // Зелёная зона
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
                 ctx.arc(cx, cy, r, -Math.PI/2 + currentAngle, -Math.PI/2 + (winChance/100) * 2 * Math.PI + currentAngle);
@@ -576,7 +581,6 @@
                 ctx.fillStyle = '#2ecc71';
                 ctx.fill();
 
-                // Красная зона
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
                 ctx.arc(cx, cy, r, -Math.PI/2 + (winChance/100) * 2 * Math.PI + currentAngle, -Math.PI/2 + 2 * Math.PI + currentAngle);
@@ -590,7 +594,6 @@
                 ctx.lineWidth = 3;
                 ctx.stroke();
 
-                // Проценты
                 ctx.fillStyle = '#fff';
                 ctx.font = 'bold 16px sans-serif';
                 ctx.textAlign = 'center';
@@ -644,11 +647,15 @@
                 html += `<div class="inv-item">
                     <div class="icon">${item.icon || '🎁'}</div>
                     <div class="name">${item.name}</div>
-                    <div class="value">${item.value || 0} 🪙</div>
+                    <div class="value">${item.value || 0} 💎</div>
                     <button class="sell-btn" onclick="sellItem(${index})">💰 Продать</button>
                 </div>`;
             });
-            html += '</div>';
+            html += `</div>
+                <div class="inv-actions">
+                    <button class="btn" onclick="sellAll()">💰 Продать всё</button>
+                </div>
+            `;
             container.innerHTML = html;
         }
 
@@ -661,7 +668,22 @@
             saveData();
             updateBalanceUI();
             renderInventory();
-            showToast(`💰 Продано! +${price} монет`, 'success');
+            showToast(`💰 Продано! +${price}💎`, 'success');
+        }
+
+        function sellAll() {
+            if (inventory.length === 0) {
+                showToast('❌ Инвентарь пуст!', 'error');
+                return;
+            }
+            let total = 0;
+            inventory.forEach(item => { total += Math.round(item.value * 0.5); });
+            currentBalance += total;
+            inventory = [];
+            saveData();
+            updateBalanceUI();
+            renderInventory();
+            showToast(`💰 Продано всё! +${total}💎`, 'success');
         }
 
         // ==================== ПРОМОКОД ====================
@@ -677,7 +699,7 @@
                 usedPromoCodes.push(code);
                 saveData();
                 updateBalanceUI();
-                showToast('🎉 Промокод активирован! +100 000 монет', 'success', 4000);
+                showToast('🎉 Промокод активирован! +100 000💎', 'success', 4000);
             } else {
                 showToast('❌ Неверный промокод', 'error');
             }
