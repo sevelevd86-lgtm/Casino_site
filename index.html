@@ -16,7 +16,6 @@
         .page.active{display:flex}
         .page-title{font-size:22px;font-weight:700;margin-bottom:16px;color:#f0b90b}
         
-        /* МЕНЮ */
         .menu-hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
         .menu-hero h1{font-size:48px;font-weight:900;color:#f0b90b;text-shadow:0 0 40px rgba(240,185,11,0.4)}
         .menu-hero .subtitle{color:#aaa;font-size:16px;margin-top:8px}
@@ -25,12 +24,10 @@
         .menu-hero .game-btn.secondary{background:#1a1a24;border:1px solid #f0b90b;color:#f0b90b}
         .menu-hero .game-btn.secondary:active{background:#2a2a3a}
         
-        /* ИНВЕНТАРЬ */
         .empty-inventory{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#666;text-align:center}
         .empty-inventory .icon{font-size:64px;margin-bottom:16px;opacity:0.5}
         .empty-inventory h2{color:#888;font-weight:400}
         
-        /* КЕЙСЫ */
         .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px}
         .case-item{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px;padding:16px;text-align:center;cursor:pointer;transition:all .2s}
         .case-item:active{transform:scale(0.95);border-color:#f0b90b}
@@ -39,7 +36,6 @@
         .case-item .price{font-size:13px;color:#f0b90b;margin-top:4px}
         .case-item .count{font-size:12px;color:#888;margin-top:2px}
         
-        /* АНИМАЦИЯ КЕЙСА */
         .case-animation{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);display:none;flex-direction:column;justify-content:center;align-items:center;z-index:300}
         .case-animation.active{display:flex}
         .case-animation .spinning-items{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:400px}
@@ -54,7 +50,6 @@
         .case-animation .close-btn{background:#f0b90b;color:#0a0a0f;padding:12px 30px;border-radius:12px;border:none;font-weight:700;font-size:16px;cursor:pointer;margin-top:20px}
         .case-animation .close-btn:active{background:#d4a40a}
         
-        /* АПГРЕЙД КОЛЕСО */
         .wheel-container{display:flex;flex-direction:column;align-items:center;margin-top:10px}
         .wheel{position:relative;width:200px;height:200px;border-radius:50%;border:4px solid #f0b90b;overflow:hidden;transition:transform 4s cubic-bezier(0.17,0.67,0.12,0.99)}
         .wheel-half{position:absolute;top:0;left:0;width:100%;height:100%;clip-path:polygon(0 0,100% 0,50% 100%)}
@@ -72,7 +67,6 @@
         .upgrade-info .green{color:#2ecc71}
         .upgrade-info .red{color:#e74c3c}
         
-        /* ПРОФИЛЬ */
         .profile-card{background:#1a1a24;border-radius:16px;padding:16px 18px;margin-bottom:10px;border:1px solid #2a2a3a}
         .profile-card .label{color:#888;font-size:12px;text-transform:uppercase}
         .profile-card .value{font-size:18px;font-weight:600;color:#fff;margin-top:2px}
@@ -157,7 +151,7 @@
         <button class="profile-btn primary" onclick="applyPromoCode()" style="margin-top:10px;">🎁 Промокод</button>
         <div style="margin-top:16px;">
             <div style="color:#888;font-size:12px;text-transform:uppercase;">Реферальная ссылка</div>
-            <div class="ref-link" id="ref-link">https://t.me/MusorDrop_ROBOT?start=ref123</div>
+            <div class="ref-link" id="ref-link">Загрузка...</div>
             <button class="profile-btn outline" onclick="copyRef()" style="margin-top:6px;">📋 Копировать</button>
         </div>
     </div>
@@ -200,21 +194,21 @@
 
         // ==================== ПРЕДМЕТЫ ====================
         const giftItems = [
-            { id: 'bear', name: 'Мишка 🧸', value: 15 },
-            { id: 'heart', name: 'Сердечко ❤️', value: 15 },
-            { id: 'rose', name: 'Роза 🌹', value: 20 },
-            { id: 'cake', name: 'Торт 🎂', value: 25 },
-            { id: 'star', name: 'Звезда ⭐', value: 30 },
-            { id: 'diamond', name: 'Алмаз 💎', value: 50 },
-            { id: 'crown', name: 'Корона 👑', value: 75 },
-            { id: 'rocket', name: 'Ракета 🚀', value: 100 },
-            { id: 'unicorn', name: 'Единорог 🦄', value: 150 },
-            { id: 'dragon', name: 'Дракон 🐉', value: 200 },
-            { id: 'phoenix', name: 'Феникс 🔥', value: 300 },
-            { id: 'golden', name: 'Золотой 🏆', value: 500 },
-            { id: 'legendary', name: 'Легендарный ⚡', value: 1000 },
-            { id: 'mythic', name: 'Мифический 🌟', value: 2500 },
-            { id: 'godly', name: 'Божественный 👼', value: 5000 },
+            { id: 'bear', name: 'Мишка 🧸', value: 15, icon: '🧸' },
+            { id: 'heart', name: 'Сердечко ❤️', value: 15, icon: '❤️' },
+            { id: 'rose', name: 'Роза 🌹', value: 20, icon: '🌹' },
+            { id: 'cake', name: 'Торт 🎂', value: 25, icon: '🎂' },
+            { id: 'star', name: 'Звезда ⭐', value: 30, icon: '⭐' },
+            { id: 'diamond', name: 'Алмаз 💎', value: 50, icon: '💎' },
+            { id: 'crown', name: 'Корона 👑', value: 75, icon: '👑' },
+            { id: 'rocket', name: 'Ракета 🚀', value: 100, icon: '🚀' },
+            { id: 'unicorn', name: 'Единорог 🦄', value: 150, icon: '🦄' },
+            { id: 'dragon', name: 'Дракон 🐉', value: 200, icon: '🐉' },
+            { id: 'phoenix', name: 'Феникс 🔥', value: 300, icon: '🔥' },
+            { id: 'golden', name: 'Золотой 🏆', value: 500, icon: '🏆' },
+            { id: 'legendary', name: 'Легендарный ⚡', value: 1000, icon: '⚡' },
+            { id: 'mythic', name: 'Мифический 🌟', value: 2500, icon: '🌟' },
+            { id: 'godly', name: 'Божественный 👼', value: 5000, icon: '👼' },
         ];
 
         // ==================== КЕЙСЫ ====================
@@ -229,17 +223,27 @@
         // ==================== ФУНКЦИИ ====================
         function updateBalanceUI() {
             document.getElementById('top-balance').textContent = '🪙 ' + currentBalance;
-            document.getElementById('profile-balance').textContent = currentBalance + ' 🪙';
-            document.getElementById('menu-balance')?.textContent = '🪙 ' + currentBalance;
+            const profileBalance = document.getElementById('profile-balance');
+            if (profileBalance) profileBalance.textContent = currentBalance + ' 🪙';
+            const menuBalance = document.getElementById('menu-balance');
+            if (menuBalance) menuBalance.textContent = '🪙 ' + currentBalance;
         }
 
         function switchPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+            const target = document.getElementById(pageId);
+            if (target) target.classList.add('active');
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-            document.querySelector(`.nav-item[data-page="${pageId}"]`)?.classList.add('active');
+            const activeBtn = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
             if (pageId === 'page-inventory') renderInventory();
+            if (pageId === 'page-profile') updateReferralLink();
             updateBalanceUI();
+        }
+
+        function updateReferralLink() {
+            const link = `https://t.me/MusorDrop_ROBOT?start=ref${123}`;
+            document.getElementById('ref-link').textContent = link;
         }
 
         function switchToGame(game) {
@@ -287,17 +291,14 @@
             currentBalance -= caseData.price;
             updateBalanceUI();
 
-            // Выбор предмета (честный для 1го кейса, взвешенный для остальных)
             let selectedItem;
             if (caseData.id === 'case1') {
-                // Честный шанс
                 const randomIndex = Math.floor(Math.random() * caseData.items.length);
                 selectedItem = caseData.items[randomIndex];
             } else {
-                // Взвешенный: 5 дешевле (больше шанс), 9 дороже (меньше шанс)
                 const cheap = caseData.items.slice(0, 5);
                 const expensive = caseData.items.slice(5);
-                const totalCheap = cheap.length * 2; // x2 шанс
+                const totalCheap = cheap.length * 2;
                 const totalExpensive = expensive.length * 1;
                 const rand = Math.random() * (totalCheap + totalExpensive);
                 if (rand < totalCheap) {
@@ -307,7 +308,6 @@
                 }
             }
 
-            // Анимация
             showCaseAnimation(caseData, selectedItem);
         }
 
@@ -322,7 +322,6 @@
             resultDiv.classList.remove('show');
             container.innerHTML = '';
 
-            // Показываем все предметы из кейса
             const allItems = caseData.items;
             allItems.forEach((item, index) => {
                 const div = document.createElement('div');
@@ -332,9 +331,7 @@
                 setTimeout(() => div.classList.add('show'), index * 100);
             });
 
-            // Через 2 секунды показываем результат
             setTimeout(() => {
-                // Добавляем в инвентарь
                 inventory.push(selectedItem);
                 resultIcon.textContent = selectedItem.icon || '🎁';
                 resultName.textContent = selectedItem.name;
@@ -350,7 +347,6 @@
 
         // ==================== АПГРЕЙД ====================
         function renderUpgrade(content) {
-            const inventoryItems = inventory.length > 0 ? inventory : [{ id: 'none', name: 'Нет предметов', icon: '❌' }];
             let html = `
                 <div class="page-title">⚡ Апгрейд</div>
                 <div class="wheel-container">
@@ -363,8 +359,8 @@
                         <div class="wheel-center"></div>
                     </div>
                     <div class="upgrade-info" id="upgrade-info">
-                        <span class="green">🟢 Победа: ${getWinChance()}%</span> | 
-                        <span class="red">🔴 Поражение: ${100 - getWinChance()}%</span>
+                        <span class="green">🟢 Победа: 50%</span> | 
+                        <span class="red">🔴 Поражение: 50%</span>
                     </div>
                     <div class="upgrade-controls">
                         <button class="btn" onclick="selectSkin()">🎯 Выбрать скин</button>
@@ -383,16 +379,18 @@
         let multiplier = 2;
 
         function getWinChance() {
-            // Чем выше множитель, тем меньше шанс
             return Math.max(10, 60 - multiplier * 5);
         }
 
         function setMultiplier(m) {
             multiplier = m;
-            document.getElementById('upgrade-info').innerHTML = `
-                <span class="green">🟢 Победа: ${getWinChance()}%</span> | 
-                <span class="red">🔴 Поражение: ${100 - getWinChance()}%</span>
-            `;
+            const info = document.getElementById('upgrade-info');
+            if (info) {
+                info.innerHTML = `
+                    <span class="green">🟢 Победа: ${getWinChance()}%</span> | 
+                    <span class="red">🔴 Поражение: ${100 - getWinChance()}%</span>
+                `;
+            }
             showToast(`Множитель: x${m}`, 'info', 1500);
         }
 
@@ -401,9 +399,9 @@
                 showToast('❌ У вас нет предметов для апгрейда!', 'error', 2000);
                 return;
             }
-            // Простой выбор первого предмета
             selectedSkin = inventory[0];
-            document.getElementById('selected-skin').textContent = `Выбран: ${selectedSkin.name}`;
+            const selectedDiv = document.getElementById('selected-skin');
+            if (selectedDiv) selectedDiv.textContent = `Выбран: ${selectedSkin.name}`;
             showToast(`✅ Выбран: ${selectedSkin.name}`, 'success', 1500);
         }
 
@@ -413,28 +411,27 @@
                 return;
             }
             const wheel = document.getElementById('upgrade-wheel');
+            if (!wheel) return;
             const winChance = getWinChance();
             const isWin = Math.random() * 100 < winChance;
 
-            // Анимация вращения
             const rotations = 3 + Math.random() * 2;
             const degrees = rotations * 360 + (isWin ? 0 : 180);
             wheel.style.transform = `rotate(${degrees}deg)`;
 
             setTimeout(() => {
                 if (isWin) {
-                    // Улучшаем скин
                     const upgraded = { ...selectedSkin, value: Math.round(selectedSkin.value * multiplier) };
                     inventory = inventory.filter(item => item.id !== selectedSkin.id);
                     inventory.push(upgraded);
                     showToast(`🎉 Апгрейд успешен! +${multiplier}x`, 'success', 3000);
                 } else {
-                    // Скин сгорает
                     inventory = inventory.filter(item => item.id !== selectedSkin.id);
                     showToast('💥 Скин сгорел!', 'error', 3000);
                 }
                 selectedSkin = null;
-                document.getElementById('selected-skin').textContent = 'Выбран: Нет';
+                const selectedDiv = document.getElementById('selected-skin');
+                if (selectedDiv) selectedDiv.textContent = 'Выбран: Нет';
                 renderInventory();
                 renderGame('upgrade');
             }, 4000);
@@ -512,8 +509,12 @@
 
         // ==================== ИНИЦИАЛИЗАЦИЯ ====================
         window.Telegram?.WebApp?.ready();
-        updateBalanceUI();
-        renderInventory();
+
+        // Обновляем ссылку в профиле
+        updateReferralLink();
+
+        // Показываем меню
+        switchPage('page-menu');
     </script>
 </body>
 </html>
