@@ -6,26 +6,58 @@
     <title>Круг</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#0a0a0f;display:flex;justify-content:center;align-items:center;min-height:100vh;overflow:hidden}
-        
-        .circle-wrapper{
-            width:200px;
-            height:200px;
-            border-radius:50%;
-            background:rgba(30,60,114,0.1);
-            border:3px solid rgba(52,102,184,0.3);
-            box-shadow:0 0 40px rgba(52,102,184,0.05), inset 0 0 60px rgba(52,102,184,0.05);
+        body{
+            background:#888; /* серый фон */
             display:flex;
             justify-content:center;
             align-items:center;
+            min-height:100vh;
+            overflow:hidden;
+        }
+        
+        /* ===== КРУГ (СИНИЙ, КАК НА СКРИНЕ) ===== */
+        .circle-wrapper{
+            position:relative;
+            width:200px;
+            height:200px;
+            border-radius:50%;
+            background:rgba(30,80,160,0.2); /* лёгкий синий фон */
+            border:3px solid rgba(30,80,160,0.5); /* синяя обводка */
+            box-shadow:0 0 30px rgba(30,80,160,0.1);
             animation:spin 4s linear infinite;
+            overflow:hidden;
         }
         
         .circle{
             width:100%;
             height:100%;
             border-radius:50%;
-            background:radial-gradient(circle at 50% 50%, rgba(52,102,184,0.05), rgba(20,40,80,0.1));
+            background:rgba(30,80,160,0.05); /* едва заметный синий */
+        }
+        
+        /* ===== ДЫРКА (КАК НА СКРИНЕ) ===== */
+        .hole{
+            position:absolute;
+            bottom:-2px;
+            left:50%;
+            transform:translateX(-50%);
+            width:28px;
+            height:8px;
+            background:#0a0a0f;
+            border-radius:0 0 50% 50% / 0 0 100% 100%;
+            border-bottom:2px solid rgba(30,80,160,0.1);
+            box-shadow:inset 0 -4px 8px rgba(0,0,0,0.6);
+            z-index:2;
+        }
+        .hole::before{
+            content:'';
+            position:absolute;
+            top:-2px;
+            left:-4px;
+            right:-4px;
+            height:6px;
+            background:#0a0a0f;
+            border-radius:50%;
         }
         
         @keyframes spin{
@@ -37,6 +69,7 @@
 <body>
     <div class="circle-wrapper">
         <div class="circle"></div>
+        <div class="hole"></div>
     </div>
 </body>
 </html>
