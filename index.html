@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Escape</title>
+<title>🐻‍❄️DROP</title>
 
 <style>
-
 * {
     margin: 0;
     padding: 0;
@@ -19,12 +17,207 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-
     background: #111315;
-
     font-family: Arial, sans-serif;
-
     user-select: none;
+    color: white;
+}
+
+button,
+input {
+    font-family: Arial, sans-serif;
+}
+
+.screen {
+    position: fixed;
+    inset: 0;
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+
+/* =====================================================
+   LOBBY
+===================================================== */
+
+#lobbyScreen {
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(30, 110, 220, .12),
+            transparent 35%
+        ),
+        #111315;
+}
+
+.lobby-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 900;
+}
+
+.logo span {
+    color: #1678e8;
+}
+
+.lobby-balance {
+    padding: 9px 14px;
+    border-radius: 10px;
+    background: #191c20;
+    color: #ffd84d;
+    font-weight: 900;
+}
+
+.lobby-center {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+
+    transform: translate(-50%, -50%);
+
+    width: min(360px, calc(100vw - 40px));
+
+    text-align: center;
+}
+
+.lobby-title {
+    font-size: 34px;
+    font-weight: 900;
+    margin-bottom: 28px;
+}
+
+.game-card {
+    width: 100%;
+    padding: 28px;
+
+    border: 1px solid #30363c;
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1b1f23,
+            #15181b
+        );
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.35);
+}
+
+.game-icon {
+    width: 100px;
+    height: 100px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #1678e8;
+
+    font-size: 45px;
+
+    box-shadow:
+        0 0 35px rgba(22,120,232,.35);
+}
+
+.game-name {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.game-description {
+    margin-top: 8px;
+
+    color: #858b91;
+    font-size: 13px;
+}
+
+.game-play {
+    width: 100%;
+
+    margin-top: 22px;
+    padding: 14px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #1678e8;
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.game-play:hover {
+    background: #2687f5;
+}
+
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 76px;
+
+    display: flex;
+
+    background: #171a1e;
+
+    border-top: 1px solid #292e33;
+}
+
+.nav-button {
+    flex: 1;
+
+    border: none;
+    background: transparent;
+
+    color: #777e85;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.nav-button.active {
+    color: white;
+}
+
+.nav-icon {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 3px;
+}
+
+
+/* =====================================================
+   GAME
+===================================================== */
+
+#gameScreen {
+    background: #111315;
 }
 
 canvas {
@@ -38,9 +231,31 @@ canvas {
     display: block;
 }
 
+.game-back {
+    position: fixed;
+
+    left: 15px;
+    top: 15px;
+
+    z-index: 30;
+
+    border: none;
+    border-radius: 9px;
+
+    padding: 9px 13px;
+
+    background: rgba(25,29,33,.9);
+
+    color: white;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
 
 /* =====================================================
-   ВЕРХНЯЯ ПАНЕЛЬ
+   GAME TOP UI
 ===================================================== */
 
 .top-ui {
@@ -52,7 +267,7 @@ canvas {
     transform: translateX(-50%);
 
     display: flex;
-    gap: 55px;
+    gap: 45px;
 
     z-index: 10;
 
@@ -66,7 +281,7 @@ canvas {
 .stat-label {
     color: #737a81;
 
-    font-size: 11px;
+    font-size: 10px;
 
     text-transform: uppercase;
 
@@ -78,9 +293,13 @@ canvas {
 
     color: white;
 
-    font-size: 24px;
+    font-size: 22px;
 
     font-weight: 800;
+}
+
+.balance-value {
+    color: #ffd84d !important;
 }
 
 #multiplier {
@@ -89,16 +308,7 @@ canvas {
 
 
 /* =====================================================
-   БАЛАНС
-===================================================== */
-
-.balance-value {
-    color: #ffd84d !important;
-}
-
-
-/* =====================================================
-   НИЖНИЕ ЗОНЫ
+   ZONES
 ===================================================== */
 
 .bottom-zones {
@@ -119,15 +329,10 @@ canvas {
     background:
         linear-gradient(
             to top,
-            rgba(10,12,14,0.98),
-            rgba(10,12,14,0.15)
+            rgba(10,12,14,.98),
+            rgba(10,12,14,.15)
         );
 }
-
-
-/* =====================================================
-   GREEN
-===================================================== */
 
 .green-zone {
     position: relative;
@@ -142,7 +347,6 @@ canvas {
     color: white;
 
     font-size: 21px;
-
     font-weight: 900;
 
     transition: width .25s ease;
@@ -154,13 +358,13 @@ canvas {
             to top,
             #2bdd72 0%,
             #26c968 35%,
-            rgba(39,201,104,0.35) 70%,
+            rgba(39,201,104,.35) 70%,
             rgba(39,201,104,0) 100%
         );
 
     box-shadow:
-        inset 0 -10px 30px rgba(35,255,120,0.35),
-        0 -4px 25px rgba(35,220,110,0.18);
+        inset 0 -10px 30px rgba(35,255,120,.35),
+        0 -4px 25px rgba(35,220,110,.18);
 }
 
 .green-zone::before {
@@ -174,37 +378,12 @@ canvas {
     width: 100%;
     height: 2px;
 
-    background:
-        rgba(87,255,155,0.75);
+    background: rgba(87,255,155,.75);
 
     box-shadow:
-        0 0 12px rgba(50,255,130,0.8),
-        0 0 28px rgba(50,255,130,0.45);
+        0 0 12px rgba(50,255,130,.8),
+        0 0 28px rgba(50,255,130,.45);
 }
-
-.green-zone::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    bottom: -35px;
-
-    width: 100%;
-    height: 70px;
-
-    background:
-        rgba(38,220,110,0.38);
-
-    filter: blur(25px);
-
-    pointer-events: none;
-}
-
-
-/* =====================================================
-   RED
-===================================================== */
 
 .red-zone {
     position: relative;
@@ -219,7 +398,6 @@ canvas {
     color: white;
 
     font-size: 21px;
-
     font-weight: 900;
 
     transition: width .25s ease;
@@ -231,13 +409,13 @@ canvas {
             to top,
             #e84550 0%,
             #d93c47 35%,
-            rgba(217,60,71,0.35) 70%,
+            rgba(217,60,71,.35) 70%,
             rgba(217,60,71,0) 100%
         );
 
     box-shadow:
-        inset 0 -10px 30px rgba(255,55,65,0.35),
-        0 -4px 25px rgba(255,55,65,0.18);
+        inset 0 -10px 30px rgba(255,55,65,.35),
+        0 -4px 25px rgba(255,55,65,.18);
 }
 
 .red-zone::before {
@@ -251,36 +429,16 @@ canvas {
     width: 100%;
     height: 2px;
 
-    background:
-        rgba(255,105,112,0.75);
+    background: rgba(255,105,112,.75);
 
     box-shadow:
-        0 0 12px rgba(255,65,75,0.8),
-        0 0 28px rgba(255,65,75,0.45);
-}
-
-.red-zone::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    bottom: -35px;
-
-    width: 100%;
-    height: 70px;
-
-    background:
-        rgba(240,55,65,0.38);
-
-    filter: blur(25px);
-
-    pointer-events: none;
+        0 0 12px rgba(255,65,75,.8),
+        0 0 28px rgba(255,65,75,.45);
 }
 
 
 /* =====================================================
-   МЕНЮ
+   START MENU
 ===================================================== */
 
 .start-menu {
@@ -295,7 +453,7 @@ canvas {
 
     padding: 28px;
 
-    background: rgba(20,23,26,.97);
+    background: rgba(20,23,26,.98);
 
     border: 1px solid #343a40;
 
@@ -313,7 +471,6 @@ canvas {
     color: white;
 
     font-size: 30px;
-
     font-weight: 900;
 
     margin-bottom: 22px;
@@ -346,11 +503,6 @@ canvas {
 
     font-weight: 900;
 }
-
-
-/* =====================================================
-   СТАВКА
-===================================================== */
 
 .bet-label {
     display: block;
@@ -400,11 +552,6 @@ canvas {
     font-size: 12px;
 }
 
-
-/* =====================================================
-   СЛОЖНОСТЬ
-===================================================== */
-
 .menu-difficulty {
     margin-top: 7px;
 
@@ -417,7 +564,6 @@ canvas {
     flex: 1;
 
     border: none;
-
     outline: none;
 
     padding: 9px 5px;
@@ -429,7 +575,6 @@ canvas {
     color: #cfd3d7;
 
     font-size: 12px;
-
     font-weight: 700;
 
     cursor: pointer;
@@ -437,14 +582,8 @@ canvas {
 
 .menu-difficulty button.active {
     background: #1678e8;
-
     color: white;
 }
-
-
-/* =====================================================
-   PLAY
-===================================================== */
 
 .play-button {
     width: 100%;
@@ -462,7 +601,6 @@ canvas {
     color: white;
 
     font-size: 15px;
-
     font-weight: 900;
 
     cursor: pointer;
@@ -472,13 +610,9 @@ canvas {
     background: #2687f5;
 }
 
-.play-button:active {
-    transform: scale(.98);
-}
-
 
 /* =====================================================
-   РЕЗУЛЬТАТ
+   RESULT
 ===================================================== */
 
 .result {
@@ -495,7 +629,7 @@ canvas {
         translate(-50%, -50%)
         scale(.85);
 
-    background: rgba(20,23,26,.98);
+    background: rgba(20,23,26,.99);
 
     border: 1px solid #343a40;
 
@@ -524,7 +658,6 @@ canvas {
 
 .result-title {
     font-size: 44px;
-
     font-weight: 900;
 }
 
@@ -586,17 +719,31 @@ canvas {
 
 
 /* =====================================================
-   MOBILE
+   OTHER SCREENS
 ===================================================== */
+
+.empty-screen {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #777e85;
+
+    font-size: 18px;
+    font-weight: 800;
+}
 
 @media(max-width:600px) {
 
     .top-ui {
-        gap: 25px;
+        gap: 20px;
     }
 
     .stat-value {
-        font-size: 19px;
+        font-size: 18px;
     }
 
     .bottom-zones {
@@ -612,70 +759,98 @@ canvas {
         width: calc(100vw - 40px);
         max-width: 330px;
     }
-}
 
+    .game-back {
+        top: 10px;
+        left: 10px;
+    }
+}
 </style>
 </head>
 
 <body>
 
 
-<canvas id="gameCanvas"></canvas>
-
-
 <!-- =====================================================
-     ВЕРХНЯЯ ПАНЕЛЬ
+     LOBBY
 ===================================================== -->
 
-<div class="top-ui">
+<div id="lobbyScreen" class="screen active">
 
-    <div class="stat">
+    <div class="lobby-header">
 
-        <div class="stat-label">
-            Баланс
+        <div class="logo">
+            🐻‍❄️<span>DROP</span>
         </div>
 
-        <div
-            class="stat-value balance-value"
-            id="balanceValue">
+        <div class="lobby-balance">
+            💰 <span id="lobbyBalance">1000.00</span>
+        </div>
 
-            1000.00
+    </div>
+
+
+    <div class="lobby-center">
+
+        <div class="lobby-title">
+            Меню
+        </div>
+
+        <div class="game-card">
+
+            <div class="game-icon">
+                ⚪
+            </div>
+
+            <div class="game-name">
+                Шарик
+            </div>
+
+            <div class="game-description">
+                Проведи шарик через вращающееся
+                отверстие и забери выигрыш.
+            </div>
+
+            <button
+                class="game-play"
+                id="openGameButton">
+
+                ИГРАТЬ
+
+            </button>
 
         </div>
 
     </div>
 
 
-    <div class="stat">
+    <div class="bottom-nav">
 
-        <div class="stat-label">
-            Отскоки
-        </div>
+        <button
+            class="nav-button">
 
-        <div
-            class="stat-value"
-            id="bounceValue">
+            <span class="nav-icon">🎒</span>
+            Инвентарь
 
-            0
-
-        </div>
-
-    </div>
+        </button>
 
 
-    <div class="stat">
+        <button
+            class="nav-button active">
 
-        <div class="stat-label">
-            Множитель
-        </div>
+            <span class="nav-icon">🏠</span>
+            Меню
 
-        <div
-            class="stat-value"
-            id="multiplier">
+        </button>
 
-            1.00x
 
-        </div>
+        <button
+            class="nav-button">
+
+            <span class="nav-icon">👤</span>
+            Профиль
+
+        </button>
 
     </div>
 
@@ -683,173 +858,452 @@ canvas {
 
 
 <!-- =====================================================
-     ЗОНЫ
+     GAME
 ===================================================== -->
 
-<div class="bottom-zones">
+<div id="gameScreen" class="screen">
 
-    <div
-        class="green-zone"
-        id="greenZone">
-
-        WIN
-
-    </div>
-
-    <div
-        class="red-zone"
-        id="redZone">
-
-        LOSE
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     СТАРТОВОЕ МЕНЮ
-===================================================== -->
-
-<div
-    class="start-menu"
-    id="startMenu">
-
-    <div class="start-title">
-        ESCAPE
-    </div>
-
-
-    <div class="balance-box">
-
-        <div class="balance-label">
-            Ваш баланс
-        </div>
-
-        <div
-            class="balance"
-            id="menuBalance">
-
-            1000.00
-
-        </div>
-
-    </div>
-
-
-    <label
-        class="bet-label"
-        for="betInput">
-
-        Ставка
-
-    </label>
-
-
-    <input
-        id="betInput"
-        class="bet-input"
-        type="number"
-        min="0.01"
-        step="0.01"
-        placeholder="Введите ставку"
-    >
-
-
-    <div
-        class="bet-error"
-        id="betError">
-    </div>
-
-
-    <div class="bet-label">
-        Сложность
-    </div>
-
-
-    <div class="menu-difficulty">
-
-        <button
-            class="difficulty-button active"
-            data-mode="easy">
-
-            Легко
-
-        </button>
-
-
-        <button
-            class="difficulty-button"
-            data-mode="medium">
-
-            Средне
-
-        </button>
-
-
-        <button
-            class="difficulty-button"
-            data-mode="hard">
-
-            Сложно
-
-        </button>
-
-    </div>
+    <canvas id="gameCanvas"></canvas>
 
 
     <button
-        class="play-button"
-        id="startButton">
+        class="game-back"
+        id="backToLobby">
 
-        ИГРАТЬ
+        ← Меню
 
     </button>
+
+
+    <div class="top-ui">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Баланс
+            </div>
+
+            <div
+                class="stat-value balance-value"
+                id="balanceValue">
+
+                1000.00
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Отскоки
+            </div>
+
+            <div
+                class="stat-value"
+                id="bounceValue">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Множитель
+            </div>
+
+            <div
+                class="stat-value"
+                id="multiplier">
+
+                1.00x
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="bottom-zones">
+
+        <div
+            class="green-zone"
+            id="greenZone">
+
+            WIN
+
+        </div>
+
+        <div
+            class="red-zone"
+            id="redZone">
+
+            LOSE
+
+        </div>
+
+    </div>
+
+
+    <!-- START MENU -->
+
+    <div
+        class="start-menu"
+        id="startMenu">
+
+        <div class="start-title">
+            ESCAPE
+        </div>
+
+
+        <div class="balance-box">
+
+            <div class="balance-label">
+                Ваш баланс
+            </div>
+
+            <div
+                class="balance"
+                id="menuBalance">
+
+                1000.00
+
+            </div>
+
+        </div>
+
+
+        <label
+            class="bet-label"
+            for="betInput">
+
+            Ставка
+
+        </label>
+
+
+        <input
+            id="betInput"
+            class="bet-input"
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="Введите ставку"
+        >
+
+
+        <div
+            class="bet-error"
+            id="betError">
+        </div>
+
+
+        <div class="bet-label">
+            Сложность
+        </div>
+
+
+        <div class="menu-difficulty">
+
+            <button
+                class="difficulty-button active"
+                data-mode="easy">
+
+                Легко
+
+            </button>
+
+
+            <button
+                class="difficulty-button"
+                data-mode="medium">
+
+                Средне
+
+            </button>
+
+
+            <button
+                class="difficulty-button"
+                data-mode="hard">
+
+                Сложно
+
+            </button>
+
+        </div>
+
+
+        <button
+            class="play-button"
+            id="startButton">
+
+            ИГРАТЬ
+
+        </button>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div
+        class="result"
+        id="resultWindow">
+
+        <div
+            id="resultTitle"
+            class="result-title">
+
+            WIN
+
+        </div>
+
+
+        <div
+            id="resultInfo"
+            class="result-info">
+        </div>
+
+
+        <div
+            id="resultMoney"
+            class="result-money">
+        </div>
+
+
+        <button id="closeResultButton">
+
+            ЗАКРЫТЬ
+
+        </button>
+
+    </div>
 
 </div>
 
 
 <!-- =====================================================
-     РЕЗУЛЬТАТ
+     EMPTY INVENTORY
 ===================================================== -->
 
-<div
-    class="result"
-    id="resultWindow">
+<div id="inventoryScreen" class="screen">
 
-    <div
-        id="resultTitle"
-        class="result-title">
+    <div class="empty-screen">
+        🎒 Инвентарь пока пуст
+    </div>
 
-        WIN
+    <div class="bottom-nav">
+
+        <button class="nav-button active" data-screen="inventoryScreen">
+            <span class="nav-icon">🎒</span>
+            Инвентарь
+        </button>
+
+        <button class="nav-button" data-screen="lobbyScreen">
+            <span class="nav-icon">🏠</span>
+            Меню
+        </button>
+
+        <button class="nav-button" data-screen="profileScreen">
+            <span class="nav-icon">👤</span>
+            Профиль
+        </button>
 
     </div>
 
+</div>
 
-    <div
-        id="resultInfo"
-        class="result-info">
 
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<div id="profileScreen" class="screen">
+
+    <div class="empty-screen">
+        👤 Профиль
     </div>
 
+    <div class="bottom-nav">
 
-    <div
-        id="resultMoney"
-        class="result-money">
+        <button class="nav-button" data-screen="inventoryScreen">
+            <span class="nav-icon">🎒</span>
+            Инвентарь
+        </button>
+
+        <button class="nav-button" data-screen="lobbyScreen">
+            <span class="nav-icon">🏠</span>
+            Меню
+        </button>
+
+        <button class="nav-button active" data-screen="profileScreen">
+            <span class="nav-icon">👤</span>
+            Профиль
+        </button>
 
     </div>
-
-
-    <button id="closeResultButton">
-
-        ЗАКРЫТЬ
-
-    </button>
 
 </div>
 
 
 <script>
+
+/* =====================================================
+   SCREENS
+===================================================== */
+
+const lobbyScreen =
+    document.getElementById("lobbyScreen");
+
+const gameScreen =
+    document.getElementById("gameScreen");
+
+const inventoryScreen =
+    document.getElementById("inventoryScreen");
+
+const profileScreen =
+    document.getElementById("profileScreen");
+
+
+function showScreen(screen) {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(element => {
+
+            element.classList.remove("active");
+
+        });
+
+
+    screen.classList.add("active");
+}
+
+
+/* =====================================================
+   BALANCE
+===================================================== */
+
+let balance = 1000;
+
+
+/* =====================================================
+   LOBBY
+===================================================== */
+
+const lobbyBalance =
+    document.getElementById("lobbyBalance");
+
+
+function updateAllBalances() {
+
+    const value =
+        balance.toFixed(2);
+
+
+    lobbyBalance.textContent =
+        value;
+
+    balanceValue.textContent =
+        value;
+
+    menuBalance.textContent =
+        value;
+}
+
+
+/* =====================================================
+   OPEN GAME
+===================================================== */
+
+document
+    .getElementById("openGameButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            showScreen(gameScreen);
+
+            updateAllBalances();
+
+        }
+    );
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document
+    .querySelectorAll("[data-screen]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const target =
+                    document.getElementById(
+                        button.dataset.screen
+                    );
+
+                if (target) {
+
+                    showScreen(target);
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   GAME BACK
+===================================================== */
+
+document
+    .getElementById("backToLobby")
+    .addEventListener(
+        "click",
+        () => {
+
+            /*
+                Нельзя выйти во время
+                активной игры.
+            */
+
+            if (gameRunning) {
+
+                return;
+
+            }
+
+
+            resultWindow.classList.remove(
+                "show"
+            );
+
+
+            startMenu.style.display =
+                "block";
+
+
+            showScreen(lobbyScreen);
+
+            updateAllBalances();
+
+        }
+    );
+
 
 /* =====================================================
    CANVAS
@@ -949,21 +1403,24 @@ const redZone =
 
 
 /* =====================================================
-   БАЛАНС
+   CURRENT BET
 ===================================================== */
 
-let balance = 1000;
+/*
+    ВАЖНО:
 
+    Ставка специально НЕ обнуляется
+    после WIN/LOSE.
 
-/* =====================================================
-   ТЕКУЩАЯ СТАВКА
-===================================================== */
+    Поэтому после закрытия результата
+    в поле останется последняя ставка.
+*/
 
 let currentBet = 0;
 
 
 /* =====================================================
-   КРУГ
+   CIRCLE
 ===================================================== */
 
 const circle = {
@@ -980,7 +1437,7 @@ const circle = {
 
 
 /* =====================================================
-   ШАР
+   BALL
 ===================================================== */
 
 const ball = {
@@ -999,79 +1456,28 @@ const ball = {
 
 
 /* =====================================================
-   ФИЗИКА
+   PHYSICS
 ===================================================== */
 
 const GRAVITY = 0.20;
 
-
-/*
-    Базовая сила прыжка.
-
-    После каждого отскока
-    она немного рандомизируется.
-*/
-
 const BASE_JUMP = 5.5;
-
-
-/*
-    Базовая скорость.
-*/
-
-const BASE_SPEED = 2.2;
-
-
-/*
-    Боковая скорость.
-*/
-
-const SIDE_SPEED = 1.6;
-
-
-/*
-    Ограничения скорости.
-*/
 
 const MAX_SPEED = 6.0;
 
 const MAX_HORIZONTAL_SPEED = 3.4;
 
-
-/*
-    Вращение отверстия.
-*/
-
 const HOLE_SPEED = 0.018;
-
-
-/*
-    Защита от проникновения
-    в стену.
-*/
 
 const COLLISION_EPSILON = 1.5;
 
-
-/*
-    Боковые стены.
-
-    Они не дают шарику
-    улететь далеко.
-*/
-
 const SIDE_WALL = 7;
-
-
-/*
-    Высота зон.
-*/
 
 const ZONE_HEIGHT = 90;
 
 
 /* =====================================================
-   СЛОЖНОСТИ
+   DIFFICULTIES
 ===================================================== */
 
 const difficulties = {
@@ -1082,16 +1488,7 @@ const difficulties = {
 
         redPercent: 30,
 
-        /*
-            Обычная дырка.
-        */
-
         holeSize: 50,
-
-        /*
-            Легко:
-            +0.05
-        */
 
         multiplierStep: 0.05
 
@@ -1104,16 +1501,7 @@ const difficulties = {
 
         redPercent: 50,
 
-        /*
-            Обычная дырка.
-        */
-
         holeSize: 50,
-
-        /*
-            Средне:
-            +0.15
-        */
 
         multiplierStep: 0.15
 
@@ -1126,16 +1514,7 @@ const difficulties = {
 
         redPercent: 75,
 
-        /*
-            Дырка на 30% больше,
-            чем обычная.
-        */
-
-        holeSize: 50 * 1.30,
-
-        /*
-            Сложный уровень.
-        */
+        holeSize: 65,
 
         multiplierStep: 0.25
 
@@ -1148,7 +1527,7 @@ let difficulty = "easy";
 
 
 /* =====================================================
-   СОСТОЯНИЕ
+   GAME STATE
 ===================================================== */
 
 let gameRunning = false;
@@ -1157,17 +1536,7 @@ let ballEscaped = false;
 
 let gameFinished = false;
 
-
-/*
-    Угол вращения дырки.
-*/
-
 let holeAngle = 0;
-
-
-/*
-    Статистика.
-*/
 
 let bounceCount = 0;
 
@@ -1242,7 +1611,9 @@ function resizeCanvas() {
         ball.y =
             circle.y -
             circle.radius * 0.35;
+
     }
+
 }
 
 
@@ -1253,7 +1624,7 @@ window.addEventListener(
 
 
 /* =====================================================
-   ЗОНЫ
+   ZONES
 ===================================================== */
 
 function updateZones() {
@@ -1268,11 +1639,12 @@ function updateZones() {
 
     redZone.style.width =
         settings.redPercent + "%";
+
 }
 
 
 /* =====================================================
-   УГЛЫ
+   ANGLES
 ===================================================== */
 
 function normalizeAngle(angle) {
@@ -1284,6 +1656,7 @@ function normalizeAngle(angle) {
 
         angle +=
             Math.PI * 2;
+
     }
 
 
@@ -1308,6 +1681,7 @@ function angleDifference(a, b) {
         difference =
             Math.PI * 2 -
             difference;
+
     }
 
 
@@ -1316,7 +1690,7 @@ function angleDifference(a, b) {
 
 
 /* =====================================================
-   ОТВЕРСТИЕ
+   HOLE
 ===================================================== */
 
 function isHole(angle) {
@@ -1340,33 +1714,39 @@ function isHole(angle) {
         <=
         holeRadians / 2
     );
+
 }
 
 
 /* =====================================================
-   ОГРАНИЧЕНИЕ СКОРОСТИ
+   RANDOM
+===================================================== */
+
+function randomRange(min, max) {
+
+    return (
+        min +
+        Math.random() *
+        (max - min)
+    );
+
+}
+
+
+/* =====================================================
+   SPEED LIMIT
 ===================================================== */
 
 function limitSpeed() {
 
-    if (
-        ball.vx >
-        MAX_HORIZONTAL_SPEED
-    ) {
-
-        ball.vx =
-            MAX_HORIZONTAL_SPEED;
-    }
-
-
-    if (
-        ball.vx <
-        -MAX_HORIZONTAL_SPEED
-    ) {
-
-        ball.vx =
-            -MAX_HORIZONTAL_SPEED;
-    }
+    ball.vx =
+        Math.max(
+            -MAX_HORIZONTAL_SPEED,
+            Math.min(
+                MAX_HORIZONTAL_SPEED,
+                ball.vx
+            )
+        );
 
 
     const speed =
@@ -1386,13 +1766,12 @@ function limitSpeed() {
             speed;
 
 
-        ball.vx *=
-            scale;
+        ball.vx *= scale;
 
+        ball.vy *= scale;
 
-        ball.vy *=
-            scale;
     }
+
 }
 
 
@@ -1402,12 +1781,7 @@ function limitSpeed() {
 
 function updateUI() {
 
-    balanceValue.textContent =
-        balance.toFixed(2);
-
-
-    menuBalance.textContent =
-        balance.toFixed(2);
+    updateAllBalances();
 
 
     bounceValue.textContent =
@@ -1417,52 +1791,28 @@ function updateUI() {
     multiplierValue.textContent =
         multiplier.toFixed(2) +
         "x";
+
 }
 
 
 /* =====================================================
-   СЛУЧАЙНАЯ СКОРОСТЬ
+   INITIAL BALL DIRECTION
 ===================================================== */
-
-function randomRange(min, max) {
-
-    return (
-        min +
-        Math.random() *
-        (max - min)
-    );
-}
-
-
-/* =====================================================
-   НАЧАЛЬНОЕ НАПРАВЛЕНИЕ
-===================================================== */
-
-/*
-    Только влево или вправо.
-
-    Ровно вниз больше никогда
-    не запускаем.
-*/
 
 function chooseStartDirection() {
 
     const direction =
-        Math.random() < 0.5
+        Math.random() < .5
             ? -1
             : 1;
 
 
-    const horizontal =
-        randomRange(
-            0.8,
-            1.8
-        );
-
-
     ball.vx =
         direction *
-        horizontal;
+        randomRange(
+            .8,
+            1.8
+        );
 
 
     ball.vy =
@@ -1470,30 +1820,21 @@ function chooseStartDirection() {
             1.8,
             2.5
         );
+
 }
 
 
 /* =====================================================
-   НАЧАЛО ИГРЫ
+   START GAME
 ===================================================== */
 
 function startGame() {
-
-    /*
-        Получаем ставку.
-    */
 
     let bet =
         Number(
             betInput.value
         );
 
-
-    /*
-        Защита от NaN,
-        отрицательных чисел
-        и нулевой ставки.
-    */
 
     if (
         !Number.isFinite(bet) ||
@@ -1504,30 +1845,21 @@ function startGame() {
             "Введите корректную ставку.";
 
         return;
+
     }
 
 
-    /*
-        Защита от ставки
-        больше баланса.
-    */
-
     if (
-        bet >
-        balance
+        bet > balance
     ) {
 
         betError.textContent =
-            "Ставка не может быть больше баланса.";
+            "Ставка больше вашего баланса.";
 
         return;
+
     }
 
-
-    /*
-        Округляем ставку
-        до двух знаков.
-    */
 
     bet =
         Math.round(
@@ -1535,36 +1867,22 @@ function startGame() {
         ) / 100;
 
 
-    if (bet <= 0) {
+    if (
+        bet <= 0 ||
+        bet > balance
+    ) {
 
         betError.textContent =
-            "Ставка должна быть больше 0.";
+            "Некорректная ставка.";
 
         return;
+
     }
 
-
-    if (bet > balance) {
-
-        betError.textContent =
-            "Недостаточно средств.";
-
-        return;
-    }
-
-
-    /*
-        Сохраняем ставку.
-    */
 
     currentBet =
         bet;
 
-
-    /*
-        Ставка списывается
-        сразу при старте.
-    */
 
     balance -=
         currentBet;
@@ -1592,34 +1910,20 @@ function startGame() {
     multiplier = 1;
 
 
-    /*
-        Начальная позиция.
-    */
-
     ball.x =
         circle.x;
 
 
     ball.y =
         circle.y -
-        circle.radius * 0.35;
+        circle.radius * .35;
 
-
-    /*
-        Каждый раунд
-        получает новое
-        направление.
-    */
 
     chooseStartDirection();
 
 
     updateUI();
 
-
-    /*
-        Прячем меню.
-    */
 
     startMenu.style.display =
         "none";
@@ -1628,11 +1932,12 @@ function startGame() {
     resultWindow.classList.remove(
         "show"
     );
+
 }
 
 
 /* =====================================================
-   ОТСКОК
+   REGISTER BOUNCE
 ===================================================== */
 
 function registerBounce() {
@@ -1647,11 +1952,6 @@ function registerBounce() {
             .multiplierStep;
 
 
-    /*
-        Округляем,
-        чтобы не было 1.15000001.
-    */
-
     multiplier =
         Math.round(
             multiplier * 100
@@ -1659,11 +1959,12 @@ function registerBounce() {
 
 
     updateUI();
+
 }
 
 
 /* =====================================================
-   ВЫХОД ЧЕРЕЗ ДЫРКУ
+   ESCAPE THROUGH HOLE
 ===================================================== */
 
 function escapeThroughHole(nx, ny) {
@@ -1674,7 +1975,7 @@ function escapeThroughHole(nx, ny) {
         (
             circle.radius +
             ball.radius +
-            4
+            5
         );
 
 
@@ -1684,17 +1985,16 @@ function escapeThroughHole(nx, ny) {
         (
             circle.radius +
             ball.radius +
-            4
+            5
         );
 
 
     /*
-        После выхода
-        шар продолжает
-        падать.
+        После выхода из круга
+        задаём новую скорость.
 
-        Но направление
-        немного меняется.
+        Она тоже немного отличается
+        каждый раз.
     */
 
     const speed =
@@ -1704,19 +2004,12 @@ function escapeThroughHole(nx, ny) {
         );
 
 
-    /*
-        Сохраняем горизонтальную
-        составляющую, чтобы шар
-        не летел строго вертикально.
-    */
-
     let vx =
         ball.vx;
 
 
     if (
-        Math.abs(vx) <
-        0.7
+        Math.abs(vx) < .7
     ) {
 
         vx =
@@ -1725,6 +2018,7 @@ function escapeThroughHole(nx, ny) {
                 1.2,
                 2.2
             );
+
     }
 
 
@@ -1738,11 +2032,6 @@ function escapeThroughHole(nx, ny) {
         );
 
 
-    /*
-        Главное направление
-        вниз.
-    */
-
     ball.vy =
         Math.max(
             2.5,
@@ -1751,12 +2040,27 @@ function escapeThroughHole(nx, ny) {
 
 
     ballEscaped = true;
+
 }
 
 
 /* =====================================================
-   ОТСКОК ОТ КРУГА
+   DIFFERENT JUMP
 ===================================================== */
+
+/*
+    Главная часть исправления.
+
+    Каждый отскок получает:
+    - новую силу прыжка;
+    - новое направление;
+    - новое боковое отклонение;
+    - небольшую случайную скорость.
+
+    Поэтому два последовательных
+    прыжка практически никогда
+    не будут одинаковыми.
+*/
 
 function bounceFromWall(nx, ny) {
 
@@ -1769,30 +2073,18 @@ function bounceFromWall(nx, ny) {
 
     ball.x =
         circle.x +
-        nx *
-        safeRadius;
+        nx * safeRadius;
 
 
     ball.y =
         circle.y +
-        ny *
-        safeRadius;
+        ny * safeRadius;
 
-
-    /*
-        Скалярное произведение.
-    */
 
     const velocityNormal =
         ball.vx * nx +
         ball.vy * ny;
 
-
-    /*
-        Отражаем только если
-        шар действительно движется
-        в стену.
-    */
 
     if (
         velocityNormal > 0
@@ -1808,137 +2100,145 @@ function bounceFromWall(nx, ny) {
             2 *
             velocityNormal *
             ny;
+
     }
 
 
     /*
-        ==============================================
-        РАЗНЫЙ ПРЫЖОК ПОСЛЕ КАЖДОГО ОТСКОКА
-        ==============================================
+        Случайная сила каждого прыжка.
+
+        Никогда не даём слишком
+        маленькое значение.
     */
 
-    const jump =
+    const jumpPower =
         randomRange(
-            BASE_JUMP * 0.88,
-            BASE_JUMP * 1.12
+            5.0,
+            6.6
         );
 
 
     /*
-        Если ударился о нижнюю
-        часть круга — прыгаем вверх.
+        Удар снизу.
+
+        Прыжок вверх.
     */
 
     if (
-        ny > 0.15
+        ny > .15
     ) {
 
         ball.vy =
-            -jump;
+            -jumpPower;
+
     }
 
 
     /*
-        Если ударился сверху —
-        направляем вниз.
+        Удар сверху.
+
+        Шар должен лететь вниз,
+        но сила тоже разная.
     */
 
     else if (
-        ny < -0.15
+        ny < -.15
     ) {
 
         ball.vy =
             randomRange(
-                2.7,
-                4.2
+                3.2,
+                5.0
             );
+
     }
 
 
     /*
-        При боковом столкновении
-        слегка меняем вертикальную
-        скорость.
+        Боковая стенка.
 
-        Это делает траекторию
-        менее предсказуемой.
+        Делаем вертикальный прыжок
+        случайным.
     */
 
     else {
 
-        if (
+        const verticalDirection =
             ball.vy < 0
-        ) {
+                ? -1
+                : 1;
 
-            ball.vy =
-                -randomRange(
-                    3.8,
-                    5.3
-                );
 
-        }
+        ball.vy =
+            verticalDirection *
+            randomRange(
+                3.8,
+                5.8
+            );
 
-        else {
-
-            ball.vy =
-                randomRange(
-                    3.5,
-                    5.0
-                );
-        }
     }
 
 
     /*
-        После каждого отскока
-        немного меняем X.
+        НОВАЯ боковая составляющая.
 
-        Благодаря этому шарик
-        не повторяет одну и ту же
-        траекторию.
+        Она может сильно изменить
+        направление следующего прыжка.
     */
 
-    const horizontalChange =
+    ball.vx +=
         randomRange(
-            -0.75,
-            0.75
+            -1.0,
+            1.0
         );
 
 
-    ball.vx +=
-        horizontalChange;
-
-
     /*
-        Минимальная X скорость.
+        Минимальная горизонтальная
+        скорость.
 
-        Шар не должен постоянно
-        прыгать строго вертикально.
+        Шар не будет постоянно
+        двигаться ровно вверх-вниз.
     */
 
     if (
-        Math.abs(ball.vx) <
-        0.65
+        Math.abs(ball.vx) < .65
     ) {
 
         ball.vx =
-            ball.vx < 0
-                ? -0.65
-                : 0.65;
+            Math.random() < .5
+                ? -.65
+                : .65;
+
     }
 
 
     /*
-        Ограничиваем скорость.
+        Иногда полностью меняем
+        сторону движения.
+
+        Это дополнительно делает
+        траекторию непредсказуемой.
     */
 
-    ball.vx =
-        Math.max(
-            -MAX_HORIZONTAL_SPEED,
-            Math.min(
-                MAX_HORIZONTAL_SPEED,
-                ball.vx
-            )
+    if (
+        Math.random() < .22
+    ) {
+
+        ball.vx *= -1;
+
+    }
+
+
+    /*
+        Небольшая случайная
+        дополнительная скорость.
+    */
+
+    ball.vy +=
+        randomRange(
+            -.35,
+            .35
         );
 
 
@@ -1946,17 +2246,23 @@ function bounceFromWall(nx, ny) {
 
 
     registerBounce();
+
 }
 
 
 /* =====================================================
-   ВЫПЛАТА
+   FINISH
 ===================================================== */
 
 function finishGame(isWin) {
 
-    if (gameFinished)
+    if (
+        gameFinished
+    ) {
+
         return;
+
+    }
 
 
     gameFinished = true;
@@ -1964,17 +2270,7 @@ function finishGame(isWin) {
     gameRunning = false;
 
 
-    /*
-        WIN
-    */
-
     if (isWin) {
-
-        /*
-            Общая выплата:
-
-            ставка * множитель
-        */
 
         const payout =
             currentBet *
@@ -2025,11 +2321,6 @@ function finishGame(isWin) {
 
     }
 
-
-    /*
-        LOSE
-    */
-
     else {
 
         resultTitle.textContent =
@@ -2057,6 +2348,7 @@ function finishGame(isWin) {
             multiplier.toFixed(2) +
             "x<br>" +
             "Ставка проиграна.";
+
     }
 
 
@@ -2066,21 +2358,15 @@ function finishGame(isWin) {
     resultWindow.classList.add(
         "show"
     );
+
 }
 
 
 /* =====================================================
-   ФИЗИКА
+   PHYSICS
 ===================================================== */
 
 function updatePhysics() {
-
-    /*
-        Отверстие вращается ВСЕГДА.
-
-        Даже когда игра ещё
-        не началась.
-    */
 
     holeAngle +=
         HOLE_SPEED;
@@ -2092,15 +2378,22 @@ function updatePhysics() {
         );
 
 
-    if (!gameRunning)
+    if (
+        !gameRunning
+    ) {
+
         return;
+
+    }
 
 
     /* =================================================
-       ШАР УЖЕ ВЫШЕЛ
+       BALL ESCAPED
     ================================================= */
 
-    if (ballEscaped) {
+    if (
+        ballEscaped
+    ) {
 
         ball.vy +=
             GRAVITY;
@@ -2118,7 +2411,7 @@ function updatePhysics() {
 
 
         /*
-            Левая боковая стена.
+            Левая стена.
         */
 
         if (
@@ -2136,11 +2429,12 @@ function updatePhysics() {
                 Math.abs(
                     ball.vx
                 );
+
         }
 
 
         /*
-            Правая боковая стена.
+            Правая стена.
         */
 
         if (
@@ -2160,33 +2454,12 @@ function updatePhysics() {
                 -Math.abs(
                     ball.vx
                 );
+
         }
 
 
         /*
-            Верхняя защита.
-
-            Если каким-то образом
-            шар пытается вернуться
-            наверх, не даём ему
-            зависнуть.
-        */
-
-        if (
-            ball.y <
-            circle.y -
-            circle.radius
-        ) {
-
-            ball.vy =
-                Math.abs(
-                    ball.vy
-                ) + 0.5;
-        }
-
-
-        /*
-            Верх зоны.
+            Зона результата.
         */
 
         const zonesTop =
@@ -2200,21 +2473,12 @@ function updatePhysics() {
             zonesTop
         ) {
 
-            /*
-                Ширина WIN.
-            */
-
             const greenWidth =
                 width *
                 difficulties[difficulty]
                     .greenPercent /
                 100;
 
-
-            /*
-                ЛЕВАЯ часть = WIN
-                ПРАВАЯ часть = LOSE
-            */
 
             if (
                 ball.x <=
@@ -2228,19 +2492,22 @@ function updatePhysics() {
             else {
 
                 finishGame(false);
+
             }
 
 
             return;
+
         }
 
 
         return;
+
     }
 
 
     /* =================================================
-       ГРАВИТАЦИЯ
+       GRAVITY
     ================================================= */
 
     ball.vy +=
@@ -2248,7 +2515,7 @@ function updatePhysics() {
 
 
     /* =================================================
-       ДВИЖЕНИЕ
+       MOVEMENT
     ================================================= */
 
     ball.x +=
@@ -2263,7 +2530,7 @@ function updatePhysics() {
 
 
     /* =================================================
-       РАССТОЯНИЕ ОТ ЦЕНТРА
+       DISTANCE
     ================================================= */
 
     const dx =
@@ -2290,7 +2557,7 @@ function updatePhysics() {
 
 
     /* =================================================
-       ДОСТИГ СТЕНЫ
+       WALL
     ================================================= */
 
     if (
@@ -2299,11 +2566,11 @@ function updatePhysics() {
     ) {
 
         if (
-            distance <
-            0.0001
+            distance < .0001
         ) {
 
             return;
+
         }
 
 
@@ -2335,12 +2602,6 @@ function updatePhysics() {
                 ball.vy * ny;
 
 
-            /*
-                В отверстие можно
-                пройти только если
-                шар движется наружу.
-            */
-
             if (
                 outwardVelocity >= 0
             ) {
@@ -2350,26 +2611,30 @@ function updatePhysics() {
                     ny
                 );
 
+
                 return;
+
             }
+
         }
 
 
         /*
-            Если это не отверстие —
-            твёрдая стена.
+            Твёрдая часть круга.
         */
 
         bounceFromWall(
             nx,
             ny
         );
+
     }
+
 }
 
 
 /* =====================================================
-   РИСОВАНИЕ
+   DRAW
 ===================================================== */
 
 function draw() {
@@ -2382,9 +2647,9 @@ function draw() {
     );
 
 
-    /* =================================================
-       БОКОВЫЕ СТЕНЫ
-    ================================================= */
+    /*
+        Боковые стены.
+    */
 
     ctx.fillStyle =
         "#252a2f";
@@ -2407,9 +2672,9 @@ function draw() {
     );
 
 
-    /* =================================================
-       КРУГ
-    ================================================= */
+    /*
+        Круг.
+    */
 
     const radius =
         circle.radius;
@@ -2433,7 +2698,7 @@ function draw() {
 
 
     /*
-        Синяя часть круга.
+        Синяя стенка.
     */
 
     ctx.save();
@@ -2478,9 +2743,9 @@ function draw() {
     ctx.restore();
 
 
-    /* =================================================
-       КРАЯ ОТВЕРСТИЯ
-    ================================================= */
+    /*
+        Концы отверстия.
+    */
 
     ctx.save();
 
@@ -2547,6 +2812,7 @@ function draw() {
 
 
         ctx.stroke();
+
     }
 
 
@@ -2563,9 +2829,9 @@ function draw() {
     ctx.restore();
 
 
-    /* =================================================
-       СВЕЧЕНИЕ ОТВЕРСТИЯ
-    ================================================= */
+    /*
+        Свечение отверстия.
+    */
 
     ctx.save();
 
@@ -2596,9 +2862,9 @@ function draw() {
     ctx.restore();
 
 
-    /* =================================================
-       ШАР
-    ================================================= */
+    /*
+        Шарик.
+    */
 
     ctx.save();
 
@@ -2654,6 +2920,7 @@ function draw() {
 
 
     ctx.fill();
+
 }
 
 
@@ -2670,11 +2937,12 @@ function gameLoop() {
     requestAnimationFrame(
         gameLoop
     );
+
 }
 
 
 /* =====================================================
-   КНОПКА СТАРТА
+   START
 ===================================================== */
 
 startButton.addEventListener(
@@ -2684,7 +2952,7 @@ startButton.addEventListener(
 
 
 /* =====================================================
-   ЗАКРЫТЬ РЕЗУЛЬТАТ
+   RESULT CLOSE
 ===================================================== */
 
 closeResultButton.addEventListener(
@@ -2696,30 +2964,24 @@ closeResultButton.addEventListener(
         );
 
 
-        /*
-            Возвращаемся
-            именно в стартовое меню.
-        */
-
         startMenu.style.display =
             "block";
 
 
-        currentBet = 0;
+        /*
+            ВАЖНО:
 
+            currentBet НЕ сбрасываем.
 
-        betInput.value =
-            "";
+            Поле ставки тоже НЕ очищаем.
 
+            Поэтому после WIN/LOSE
+            остаётся та же ставка.
+        */
 
         betError.textContent =
             "";
 
-
-        /*
-            Ставим шарик обратно
-            в исходную позицию.
-        */
 
         ball.x =
             circle.x;
@@ -2727,7 +2989,7 @@ closeResultButton.addEventListener(
 
         ball.y =
             circle.y -
-            circle.radius * 0.35;
+            circle.radius * .35;
 
 
         ball.vx = 0;
@@ -2736,12 +2998,13 @@ closeResultButton.addEventListener(
 
 
         updateUI();
+
     }
 );
 
 
 /* =====================================================
-   ВЫБОР СЛОЖНОСТИ
+   DIFFICULTY
 ===================================================== */
 
 document
@@ -2756,8 +3019,8 @@ document
                 () => {
 
                     /*
-                        ВО ВРЕМЯ ИГРЫ
-                        сложность менять нельзя.
+                        Во время игры
+                        менять нельзя.
                     */
 
                     if (
@@ -2765,6 +3028,7 @@ document
                     ) {
 
                         return;
+
                     }
 
 
@@ -2782,6 +3046,7 @@ document
                                 other.classList.remove(
                                     "active"
                                 );
+
                             }
                         );
 
@@ -2792,14 +3057,16 @@ document
 
 
                     updateZones();
+
                 }
             );
+
         }
     );
 
 
 /* =====================================================
-   ЗАПУСК
+   INITIALIZATION
 ===================================================== */
 
 resizeCanvas();
@@ -2814,12 +3081,12 @@ ball.x =
 
 ball.y =
     circle.y -
-    circle.radius * 0.35;
+    circle.radius * .35;
 
 
 /*
     Круг вращается
-    уже до начала игры.
+    даже в меню игры.
 */
 
 gameLoop();
