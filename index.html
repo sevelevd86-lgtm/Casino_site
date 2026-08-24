@@ -11,6 +11,14 @@
         ::-webkit-scrollbar-track{background:#0a0a0f}
         ::-webkit-scrollbar-thumb{background:#f0b90b;border-radius:10px}
         
+        /* ===== ЗАГРУЗКА ===== */
+        .loading-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#0a0a0f;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity .5s ease}
+        .loading-overlay.hide{opacity:0;pointer-events:none}
+        .loading-spinner{width:40px;height:40px;border:2px solid rgba(240,185,11,0.04);border-top:2px solid #f0b90b;border-radius:50%;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loading-text{color:#555;font-size:13px;margin-top:12px;letter-spacing:2px;animation:pulse 1.5s ease-in-out infinite}
+        @keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+        
         .top-bar{background:rgba(13,13,20,0.6);backdrop-filter:blur(20px);padding:12px 20px;border-bottom:1px solid rgba(240,185,11,0.04);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50}
         .top-bar .logo{font-weight:600;color:#f0b90b;font-size:15px;letter-spacing:2px}
         .top-bar .balance{color:#f0b90b;font-weight:500;font-size:14px;background:rgba(240,185,11,0.04);padding:4px 14px;border-radius:30px;border:1px solid rgba(240,185,11,0.04);cursor:pointer}
@@ -28,17 +36,29 @@
         .menu-hero .game-btn:active{transform:scale(0.96);background:rgba(240,185,11,0.08)}
         .menu-hero .game-btn.secondary{border-color:rgba(255,255,255,0.03);color:#888}
         
+        /* ===== КЕЙСЫ (НОВЫЕ, КАК В ТЕЛЕГРАМ-БОТАХ) ===== */
         .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-        .case-item{background:rgba(26,26,36,0.3);border:1px solid rgba(255,255,255,0.02);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s}
+        .case-item{background:rgba(26,26,36,0.3);border:1px solid rgba(255,255,255,0.02);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
         .case-item:active{transform:scale(0.94);border-color:rgba(240,185,11,0.05)}
+        .case-item .case-rare{position:absolute;top:0;left:0;right:0;height:2px}
+        .case-item .case-rare.common{background:linear-gradient(90deg,#888,#aaa)}
+        .case-item .case-rare.uncommon{background:linear-gradient(90deg,#4CAF50,#8BC34A)}
+        .case-item .case-rare.rare{background:linear-gradient(90deg,#2196F3,#03A9F4)}
+        .case-item .case-rare.epic{background:linear-gradient(90deg,#9C27B0,#E040FB)}
+        .case-item .case-rare.legendary{background:linear-gradient(90deg,#FF9800,#FFC107)}
         .case-item .icon{font-size:32px;margin-bottom:4px}
         .case-item .name{font-size:13px;font-weight:500;color:#ddd}
         .case-item .price{font-size:12px;color:#f0b90b;margin-top:2px}
         .case-item .count{font-size:10px;color:#555;margin-top:2px}
+        .case-item .chance{font-size:9px;color:#444;margin-top:2px}
+        .case-item .chance span{color:#f0b90b}
         
         .case-preview{background:rgba(26,26,36,0.4);border:1px solid rgba(240,185,11,0.03);border-radius:14px;padding:14px;margin-top:10px;backdrop-filter:blur(8px);animation:fade .3s ease}
-        .case-preview .items-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:8px 0}
-        .case-preview .preview-item{background:rgba(13,13,20,0.3);border-radius:8px;padding:6px 2px;text-align:center}
+        .case-preview .preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .case-preview .preview-header .preview-title{font-size:14px;font-weight:500;color:#f0b90b}
+        .case-preview .preview-header .preview-price{font-size:12px;color:#888}
+        .case-preview .items-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+        .case-preview .preview-item{background:rgba(13,13,20,0.3);border-radius:8px;padding:6px 2px;text-align:center;border:1px solid rgba(255,255,255,0.02)}
         .case-preview .preview-item .icon{font-size:18px}
         .case-preview .preview-item .name{font-size:8px;color:#888;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
         .case-preview .preview-item .price{font-size:7px;color:#f0b90b}
@@ -65,7 +85,7 @@
         .case-close-btn{background:rgba(240,185,11,0.04);color:#f0b90b;padding:8px 24px;border-radius:50px;border:1px solid rgba(240,185,11,0.04);font-weight:500;font-size:13px;cursor:pointer;margin-top:10px;transition:all .1s}
         .case-close-btn:active{transform:scale(0.96)}
         
-        /* ===== НОВЫЙ АПГРЕЙД (как в симуляторах) ===== */
+        /* ===== АПГРЕЙД ===== */
         .upgrade-container{display:flex;flex-direction:column;align-items:center;gap:10px;padding:6px 0;max-width:400px;margin:0 auto;width:100%}
         .upgrade-title{font-size:18px;font-weight:500;color:#f0b90b;letter-spacing:1px;margin-bottom:2px}
         .wheel-wrapper{position:relative;width:200px;height:200px;margin:0 auto}
@@ -120,6 +140,15 @@
         .profile-btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.02);color:#555}
         .ref-link{background:rgba(10,10,15,0.2);padding:6px 10px;border-radius:30px;font-size:10px;color:#555;word-break:break-all;margin-top:4px;border:1px solid rgba(255,255,255,0.02)}
         
+        /* ===== ЕЖЕДНЕВНЫЙ БОНУС С ТАЙМЕРОМ ===== */
+        .daily-bonus{background:rgba(46,204,113,0.02);border:1px solid rgba(46,204,113,0.02);border-radius:12px;padding:10px;text-align:center;margin-bottom:8px;cursor:pointer;transition:all .15s}
+        .daily-bonus:active{transform:scale(0.97)}
+        .daily-bonus .bonus-amount{font-size:18px;font-weight:600;color:#2ecc71}
+        .daily-bonus .bonus-label{color:#555;font-size:11px;margin-top:2px}
+        .daily-bonus .bonus-timer{color:#444;font-size:10px;margin-top:2px;font-family:monospace}
+        .daily-bonus.claimed{opacity:0.4;pointer-events:none}
+        .daily-bonus.claimed .bonus-timer{color:#666}
+        
         .deposit-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;flex-direction:column;justify-content:center;align-items:center;z-index:400;padding:20px;backdrop-filter:blur(30px)}
         .deposit-overlay.active{display:flex}
         .deposit-card{background:rgba(26,26,36,0.4);border:1px solid rgba(240,185,11,0.02);border-radius:16px;padding:20px;width:100%;max-width:300px;backdrop-filter:blur(8px)}
@@ -155,11 +184,6 @@
         .skin-select-close{background:rgba(240,185,11,0.04);color:#f0b90b;padding:8px 24px;border-radius:50px;border:1px solid rgba(240,185,11,0.02);font-weight:500;font-size:13px;cursor:pointer;margin-top:10px;transition:all .1s}
         .skin-select-close:active{transform:scale(0.96)}
         
-        .daily-bonus{background:rgba(46,204,113,0.02);border:1px solid rgba(46,204,113,0.02);border-radius:12px;padding:10px;text-align:center;margin-bottom:8px;cursor:pointer;transition:all .15s}
-        .daily-bonus:active{transform:scale(0.97)}
-        .daily-bonus .bonus-amount{font-size:18px;font-weight:600;color:#2ecc71}
-        .daily-bonus .bonus-label{color:#555;font-size:11px;margin-top:2px}
-        .daily-bonus.claimed{opacity:0.3;pointer-events:none}
         .history-item{background:rgba(26,26,36,0.1);border-radius:8px;padding:6px 10px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;border-left:2px solid rgba(240,185,11,0.05)}
         .history-item .time{color:#444;font-size:9px}
         .history-item .desc{color:#888;font-size:11px;flex:1;margin:0 6px}
@@ -183,6 +207,12 @@
 </head>
 <body>
 
+    <!-- ===== ЗАГРУЗКА ===== -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">ЗАГРУЗКА</div>
+    </div>
+
     <div id="toast" class="toast"></div>
 
     <div class="top-bar">
@@ -205,7 +235,11 @@
 
     <div id="page-profile" class="page">
         <div class="page-title">Профиль</div>
-        <div class="daily-bonus" id="daily-bonus" onclick="claimDailyBonus()"><div class="bonus-amount">+50⭐</div><div class="bonus-label">Ежедневный бонус</div></div>
+        <div class="daily-bonus" id="daily-bonus" onclick="claimDailyBonus()">
+            <div class="bonus-amount" id="bonus-amount">+50⭐</div>
+            <div class="bonus-label" id="bonus-label">Ежедневный бонус</div>
+            <div class="bonus-timer" id="bonus-timer"></div>
+        </div>
         <div class="profile-card"><div class="label">Имя</div><div class="value" id="profile-name">Игрок</div></div>
         <div class="profile-card"><div class="label">ID</div><div class="value" id="profile-id">---</div></div>
         <div class="profile-card"><div class="label">Баланс</div><div class="balance-num" id="profile-balance">⭐ 1000</div></div>
@@ -219,7 +253,17 @@
         <div style="margin-top:10px;"><div style="color:#444;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">История</div><div id="history-container"></div></div>
     </div>
 
-    <div class="case-preview" id="case-preview" style="display:none;"><div class="page-title" id="preview-title" style="font-size:16px;margin-bottom:4px;">Кейс</div><div class="items-preview" id="preview-items"></div><div class="case-actions"><button class="btn open" id="preview-open">Открыть</button><button class="btn back" onclick="closeCasePreview()">Назад</button></div></div>
+    <div class="case-preview" id="case-preview" style="display:none;">
+        <div class="preview-header">
+            <span class="preview-title" id="preview-title">Кейс</span>
+            <span class="preview-price" id="preview-price">100⭐</span>
+        </div>
+        <div class="items-preview" id="preview-items"></div>
+        <div class="case-actions">
+            <button class="btn open" id="preview-open">Открыть</button>
+            <button class="btn back" onclick="closeCasePreview()">Назад</button>
+        </div>
+    </div>
 
     <div class="case-animation" id="case-animation"><div class="slot-machine" id="slot-machine"></div><div class="case-result" id="case-result"><div class="icon" id="result-icon">⏤</div><div class="name" id="result-name">Предмет</div></div><button class="case-close-btn" onclick="closeCaseAnimation()">Закрыть</button></div>
 
@@ -234,17 +278,82 @@
     </div>
 
     <script>
+        // ==================== ЗАГРУЗКА ====================
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading-overlay').classList.add('hide');
+            }, 1500);
+        });
+
         // ==================== ДАННЫЕ ====================
         let balance = 1000, inventory = [], usedPromoCodes = [], selectedSkin = null, multiplier = 2, wheelAngle = 0, isSpinning = false, currentCase = null, history = [], achievements = { casesOpened: 0, itemsSold: 0, upgradesDone: 0 }, lastDailyBonus = 0;
+        let bonusTimerInterval = null;
 
+        // ==================== КЕЙСЫ (НОВЫЕ, КАК В ТЕЛЕГРАМ-БОТАХ) ====================
         const caseItems = {
-            case1: [{id:'bear',name:'Мишка',icon:'🧸',value:15},{id:'heart',name:'Сердечко',icon:'❤️',value:15},{id:'rose',name:'Роза',icon:'🌹',value:20},{id:'cake',name:'Торт',icon:'🎂',value:25},{id:'star',name:'Звезда',icon:'⭐',value:30},{id:'diamond',name:'Алмаз',icon:'💎',value:50},{id:'crown',name:'Корона',icon:'👑',value:75},{id:'rocket',name:'Ракета',icon:'🚀',value:100},{id:'unicorn',name:'Единорог',icon:'🦄',value:150}],
-            case2: [{id:'bear',name:'Мишка',icon:'🧸',value:15},{id:'heart',name:'Сердечко',icon:'❤️',value:15},{id:'rose',name:'Роза',icon:'🌹',value:20},{id:'cake',name:'Торт',icon:'🎂',value:25},{id:'star',name:'Звезда',icon:'⭐',value:30},{id:'diamond',name:'Алмаз',icon:'💎',value:50},{id:'crown',name:'Корона',icon:'👑',value:75},{id:'rocket',name:'Ракета',icon:'🚀',value:100},{id:'unicorn',name:'Единорог',icon:'🦄',value:150},{id:'dragon',name:'Дракон',icon:'🐉',value:200},{id:'phoenix',name:'Феникс',icon:'🔥',value:300},{id:'golden',name:'Золотой',icon:'🏆',value:500}],
-            case3: [{id:'diamond',name:'Алмаз',icon:'💎',value:50},{id:'crown',name:'Корона',icon:'👑',value:75},{id:'rocket',name:'Ракета',icon:'🚀',value:100},{id:'unicorn',name:'Единорог',icon:'🦄',value:150},{id:'dragon',name:'Дракон',icon:'🐉',value:200},{id:'phoenix',name:'Феникс',icon:'🔥',value:300},{id:'golden',name:'Золотой',icon:'🏆',value:500},{id:'legendary',name:'Легендарный',icon:'⚡',value:1000},{id:'mythic',name:'Мифический',icon:'🌟',value:2500}],
-            case4: [{id:'golden',name:'Золотой',icon:'🏆',value:500},{id:'legendary',name:'Легендарный',icon:'⚡',value:1000},{id:'mythic',name:'Мифический',icon:'🌟',value:2500},{id:'godly',name:'Божественный',icon:'👼',value:5000},{id:'cosmic',name:'Космический',icon:'🌌',value:10000},{id:'void',name:'Войд',icon:'🕳️',value:25000},{id:'eternal',name:'Вечный',icon:'♾️',value:50000}],
-            case5: [{id:'legendary',name:'Легендарный',icon:'⚡',value:1000},{id:'mythic',name:'Мифический',icon:'🌟',value:2500},{id:'godly',name:'Божественный',icon:'👼',value:5000},{id:'cosmic',name:'Космический',icon:'🌌',value:10000},{id:'void',name:'Войд',icon:'🕳️',value:25000},{id:'eternal',name:'Вечный',icon:'♾️',value:50000},{id:'celestial',name:'Небесный',icon:'☀️',value:75000},{id:'divine',name:'Божественный',icon:'✨',value:100000}]
+            case1: [
+                {id:'bear',name:'Мишка',icon:'🧸',value:15,rare:'common'},
+                {id:'heart',name:'Сердечко',icon:'❤️',value:15,rare:'common'},
+                {id:'rose',name:'Роза',icon:'🌹',value:20,rare:'common'},
+                {id:'cake',name:'Торт',icon:'🎂',value:25,rare:'uncommon'},
+                {id:'star',name:'Звезда',icon:'⭐',value:30,rare:'uncommon'},
+                {id:'diamond',name:'Алмаз',icon:'💎',value:50,rare:'rare'},
+                {id:'crown',name:'Корона',icon:'👑',value:75,rare:'rare'},
+                {id:'rocket',name:'Ракета',icon:'🚀',value:100,rare:'epic'},
+                {id:'unicorn',name:'Единорог',icon:'🦄',value:150,rare:'epic'},
+            ],
+            case2: [
+                {id:'bear',name:'Мишка',icon:'🧸',value:15,rare:'common'},
+                {id:'heart',name:'Сердечко',icon:'❤️',value:15,rare:'common'},
+                {id:'rose',name:'Роза',icon:'🌹',value:20,rare:'common'},
+                {id:'cake',name:'Торт',icon:'🎂',value:25,rare:'uncommon'},
+                {id:'star',name:'Звезда',icon:'⭐',value:30,rare:'uncommon'},
+                {id:'diamond',name:'Алмаз',icon:'💎',value:50,rare:'rare'},
+                {id:'crown',name:'Корона',icon:'👑',value:75,rare:'rare'},
+                {id:'rocket',name:'Ракета',icon:'🚀',value:100,rare:'epic'},
+                {id:'unicorn',name:'Единорог',icon:'🦄',value:150,rare:'epic'},
+                {id:'dragon',name:'Дракон',icon:'🐉',value:200,rare:'epic'},
+                {id:'phoenix',name:'Феникс',icon:'🔥',value:300,rare:'legendary'},
+                {id:'golden',name:'Золотой',icon:'🏆',value:500,rare:'legendary'},
+            ],
+            case3: [
+                {id:'diamond',name:'Алмаз',icon:'💎',value:50,rare:'rare'},
+                {id:'crown',name:'Корона',icon:'👑',value:75,rare:'rare'},
+                {id:'rocket',name:'Ракета',icon:'🚀',value:100,rare:'epic'},
+                {id:'unicorn',name:'Единорог',icon:'🦄',value:150,rare:'epic'},
+                {id:'dragon',name:'Дракон',icon:'🐉',value:200,rare:'epic'},
+                {id:'phoenix',name:'Феникс',icon:'🔥',value:300,rare:'legendary'},
+                {id:'golden',name:'Золотой',icon:'🏆',value:500,rare:'legendary'},
+                {id:'legendary',name:'Легендарный',icon:'⚡',value:1000,rare:'legendary'},
+                {id:'mythic',name:'Мифический',icon:'🌟',value:2500,rare:'legendary'},
+            ],
+            case4: [
+                {id:'golden',name:'Золотой',icon:'🏆',value:500,rare:'legendary'},
+                {id:'legendary',name:'Легендарный',icon:'⚡',value:1000,rare:'legendary'},
+                {id:'mythic',name:'Мифический',icon:'🌟',value:2500,rare:'legendary'},
+                {id:'godly',name:'Божественный',icon:'👼',value:5000,rare:'legendary'},
+                {id:'cosmic',name:'Космический',icon:'🌌',value:10000,rare:'legendary'},
+                {id:'void',name:'Войд',icon:'🕳️',value:25000,rare:'legendary'},
+                {id:'eternal',name:'Вечный',icon:'♾️',value:50000,rare:'legendary'},
+            ],
+            case5: [
+                {id:'legendary',name:'Легендарный',icon:'⚡',value:1000,rare:'legendary'},
+                {id:'mythic',name:'Мифический',icon:'🌟',value:2500,rare:'legendary'},
+                {id:'godly',name:'Божественный',icon:'👼',value:5000,rare:'legendary'},
+                {id:'cosmic',name:'Космический',icon:'🌌',value:10000,rare:'legendary'},
+                {id:'void',name:'Войд',icon:'🕳️',value:25000,rare:'legendary'},
+                {id:'eternal',name:'Вечный',icon:'♾️',value:50000,rare:'legendary'},
+                {id:'celestial',name:'Небесный',icon:'☀️',value:75000,rare:'legendary'},
+                {id:'divine',name:'Божественный',icon:'✨',value:100000,rare:'legendary'},
+            ]
         };
-        const cases = [{id:'case1',name:'Обычный',price:100,icon:'⏤'},{id:'case2',name:'Редкий',price:500,icon:'⏤'},{id:'case3',name:'Эпический',price:1000,icon:'⏤'},{id:'case4',name:'Легендарный',price:2500,icon:'⏤'},{id:'case5',name:'Мифический',price:5000,icon:'⏤'}];
+        const cases = [
+            {id:'case1',name:'Обычный',price:100,icon:'📦',rare:'common'},
+            {id:'case2',name:'Редкий',price:500,icon:'📦',rare:'uncommon'},
+            {id:'case3',name:'Эпический',price:1000,icon:'📦',rare:'rare'},
+            {id:'case4',name:'Легендарный',price:2500,icon:'📦',rare:'epic'},
+            {id:'case5',name:'Мифический',price:5000,icon:'📦',rare:'legendary'},
+        ];
 
         // ==================== ФУНКЦИИ ====================
         function updateUI(){document.getElementById('top-balance').textContent='⭐ '+balance;const pb=document.getElementById('profile-balance');if(pb)pb.textContent='⭐ '+balance;updateDailyBonusUI();renderAchievements();renderRating();renderHistory();}
@@ -252,26 +361,97 @@
         function loadData(){try{const raw=localStorage.getItem('casino_data');if(!raw)return;const data=JSON.parse(raw);if(data.balance!==undefined)balance=data.balance;if(data.inventory)inventory=data.inventory;if(data.usedPromoCodes)usedPromoCodes=data.usedPromoCodes;if(data.history)history=data.history;if(data.achievements)achievements=data.achievements;if(data.lastDailyBonus)lastDailyBonus=data.lastDailyBonus;if(data.wheelAngle!==undefined)wheelAngle=data.wheelAngle;updateUI();renderInventory();}catch(e){}}
         function addHistory(desc,amount){history.unshift({desc,amount,time:new Date().toLocaleString()});if(history.length>50)history.pop();saveData();renderHistory();}
         function renderHistory(){const c=document.getElementById('history-container');if(!history.length){c.innerHTML='<div style="color:#444;text-align:center;padding:6px;font-size:11px;">Пусто</div>';return;}let html='';history.slice(0,20).forEach(h=>{const sign=h.amount>0?'+':'';const cls=h.amount>0?'positive':'negative';html+=`<div class="history-item"><span class="time">${h.time}</span><span class="desc">${h.desc}</span><span class="amount ${cls}">${sign}${h.amount}⭐</span></div>`;});c.innerHTML=html;}
-        function updateDailyBonusUI(){const el=document.getElementById('daily-bonus');const today=new Date().toDateString();const last=new Date(lastDailyBonus).toDateString();if(last===today){el.classList.add('claimed');el.querySelector('.bonus-label').textContent='✅ Получен';}else{el.classList.remove('claimed');el.querySelector('.bonus-label').textContent='Нажми +50⭐';}}
-        function claimDailyBonus(){const today=new Date().toDateString();const last=new Date(lastDailyBonus).toDateString();if(last===today){showToast('✅ Уже получен','info');return;}balance+=50;lastDailyBonus=Date.now();addHistory('Ежедневный бонус',50);updateUI();saveData();updateDailyBonusUI();showToast('🎉 +50⭐','success');}
+
+        // ==================== ЕЖЕДНЕВНЫЙ БОНУС С ТАЙМЕРОМ ====================
+        function updateDailyBonusUI(){
+            const el=document.getElementById('daily-bonus');
+            const today=new Date().toDateString();
+            const last=new Date(lastDailyBonus).toDateString();
+            const timerEl=document.getElementById('bonus-timer');
+            if(last===today){
+                el.classList.add('claimed');
+                document.getElementById('bonus-label').textContent='✅ Бонус получен';
+                const nextDay=new Date(lastDailyBonus);
+                nextDay.setDate(nextDay.getDate()+1);
+                const now=Date.now();
+                const diff=nextDay.getTime()-now;
+                if(diff>0){
+                    const hours=Math.floor(diff/(1000*60*60));
+                    const mins=Math.floor((diff%(1000*60*60))/(1000*60));
+                    const secs=Math.floor((diff%(1000*60))/1000);
+                    timerEl.textContent=`⏱ ${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+                } else {
+                    timerEl.textContent='⏱ 00:00:00';
+                }
+            } else {
+                el.classList.remove('claimed');
+                document.getElementById('bonus-label').textContent='Нажми, чтобы получить +50⭐';
+                timerEl.textContent='';
+            }
+        }
+
+        function startBonusTimer(){
+            if(bonusTimerInterval) clearInterval(bonusTimerInterval);
+            bonusTimerInterval=setInterval(updateDailyBonusUI, 1000);
+        }
+
+        function claimDailyBonus(){
+            const today=new Date().toDateString();
+            const last=new Date(lastDailyBonus).toDateString();
+            if(last===today){showToast('✅ Уже получен сегодня','info');return;}
+            balance+=50;lastDailyBonus=Date.now();addHistory('Ежедневный бонус',50);updateUI();saveData();updateDailyBonusUI();showToast('🎉 +50⭐','success');
+        }
+
+        // ==================== ОСТАЛЬНЫЕ ФУНКЦИИ ====================
         function renderAchievements(){const grid=document.getElementById('achievements-grid');const list=[{id:'ach1',name:'Первый кейс',icon:'📦',check:()=>achievements.casesOpened>=1},{id:'ach2',name:'10 кейсов',icon:'📦',check:()=>achievements.casesOpened>=10},{id:'ach3',name:'50 кейсов',icon:'📦',check:()=>achievements.casesOpened>=50},{id:'ach4',name:'Продавец',icon:'💰',check:()=>achievements.itemsSold>=5},{id:'ach5',name:'Магнат',icon:'💰',check:()=>achievements.itemsSold>=20},{id:'ach6',name:'Апгрейд мастер',icon:'⚡',check:()=>achievements.upgradesDone>=5}];let html='';list.forEach(a=>{const unlocked=a.check();html+=`<div class="achievement-item ${unlocked?'unlocked':''}"><div class="icon">${a.icon}</div><div class="name">${a.name}</div><div class="status">${unlocked?'✅ Открыто':'🔒 Закрыто'}</div></div>`;});grid.innerHTML=html;}
         function renderRating(){const grid=document.getElementById('rating-grid');const players=[{name:'Игрок1',score:25000},{name:'Игрок2',score:18000},{name:'Игрок3',score:12000},{name:'Вы',score:balance}];players.sort((a,b)=>b.score-a.score);let html='';players.forEach((p,i)=>{const isYou=p.name==='Вы';html+=`<div class="rating-item" style="${isYou?'border-color:rgba(240,185,11,0.04);':''}"><span class="pos">#${i+1}</span><span class="name">${p.name}${isYou?' ⏤':''}</span><span class="score">${p.score}⭐</span></div>`;});grid.innerHTML=html;}
         function switchPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));const btn=document.querySelector(`.nav-item[data-page="${id}"]`);if(btn)btn.classList.add('active');if(id==='page-inventory')renderInventory();if(id==='page-profile'){updateRefLink();updateUI();}}
         function updateRefLink(){document.getElementById('ref-link').textContent=`https://t.me/MusorDrop_ROBOT?start=ref${123}`;}
         function switchToGame(game){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-games').classList.add('active');document.getElementById('game-title').textContent=game==='cases'?'Кейсы':'Апгрейд';const content=document.getElementById('game-content');if(game==='cases')renderCases(content);else renderUpgrade(content);}
 
-        // ==================== КЕЙСЫ ====================
-        function renderCases(content){let html='<div class="cases-grid">';cases.forEach(c=>{html+=`<div class="case-item" onclick="showPreview('${c.id}')"><div class="icon">${c.icon}</div><div class="name">${c.name}</div><div class="price">${c.price}⭐</div><div class="count">${caseItems[c.id].length}</div></div>`;});html+='</div>';document.getElementById('case-preview').style.display='none';content.innerHTML=html;}
-        function showPreview(id){const c=cases.find(x=>x.id===id);if(!c)return;currentCase=c;const preview=document.getElementById('case-preview');preview.style.display='block';document.getElementById('preview-title').textContent=`${c.name}`;const items=document.getElementById('preview-items');items.innerHTML='';caseItems[id].forEach(item=>{const div=document.createElement('div');div.className='preview-item';div.innerHTML=`<div class="icon">${item.icon}</div><div class="name">${item.name}</div><div class="price">${item.value}⭐</div>`;items.appendChild(div);});document.getElementById('preview-open').textContent=`Открыть за ${c.price}⭐`;document.getElementById('preview-open').onclick=()=>openCase(id);preview.scrollIntoView({behavior:'smooth'});}
+        // ==================== КЕЙСЫ (НОВЫЕ) ====================
+        function renderCases(content){
+            let html='<div class="cases-grid">';
+            cases.forEach(c=>{
+                html+=`<div class="case-item" onclick="showPreview('${c.id}')">
+                    <div class="case-rare ${c.rare}"></div>
+                    <div class="icon">${c.icon}</div>
+                    <div class="name">${c.name}</div>
+                    <div class="price">${c.price}⭐</div>
+                    <div class="count">${caseItems[c.id].length} предметов</div>
+                    <div class="chance">Шанс на выигрыш: <span>${Math.round(100/caseItems[c.id].length)}%</span></div>
+                </div>`;
+            });
+            html+='</div>';
+            document.getElementById('case-preview').style.display='none';
+            content.innerHTML=html;
+        }
+
+        function showPreview(id){
+            const c=cases.find(x=>x.id===id);if(!c)return;currentCase=c;
+            const preview=document.getElementById('case-preview');preview.style.display='block';
+            document.getElementById('preview-title').textContent=`${c.name}`;
+            document.getElementById('preview-price').textContent=`${c.price}⭐`;
+            const items=document.getElementById('preview-items');items.innerHTML='';
+            caseItems[id].forEach(item=>{
+                const div=document.createElement('div');
+                div.className='preview-item';
+                div.innerHTML=`<div class="icon">${item.icon}</div><div class="name">${item.name}</div><div class="price">${item.value}⭐</div>`;
+                items.appendChild(div);
+            });
+            document.getElementById('preview-open').textContent=`Открыть за ${c.price}⭐`;
+            document.getElementById('preview-open').onclick=()=>openCase(id);
+            preview.scrollIntoView({behavior:'smooth'});
+        }
         function closeCasePreview(){document.getElementById('case-preview').style.display='none';currentCase=null;}
         function getRandomItem(items){const price=currentCase?currentCase.price:100;const profitable=items.filter(i=>i.value>=price);if(Math.random()<0.35&&profitable.length)return profitable[Math.floor(Math.random()*profitable.length)];const weights=items.map(i=>{if(i.value<=50)return 100;if(i.value<=200)return 50;if(i.value<=500)return 20;if(i.value<=1000)return 8;if(i.value<=5000)return 2;if(i.value<=25000)return 0.5;return 0.1;});const total=weights.reduce((a,b)=>a+b,0);let r=Math.random()*total;for(let i=0;i<items.length;i++){r-=weights[i];if(r<=0)return items[i];}return items[items.length-1];}
         function openCase(id){const c=cases.find(x=>x.id===id);if(!c)return;if(balance<c.price){showToast('❌ Недостаточно звёзд','error');return;}balance-=c.price;achievements.casesOpened++;addHistory(`Открытие "${c.name}"`,-c.price);updateUI();saveData();closeCasePreview();const items=caseItems[id];const selected=getRandomItem(items);showAnimation(items,selected);}
         function showAnimation(allItems,selected){const overlay=document.getElementById('case-animation');const machine=document.getElementById('slot-machine');const resultDiv=document.getElementById('case-result');const resultIcon=document.getElementById('result-icon');const resultName=document.getElementById('result-name');overlay.classList.add('active');resultDiv.classList.remove('show');machine.innerHTML='';const total=15;const slotItems=[];for(let i=0;i<total;i++)slotItems.push(allItems[Math.floor(Math.random()*allItems.length)]);const winIndex=Math.floor(Math.random()*total);slotItems[winIndex]=selected;slotItems.forEach((item,idx)=>{const div=document.createElement('div');div.className='slot-item';div.dataset.index=idx;div.innerHTML=`<div class="icon">${item.icon}</div><div class="name">${item.name}</div><div class="slot-price">${item.value}⭐</div>`;machine.appendChild(div);setTimeout(()=>div.classList.add('show'),idx*30);});const items=document.querySelectorAll('.slot-item');let highlight=0,dir=1;const interval=setInterval(()=>{items.forEach(el=>el.classList.remove('winner'));if(items.length){items[highlight%items.length].classList.add('winner');highlight+=dir;if(highlight>=items.length-1||highlight<=0)dir*=-1;}},120);setTimeout(()=>{clearInterval(interval);let slowIdx=highlight,slowDir=dir;const slowInt=setInterval(()=>{items.forEach(el=>el.classList.remove('winner'));if(items.length){items[slowIdx%items.length].classList.add('winner');slowIdx+=slowDir;if(slowIdx>=items.length-1||slowIdx<=0)slowDir*=-1;}},250);setTimeout(()=>{clearInterval(slowInt);items.forEach(el=>el.classList.remove('winner'));const winEl=document.querySelector(`.slot-item[data-index="${winIndex}"]`);if(winEl)winEl.classList.add('winner');inventory.push(selected);addHistory(`Выиграл "${selected.name}"`,selected.value);saveData();resultIcon.textContent=selected.icon;resultName.textContent=selected.name;resultDiv.classList.add('show');showToast(`🎉 ${selected.name}! (${selected.value}⭐)`,'success');renderInventory();},600);},2000);}
         function closeCaseAnimation(){document.getElementById('case-animation').classList.remove('active');}
 
-        // ==================== НОВЫЙ АПГРЕЙД (как в симуляторах) ====================
-        function renderUpgrade(content) {
-            content.innerHTML = `
+        // ==================== АПГРЕЙД ====================
+        function renderUpgrade(content){
+            content.innerHTML=`
                 <div class="upgrade-container">
                     <div class="upgrade-title">Апгрейд</div>
                     <div class="wheel-wrapper">
@@ -299,156 +479,15 @@
                 </div>
             `;
             drawWheel(wheelAngle);
-            // Очищаем результат при перерисовке
-            const resultEl = document.getElementById('upgrade-result');
-            if (resultEl) {
-                resultEl.className = 'upgrade-result';
-                resultEl.textContent = '';
-            }
+            const resultEl=document.getElementById('upgrade-result');if(resultEl){resultEl.className='upgrade-result';resultEl.textContent='';}
         }
-
-        function getWinChance(){ return Math.max(10, 60 - multiplier * 5); }
-
-        function setMult(m){
-            multiplier = m;
-            document.querySelectorAll('.multipliers .btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.multipliers .btn').forEach(b => { if (b.textContent === `x${m}`) b.classList.add('active'); });
-            const info = document.getElementById('upgrade-info');
-            if (info) info.innerHTML = `<span class="green">🟢 Победа: ${getWinChance()}%</span> | <span class="red">🔴 Поражение: ${100 - getWinChance()}%</span>`;
-            drawWheel(wheelAngle);
-            // Скрываем результат при смене множителя
-            const resultEl = document.getElementById('upgrade-result');
-            if (resultEl) {
-                resultEl.className = 'upgrade-result';
-                resultEl.textContent = '';
-            }
-            showToast(`Множитель: x${m}`, 'info', 1200);
-        }
-
-        function drawWheel(angle = 0){
-            const canvas = document.getElementById('wheelCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = 200, h = 200, cx = 100, cy = 100, r = 90;
-            ctx.clearRect(0, 0, w, h);
-            const win = getWinChance();
-            const lose = 100 - win;
-            ctx.beginPath(); ctx.moveTo(cx, cy);
-            ctx.arc(cx, cy, r, -Math.PI/2 + angle, -Math.PI/2 + (win/100) * 2 * Math.PI + angle);
-            ctx.closePath(); ctx.fillStyle = '#2ecc71'; ctx.fill();
-            ctx.beginPath(); ctx.moveTo(cx, cy);
-            ctx.arc(cx, cy, r, -Math.PI/2 + (win/100) * 2 * Math.PI + angle, -Math.PI/2 + 2 * Math.PI + angle);
-            ctx.closePath(); ctx.fillStyle = '#e74c3c'; ctx.fill();
-            ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-            ctx.strokeStyle = 'rgba(240,185,11,0.04)'; ctx.lineWidth = 1; ctx.stroke();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-            const mid = -Math.PI/2 + angle + (win/100) * Math.PI;
-            ctx.fillText(`${win}%`, cx + r * 0.6 * Math.cos(mid), cy + r * 0.6 * Math.sin(mid));
-            const lAng = -Math.PI/2 + angle + (win/100) * 2 * Math.PI + (lose/100) * Math.PI;
-            ctx.fillText(`${lose}%`, cx + r * 0.6 * Math.cos(lAng), cy + r * 0.6 * Math.sin(lAng));
-        }
-
-        function openSkinSelect(){
-            if (!inventory.length) { showToast('❌ Нет предметов', 'error'); return; }
-            const overlay = document.getElementById('skin-select-overlay');
-            const grid = document.getElementById('skin-select-grid');
-            grid.innerHTML = '';
-            inventory.forEach((item, idx) => {
-                const div = document.createElement('div');
-                div.className = 'skin-select-item';
-                div.innerHTML = `<div class="icon">${item.icon}</div><div class="name">${item.name}</div>`;
-                div.onclick = () => {
-                    selectedSkin = item;
-                    document.getElementById('selected-skin-info').innerHTML = `Выбран: <span>${item.name}</span>`;
-                    closeSkinSelect();
-                    // Скрываем старый результат
-                    const resultEl = document.getElementById('upgrade-result');
-                    if (resultEl) { resultEl.className = 'upgrade-result'; resultEl.textContent = ''; }
-                    showToast(`✅ Выбран: ${item.name}`, 'success');
-                };
-                grid.appendChild(div);
-            });
-            overlay.classList.add('active');
-        }
-
-        function closeSkinSelect(){ document.getElementById('skin-select-overlay').classList.remove('active'); }
-
-        function spinUpgrade(){
-            if (!selectedSkin) { showToast('❌ Выберите скин', 'error'); return; }
-            if (isSpinning) return;
-            isSpinning = true;
-            const canvas = document.getElementById('wheelCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = 200, h = 200, cx = 100, cy = 100, r = 90;
-            const win = getWinChance();
-            const isWin = Math.random() * 100 < win;
-            const arrow = document.getElementById('wheelArrow');
-            const targetAngle = isWin ? 0 : Math.PI;
-            const totalRot = 4 * Math.PI + targetAngle;
-            const duration = 2000 + Math.random() * 800;
-            const start = Date.now();
-            const startAng = wheelAngle;
-            const resultEl = document.getElementById('upgrade-result');
-            // Скрываем предыдущий результат
-            if (resultEl) { resultEl.className = 'upgrade-result'; resultEl.textContent = ''; }
-
-            function anim(){
-                const elapsed = Date.now() - start;
-                const progress = Math.min(elapsed / duration, 1);
-                const ease = 1 - Math.pow(1 - progress, 3);
-                const current = startAng + totalRot * ease;
-                arrow.style.transform = `translateX(-50%) rotate(${current}rad)`;
-                ctx.clearRect(0, 0, w, h);
-                const winNow = getWinChance();
-                const loseNow = 100 - winNow;
-                ctx.beginPath(); ctx.moveTo(cx, cy);
-                ctx.arc(cx, cy, r, -Math.PI/2 + current, -Math.PI/2 + (winNow/100) * 2 * Math.PI + current);
-                ctx.closePath(); ctx.fillStyle = '#2ecc71'; ctx.fill();
-                ctx.beginPath(); ctx.moveTo(cx, cy);
-                ctx.arc(cx, cy, r, -Math.PI/2 + (winNow/100) * 2 * Math.PI + current, -Math.PI/2 + 2 * Math.PI + current);
-                ctx.closePath(); ctx.fillStyle = '#e74c3c'; ctx.fill();
-                ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-                ctx.strokeStyle = 'rgba(240,185,11,0.04)'; ctx.lineWidth = 1; ctx.stroke();
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-                const mid = -Math.PI/2 + current + (winNow/100) * Math.PI;
-                ctx.fillText(`${winNow}%`, cx + r * 0.6 * Math.cos(mid), cy + r * 0.6 * Math.sin(mid));
-                const lAng = -Math.PI/2 + current + (winNow/100) * 2 * Math.PI + ((100-winNow)/100) * Math.PI;
-                ctx.fillText(`${loseNow}%`, cx + r * 0.6 * Math.cos(lAng), cy + r * 0.6 * Math.sin(lAng));
-                if (progress < 1) { requestAnimationFrame(anim); } else {
-                    wheelAngle = current;
-                    isSpinning = false;
-                    if (isWin) {
-                        const upgraded = { ...selectedSkin, value: Math.round(selectedSkin.value * multiplier) };
-                        inventory = inventory.filter(i => i.id !== selectedSkin.id);
-                        inventory.push(upgraded);
-                        achievements.upgradesDone++;
-                        addHistory(`Апгрейд "${selectedSkin.name}" +${multiplier}x`, upgraded.value - selectedSkin.value);
-                        if (resultEl) {
-                            resultEl.className = 'upgrade-result success';
-                            resultEl.textContent = `🎉 Успех! +${multiplier}x (${upgraded.value}⭐)`;
-                        }
-                        showToast(`🎉 Апгрейд успешен! +${multiplier}x`, 'success');
-                    } else {
-                        const oldValue = selectedSkin.value;
-                        inventory = inventory.filter(i => i.id !== selectedSkin.id);
-                        addHistory(`Апгрейд "${selectedSkin.name}" сгорел`, -oldValue);
-                        if (resultEl) {
-                            resultEl.className = 'upgrade-result fail';
-                            resultEl.textContent = `💥 Скин сгорел (-${oldValue}⭐)`;
-                        }
-                        showToast('💥 Скин сгорел', 'error');
-                    }
-                    selectedSkin = null;
-                    document.getElementById('selected-skin-info').innerHTML = 'Выбран: <span>Нет</span>';
-                    saveData();
-                    renderInventory();
-                    // Перерисовываем апгрейд, чтобы сбросить состояние
-                    renderUpgrade(document.getElementById('game-content'));
-                }
-            }
-            anim();
-        }
+        function getWinChance(){return Math.max(10,60-multiplier*5);}
+        function setMult(m){multiplier=m;document.querySelectorAll('.multipliers .btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.multipliers .btn').forEach(b=>{if(b.textContent===`x${m}`)b.classList.add('active');});const info=document.getElementById('upgrade-info');if(info)info.innerHTML=`<span class="green">🟢 Победа: ${getWinChance()}%</span> | <span class="red">🔴 Поражение: ${100-getWinChance()}%</span>`;drawWheel(wheelAngle);const resultEl=document.getElementById('upgrade-result');if(resultEl){resultEl.className='upgrade-result';resultEl.textContent='';}showToast(`Множитель: x${m}`,'info',1200);}
+        function drawWheel(angle=0){const canvas=document.getElementById('wheelCanvas');if(!canvas)return;const ctx=canvas.getContext('2d');const w=200,h=200,cx=100,cy=100,r=90;ctx.clearRect(0,0,w,h);const win=getWinChance();const lose=100-win;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+angle,-Math.PI/2+(win/100)*2*Math.PI+angle);ctx.closePath();ctx.fillStyle='#2ecc71';ctx.fill();ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+(win/100)*2*Math.PI+angle,-Math.PI/2+2*Math.PI+angle);ctx.closePath();ctx.fillStyle='#e74c3c';ctx.fill();ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.strokeStyle='rgba(240,185,11,0.04)';ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const mid=-Math.PI/2+angle+(win/100)*Math.PI;ctx.fillText(`${win}%`,cx+r*0.6*Math.cos(mid),cy+r*0.6*Math.sin(mid));const lAng=-Math.PI/2+angle+(win/100)*2*Math.PI+(lose/100)*Math.PI;ctx.fillText(`${lose}%`,cx+r*0.6*Math.cos(lAng),cy+r*0.6*Math.sin(lAng));}
+        function openSkinSelect(){if(!inventory.length){showToast('❌ Нет предметов','error');return;}const overlay=document.getElementById('skin-select-overlay');const grid=document.getElementById('skin-select-grid');grid.innerHTML='';inventory.forEach((item,idx)=>{const div=document.createElement('div');div.className='skin-select-item';div.innerHTML=`<div class="icon">${item.icon}</div><div class="name">${item.name}</div>`;div.onclick=()=>{selectedSkin=item;document.getElementById('selected-skin-info').innerHTML=`Выбран: <span>${item.name}</span>`;closeSkinSelect();const resultEl=document.getElementById('upgrade-result');if(resultEl){resultEl.className='upgrade-result';resultEl.textContent='';}showToast(`✅ Выбран: ${item.name}`,'success');};grid.appendChild(div);});overlay.classList.add('active');}
+        function closeSkinSelect(){document.getElementById('skin-select-overlay').classList.remove('active');}
+        function spinUpgrade(){if(!selectedSkin){showToast('❌ Выберите скин','error');return;}if(isSpinning)return;isSpinning=true;const canvas=document.getElementById('wheelCanvas');if(!canvas)return;const ctx=canvas.getContext('2d');const w=200,h=200,cx=100,cy=100,r=90;const win=getWinChance();const isWin=Math.random()*100<win;const arrow=document.getElementById('wheelArrow');const targetAngle=isWin?0:Math.PI;const totalRot=4*Math.PI+targetAngle;const duration=2000+Math.random()*800;const start=Date.now();const startAng=wheelAngle;const resultEl=document.getElementById('upgrade-result');if(resultEl){resultEl.className='upgrade-result';resultEl.textContent='';}
+        function anim(){const elapsed=Date.now()-start;const progress=Math.min(elapsed/duration,1);const ease=1-Math.pow(1-progress,3);const current=startAng+totalRot*ease;arrow.style.transform=`translateX(-50%) rotate(${current}rad)`;ctx.clearRect(0,0,w,h);const winNow=getWinChance();const loseNow=100-winNow;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+current,-Math.PI/2+(winNow/100)*2*Math.PI+current);ctx.closePath();ctx.fillStyle='#2ecc71';ctx.fill();ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+(winNow/100)*2*Math.PI+current,-Math.PI/2+2*Math.PI+current);ctx.closePath();ctx.fillStyle='#e74c3c';ctx.fill();ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.strokeStyle='rgba(240,185,11,0.04)';ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const mid=-Math.PI/2+current+(winNow/100)*Math.PI;ctx.fillText(`${winNow}%`,cx+r*0.6*Math.cos(mid),cy+r*0.6*Math.sin(mid));const lAng=-Math.PI/2+current+(winNow/100)*2*Math.PI+((100-winNow)/100)*Math.PI;ctx.fillText(`${loseNow}%`,cx+r*0.6*Math.cos(lAng),cy+r*0.6*Math.sin(lAng));if(progress<1){requestAnimationFrame(anim);}else{wheelAngle=current;isSpinning=false;if(isWin){const upgraded={...selectedSkin,value:Math.round(selectedSkin.value*multiplier)};inventory=inventory.filter(i=>i.id!==selectedSkin.id);inventory.push(upgraded);achievements.upgradesDone++;addHistory(`Апгрейд "${selectedSkin.name}" +${multiplier}x`,upgraded.value-selectedSkin.value);if(resultEl){resultEl.className='upgrade-result success';resultEl.textContent=`🎉 Успех! +${multiplier}x (${upgraded.value}⭐)`;}showToast(`🎉 Апгрейд успешен! +${multiplier}x`,'success');}else{const oldValue=selectedSkin.value;inventory=inventory.filter(i=>i.id!==selectedSkin.id);addHistory(`Апгрейд "${selectedSkin.name}" сгорел`,-oldValue);if(resultEl){resultEl.className='upgrade-result fail';resultEl.textContent=`💥 Скин сгорел (-${oldValue}⭐)`;}showToast('💥 Скин сгорел','error');}selectedSkin=null;document.getElementById('selected-skin-info').innerHTML='Выбран: <span>Нет</span>';saveData();renderInventory();renderUpgrade(document.getElementById('game-content'));}}anim();}
 
         // ==================== ИНВЕНТАРЬ ====================
         function renderInventory(){const container=document.getElementById('inventory-content');if(!inventory.length){container.innerHTML=`<div class="empty-inventory"><div class="icon">⏤</div><h2>Пусто</h2><p style="color:#444;font-size:11px;margin-top:2px;">Открой кейс</p></div>`;return;}let html='<div class="inventory-grid">';inventory.forEach((item,idx)=>{html+=`<div class="inv-item"><div class="icon">${item.icon}</div><div class="name">${item.name}</div><div class="value">${item.value}⭐</div><button class="sell-btn" onclick="sellItem(${idx})">Продать</button></div>`;});html+='</div>';container.innerHTML=html;}
@@ -471,6 +510,7 @@
         loadData();
         updateRefLink();
         switchPage('page-menu');
+        startBonusTimer();
     </script>
 </body>
 </html>
