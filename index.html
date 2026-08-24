@@ -2,74 +2,75 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Круг</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Крутящийся круг</title>
+
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{
-            background:#888; /* серый фон */
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            min-height:100vh;
-            overflow:hidden;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        /* ===== КРУГ (СИНИЙ, КАК НА СКРИНЕ) ===== */
-        .circle-wrapper{
-            position:relative;
-            width:200px;
-            height:200px;
-            border-radius:50%;
-            background:rgba(30,80,160,0.2); /* лёгкий синий фон */
-            border:3px solid rgba(30,80,160,0.5); /* синяя обводка */
-            box-shadow:0 0 30px rgba(30,80,160,0.1);
-            animation:spin 4s linear infinite;
-            overflow:hidden;
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #181818;
         }
-        
-        .circle{
-            width:100%;
-            height:100%;
-            border-radius:50%;
-            background:rgba(30,80,160,0.05); /* едва заметный синий */
+
+        .circle {
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+
+            border: 10px solid transparent;
+
+            background:
+                linear-gradient(#181818, #181818) padding-box,
+                conic-gradient(
+                    from 30deg,
+                    transparent 0deg 35deg,
+                    #1473e6 35deg 330deg,
+                    transparent 330deg 360deg
+                ) border-box;
+
+            box-shadow:
+                0 0 8px rgba(20, 115, 230, 0.8),
+                0 0 20px rgba(20, 115, 230, 0.4);
+
+            animation: rotate 2s linear infinite;
         }
-        
-        /* ===== ДЫРКА (КАК НА СКРИНЕ) ===== */
-        .hole{
-            position:absolute;
-            bottom:-2px;
-            left:50%;
-            transform:translateX(-50%);
-            width:28px;
-            height:8px;
-            background:#0a0a0f;
-            border-radius:0 0 50% 50% / 0 0 100% 100%;
-            border-bottom:2px solid rgba(30,80,160,0.1);
-            box-shadow:inset 0 -4px 8px rgba(0,0,0,0.6);
-            z-index:2;
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
-        .hole::before{
-            content:'';
-            position:absolute;
-            top:-2px;
-            left:-4px;
-            right:-4px;
-            height:6px;
-            background:#0a0a0f;
-            border-radius:50%;
-        }
-        
-        @keyframes spin{
-            0%{transform:rotate(0deg)}
-            100%{transform:rotate(360deg)}
+
+        @media (max-width: 600px) {
+            .circle {
+                width: 80vw;
+                height: 80vw;
+                border-width: 8px;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="circle-wrapper">
-        <div class="circle"></div>
-        <div class="hole"></div>
-    </div>
+
+    <div class="circle"></div>
+
 </body>
 </html>
