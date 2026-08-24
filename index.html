@@ -21,9 +21,6 @@
         .top-bar{background:rgba(13,13,20,0.6);backdrop-filter:blur(20px);padding:10px 16px;border-bottom:1px solid rgba(240,185,11,0.04);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50}
         .top-bar .back-btn{background:none;border:none;color:#888;font-size:14px;cursor:pointer;font-weight:400;padding:4px 8px;transition:color .2s}
         .top-bar .back-btn:active{color:#f0b90b}
-        .top-bar .online{color:#555;font-size:12px;display:flex;align-items:center;gap:6px}
-        .top-bar .online .dot{display:inline-block;width:6px;height:6px;background:#2ecc71;border-radius:50%;animation:pulse-dot 1.5s ease-in-out infinite}
-        @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.2}}
         .top-bar .balance{color:#f0b90b;font-weight:600;font-size:14px;background:rgba(240,185,11,0.04);padding:4px 12px;border-radius:30px;border:1px solid rgba(240,185,11,0.04);cursor:pointer;transition:all .15s}
         .top-bar .balance:active{transform:scale(0.95)}
         
@@ -31,14 +28,7 @@
         .page.active{display:flex}
         @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
         
-        .luck-section{display:flex;gap:6px;margin-bottom:10px}
-        .luck-card{flex:1;background:rgba(26,26,36,0.3);border-radius:12px;padding:8px 10px;border:1px solid rgba(255,255,255,0.02);text-align:center}
-        .luck-card .label{color:#555;font-size:8px;text-transform:uppercase;letter-spacing:0.5px}
-        .luck-card .name{color:#f0b90b;font-size:14px;font-weight:600;margin-top:1px}
-        .luck-card .value{color:#2ecc71;font-size:12px;font-weight:500}
-        .luck-card .value .fire{color:#ff6b35}
-        
-        /* ===== ШАРИК — ТОЧНО КАК НА IMG_0724 ===== */
+        /* ===== ШАРИК — КАК НА IMG_0737 (СИНИЙ КРУГ) ===== */
         .ball-escape-container{display:flex;flex-direction:column;align-items:center;gap:6px;max-width:400px;margin:0 auto;width:100%}
         
         .ball-escape-header{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:3px 10px;background:rgba(13,13,20,0.4);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
@@ -47,17 +37,17 @@
 
         .ball-escape-map{position:relative;width:320px;height:340px;background:rgba(13,13,20,0.4);border-radius:20px;border:1px solid rgba(255,255,255,0.02);overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.3)}
         
-        /* ===== КРУГ — КАК НА IMG_0724 (ТЁМНЫЙ, БЕЗ ОБВОДКИ) ===== */
-        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(10,10,18,0.9);border:none;box-shadow:inset 0 0 30px rgba(0,0,0,0.8)}
+        /* ===== СИНИЙ КРУГ (КАК НА IMG_0737) ===== */
+        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(30,60,114,0.15);border:3px solid rgba(52,102,184,0.3);box-shadow:0 0 40px rgba(52,102,184,0.05), inset 0 0 60px rgba(52,102,184,0.05)}
         .ball-escape-rotation-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;transition:transform 0.05s linear;will-change:transform}
-        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:rgba(8,8,14,0.95)}
+        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, rgba(52,102,184,0.05), rgba(20,40,80,0.1))}
         
-        /* ===== ДЫРКА — УЗКАЯ, ЧЁРНАЯ, ЕДВА ЗАМЕТНАЯ ===== */
-        .ball-escape-hole{position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:24px;height:6px;background:#0a0a0f;z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:1px solid rgba(255,255,255,0.01);box-shadow:inset 0 -4px 8px rgba(0,0,0,0.9)}
-        .ball-escape-hole::before{content:'';position:absolute;top:-2px;left:-4px;right:-4px;height:5px;background:#0a0a0f;border-radius:50%}
+        /* ===== ДЫРКА ===== */
+        .ball-escape-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:28px;height:8px;background:rgba(13,13,20,0.7);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:2px solid rgba(52,102,184,0.1)}
+        .ball-escape-hole::before{content:'';position:absolute;top:-2px;left:-4px;right:-4px;height:6px;background:rgba(13,13,20,0.5);border-radius:50%}
 
-        /* ===== ШАРИК — МАЛЕНЬКИЙ, ЖЁЛТЫЙ С БЕЛЫМ БЛИКОМ ===== */
-        .ball-escape-ball{position:absolute;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #f0b90b);box-shadow:0 0 16px rgba(240,185,11,0.12), 0 2px 6px rgba(0,0,0,0.5);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
+        /* ===== ШАРИК ===== */
+        .ball-escape-ball{position:absolute;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #f0b90b);box-shadow:0 0 20px rgba(240,185,11,0.15), 0 2px 6px rgba(0,0,0,0.5);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
         .ball-escape-hit{color:#f0b90b;font-size:11px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .9s ease forwards;font-weight:700;text-shadow:0 0 20px rgba(240,185,11,0.1)}
         @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(1.1)}}
 
@@ -109,7 +99,7 @@
         .toast.error{border-color:rgba(231,76,60,0.05);color:#e74c3c}
         .toast.success{border-color:rgba(46,204,113,0.05);color:#2ecc71}
         
-        @media(max-width:420px){.ball-escape-map{width:280px;height:300px}.ball-escape-circle-wrapper{width:170px;height:170px}.ball-escape-bet-row,.ball-escape-modes,.ball-escape-nav,.ball-escape-info{max-width:280px}.ball-escape-header{max-width:280px;flex-wrap:wrap;gap:4px}.luck-card .name{font-size:12px}}
+        @media(max-width:420px){.ball-escape-map{width:280px;height:300px}.ball-escape-circle-wrapper{width:170px;height:170px}.ball-escape-bet-row,.ball-escape-modes,.ball-escape-nav,.ball-escape-info{max-width:280px}.ball-escape-header{max-width:280px;flex-wrap:wrap;gap:4px}}
     </style>
 </head>
 <body>
@@ -123,7 +113,6 @@
 
     <div class="top-bar">
         <button class="back-btn" id="backBtn" onclick="goBack()">← Назад</button>
-        <span class="online"><span class="dot"></span> <span id="onlineCount">8</span> онлайн</span>
         <span class="balance" id="top-balance" onclick="openDeposit()">0.03 GRAM</span>
     </div>
 
@@ -190,10 +179,6 @@
         function renderBall(content) {
             const hash = 'd0d5' + Math.random().toString(36).substring(2, 6) + 'af51';
             content.innerHTML = `
-                <div class="luck-section">
-                    <div class="luck-card"><div class="label">Удача недели</div><div class="name">VLAKOS</div><div class="value">+3.8 <span class="fire">🔥</span></div></div>
-                    <div class="luck-card"><div class="label">Удача дня</div><div class="name">VLAKOS</div><div class="value">+3.8 <span class="fire">🔥</span></div></div>
-                </div>
                 <div class="ball-escape-container">
                     <div class="ball-escape-header">
                         <span class="multiplier">Каждый отскок: +<span id="hitMultiplier">0.15</span>x</span>
@@ -319,7 +304,7 @@
             let x = centerX, y = centerY - 15;
             let dx = (Math.random() - 0.5) * 3.0;
             let dy = -0.3;
-            const radius = 6;
+            const radius = 7;
             const GRAVITY = 0.25, BOUNCE = 0.82;
 
             if (ballInterval) clearInterval(ballInterval);
@@ -339,7 +324,7 @@
 
                 const holeX = circleRect.width / 2, holeY = circleRect.height;
                 const distToHole = Math.sqrt((x - holeX) ** 2 + (y - holeY) ** 2);
-                if (distToHole < 22 && y > circleRect.height - 24) { dy *= -0.3; y = circleRect.height - 24; hitWall = true; }
+                if (distToHole < 24 && y > circleRect.height - 26) { dy *= -0.4; y = circleRect.height - 26; hitWall = true; }
 
                 if (hitWall && Date.now() - lastHitTime > 150) {
                     ballHits++;
@@ -360,7 +345,7 @@
                 ball.style.top = y + 'px';
                 ball.style.left = x + 'px';
 
-                const isNearHole = y > circleRect.height - 14 && Math.abs(x - holeX) < 16;
+                const isNearHole = y > circleRect.height - 16 && Math.abs(x - holeX) < 18;
                 const isFallingDown = dy > 0.5;
                 if (isNearHole && isFallingDown && elapsed > 1500 && !ballIsWaitingForExit) {
                     ballIsWaitingForExit = true;
