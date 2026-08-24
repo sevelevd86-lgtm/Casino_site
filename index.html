@@ -47,18 +47,18 @@
 
         .ball-escape-map{position:relative;width:320px;height:340px;background:rgba(13,13,20,0.4);border-radius:20px;border:1px solid rgba(255,255,255,0.02);overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.3)}
         
-        /* ===== КРУГ — КАК НА СКРИНЕ ===== */
-        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(20,20,30,0.6);border:2px solid rgba(255,255,255,0.04);box-shadow:none}
+        /* ===== КРУГ — КАК НА IMG_0724 (ТЁМНЫЙ, БЕЗ ОБВОДКИ) ===== */
+        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(10,10,18,0.9);border:none;box-shadow:inset 0 0 30px rgba(0,0,0,0.8)}
         .ball-escape-rotation-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;transition:transform 0.05s linear;will-change:transform}
-        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:rgba(10,10,18,0.5)}
+        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:rgba(8,8,14,0.95)}
         
-        /* ===== ДЫРКА (разрыв) — УЗКАЯ, ЧЁРНАЯ, ВНИЗУ ===== */
-        .ball-escape-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:28px;height:8px;background:#0a0a0f;z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:2px solid rgba(255,255,255,0.02);box-shadow:inset 0 -4px 8px rgba(0,0,0,0.8)}
-        .ball-escape-hole::before{content:'';position:absolute;top:-2px;left:-4px;right:-4px;height:6px;background:#0a0a0f;border-radius:50%}
+        /* ===== ДЫРКА — УЗКАЯ, ЧЁРНАЯ, ЕДВА ЗАМЕТНАЯ ===== */
+        .ball-escape-hole{position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:24px;height:6px;background:#0a0a0f;z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:1px solid rgba(255,255,255,0.01);box-shadow:inset 0 -4px 8px rgba(0,0,0,0.9)}
+        .ball-escape-hole::before{content:'';position:absolute;top:-2px;left:-4px;right:-4px;height:5px;background:#0a0a0f;border-radius:50%}
 
-        /* ===== ШАРИК — МАЛЕНЬКИЙ, ЯРКО-ЖЁЛТЫЙ ===== */
-        .ball-escape-ball{position:absolute;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #f0b90b);box-shadow:0 0 20px rgba(240,185,11,0.15), 0 2px 8px rgba(0,0,0,0.5);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
-        .ball-escape-hit{color:#f0b90b;font-size:11px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .9s ease forwards;font-weight:700;text-shadow:0 0 20px rgba(240,185,11,0.15)}
+        /* ===== ШАРИК — МАЛЕНЬКИЙ, ЖЁЛТЫЙ С БЕЛЫМ БЛИКОМ ===== */
+        .ball-escape-ball{position:absolute;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #f0b90b);box-shadow:0 0 16px rgba(240,185,11,0.12), 0 2px 6px rgba(0,0,0,0.5);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
+        .ball-escape-hit{color:#f0b90b;font-size:11px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .9s ease forwards;font-weight:700;text-shadow:0 0 20px rgba(240,185,11,0.1)}
         @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(1.1)}}
 
         .ball-escape-zones{position:absolute;bottom:0;left:0;right:0;height:40px;display:flex;border-radius:0 0 20px 20px;overflow:hidden;border-top:1px solid rgba(255,255,255,0.02)}
@@ -319,7 +319,7 @@
             let x = centerX, y = centerY - 15;
             let dx = (Math.random() - 0.5) * 3.0;
             let dy = -0.3;
-            const radius = 7;
+            const radius = 6;
             const GRAVITY = 0.25, BOUNCE = 0.82;
 
             if (ballInterval) clearInterval(ballInterval);
@@ -339,7 +339,7 @@
 
                 const holeX = circleRect.width / 2, holeY = circleRect.height;
                 const distToHole = Math.sqrt((x - holeX) ** 2 + (y - holeY) ** 2);
-                if (distToHole < 25 && y > circleRect.height - 28) { dy *= -0.4; y = circleRect.height - 28; hitWall = true; }
+                if (distToHole < 22 && y > circleRect.height - 24) { dy *= -0.3; y = circleRect.height - 24; hitWall = true; }
 
                 if (hitWall && Date.now() - lastHitTime > 150) {
                     ballHits++;
@@ -360,7 +360,7 @@
                 ball.style.top = y + 'px';
                 ball.style.left = x + 'px';
 
-                const isNearHole = y > circleRect.height - 16 && Math.abs(x - holeX) < 18;
+                const isNearHole = y > circleRect.height - 14 && Math.abs(x - holeX) < 16;
                 const isFallingDown = dy > 0.5;
                 if (isNearHole && isFallingDown && elapsed > 1500 && !ballIsWaitingForExit) {
                     ballIsWaitingForExit = true;
