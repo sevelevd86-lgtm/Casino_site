@@ -5,76 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Шарик в круге</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100vw; height: 100vh; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
             background: #181818;
         }
-
         .circle-wrapper {
             position: relative;
-            width: 500px;
-            height: 500px;
+            width: 500px; height: 500px;
             border-radius: 50%;
-            border: 10px solid transparent;
-            background:
-                linear-gradient(#181818, #181818) padding-box,
-                conic-gradient(
-                    from 30deg,
-                    transparent 0deg 35deg,
-                    #1473e6 35deg 330deg,
-                    transparent 330deg 360deg
-                ) border-box;
-            box-shadow:
-                0 0 8px rgba(20, 115, 230, 0.8),
-                0 0 20px rgba(20, 115, 230, 0.4);
+            /* === ТВЁРДАЯ ВИДИМАЯ ГРАНИЦА === */
+            border: 4px solid #1473e6;
+            background: #181818;
+            box-shadow: 0 0 20px rgba(20, 115, 230, 0.3);
             animation: rotate 2s linear infinite;
         }
-
+        /* ===== ДЫРКА ===== */
+        .hole {
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px;
+            height: 8px;
+            background: #181818;
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            border-bottom: 2px solid #1473e6;
+            z-index: 3;
+        }
         .ball {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border-radius: 50%;
             background: radial-gradient(circle at 35% 30%, #fff, #f0b90b);
             box-shadow: 0 0 20px rgba(240, 185, 11, 0.3);
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             will-change: transform;
             pointer-events: none;
             z-index: 2;
             animation: none;
         }
-
         @keyframes rotate {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-
         @media (max-width: 600px) {
-            .circle-wrapper {
-                width: 80vw;
-                height: 80vw;
-                border-width: 8px;
-            }
+            .circle-wrapper { width: 80vw; height: 80vw; border-width: 3px; }
         }
     </style>
 </head>
 <body>
-
     <div class="circle-wrapper" id="circleWrapper">
         <div class="ball" id="ball"></div>
+        <div class="hole"></div>
     </div>
 
     <script>
@@ -96,37 +81,25 @@
         const MAX_BOUNCE_HEIGHT = radius * 0.5;
 
         function updateBall() {
-            // Гравитация
             dy += GRAVITY;
-
-            // Движение
             x += dx;
             y += dy;
 
-            // Расстояние от центра
             const dist = Math.sqrt((x - radius) ** 2 + (y - radius) ** 2);
-            const maxDist = radius - ballRadius - 2;
+            const maxDist = radius - ballRadius - 2; // физическая граница = видимой
 
-            // === ЖЁСТКОЕ СТОЛКНОВЕНИЕ СО СТЕНКОЙ ===
             if (dist > maxDist) {
-                // Вектор нормали от центра к шарику
                 const nx = (x - radius) / dist;
                 const ny = (y - radius) / dist;
 
-                // Жёстко вталкиваем шарик внутрь (чтобы не пробивал)
                 x = radius + nx * maxDist;
                 y = radius + ny * maxDist;
 
-                // Нормальная составляющая скорости
                 const vn = dx * nx + dy * ny;
-
-                // Если шарик движется наружу — отражаем
                 if (vn > 0) {
-                    // Полное отражение с учётом упругости
                     dx -= 2 * vn * nx * BOUNCE;
                     dy -= 2 * vn * ny * BOUNCE;
 
-                    // Небольшое демпфирование, чтобы не улетел
                     const speed = Math.sqrt(dx * dx + dy * dy);
                     if (speed > 0) {
                         const vy_abs = Math.abs(dy);
@@ -139,27 +112,13 @@
                 }
             }
 
-            // Дополнительная проверка: если шарик всё же оказался снаружи (защита)
-            const dist2 = Math.sqrt((x - radius) ** 2 + (y - radius) ** 2);
-            if (dist2 > maxDist + 5) {
-                // Принудительно возвращаем в центр
-                const angle = Math.atan2(y - radius, x - radius);
-                x = radius + Math.cos(angle) * maxDist;
-                y = radius + Math.sin(angle) * maxDist;
-                // Гасим скорость
-                dx *= 0.5;
-                dy *= 0.5;
-            }
-
-            // Применяем позицию
-            ball.style.left = x - ballRadius + 'px';
-            ball.style.top = y - ballRadius + 'px';
+            ball.style.left = (x - ballRadius) + 'px';
+            ball.style.top = (y - ballRadius) + 'px';
 
             requestAnimationFrame(updateBall);
         }
 
         updateBall();
     </script>
-
 </body>
 </html>
