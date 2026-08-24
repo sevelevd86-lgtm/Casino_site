@@ -2,8 +2,9 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐻‍❄️ DROP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Scratch & Win</title>
 
 <style>
 * {
@@ -16,692 +17,316 @@
 html,
 body {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
+}
+
+body {
     background: #111315;
     color: #fff;
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
     user-select: none;
 }
 
-button,
-input {
-    font-family: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* =========================
-   APP
-========================= */
-
-#app {
+.game {
     width: 100%;
-    height: 100%;
-    position: relative;
-    background: #111315;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 74px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 22px;
-
-    border-bottom: 1px solid #282d31;
-    background: rgba(17,19,21,.96);
-
-    z-index: 20;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: -.5px;
-}
-
-.header-balance {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    color: #ffd84d;
-    font-size: 19px;
-    font-weight: 900;
-}
-
-/* =========================
-   CONTENT
-========================= */
-
-.content {
-    position: absolute;
-    top: 74px;
-    left: 0;
-    right: 0;
-    bottom: 82px;
-
-    overflow-y: auto;
-    padding: 25px 18px 30px;
-}
-
-.page {
-    width: 100%;
-    max-width: 620px;
-    margin: 0 auto;
-}
-
-/* =========================
-   TITLES
-========================= */
-
-.page-title {
-    font-size: 30px;
-    font-weight: 900;
-    margin-bottom: 8px;
-}
-
-.page-subtitle {
-    color: #858b91;
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 24px;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.card {
-    background: #191c20;
-    border: 1px solid #292e33;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 14px;
-}
-
-.card-title {
-    font-size: 20px;
-    font-weight: 900;
-    margin-bottom: 7px;
-}
-
-.card-text {
-    color: #858b91;
-    font-size: 15px;
-    line-height: 1.5;
-}
-
-/* =========================
-   GAME CARD
-========================= */
-
-.game-card {
-    padding: 24px;
-}
-
-.game-icon {
-    width: 62px;
-    height: 62px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 16px;
-    background: #24292e;
-
-    font-size: 31px;
-
-    margin-bottom: 17px;
-}
-
-.game-button {
-    width: 100%;
-    margin-top: 18px;
-
-    padding: 15px;
-
-    border: none;
-    border-radius: 11px;
-
-    background: #1678e8;
-    color: #fff;
-
-    font-size: 16px;
-    font-weight: 900;
-}
-
-.game-button:active {
-    transform: scale(.98);
-}
-
-/* =========================
-   INVENTORY
-========================= */
-
-.sell-all {
-    width: 100%;
-
-    padding: 14px;
-
-    border: none;
-    border-radius: 11px;
-
-    background: #282d32;
-    color: #fff;
-
-    font-size: 16px;
-    font-weight: 800;
-
-    margin-bottom: 16px;
-}
-
-.sell-all:disabled {
-    opacity: .45;
-    cursor: default;
-}
-
-.empty-inventory {
-    text-align: center;
-    padding: 45px 15px;
-
-    color: #737a81;
-}
-
-.empty-icon {
-    font-size: 45px;
-    margin-bottom: 13px;
-}
-
-.empty-title {
-    color: #c9cdd1;
-    font-size: 19px;
-    font-weight: 800;
-    margin-bottom: 7px;
-}
-
-.empty-text {
-    font-size: 15px;
-}
-
-/* =========================
-   PROFILE
-========================= */
-
-.profile-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 15px 0;
-
-    border-bottom: 1px solid #292e33;
-}
-
-.profile-row:last-child {
-    border-bottom: none;
-}
-
-.profile-label {
-    color: #858b91;
-    font-size: 15px;
-}
-
-.profile-value {
-    font-size: 16px;
-    font-weight: 800;
-}
-
-.ref-value {
-    color: #54a8ff;
-    word-break: break-all;
-}
-
-/* =========================
-   DAILY
-========================= */
-
-.daily-button {
-    width: 100%;
-
-    padding: 15px;
-
-    border: none;
-    border-radius: 11px;
-
-    background: #1678e8;
-    color: white;
-
-    font-size: 16px;
-    font-weight: 900;
-
-    margin-top: 15px;
-}
-
-.daily-button:disabled {
-    background: #282d32;
-    color: #777d83;
-}
-
-.timer {
-    text-align: center;
-
-    margin-top: 13px;
-
-    color: #ffd84d;
-
-    font-size: 18px;
-    font-weight: 900;
-}
-
-/* =========================
-   PROMOCODE
-========================= */
-
-.promo-input {
-    width: 100%;
-
-    padding: 14px;
-
-    border: 1px solid #383e44;
-    border-radius: 10px;
-
-    background: #111315;
-    color: #fff;
-
-    outline: none;
-
-    font-size: 16px;
-    text-align: center;
-}
-
-.promo-input:focus {
-    border-color: #1678e8;
-}
-
-.promo-button {
-    width: 100%;
-
-    margin-top: 11px;
-
-    padding: 14px;
-
-    border: none;
-    border-radius: 10px;
-
-    background: #282d32;
-    color: white;
-
-    font-size: 15px;
-    font-weight: 900;
-}
-
-.promo-message {
-    min-height: 20px;
-
-    margin-top: 9px;
-
-    text-align: center;
-
-    font-size: 14px;
-    color: #54df87;
-}
-
-/* =========================
-   BOTTOM NAV
-========================= */
-
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-
-    width: 100%;
-    height: 82px;
-
-    display: flex;
-
-    background: #171a1d;
-    border-top: 1px solid #292e33;
-
-    z-index: 30;
-}
-
-.nav-button {
-    flex: 1;
-
+    max-width: 480px;
+    min-height: 100vh;
+    padding: 24px 18px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-
-    gap: 5px;
-
-    border: none;
-    background: transparent;
-
-    color: #737a81;
-
-    font-size: 13px;
-    font-weight: 800;
 }
 
-.nav-icon {
-    font-size: 23px;
-}
 
-.nav-button.active {
-    color: #fff;
-}
+/* =====================================================
+   HEADER
+===================================================== */
 
-.nav-button.active .nav-icon {
-    transform: translateY(-1px);
-}
-
-/* =========================
-   GAME
-========================= */
-
-#gameScreen {
-    position: fixed;
-    inset: 0;
-
-    background: #111315;
-
-    z-index: 100;
-}
-
-#gameCanvas {
-    position: fixed;
-    inset: 0;
-
+.header {
     width: 100%;
-    height: 100%;
-}
-
-.game-top {
-    position: fixed;
-
-    top: 16px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    display: flex;
-    gap: 30px;
-
-    z-index: 110;
-}
-
-.game-stat {
-    min-width: 75px;
     text-align: center;
+    margin-bottom: 25px;
 }
 
-.game-stat-label {
-    color: #737a81;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: .8px;
+.logo {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -1px;
 }
 
-.game-stat-value {
-    margin-top: 4px;
+.subtitle {
+    margin-top: 9px;
+    color: #858b91;
+    font-size: 15px;
+}
 
-    color: #fff;
-
+.prize {
+    margin-top: 8px;
+    color: #42df78;
     font-size: 20px;
     font-weight: 900;
 }
 
-#gameMultiplier {
-    color: #42df78;
-}
 
-#gameBalance {
-    color: #ffd84d;
-}
+/* =====================================================
+   CARD
+===================================================== */
 
-/* =========================
-   GAME ZONES
-========================= */
-
-.bottom-zones {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-
+.lottery-card {
     width: 100%;
-    height: 90px;
-
-    display: flex;
-
-    z-index: 105;
-
-    pointer-events: none;
+    padding: 16px;
+    background: #1a1d20;
+    border: 1px solid #30353a;
+    border-radius: 22px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .35);
 }
 
-.green-zone,
-.red-zone {
-    height: 100%;
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+
+/* =====================================================
+   CELL
+===================================================== */
+
+.cell {
+    position: relative;
+    overflow: hidden;
+
+    border-radius: 14px;
+    background: #292e33;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    color: #fff;
+    cursor: pointer;
 
-    font-size: 20px;
-    font-weight: 900;
+    border: 1px solid #3b4248;
 
-    overflow: hidden;
+    perspective: 600px;
 }
 
-.green-zone {
+.icon {
+    position: absolute;
+
+    font-size: clamp(38px, 13vw, 65px);
+
+    transform: scale(.75);
+
+    opacity: 0;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
+}
+
+.cell.open .icon {
+    transform: scale(1);
+    opacity: 1;
+}
+
+
+/* =====================================================
+   SCRATCH LAYER
+===================================================== */
+
+.scratch {
+    position: absolute;
+    inset: 0;
+
+    z-index: 5;
+
+    border-radius: 13px;
+
     background:
         linear-gradient(
-            to top,
-            #2bdd72,
-            #26c968 35%,
-            rgba(39,201,104,.2)
+            135deg,
+            rgba(255,255,255,.08) 0%,
+            rgba(255,255,255,0) 25%,
+            rgba(255,255,255,.08) 50%,
+            rgba(255,255,255,0) 75%
+        ),
+        repeating-linear-gradient(
+            115deg,
+            #777d82 0px,
+            #777d82 3px,
+            #6b7176 3px,
+            #6b7176 6px
         );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.08),
+        inset 0 0 18px rgba(0,0,0,.35);
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
 }
 
-.red-zone {
+.scratch::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
     background:
-        linear-gradient(
-            to top,
-            #e84550,
-            #d93c47 35%,
-            rgba(217,60,71,.2)
+        repeating-linear-gradient(
+            165deg,
+            transparent 0px,
+            transparent 7px,
+            rgba(255,255,255,.13) 8px,
+            transparent 10px
         );
+
+    opacity: .65;
 }
 
-/* =========================
-   GAME MENU
-========================= */
+.scratch::after {
+    content: "?";
 
-.game-menu {
-    position: fixed;
+    position: absolute;
 
     left: 50%;
     top: 50%;
 
     transform: translate(-50%, -50%);
 
-    width: calc(100% - 40px);
-    max-width: 350px;
+    color: rgba(255,255,255,.25);
 
-    padding: 25px;
-
-    background: rgba(25,28,32,.98);
-
-    border: 1px solid #343a40;
-    border-radius: 18px;
-
-    z-index: 120;
-}
-
-.game-menu-title {
-    text-align: center;
-
-    font-size: 28px;
-    font-weight: 900;
-
-    margin-bottom: 18px;
-}
-
-.game-menu-balance {
-    text-align: center;
-
-    color: #ffd84d;
-
-    font-size: 23px;
-    font-weight: 900;
-
-    margin-bottom: 18px;
-}
-
-.bet-input {
-    width: 100%;
-
-    padding: 14px;
-
-    background: #111315;
-
-    color: white;
-
-    border: 1px solid #3a4148;
-    border-radius: 10px;
-
-    outline: none;
-
-    text-align: center;
-
-    font-size: 17px;
-    font-weight: 800;
-}
-
-.bet-error {
-    min-height: 18px;
-
-    color: #ef4752;
-
-    text-align: center;
-
-    font-size: 12px;
-
-    margin-top: 7px;
-}
-
-.difficulty {
-    display: flex;
-    gap: 6px;
-
-    margin-top: 12px;
-}
-
-.difficulty button {
-    flex: 1;
-
-    border: none;
-    border-radius: 9px;
-
-    padding: 10px 5px;
-
-    background: #282d32;
-    color: #cfd3d7;
-
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.difficulty button.active {
-    background: #1678e8;
-    color: #fff;
-}
-
-.start-game {
-    width: 100%;
-
-    margin-top: 15px;
-
-    padding: 14px;
-
-    border: none;
-    border-radius: 10px;
-
-    background: #1678e8;
-    color: #fff;
-
-    font-size: 15px;
+    font-size: 38px;
     font-weight: 900;
 }
 
-.exit-game {
-    width: 100%;
+.cell.scratching .scratch {
+    animation: scratchAnimation .35s ease forwards;
+}
 
-    margin-top: 8px;
+@keyframes scratchAnimation {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
 
-    padding: 12px;
+    50% {
+        opacity: .65;
+        transform: scale(1.04);
+    }
 
-    border: none;
-    border-radius: 10px;
+    100% {
+        opacity: 0;
+        transform: scale(1.15);
+        pointer-events: none;
+    }
+}
 
-    background: transparent;
+
+/* =====================================================
+   OPENED CELL
+===================================================== */
+
+.cell.open {
+    background: #20252a;
+    border-color: #414950;
+}
+
+
+/* =====================================================
+   INFO
+===================================================== */
+
+.info {
+    margin-top: 18px;
+
+    text-align: center;
+
     color: #858b91;
 
     font-size: 14px;
-    font-weight: 800;
+
+    line-height: 1.5;
 }
 
-/* =========================
-   RESULT
-========================= */
+.info strong {
+    color: #fff;
+}
 
-.result {
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal {
     position: fixed;
+    inset: 0;
 
-    left: 50%;
-    top: 50%;
+    z-index: 100;
 
-    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,.72);
 
-    width: calc(100% - 40px);
-    max-width: 330px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    padding: 28px;
+    padding: 20px;
 
-    background: #191c20;
+    opacity: 0;
+    pointer-events: none;
 
-    border: 1px solid #343a40;
-    border-radius: 18px;
+    transition: opacity .25s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 350px;
+
+    padding: 30px 24px;
+
+    background: #1a1d20;
+
+    border: 1px solid #353b40;
+
+    border-radius: 22px;
 
     text-align: center;
 
-    z-index: 130;
+    transform: scale(.85);
+
+    transition: transform .25s ease;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.6);
+}
+
+.modal.show .modal-box {
+    transform: scale(1);
+}
+
+.result-icon {
+    font-size: 60px;
+    margin-bottom: 10px;
 }
 
 .result-title {
-    font-size: 44px;
+    font-size: 34px;
     font-weight: 900;
 }
 
@@ -713,91 +338,121 @@ button {
     color: #ef4752;
 }
 
-.result-info {
-    color: #858b91;
-
-    font-size: 14px;
-    line-height: 1.7;
-
-    margin-top: 8px;
-}
-
-.result-money {
+.result-text {
     margin-top: 12px;
 
-    font-size: 23px;
+    color: #858b91;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+.win-amount {
+    margin-top: 10px;
+
+    color: #42df78;
+
+    font-size: 32px;
     font-weight: 900;
 }
 
-.result-money.win {
-    color: #42df78;
-}
-
-.result-money.lose {
-    color: #ef4752;
-}
-
-.result-close {
+.play-again {
     width: 100%;
 
-    margin-top: 18px;
+    margin-top: 25px;
 
-    padding: 13px;
+    padding: 15px;
 
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
 
     background: #1678e8;
+
     color: white;
 
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        transform .1s ease;
 }
 
-/* =========================
+.play-again:active {
+    transform: scale(.97);
+}
+
+.play-again:hover {
+    background: #2687f5;
+}
+
+
+/* =====================================================
+   CONFETTI / SPARKS
+===================================================== */
+
+.spark {
+    position: fixed;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 150;
+
+    animation:
+        sparkFly 1s ease-out forwards;
+}
+
+@keyframes sparkFly {
+    0% {
+        transform:
+            translate(0, 0)
+            scale(1);
+
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translate(
+                var(--x),
+                var(--y)
+            )
+            scale(0);
+
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 360px) {
 
-    .header {
-        padding: 0 17px;
+    .game {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .lottery-card {
+        padding: 11px;
+    }
+
+    .grid {
+        gap: 7px;
     }
 
     .logo {
-        font-size: 20px;
-    }
-
-    .header-balance {
-        font-size: 17px;
-    }
-
-    .content {
-        padding: 22px 15px 25px;
-    }
-
-    .page-title {
         font-size: 28px;
-    }
-
-    .page-subtitle {
-        font-size: 15px;
-    }
-
-    .game-top {
-        gap: 17px;
-    }
-
-    .game-stat {
-        min-width: 65px;
-    }
-
-    .game-stat-value {
-        font-size: 18px;
-    }
-
-    .bottom-zones {
-        height: 76px;
     }
 }
 </style>
@@ -805,582 +460,35 @@ button {
 
 <body>
 
-<div id="app">
+<div class="game">
 
-    <!-- HEADER -->
     <header class="header">
-        <div class="logo">🐻‍❄️ DROP</div>
 
-        <div class="header-balance">
-            💰 <span id="headerBalance">1000.00</span>
+        <div class="logo">
+            SCRATCH & WIN!
         </div>
+
+        <div class="subtitle">
+            Лотерея • Номинал $5
+        </div>
+
+        <div class="prize">
+            Выигрыш до $100,000
+        </div>
+
     </header>
 
 
-    <!-- CONTENT -->
-    <main class="content">
+    <div class="lottery-card">
 
-        <!-- MENU -->
-        <section
-            id="menuPage"
-            class="page">
-
-            <div class="page-title">
-                Меню
-            </div>
-
-            <div class="page-subtitle">
-                Выберите игру и испытайте удачу.
-            </div>
-
-            <div class="card game-card">
-
-                <div class="game-icon">
-                    ⚪
-                </div>
-
-                <div class="card-title">
-                    Шарик
-                </div>
-
-                <div class="card-text">
-                    Управляйте ставкой и наблюдайте,
-                    как шарик проходит через отверстие.
-                    Чем больше отскоков — тем выше множитель.
-                </div>
-
-                <button
-                    class="game-button"
-                    id="openGameButton">
-
-                    ИГРАТЬ
-
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- INVENTORY -->
-        <section
-            id="inventoryPage"
-            class="page hidden">
-
-            <div class="page-title">
-                Инвентарь
-            </div>
-
-            <div class="page-subtitle">
-                Здесь будут находиться полученные предметы.
-            </div>
-
-            <button
-                class="sell-all"
-                id="sellAllButton"
-                disabled>
-
-                ПРОДАТЬ ВСЕ
-
-            </button>
-
-            <div class="card">
-
-                <div class="empty-inventory">
-
-                    <div class="empty-icon">
-                        📦
-                    </div>
-
-                    <div class="empty-title">
-                        Инвентарь пуст
-                    </div>
-
-                    <div class="empty-text">
-                        Полученные предметы появятся здесь.
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- PROFILE -->
-        <section
-            id="profilePage"
-            class="page hidden">
-
-            <div class="page-title">
-                Профиль
-            </div>
-
-            <div class="page-subtitle">
-                Управляйте аккаунтом, наградами и промокодами.
-            </div>
-
-
-            <!-- USER -->
-            <div class="card">
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Имя
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="profileName">
-
-                        Игрок
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        ID игрока
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="profileId">
-
-                        100001
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Баланс
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="profileBalance">
-
-                        1000.00
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- REFERRAL -->
-            <div class="card">
-
-                <div class="card-title">
-                    Реферальная система
-                </div>
-
-                <div class="card-text">
-                    Приглашайте друзей и получайте
-                    по <b>50</b> валюты за каждого приглашённого.
-                </div>
-
-                <div
-                    class="profile-row"
-                    style="margin-top:10px;">
-
-                    <div class="profile-label">
-                        Приглашено
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="refCount">
-
-                        0
-
-                    </div>
-
-                </div>
-
-                <div
-                    class="profile-row">
-
-                    <div class="profile-label">
-                        Реферальная ссылка
-                    </div>
-
-                    <div
-                        class="profile-value ref-value"
-                        id="refLink">
-
-                        drop.example/100001
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- DAILY -->
-            <div class="card">
-
-                <div class="card-title">
-                    Ежедневная награда
-                </div>
-
-                <div class="card-text">
-                    Забирайте <b>50</b> валюты каждые 24 часа.
-                </div>
-
-                <button
-                    class="daily-button"
-                    id="dailyButton">
-
-                    ЗАБРАТЬ 50
-
-                </button>
-
-                <div
-                    class="timer hidden"
-                    id="dailyTimer">
-
-                    24:00:00
-
-                </div>
-
-            </div>
-
-
-            <!-- PROMO -->
-            <div class="card">
-
-                <div class="card-title">
-                    Промокод
-                </div>
-
-                <div class="card-text">
-                    Введите промокод, чтобы получить награду.
-                </div>
-
-                <input
-                    id="promoInput"
-                    class="promo-input"
-                    type="text"
-                    placeholder="Введите промокод"
-                    autocomplete="off"
-                >
-
-                <button
-                    class="promo-button"
-                    id="promoButton">
-
-                    АКТИВИРОВАТЬ
-
-                </button>
-
-                <div
-                    class="promo-message"
-                    id="promoMessage">
-
-                </div>
-
-            </div>
-
-
-            <!-- EXTRA -->
-            <div class="card">
-
-                <div class="card-title">
-                    Статистика
-                </div>
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Игр сыграно
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="gamesPlayed">
-
-                        0
-
-                    </div>
-
-                </div>
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Побед
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="wins">
-
-                        0
-
-                    </div>
-
-                </div>
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Поражений
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="losses">
-
-                        0
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- NAVIGATION -->
-    <nav class="bottom-nav">
-
-        <button
-            class="nav-button"
-            data-page="inventoryPage">
-
-            <span class="nav-icon">🎒</span>
-            <span>Инвентарь</span>
-
-        </button>
-
-
-        <button
-            class="nav-button active"
-            data-page="menuPage">
-
-            <span class="nav-icon">⌂</span>
-            <span>Меню</span>
-
-        </button>
-
-
-        <button
-            class="nav-button"
-            data-page="profilePage">
-
-            <span class="nav-icon">👤</span>
-            <span>Профиль</span>
-
-        </button>
-
-    </nav>
-
-
-    <!-- GAME -->
-    <div
-        id="gameScreen"
-        class="hidden">
-
-        <canvas id="gameCanvas"></canvas>
-
-
-        <div class="game-top">
-
-            <div class="game-stat">
-
-                <div class="game-stat-label">
-                    Баланс
-                </div>
-
-                <div
-                    class="game-stat-value"
-                    id="gameBalance">
-
-                    1000.00
-
-                </div>
-
-            </div>
-
-
-            <div class="game-stat">
-
-                <div class="game-stat-label">
-                    Отскоки
-                </div>
-
-                <div
-                    class="game-stat-value"
-                    id="gameBounces">
-
-                    0
-
-                </div>
-
-            </div>
-
-
-            <div class="game-stat">
-
-                <div class="game-stat-label">
-                    Множитель
-                </div>
-
-                <div
-                    class="game-stat-value"
-                    id="gameMultiplier">
-
-                    1.00x
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="bottom-zones">
-
-            <div
-                id="greenZone"
-                class="green-zone">
-
-                WIN
-
-            </div>
-
-            <div
-                id="redZone"
-                class="red-zone">
-
-                LOSE
-
-            </div>
-
-        </div>
-
-
-        <!-- GAME MENU -->
         <div
-            id="gameMenu"
-            class="game-menu">
-
-            <div class="game-menu-title">
-                ESCAPE
-            </div>
-
-            <div
-                class="game-menu-balance"
-                id="gameMenuBalance">
-
-                1000.00
-
-            </div>
-
-            <input
-                id="gameBet"
-                class="bet-input"
-                type="number"
-                min="0.01"
-                step="0.01"
-                placeholder="Введите ставку"
-            >
-
-            <div
-                id="gameBetError"
-                class="bet-error">
-            </div>
-
-            <div class="difficulty">
-
-                <button
-                    data-difficulty="easy"
-                    class="active">
-
-                    Легко
-
-                </button>
-
-                <button
-                    data-difficulty="medium">
-
-                    Средне
-
-                </button>
-
-                <button
-                    data-difficulty="hard">
-
-                    Сложно
-
-                </button>
-
-            </div>
-
-            <button
-                class="start-game"
-                id="startGame">
-
-                ИГРАТЬ
-
-            </button>
-
-            <button
-                class="exit-game"
-                id="exitGame">
-
-                НАЗАД
-
-            </button>
-
+            class="grid"
+            id="grid">
         </div>
 
-
-        <!-- RESULT -->
-        <div
-            id="gameResult"
-            class="result hidden">
-
-            <div
-                id="resultTitle"
-                class="result-title win">
-
-                WIN
-
-            </div>
-
-            <div
-                id="resultInfo"
-                class="result-info">
-            </div>
-
-            <div
-                id="resultMoney"
-                class="result-money win">
-            </div>
-
-            <button
-                id="resultClose"
-                class="result-close">
-
-                ЗАКРЫТЬ
-
-            </button>
-
+        <div class="info">
+            Откройте карточки и найдите
+            <strong>3 одинаковых символа</strong>
         </div>
 
     </div>
@@ -1388,1810 +496,726 @@ button {
 </div>
 
 
+<!-- =====================================================
+     RESULT MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="modal">
+
+    <div class="modal-box">
+
+        <div
+            class="result-icon"
+            id="resultIcon">
+            🎉
+        </div>
+
+        <div
+            class="result-title"
+            id="resultTitle">
+            ПОБЕДА!
+        </div>
+
+        <div
+            class="result-text"
+            id="resultText">
+        </div>
+
+        <div
+            class="win-amount"
+            id="winAmount">
+        </div>
+
+        <button
+            class="play-again"
+            id="playAgain">
+            ИГРАТЬ СНОВА
+        </button>
+
+    </div>
+
+</div>
+
+
 <script>
-/* =====================================================
-   СОСТОЯНИЕ ИГРЫ
-===================================================== */
-
-let balance = 1000;
-
-let currentBet = 0;
-
-let difficulty = "easy";
-
-let gameRunning = false;
-
-let escaped = false;
-
-let gameFinished = false;
-
-let bounceCount = 0;
-
-let multiplier = 1;
-
-let gamesPlayed = 0;
-
-let wins = 0;
-
-let losses = 0;
-
-let promoUsed = false;
-
-let dailyAvailable = true;
-
-let dailyNextTime = 0;
-
 
 /* =====================================================
-   НАСТРОЙКИ СЛОЖНОСТИ
+   НАСТРОЙКИ
 ===================================================== */
 
-const difficulties = {
+const icons = [
+    "🪙",
+    "⭐",
+    "💎",
+    "🍀",
+    "🧲",
+    "🎰"
+];
 
-    easy: {
-        green: 70,
-        red: 30,
-        hole: 50,
-        step: 0.05
-    },
+const grid = document.getElementById("grid");
 
-    medium: {
-        green: 50,
-        red: 50,
-        hole: 50,
-        step: 0.15
-    },
+const modal =
+    document.getElementById("modal");
 
-    hard: {
-        green: 25,
-        red: 75,
-
-        // На 22% больше обычного
-        hole: 50 * 1.22,
-
-        step: 0.25
-    }
-};
-
-
-/* =====================================================
-   DOM
-===================================================== */
-
-const headerBalance =
-    document.getElementById("headerBalance");
-
-const profileBalance =
-    document.getElementById("profileBalance");
-
-const menuPage =
-    document.getElementById("menuPage");
-
-const inventoryPage =
-    document.getElementById("inventoryPage");
-
-const profilePage =
-    document.getElementById("profilePage");
-
-const gameScreen =
-    document.getElementById("gameScreen");
-
-const openGameButton =
-    document.getElementById("openGameButton");
-
-const gameMenu =
-    document.getElementById("gameMenu");
-
-const gameMenuBalance =
-    document.getElementById("gameMenuBalance");
-
-const gameBet =
-    document.getElementById("gameBet");
-
-const gameBetError =
-    document.getElementById("gameBetError");
-
-const startGameButton =
-    document.getElementById("startGame");
-
-const exitGameButton =
-    document.getElementById("exitGame");
-
-const gameResult =
-    document.getElementById("gameResult");
+const resultIcon =
+    document.getElementById("resultIcon");
 
 const resultTitle =
     document.getElementById("resultTitle");
 
-const resultInfo =
-    document.getElementById("resultInfo");
+const resultText =
+    document.getElementById("resultText");
 
-const resultMoney =
-    document.getElementById("resultMoney");
+const winAmount =
+    document.getElementById("winAmount");
 
-const resultClose =
-    document.getElementById("resultClose");
-
-const gameBalance =
-    document.getElementById("gameBalance");
-
-const gameBounces =
-    document.getElementById("gameBounces");
-
-const gameMultiplier =
-    document.getElementById("gameMultiplier");
-
-const greenZone =
-    document.getElementById("greenZone");
-
-const redZone =
-    document.getElementById("redZone");
-
-const dailyButton =
-    document.getElementById("dailyButton");
-
-const dailyTimer =
-    document.getElementById("dailyTimer");
-
-const promoInput =
-    document.getElementById("promoInput");
-
-const promoButton =
-    document.getElementById("promoButton");
-
-const promoMessage =
-    document.getElementById("promoMessage");
+const playAgain =
+    document.getElementById("playAgain");
 
 
 /* =====================================================
-   CANVAS
+   СОСТОЯНИЕ ИГРЫ
 ===================================================== */
 
-const canvas =
-    document.getElementById("gameCanvas");
+let cells = [];
 
-const ctx =
-    canvas.getContext("2d");
+let openedCount = 0;
 
-let width = 0;
-let height = 0;
+let gameOver = false;
 
 
 /* =====================================================
-   КРУГ
+   RANDOM
 ===================================================== */
 
-const circle = {
+function randomItem(array) {
 
-    x: 0,
-    y: 0,
-
-    radius: 205,
-
-    wallWidth: 10
-};
-
-
-/* =====================================================
-   ШАР
-===================================================== */
-
-const ball = {
-
-    x: 0,
-    y: 0,
-
-    vx: 0,
-    vy: 0,
-
-    radius: 13
-};
-
-
-/* =====================================================
-   ФИЗИКА
-===================================================== */
-
-const GRAVITY = 0.20;
-
-const MAX_SPEED = 6.2;
-
-const MAX_HORIZONTAL_SPEED = 3.8;
-
-const SIDE_WALL = 7;
-
-const ZONE_HEIGHT = 90;
-
-const HOLE_SPEED = 0.018;
-
-
-/* =====================================================
-   ОТВЕРСТИЕ
-===================================================== */
-
-let holeAngle = 0;
-
-
-/* =====================================================
-   RESIZE
-===================================================== */
-
-function resizeCanvas() {
-
-    width =
-        window.innerWidth;
-
-    height =
-        window.innerHeight;
-
-    const dpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            2
-        );
-
-    canvas.width =
-        width * dpr;
-
-    canvas.height =
-        height * dpr;
-
-    canvas.style.width =
-        width + "px";
-
-    canvas.style.height =
-        height + "px";
-
-    ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-
-    circle.radius =
-        Math.min(
-            205,
-            width * .33,
-            height * .30
-        );
-
-    circle.x =
-        width / 2;
-
-    circle.y =
-        height * .39;
-
-    if (!gameRunning) {
-
-        ball.x =
-            circle.x;
-
-        ball.y =
-            circle.y -
-            circle.radius * .35;
-    }
-}
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-
-/* =====================================================
-   UI БАЛАНС
-===================================================== */
-
-function updateBalanceUI() {
-
-    const value =
-        balance.toFixed(2);
-
-    headerBalance.textContent =
-        value;
-
-    profileBalance.textContent =
-        value;
-
-    gameBalance.textContent =
-        value;
-
-    gameMenuBalance.textContent =
-        value;
+    return array[
+        Math.floor(
+            Math.random() *
+            array.length
+        )
+    ];
 }
 
 
-/* =====================================================
-   ИГРОВАЯ UI
-===================================================== */
+function randomMoney(min, max) {
 
-function updateGameUI() {
-
-    gameBounces.textContent =
-        bounceCount;
-
-    gameMultiplier.textContent =
-        multiplier.toFixed(2) + "x";
-
-    updateBalanceUI();
-}
-
-
-/* =====================================================
-   ЗОНЫ
-===================================================== */
-
-function updateZones() {
-
-    const settings =
-        difficulties[difficulty];
-
-    greenZone.style.width =
-        settings.green + "%";
-
-    redZone.style.width =
-        settings.red + "%";
-}
-
-
-/* =====================================================
-   СЛУЧАЙНОЕ ЧИСЛО
-===================================================== */
-
-function randomRange(min, max) {
-
-    return (
-        min +
+    return Math.floor(
         Math.random() *
-        (max - min)
-    );
+        (max - min + 1)
+    ) + min;
 }
 
 
 /* =====================================================
-   НОРМАЛИЗАЦИЯ УГЛА
+   ЗВУК SCRATCH
 ===================================================== */
 
-function normalizeAngle(angle) {
+let audioContext = null;
 
-    angle %= Math.PI * 2;
 
-    if (angle < 0)
-        angle += Math.PI * 2;
+function scratchSound() {
 
-    return angle;
-}
+    try {
 
+        if (!audioContext) {
 
-function angleDifference(a, b) {
-
-    let d =
-        Math.abs(
-            normalizeAngle(a) -
-            normalizeAngle(b)
-        );
-
-    if (d > Math.PI)
-        d =
-            Math.PI * 2 - d;
-
-    return d;
-}
-
-
-/* =====================================================
-   ПРОВЕРКА ДЫРКИ
-===================================================== */
-
-function isHole(angle) {
-
-    const hole =
-        difficulties[difficulty].hole *
-        Math.PI / 180;
-
-    return (
-        angleDifference(
-            angle,
-            holeAngle
-        ) <=
-        hole / 2
-    );
-}
-
-
-/* =====================================================
-   ОГРАНИЧЕНИЕ СКОРОСТИ
-===================================================== */
-
-function limitSpeed() {
-
-    ball.vx =
-        Math.max(
-            -MAX_HORIZONTAL_SPEED,
-            Math.min(
-                MAX_HORIZONTAL_SPEED,
-                ball.vx
-            )
-        );
-
-    const speed =
-        Math.sqrt(
-            ball.vx ** 2 +
-            ball.vy ** 2
-        );
-
-    if (speed > MAX_SPEED) {
-
-        const scale =
-            MAX_SPEED / speed;
-
-        ball.vx *= scale;
-        ball.vy *= scale;
-    }
-}
-
-
-/* =====================================================
-   РАЗНООБРАЗНЫЙ СТАРТ
-===================================================== */
-
-function chooseStartVelocity() {
-
-    const direction =
-        Math.random() < .5
-            ? -1
-            : 1;
-
-    ball.vx =
-        direction *
-        randomRange(
-            1.0,
-            2.3
-        );
-
-    ball.vy =
-        randomRange(
-            1.8,
-            3.0
-        );
-}
-
-
-/* =====================================================
-   РАЗНЫЙ ОТСКОК
-===================================================== */
-
-/*
-    Это главная часть.
-
-    После КАЖДОГО столкновения:
-
-    1. Случайно меняется сила прыжка.
-    2. Случайно меняется горизонтальное
-       направление.
-    3. Создаётся небольшой случайный
-       угол.
-    4. Проверяется минимальная скорость.
-    5. Поэтому шарик не повторяет
-       одну и ту же точку.
-*/
-
-function registerBounce(nx, ny) {
-
-    bounceCount++;
-
-    multiplier =
-        1 +
-        bounceCount *
-        difficulties[difficulty].step;
-
-    multiplier =
-        Math.round(
-            multiplier * 100
-        ) / 100;
-
-
-    /*
-        Сила прыжка.
-        Каждый раз немного разная.
-    */
-
-    const jumpPower =
-        randomRange(
-            4.2,
-            5.9
-        );
-
-
-    /*
-        Случайная горизонтальная
-        составляющая.
-
-        Она зависит от точки
-        столкновения.
-    */
-
-    const randomSide =
-        randomRange(
-            -2.8,
-            2.8
-        );
-
-
-    /*
-        Если удар пришёлся
-        по нижней части круга,
-        шар обычно прыгает вверх.
-    */
-
-    if (ny > .12) {
-
-        ball.vy =
-            -jumpPower;
-
-        ball.vx +=
-            randomSide;
-    }
-
-    /*
-        Верхняя часть.
-    */
-
-    else if (ny < -.12) {
-
-        ball.vy =
-            randomRange(
-                2.8,
-                4.7
-            );
-
-        ball.vx +=
-            randomSide;
-    }
-
-    /*
-        Бок.
-    */
-
-    else {
-
-        /*
-            Не задаём одну фиксированную
-            точку.
-
-            Каждый раз новая скорость.
-        */
-
-        ball.vy =
-            Math.random() < .5
-                ? -randomRange(3.6, 5.7)
-                : randomRange(3.4, 5.4);
-
-        ball.vx +=
-            randomSide;
-    }
-
-
-    /*
-        Дополнительное изменение
-        в зависимости от нормали.
-
-        Это заставляет шарик
-        прыгать в разные участки.
-    */
-
-    ball.vx +=
-        -nx *
-        randomRange(
-            .15,
-            .75
-        );
-
-
-    /*
-        Не даём скорости X стать
-        слишком маленькой.
-    */
-
-    if (
-        Math.abs(ball.vx) <
-        .65
-    ) {
-
-        ball.vx =
-            Math.random() < .5
-                ? -.65
-                : .65;
-    }
-
-
-    limitSpeed();
-
-    updateGameUI();
-}
-
-
-/* =====================================================
-   СТАРТ ИГРЫ
-===================================================== */
-
-function startRound() {
-
-    let bet =
-        Number(gameBet.value);
-
-    if (
-        !Number.isFinite(bet) ||
-        bet <= 0
-    ) {
-
-        gameBetError.textContent =
-            "Введите ставку больше 0.";
-
-        return;
-    }
-
-    bet =
-        Math.round(
-            bet * 100
-        ) / 100;
-
-    if (bet > balance) {
-
-        gameBetError.textContent =
-            "Недостаточно средств.";
-
-        return;
-    }
-
-
-    /*
-        Ставка сохраняется
-        в поле и после результата.
-    */
-
-    currentBet =
-        bet;
-
-
-    balance -=
-        currentBet;
-
-    balance =
-        Math.round(
-            balance * 100
-        ) / 100;
-
-
-    gameBetError.textContent =
-        "";
-
-    gameRunning = true;
-
-    escaped = false;
-
-    gameFinished = false;
-
-    bounceCount = 0;
-
-    multiplier = 1;
-
-
-    ball.x =
-        circle.x;
-
-    ball.y =
-        circle.y -
-        circle.radius * .35;
-
-
-    chooseStartVelocity();
-
-    gameMenu.classList.add(
-        "hidden"
-    );
-
-    gameResult.classList.add(
-        "hidden"
-    );
-
-    updateGameUI();
-}
-
-
-/* =====================================================
-   ВЫЛЕТ ИЗ ОТВЕРСТИЯ
-===================================================== */
-
-function escapeThroughHole(nx, ny) {
-
-    /*
-        Сохраняем текущую скорость.
-
-        ВАЖНО:
-        после вылета шарик НЕ меняет
-        направление принудительно.
-
-        Он продолжает лететь туда,
-        куда летел до выхода.
-    */
-
-    const oldVx =
-        ball.vx;
-
-    const oldVy =
-        ball.vy;
-
-
-    ball.x =
-        circle.x +
-        nx *
-        (
-            circle.radius +
-            ball.radius +
-            5
-        );
-
-    ball.y =
-        circle.y +
-        ny *
-        (
-            circle.radius +
-            ball.radius +
-            5
-        );
-
-
-    ball.vx =
-        oldVx;
-
-    ball.vy =
-        oldVy;
-
-
-    escaped = true;
-}
-
-
-/* =====================================================
-   СТОЛКНОВЕНИЕ СО СТЕНОЙ
-===================================================== */
-
-function bounceFromWall(nx, ny) {
-
-    const safeRadius =
-        circle.radius -
-        circle.wallWidth / 2 -
-        ball.radius -
-        1.5;
-
-
-    ball.x =
-        circle.x +
-        nx *
-        safeRadius;
-
-    ball.y =
-        circle.y +
-        ny *
-        safeRadius;
-
-
-    /*
-        Отражение скорости.
-    */
-
-    const dot =
-        ball.vx * nx +
-        ball.vy * ny;
-
-    if (dot > 0) {
-
-        ball.vx -=
-            2 * dot * nx;
-
-        ball.vy -=
-            2 * dot * ny;
-    }
-
-
-    /*
-        После отражения запускаем
-        нашу систему разнообразных
-        прыжков.
-    */
-
-    registerBounce(
-        nx,
-        ny
-    );
-}
-
-
-/* =====================================================
-   ЗАВЕРШЕНИЕ
-===================================================== */
-
-function finishGame(win) {
-
-    if (gameFinished)
-        return;
-
-    gameFinished = true;
-
-    gameRunning = false;
-
-    gamesPlayed++;
-
-
-    if (win) {
-
-        wins++;
-
-        const payout =
-            currentBet *
-            multiplier;
-
-        balance +=
-            payout;
-
-        balance =
-            Math.round(
-                balance * 100
-            ) / 100;
-
-        const profit =
-            payout -
-            currentBet;
-
-        resultTitle.textContent =
-            "WIN";
-
-        resultTitle.className =
-            "result-title win";
-
-        resultMoney.textContent =
-            "+" +
-            profit.toFixed(2);
-
-        resultMoney.className =
-            "result-money win";
-
-        resultInfo.innerHTML =
-            "Ставка: " +
-            currentBet.toFixed(2) +
-            "<br>" +
-            "Множитель: " +
-            multiplier.toFixed(2) +
-            "x<br>" +
-            "Выплата: " +
-            payout.toFixed(2);
-
-    } else {
-
-        losses++;
-
-        resultTitle.textContent =
-            "LOSE";
-
-        resultTitle.className =
-            "result-title lose";
-
-        resultMoney.textContent =
-            "-" +
-            currentBet.toFixed(2);
-
-        resultMoney.className =
-            "result-money lose";
-
-        resultInfo.innerHTML =
-            "Ставка: " +
-            currentBet.toFixed(2) +
-            "<br>" +
-            "Множитель: " +
-            multiplier.toFixed(2) +
-            "x<br>" +
-            "Ставка проиграна.";
-    }
-
-
-    updateGameUI();
-
-    updateProfileStats();
-
-    gameResult.classList.remove(
-        "hidden"
-    );
-}
-
-
-/* =====================================================
-   ФИЗИКА
-===================================================== */
-
-function updatePhysics() {
-
-    holeAngle +=
-        HOLE_SPEED;
-
-    holeAngle =
-        normalizeAngle(
-            holeAngle
-        );
-
-
-    if (!gameRunning)
-        return;
-
-
-    /*
-        После выхода из круга
-        шар летит с той же скоростью
-        и в том же направлении.
-    */
-
-    if (escaped) {
-
-        ball.vy +=
-            GRAVITY;
-
-        ball.x +=
-            ball.vx;
-
-        ball.y +=
-            ball.vy;
-
-        limitSpeed();
-
-
-        /*
-            Боковые стены.
-        */
-
-        if (
-            ball.x -
-            ball.radius <
-            SIDE_WALL
-        ) {
-
-            ball.x =
-                SIDE_WALL +
-                ball.radius;
-
-            ball.vx =
-                Math.abs(
-                    ball.vx
-                );
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
         }
 
 
         if (
-            ball.x +
-            ball.radius >
-            width -
-            SIDE_WALL
+            audioContext.state ===
+            "suspended"
         ) {
 
-            ball.x =
-                width -
-                SIDE_WALL -
-                ball.radius;
-
-            ball.vx =
-                -Math.abs(
-                    ball.vx
-                );
+            audioContext.resume();
         }
 
 
-        /*
-            Нижняя зона.
-        */
+        const duration = .18;
 
-        const zoneTop =
-            height -
-            ZONE_HEIGHT;
-
-        if (
-            ball.y +
-            ball.radius >=
-            zoneTop
-        ) {
-
-            const greenWidth =
-                width *
-                difficulties[difficulty].green /
-                100;
-
-
-            if (
-                ball.x <=
-                greenWidth
-            ) {
-
-                finishGame(true);
-
-            } else {
-
-                finishGame(false);
-            }
-
-            return;
-        }
-
-        return;
-    }
-
-
-    /*
-        Гравитация.
-    */
-
-    ball.vy +=
-        GRAVITY;
-
-
-    /*
-        Движение.
-    */
-
-    ball.x +=
-        ball.vx;
-
-    ball.y +=
-        ball.vy;
-
-
-    limitSpeed();
-
-
-    /*
-        Расстояние до центра.
-    */
-
-    const dx =
-        ball.x -
-        circle.x;
-
-    const dy =
-        ball.y -
-        circle.y;
-
-    const distance =
-        Math.sqrt(
-            dx * dx +
-            dy * dy
-        );
-
-
-    const collisionRadius =
-        circle.radius -
-        circle.wallWidth / 2 -
-        ball.radius;
-
-
-    if (
-        distance >=
-        collisionRadius
-    ) {
-
-        if (distance < .0001)
-            return;
-
-
-        const nx =
-            dx / distance;
-
-        const ny =
-            dy / distance;
-
-
-        const angle =
-            Math.atan2(
-                dy,
-                dx
+        const buffer =
+            audioContext.createBuffer(
+                1,
+                audioContext.sampleRate *
+                duration,
+                audioContext.sampleRate
             );
 
 
-        /*
-            Если это отверстие
-            и шар движется наружу —
-            выпускаем его.
-        */
+        const data =
+            buffer.getChannelData(0);
 
-        if (
-            isHole(angle)
+
+        for (
+            let i = 0;
+            i < data.length;
+            i++
         ) {
 
-            const outwardVelocity =
-                ball.vx * nx +
-                ball.vy * ny;
+            /*
+                Шум.
 
+                Чем дальше,
+                тем тише.
+            */
+
+            const fade =
+                1 -
+                i / data.length;
+
+
+            data[i] =
+                (
+                    Math.random() * 2 -
+                    1
+                ) *
+                fade;
+        }
+
+
+        const source =
+            audioContext.createBufferSource();
+
+        source.buffer =
+            buffer;
+
+
+        const filter =
+            audioContext.createBiquadFilter();
+
+        filter.type =
+            "bandpass";
+
+        filter.frequency.value =
+            1700;
+
+        filter.Q.value =
+            .8;
+
+
+        const gain =
+            audioContext.createGain();
+
+        gain.gain.value =
+            .22;
+
+
+        source
+            .connect(filter)
+            .connect(gain)
+            .connect(
+                audioContext.destination
+            );
+
+
+        source.start();
+
+    } catch (error) {
+
+        /*
+            Если браузер
+            заблокировал звук —
+            игра всё равно работает.
+        */
+    }
+}
+
+
+/* =====================================================
+   СОЗДАНИЕ ПОЛЯ
+===================================================== */
+
+function createGame() {
+
+    grid.innerHTML = "";
+
+    cells = [];
+
+    openedCount = 0;
+
+    gameOver = false;
+
+
+    /*
+        Создаём 9 случайных
+        символов.
+    */
+
+    const values = [];
+
+    for (
+        let i = 0;
+        i < 9;
+        i++
+    ) {
+
+        values.push(
+            randomItem(icons)
+        );
+    }
+
+
+    for (
+        let i = 0;
+        i < 9;
+        i++
+    ) {
+
+        const cell =
+            document.createElement("div");
+
+        cell.className =
+            "cell";
+
+
+        const icon =
+            document.createElement("div");
+
+        icon.className =
+            "icon";
+
+        icon.textContent =
+            values[i];
+
+
+        const scratch =
+            document.createElement("div");
+
+        scratch.className =
+            "scratch";
+
+
+        cell.appendChild(icon);
+
+        cell.appendChild(scratch);
+
+
+        cell.dataset.value =
+            values[i];
+
+        cell.dataset.index =
+            i;
+
+
+        cell.addEventListener(
+            "click",
+            () => openCell(cell)
+        );
+
+
+        grid.appendChild(cell);
+
+        cells.push(cell);
+    }
+}
+
+
+/* =====================================================
+   ОТКРЫТИЕ ЯЧЕЙКИ
+===================================================== */
+
+function openCell(cell) {
+
+    if (gameOver)
+        return;
+
+
+    if (
+        cell.classList.contains("open")
+    )
+        return;
+
+
+    if (
+        cell.classList.contains(
+            "scratching"
+        )
+    )
+        return;
+
+
+    /*
+        Запускаем звук.
+    */
+
+    scratchSound();
+
+
+    /*
+        Анимация стирания.
+    */
+
+    cell.classList.add(
+        "scratching"
+    );
+
+
+    /*
+        Небольшая задержка,
+        чтобы символ появился
+        после стирания.
+    */
+
+    setTimeout(
+        () => {
+
+            if (gameOver)
+                return;
+
+
+            cell.classList.add(
+                "open"
+            );
+
+            openedCount++;
+
+
+            /*
+                Проверяем победу
+                сразу после открытия.
+            */
 
             if (
-                outwardVelocity >= 0
+                checkWin()
             ) {
 
-                escapeThroughHole(
-                    nx,
-                    ny
-                );
+                showWin();
 
                 return;
             }
+
+
+            /*
+                Если открыты все —
+                проигрыш.
+            */
+
+            if (
+                openedCount >= 9
+            ) {
+
+                showLose();
+            }
+
+        },
+        320
+    );
+}
+
+
+/* =====================================================
+   ПРОВЕРКА ТРЁХ В РЯД
+===================================================== */
+
+function checkWin() {
+
+    const board =
+        cells.map(
+            cell =>
+                cell.dataset.value
+        );
+
+
+    /*
+        Все возможные линии:
+        3 горизонтальные,
+        3 вертикальные,
+        2 диагонали.
+    */
+
+    const lines = [
+
+        [0, 1, 2],
+
+        [3, 4, 5],
+
+        [6, 7, 8],
+
+        [0, 3, 6],
+
+        [1, 4, 7],
+
+        [2, 5, 8],
+
+        [0, 4, 8],
+
+        [2, 4, 6]
+
+    ];
+
+
+    for (
+        const line of lines
+    ) {
+
+        const [a, b, c] =
+            line;
+
+
+        /*
+            Проверяем только
+            открытые клетки.
+
+            Благодаря этому нельзя
+            выиграть через закрытые.
+        */
+
+        if (
+            cells[a].classList.contains("open") &&
+            cells[b].classList.contains("open") &&
+            cells[c].classList.contains("open") &&
+            board[a] === board[b] &&
+            board[b] === board[c]
+        ) {
+
+            return true;
         }
-
-
-        /*
-            Иначе стена твёрдая.
-        */
-
-        bounceFromWall(
-            nx,
-            ny
-        );
     }
+
+
+    return false;
 }
 
 
 /* =====================================================
-   DRAW
+   ПОБЕДА
 ===================================================== */
 
-function draw() {
+function showWin() {
 
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
+    gameOver = true;
 
 
-    /*
-        Боковые стены.
-    */
-
-    ctx.fillStyle =
-        "#252a2f";
-
-    ctx.fillRect(
-        0,
-        0,
-        SIDE_WALL,
-        height
-    );
-
-    ctx.fillRect(
-        width - SIDE_WALL,
-        0,
-        SIDE_WALL,
-        height
-    );
-
-
-    /*
-        Круг.
-    */
-
-    const radius =
-        circle.radius;
-
-    const holeRadians =
-        difficulties[difficulty].hole *
-        Math.PI / 180;
-
-    const holeStart =
-        holeAngle -
-        holeRadians / 2;
-
-    const holeEnd =
-        holeAngle +
-        holeRadians / 2;
-
-
-    ctx.save();
-
-    ctx.beginPath();
-
-    ctx.arc(
-        circle.x,
-        circle.y,
-        radius,
-        holeEnd,
-        holeStart + Math.PI * 2
-    );
-
-    ctx.strokeStyle =
-        "#1478e8";
-
-    ctx.lineWidth =
-        circle.wallWidth;
-
-    ctx.lineCap =
-        "round";
-
-    ctx.shadowBlur =
-        20;
-
-    ctx.shadowColor =
-        "rgba(20,120,235,.8)";
-
-    ctx.stroke();
-
-    ctx.restore();
-
-
-    /*
-        Края отверстия.
-    */
-
-    ctx.save();
-
-    ctx.strokeStyle =
-        "#1478e8";
-
-    ctx.lineWidth =
-        5;
-
-    ctx.lineCap =
-        "round";
-
-
-    function holeEdge(angle) {
-
-        const inner =
-            radius - 6;
-
-        const outer =
-            radius + 3;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            circle.x +
-            Math.cos(angle) *
-            inner,
-
-            circle.y +
-            Math.sin(angle) *
-            inner
+    const amount =
+        randomMoney(
+            10,
+            50000
         );
 
-        ctx.lineTo(
-            circle.x +
-            Math.cos(angle) *
-            outer,
 
-            circle.y +
-            Math.sin(angle) *
-            outer
+    resultIcon.textContent =
+        "🎉";
+
+
+    resultTitle.textContent =
+        "ПОБЕДА!";
+
+
+    resultTitle.className =
+        "result-title win";
+
+
+    resultText.textContent =
+        "Три одинаковых символа!";
+
+
+    winAmount.textContent =
+        "$" +
+        amount.toLocaleString(
+            "en-US"
         );
 
-        ctx.stroke();
-    }
+
+    winAmount.style.display =
+        "block";
 
 
-    holeEdge(holeStart);
-    holeEdge(holeEnd);
-
-    ctx.restore();
-
-
-    /*
-        Шар.
-    */
-
-    ctx.save();
-
-    ctx.beginPath();
-
-    ctx.arc(
-        ball.x,
-        ball.y,
-        ball.radius,
-        0,
-        Math.PI * 2
+    modal.classList.add(
+        "show"
     );
 
-    ctx.fillStyle =
-        "#fff";
 
-    ctx.shadowBlur =
-        16;
-
-    ctx.shadowColor =
-        "rgba(255,255,255,.95)";
-
-    ctx.fill();
-
-    ctx.restore();
-
-
-    /*
-        Блик.
-    */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        ball.x - 4,
-        ball.y - 4,
-        3,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle =
-        "#fff";
-
-    ctx.fill();
+    createSparks();
 }
 
 
 /* =====================================================
-   GAME LOOP
+   ПРОИГРЫШ
 ===================================================== */
 
-function gameLoop() {
+function showLose() {
 
-    updatePhysics();
+    gameOver = true;
 
-    draw();
 
-    requestAnimationFrame(
-        gameLoop
+    resultIcon.textContent =
+        "😔";
+
+
+    resultTitle.textContent =
+        "ПОПРОБУЙ СНОВА";
+
+
+    resultTitle.className =
+        "result-title lose";
+
+
+    resultText.textContent =
+        "Трёх одинаковых символов не найдено.";
+
+
+    winAmount.textContent =
+        "";
+
+
+    winAmount.style.display =
+        "none";
+
+
+    modal.classList.add(
+        "show"
     );
 }
 
 
 /* =====================================================
-   ОТКРЫТИЕ ИГРЫ
+   ИСКРЫ
 ===================================================== */
 
-openGameButton.addEventListener(
-    "click",
-    () => {
+function createSparks() {
 
-        gameScreen.classList.remove(
-            "hidden"
-        );
-
-        gameMenu.classList.remove(
-            "hidden"
-        );
-
-        gameResult.classList.add(
-            "hidden"
-        );
-
-        updateBalanceUI();
-        updateZones();
-    }
-);
+    const count = 45;
 
 
-/* =====================================================
-   ВЫХОД ИЗ ИГРЫ
-===================================================== */
+    for (
+        let i = 0;
+        i < count;
+        i++
+    ) {
 
-exitGameButton.addEventListener(
-    "click",
-    () => {
-
-        if (gameRunning)
-            return;
-
-        gameScreen.classList.add(
-            "hidden"
-        );
-
-        gameMenu.classList.remove(
-            "hidden"
-        );
-
-        gameResult.classList.add(
-            "hidden"
-        );
-    }
-);
-
-
-/* =====================================================
-   СТАРТ РАУНДА
-===================================================== */
-
-startGameButton.addEventListener(
-    "click",
-    startRound
-);
-
-
-/* =====================================================
-   РЕЗУЛЬТАТ
-===================================================== */
-
-resultClose.addEventListener(
-    "click",
-    () => {
-
-        /*
-            Ставку НЕ сбрасываем.
-
-            Она остаётся в поле,
-            поэтому можно сразу снова
-            играть на ту же сумму.
-        */
-
-        gameResult.classList.add(
-            "hidden"
-        );
-
-        gameMenu.classList.remove(
-            "hidden"
-        );
-
-        updateBalanceUI();
-    }
-);
-
-
-/* =====================================================
-   СЛОЖНОСТЬ
-===================================================== */
-
-document
-    .querySelectorAll(
-        "[data-difficulty]"
-    )
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    /*
-                        Во время раунда
-                        менять сложность нельзя.
-                    */
-
-                    if (gameRunning)
-                        return;
-
-
-                    difficulty =
-                        button.dataset.difficulty;
-
-
-                    document
-                        .querySelectorAll(
-                            "[data-difficulty]"
-                        )
-                        .forEach(
-                            item => {
-
-                                item.classList.remove(
-                                    "active"
-                                );
-                            }
-                        );
-
-
-                    button.classList.add(
-                        "active"
-                    );
-
-
-                    updateZones();
-                }
+        const spark =
+            document.createElement(
+                "div"
             );
-        }
-    );
 
 
-/* =====================================================
-   НАВИГАЦИЯ
-===================================================== */
-
-document
-    .querySelectorAll(".nav-button")
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const page =
-                        button.dataset.page;
-
-
-                    document
-                        .querySelectorAll(".page")
-                        .forEach(
-                            p => {
-
-                                p.classList.add(
-                                    "hidden"
-                                );
-                            }
-                        );
-
-
-                    document
-                        .getElementById(page)
-                        .classList.remove(
-                            "hidden"
-                        );
-
-
-                    document
-                        .querySelectorAll(".nav-button")
-                        .forEach(
-                            b => {
-
-                                b.classList.remove(
-                                    "active"
-                                );
-                            }
-                        );
-
-
-                    button.classList.add(
-                        "active"
-                    );
-                }
-            );
-        }
-    );
-
-
-/* =====================================================
-   ЕЖЕДНЕВНАЯ НАГРАДА
-===================================================== */
-
-dailyButton.addEventListener(
-    "click",
-    () => {
-
-        if (!dailyAvailable)
-            return;
-
-
-        balance += 50;
-
-        balance =
-            Math.round(
-                balance * 100
-            ) / 100;
-
-
-        dailyAvailable = false;
-
-        dailyNextTime =
-            Date.now() +
-            24 * 60 * 60 * 1000;
-
-
-        dailyButton.disabled =
-            true;
-
-        dailyButton.textContent =
-            "НАГРАДА ПОЛУЧЕНА";
-
-        dailyTimer.classList.remove(
-            "hidden"
-        );
-
-        updateBalanceUI();
-    }
-);
-
-
-/* =====================================================
-   ТАЙМЕР DAILY
-===================================================== */
-
-function updateDailyTimer() {
-
-    if (dailyAvailable)
-        return;
-
-
-    const remaining =
-        dailyNextTime -
-        Date.now();
-
-
-    if (remaining <= 0) {
-
-        dailyAvailable = true;
-
-        dailyButton.disabled =
-            false;
-
-        dailyButton.textContent =
-            "ЗАБРАТЬ 50";
-
-        dailyTimer.classList.add(
-            "hidden"
-        );
-
-        return;
-    }
-
-
-    const totalSeconds =
-        Math.floor(
-            remaining / 1000
-        );
-
-
-    const hours =
-        Math.floor(
-            totalSeconds / 3600
-        );
-
-    const minutes =
-        Math.floor(
-            (totalSeconds % 3600) / 60
-        );
-
-    const seconds =
-        totalSeconds % 60;
-
-
-    dailyTimer.textContent =
-        String(hours).padStart(2,"0") +
-        ":" +
-        String(minutes).padStart(2,"0") +
-        ":" +
-        String(seconds).padStart(2,"0");
-}
-
-
-setInterval(
-    updateDailyTimer,
-    1000
-);
-
-
-/* =====================================================
-   ПРОМОКОД
-===================================================== */
-
-promoButton.addEventListener(
-    "click",
-    () => {
-
-        const code =
-            promoInput.value
-                .trim()
-                .toLowerCase();
-
-
-        if (code !== "200") {
-
-            promoMessage.style.color =
-                "#ef4752";
-
-            promoMessage.textContent =
-                "Неверный промокод.";
-
-            return;
-        }
-
-
-        if (promoUsed) {
-
-            promoMessage.style.color =
-                "#ef4752";
-
-            promoMessage.textContent =
-                "Этот промокод уже использован.";
-
-            return;
-        }
+        spark.className =
+            "spark";
 
 
         /*
-            ПРОМО 200
-            Даёт 200000 валюты.
+            Начальная точка —
+            центр экрана.
         */
 
-        balance += 200000;
+        spark.style.left =
+            "50%";
 
-        balance =
-            Math.round(
-                balance * 100
-            ) / 100;
+        spark.style.top =
+            "50%";
 
 
-        promoUsed = true;
+        /*
+            Случайное направление.
+        */
 
-        promoInput.value =
-            "";
+        const angle =
+            Math.random() *
+            Math.PI *
+            2;
 
-        promoButton.disabled =
-            true;
 
-        promoMessage.style.color =
-            "#42df78";
+        const distance =
+            100 +
+            Math.random() *
+            280;
 
-        promoMessage.textContent =
-            "+200000 валюты получено!";
 
-        updateBalanceUI();
+        const x =
+            Math.cos(angle) *
+            distance;
+
+
+        const y =
+            Math.sin(angle) *
+            distance;
+
+
+        spark.style.setProperty(
+            "--x",
+            x + "px"
+        );
+
+
+        spark.style.setProperty(
+            "--y",
+            y + "px"
+        );
+
+
+        /*
+            Разный размер.
+        */
+
+        const size =
+            4 +
+            Math.random() * 7;
+
+
+        spark.style.width =
+            size + "px";
+
+        spark.style.height =
+            size + "px";
+
+
+        document.body.appendChild(
+            spark
+        );
+
+
+        setTimeout(
+            () => {
+                spark.remove();
+            },
+            1100
+        );
+    }
+}
+
+
+/* =====================================================
+   НОВАЯ ИГРА
+===================================================== */
+
+playAgain.addEventListener(
+    "click",
+    () => {
+
+        modal.classList.remove(
+            "show"
+        );
+
+
+        /*
+            Небольшая задержка,
+            чтобы модальное окно
+            успело исчезнуть.
+        */
+
+        setTimeout(
+            createGame,
+            200
+        );
     }
 );
 
 
 /* =====================================================
-   СТАТИСТИКА
+   START
 ===================================================== */
 
-function updateProfileStats() {
+createGame();
 
-    document.getElementById(
-        "gamesPlayed"
-    ).textContent =
-        gamesPlayed;
-
-    document.getElementById(
-        "wins"
-    ).textContent =
-        wins;
-
-    document.getElementById(
-        "losses"
-    ).textContent =
-        losses;
-}
-
-
-/* =====================================================
-   НАЧАЛЬНАЯ ИНИЦИАЛИЗАЦИЯ
-===================================================== */
-
-resizeCanvas();
-
-updateZones();
-
-updateBalanceUI();
-
-updateProfileStats();
-
-ball.x =
-    circle.x;
-
-ball.y =
-    circle.y -
-    circle.radius * .35;
-
-
-/*
-    Реферальный ID-заглушка.
-
-    Позже здесь можно будет
-    автоматически получать ID
-    из Telegram WebApp.
-*/
-
-document.getElementById(
-    "refLink"
-).textContent =
-    "drop.example/100001";
-
-
-/*
-    Запускаем игру.
-*/
-
-gameLoop();
 </script>
 
 </body>
