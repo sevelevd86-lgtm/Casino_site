@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Шарик в круге</title>
+    <title>Шарик катится по кругу</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -15,13 +15,12 @@
             position: relative;
             width: 500px; height: 500px;
             border-radius: 50%;
-            /* === ТВЁРДАЯ ВИДИМАЯ ГРАНИЦА === */
             border: 4px solid #1473e6;
             background: #181818;
             box-shadow: 0 0 20px rgba(20, 115, 230, 0.3);
             animation: rotate 2s linear infinite;
         }
-        /* ===== ДЫРКА ===== */
+        /* ===== ДЫРКА (вращается вместе с кругом) ===== */
         .hole {
             position: absolute;
             bottom: -2px;
@@ -59,59 +58,100 @@
 <body>
     <div class="circle-wrapper" id="circleWrapper">
         <div class="ball" id="ball"></div>
-        <div class="hole"></div>
+        <div class="hole" id="hole"></div>
     </div>
 
     <script>
         const wrapper = document.getElementById('circleWrapper');
         const ball = document.getElementById('ball');
+        const hole = document.getElementById('hole');
 
         const size = 500;
         const radius = size / 2;
         const ballRadius = 10;
 
+        // Позиция шарика (внутри круга)
         let x = radius;
         let y = radius - 40;
 
-        let dx = (Math.random() - 0.5) * 2.0;
+        // Скорость
+        let dx = (Math.random() - 0.5) * 1.0;
         let dy = 0;
 
         const GRAVITY = 0.2;
-        const BOUNCE = 0.80;
-        const MAX_BOUNCE_HEIGHT = radius * 0.5;
+        const BOUNCE = 0.85;
+        const FRICTION = 0.995; // чтобы шарик не разгонялся бесконечно
+
+        // === ПОЛУЧАЕМ ТЕКУЩИЙ УГОЛ ДЫРКИ (относительно круга) ===
+        function getHoleAngle() {
+            // Дырка всегда внизу в локальных координатах круга
+            // Но так как круг вращается, её угол в мировой системе = -90° + вращение
+            const wrapperStyle = window.getComputedStyle(wrapper);
+            const transform = wrapperStyle.transform;
+            if (transform === 'none') return -Math.PI / 2;
+            const matrix = transform.match(/matrix\(([^)]+)\)/);
+            if (!matrix) return -Math.PI / 2;
+            const values = matrix[1].split(', ').map(Number);
+            const angle = Math.atan2(values[1], values[0]);
+            return angle;
+        }
 
         function updateBall() {
+            // Гравитация всегда вниз (в мировых координатах)
             dy += GRAVITY;
+
+            // Движение
             x += dx;
             y += dy;
 
+            // Расстояние от центра
             const dist = Math.sqrt((x - radius) ** 2 + (y - radius) ** 2);
-            const maxDist = radius - ballRadius - 2; // физическая граница = видимой
+            const maxDist = radius - ballRadius - 2;
 
+            // === СТОЛКНОВЕНИЕ СО СТЕНКОЙ ===
             if (dist > maxDist) {
                 const nx = (x - radius) / dist;
                 const ny = (y - radius) / dist;
 
+                // Вталкиваем внутрь
                 x = radius + nx * maxDist;
                 y = radius + ny * maxDist;
 
+                // Отражение скорости
                 const vn = dx * nx + dy * ny;
                 if (vn > 0) {
                     dx -= 2 * vn * nx * BOUNCE;
                     dy -= 2 * vn * ny * BOUNCE;
 
-                    const speed = Math.sqrt(dx * dx + dy * dy);
-                    if (speed > 0) {
-                        const vy_abs = Math.abs(dy);
-                        const maxVy = Math.sqrt(2 * GRAVITY * MAX_BOUNCE_HEIGHT);
-                        if (vy_abs > maxVy) {
-                            const scale = maxVy / vy_abs;
-                            dy *= scale;
-                        }
-                    }
+                    // Трение, чтобы не разгонялся
+                    dx *= FRICTION;
+                    dy *= FRICTION;
                 }
             }
 
+            // === ПРОВЕРКА: НАХОДИТСЯ ЛИ ДЫРКА ПОД ШАРИКОМ? ===
+            // Угол шарика относительно центра круга
+            const ballAngle = Math.atan2(y - radius, x - radius);
+            // Угол дырки в мировой системе
+            const holeAngle = getHoleAngle();
+
+            // Разница углов (нормализуем)
+            let diff = ballAngle - holeAngle;
+            while (diff > Math.PI) diff -= 2 * Math.PI;
+            while (diff < -Math.PI) diff += 2 * Math.PI;
+
+            // Если шарик близко к дырке (по углу) и находится в нижней части
+            const isNearHole = Math.abs(diff) < 0.15;
+            const isAtBottom = y > radius + 10;
+
+            if (isNearHole && isAtBottom) {
+                // Шарик падает в дырку!
+                dy += 0.5; // ускоряем падение
+                // Можно добавить визуальный эффект или остановить игру
+                console.log('Шарик упал в дырку!');
+            }
+
+            // Применяем позицию
             ball.style.left = (x - ballRadius) + 'px';
             ball.style.top = (y - ballRadius) + 'px';
 
@@ -120,5 +160,6 @@
 
         updateBall();
     </script>
+
 </body>
 </html>
