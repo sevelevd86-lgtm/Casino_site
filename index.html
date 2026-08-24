@@ -197,298 +197,68 @@
         .rating-item .name{color:#aaa;font-size:12px;flex:1;margin:0 6px}
         .rating-item .score{color:#f0b90b;font-weight:500;font-size:11px}
         
-<!-- ===== РЕЖИМ ШАРИК (ESCAPE) ===== -->
-<div>
-.ball-escape-container{display:flex;flex-direction:column;align-items:center;gap:10px;padding:4px 0;max-width:400px;margin:0 auto;width:100%}
-.ball-escape-header{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:6px 14px;background:rgba(13,13,20,0.6);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
-.ball-escape-header .multiplier{color:#f0b90b;font-size:11px;font-weight:500}
-.ball-escape-header .hash{color:#555;font-size:9px;font-family:monospace}
+        /* ===== РЕЖИМ ШАРИК (ESCAPE) ===== */
+        .ball-escape-container{display:flex;flex-direction:column;align-items:center;gap:10px;padding:4px 0;max-width:400px;margin:0 auto;width:100%}
+        .ball-escape-header{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:6px 14px;background:rgba(13,13,20,0.6);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
+        .ball-escape-header .multiplier{color:#f0b90b;font-size:11px;font-weight:500}
+        .ball-escape-header .hash{color:#555;font-size:9px;font-family:monospace}
 
-.ball-escape-circle-wrapper{position:relative;width:280px;height:280px;border-radius:50%;background:#0d0d14;border:2px solid rgba(255,255,255,0.03);box-shadow:inset 0 0 80px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.3)}
-.ball-escape-rotation-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;transition:transform 0.05s linear;will-change:transform}
-.ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, #16161f, #08080c)}
-.ball-escape-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:34px;height:14px;background:#0a0a0f;border-bottom:3px solid rgba(240,185,11,0.03);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;box-shadow:inset 0 -4px 12px rgba(0,0,0,0.8)}
-.ball-escape-hole::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:24px;height:8px;background:rgba(240,185,11,0.02);border-radius:50%}
-.ball-escape-ball{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 30px rgba(240,185,11,0.15), inset 0 -2px 6px rgba(0,0,0,0.3);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
-.ball-escape-hit{color:#f0b90b;font-size:9px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .8s ease forwards;font-weight:600}
-@keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-30px)}}
+        .ball-escape-circle-wrapper{position:relative;width:280px;height:280px;border-radius:50%;background:#0d0d14;border:2px solid rgba(255,255,255,0.03);box-shadow:inset 0 0 80px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.3)}
+        .ball-escape-rotation-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;transition:transform 0.05s linear;will-change:transform}
+        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, #16161f, #08080c)}
+        .ball-escape-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:34px;height:14px;background:#0a0a0f;border-bottom:3px solid rgba(240,185,11,0.03);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;box-shadow:inset 0 -4px 12px rgba(0,0,0,0.8)}
+        .ball-escape-hole::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:24px;height:8px;background:rgba(240,185,11,0.02);border-radius:50%}
+        .ball-escape-ball{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 30px rgba(240,185,11,0.15), inset 0 -2px 6px rgba(0,0,0,0.3);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
+        .ball-escape-hit{color:#f0b90b;font-size:9px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .8s ease forwards;font-weight:600}
+        @keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-30px)}}
 
-.ball-escape-zones{display:flex;width:100%;max-width:340px;height:40px;margin-top:8px;border-radius:0 0 20px 20px;overflow:hidden;border:1px solid rgba(255,255,255,0.02);background:rgba(13,13,20,0.3)}
-.ball-escape-zones .zone{flex:1;display:flex;justify-content:center;align-items:center;font-size:18px;font-weight:700;transition:all .3s;position:relative}
-.ball-escape-zones .zone.green{background:rgba(46,204,113,0.04);color:#2ecc71;border-right:1px solid rgba(255,255,255,0.01)}
-.ball-escape-zones .zone.red{background:rgba(231,76,60,0.04);color:#e74c3c}
-.ball-escape-zones .zone.active.green{background:rgba(46,204,113,0.15);box-shadow:inset 0 0 40px rgba(46,204,113,0.04)}
-.ball-escape-zones .zone.active.red{background:rgba(231,76,60,0.15);box-shadow:inset 0 0 40px rgba(231,76,60,0.04)}
-.ball-escape-zones .zone .zone-label{position:absolute;bottom:4px;font-size:8px;color:rgba(255,255,255,0.1);text-transform:uppercase;letter-spacing:1px}
+        .ball-escape-zones{display:flex;width:100%;max-width:340px;height:40px;margin-top:8px;border-radius:0 0 20px 20px;overflow:hidden;border:1px solid rgba(255,255,255,0.02);background:rgba(13,13,20,0.3)}
+        .ball-escape-zones .zone{flex:1;display:flex;justify-content:center;align-items:center;font-size:18px;font-weight:700;transition:all .3s;position:relative}
+        .ball-escape-zones .zone.green{background:rgba(46,204,113,0.04);color:#2ecc71;border-right:1px solid rgba(255,255,255,0.01)}
+        .ball-escape-zones .zone.red{background:rgba(231,76,60,0.04);color:#e74c3c}
+        .ball-escape-zones .zone.active.green{background:rgba(46,204,113,0.15);box-shadow:inset 0 0 40px rgba(46,204,113,0.04)}
+        .ball-escape-zones .zone.active.red{background:rgba(231,76,60,0.15);box-shadow:inset 0 0 40px rgba(231,76,60,0.04)}
+        .ball-escape-zones .zone .zone-label{position:absolute;bottom:4px;font-size:8px;color:rgba(255,255,255,0.1);text-transform:uppercase;letter-spacing:1px}
 
-.ball-escape-info{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:6px 14px;background:rgba(13,13,20,0.4);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
-.ball-escape-info .item{text-align:center;font-size:9px;color:#555;flex:1}
-.ball-escape-info .item span{display:block;font-size:14px;font-weight:600;color:#f0b90b;margin-top:1px}
-.ball-escape-info .item .multiplier{font-size:20px;color:#f0b90b;font-weight:700}
+        .ball-escape-info{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:6px 14px;background:rgba(13,13,20,0.4);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
+        .ball-escape-info .item{text-align:center;font-size:9px;color:#555;flex:1}
+        .ball-escape-info .item span{display:block;font-size:14px;font-weight:600;color:#f0b90b;margin-top:1px}
+        .ball-escape-info .item .multiplier{font-size:20px;color:#f0b90b;font-weight:700}
 
-.ball-escape-bet-row{display:flex;gap:6px;width:100%;max-width:340px}
-.ball-escape-bet-input{flex:1;background:rgba(10,10,15,0.4);border:1px solid rgba(255,255,255,0.02);border-radius:50px;padding:10px 14px;color:#fff;font-size:14px;text-align:center;outline:none}
-.ball-escape-bet-input:focus{border-color:rgba(240,185,11,0.04)}
-.ball-escape-bet-btn{flex:1;padding:10px;border-radius:50px;border:none;font-weight:600;font-size:13px;cursor:pointer;transition:all .1s;background:#f0b90b;color:#0a0a0f}
-.ball-escape-bet-btn:active{transform:scale(0.95)}
-.ball-escape-bet-btn:disabled{opacity:0.3;pointer-events:none}
+        .ball-escape-bet-row{display:flex;gap:6px;width:100%;max-width:340px}
+        .ball-escape-bet-input{flex:1;background:rgba(10,10,15,0.4);border:1px solid rgba(255,255,255,0.02);border-radius:50px;padding:10px 14px;color:#fff;font-size:14px;text-align:center;outline:none}
+        .ball-escape-bet-input:focus{border-color:rgba(240,185,11,0.04)}
+        .ball-escape-bet-btn{flex:1;padding:10px;border-radius:50px;border:none;font-weight:600;font-size:13px;cursor:pointer;transition:all .1s;background:#f0b90b;color:#0a0a0f}
+        .ball-escape-bet-btn:active{transform:scale(0.95)}
+        .ball-escape-bet-btn:disabled{opacity:0.3;pointer-events:none}
 
-.ball-escape-modes{display:flex;gap:4px;width:100%;max-width:340px}
-.ball-escape-modes .mode{flex:1;padding:6px;border-radius:30px;border:none;font-weight:500;font-size:11px;cursor:pointer;background:rgba(13,13,20,0.3);border:1px solid rgba(255,255,255,0.02);color:#555;transition:all .15s;text-transform:uppercase;letter-spacing:0.5px}
-.ball-escape-modes .mode.active{background:rgba(240,185,11,0.04);border-color:rgba(240,185,11,0.04);color:#f0b90b}
-.ball-escape-modes .mode:active{transform:scale(0.95)}
+        .ball-escape-modes{display:flex;gap:4px;width:100%;max-width:340px}
+        .ball-escape-modes .mode{flex:1;padding:6px;border-radius:30px;border:none;font-weight:500;font-size:11px;cursor:pointer;background:rgba(13,13,20,0.3);border:1px solid rgba(255,255,255,0.02);color:#555;transition:all .15s;text-transform:uppercase;letter-spacing:0.5px}
+        .ball-escape-modes .mode.active{background:rgba(240,185,11,0.04);border-color:rgba(240,185,11,0.04);color:#f0b90b}
+        .ball-escape-modes .mode:active{transform:scale(0.95)}
 
-.ball-escape-nav{display:flex;gap:4px;width:100%;max-width:340px;margin-top:4px}
-.ball-escape-nav .nav-btn{flex:1;padding:8px;border-radius:30px;border:none;font-weight:500;font-size:10px;cursor:pointer;background:rgba(13,13,20,0.2);border:1px solid rgba(255,255,255,0.02);color:#444;transition:all .15s;text-transform:uppercase;letter-spacing:0.3px}
-.ball-escape-nav .nav-btn:active{transform:scale(0.95)}
-.ball-escape-nav .nav-btn.active{color:#f0b90b;border-color:rgba(240,185,11,0.02)}
-</style>
+        .ball-escape-nav{display:flex;gap:4px;width:100%;max-width:340px;margin-top:4px}
+        .ball-escape-nav .nav-btn{flex:1;padding:8px;border-radius:30px;border:none;font-weight:500;font-size:10px;cursor:pointer;background:rgba(13,13,20,0.2);border:1px solid rgba(255,255,255,0.02);color:#444;transition:all .15s;text-transform:uppercase;letter-spacing:0.3px}
+        .ball-escape-nav .nav-btn:active{transform:scale(0.95)}
+        .ball-escape-nav .nav-btn.active{color:#f0b90b;border-color:rgba(240,185,11,0.02)}
+        
+        @media(max-width:420px){.ball-escape-circle-wrapper{width:220px;height:220px}.ball-escape-zones{max-width:280px}.ball-escape-bet-row,.ball-escape-modes,.ball-escape-nav{max-width:280px}.ball-escape-header{max-width:280px;flex-wrap:wrap;gap:4px}.ball-escape-info{max-width:280px}.cases-grid,.inventory-grid{grid-template-columns:1fr 1fr}.case-preview .items-preview{grid-template-columns:repeat(3,1fr)}.slot-item{width:38px}.slot-item .icon{font-size:14px}.deposit-grid{grid-template-columns:repeat(2,1fr)}.deposit-custom{grid-column:span 2}}
+    </style>
+</head>
+<body>
 
-<div class="ball-escape-container">
-    <!-- Верхняя панель -->
-    <div class="ball-escape-header">
-        <span class="multiplier">Каждый отскок: +<span id="hitMultiplier">0.4x</span></span>
-        <span class="hash" id="gameHash">Хеш: d0d5...af51</span>
+    <!-- ===== ЗАГРУЗКА ===== -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">ЗАГРУЗКА</div>
     </div>
-    
-    <!-- Круг -->
-    <div class="ball-escape-circle-wrapper">
-        <div class="ball-escape-rotation-layer" id="ballRotationLayer">
-            <div class="ball-escape-circle" id="ballCircle">
-                <div class="ball-escape-ball" id="ball"></div>
-                <div class="ball-escape-hole"></div>
-            </div>
-        </div>
+
+    <div id="toast" class="toast"></div>
+
+    <div class="top-bar">
+        <span class="logo">⏤ DROP</span>
+        <span class="balance" id="top-balance" onclick="openDeposit()">⭐ 1000</span>
     </div>
-    
-    <!-- Зоны (полная ширина) -->
-    <div class="ball-escape-zones" id="ballZones">
-        <div class="zone green" id="zoneGreen">💸<span class="zone-label">win</span></div>
-        <div class="zone red" id="zoneRed">💀<span class="zone-label">lose</span></div>
-    </div>
-    
-    <!-- Информация о ставке и множителе -->
-    <div class="ball-escape-info">
-        <div class="item">Ставка<br><span id="ballBetDisplay">0.1⭐</span></div>
-        <div class="item">Множитель<br><span class="multiplier" id="ballMultiplierDisplay">x1.0</span></div>
-        <div class="item">Результат<br><span id="ballResultDisplay">—</span></div>
-    </div>
-    
-    <!-- Ставка и кнопка -->
-    <div class="ball-escape-bet-row">
-        <input type="number" class="ball-escape-bet-input" id="ballBetInput" value="0.1" min="0.1" step="0.1" placeholder="Ставка">
-        <button class="ball-escape-bet-btn" id="ballStartBtn" onclick="startBallGame()">Запустить</button>
-    </div>
-    
-    <!-- Режимы -->
-    <div class="ball-escape-modes">
-        <button class="mode active" onclick="setBallMode('lite')">Lite</button>
-        <button class="mode" onclick="setBallMode('mid')">Mid</button>
-        <button class="mode" onclick="setBallMode('epic')">Epic</button>
-    </div>
-    
-    <!-- Нижняя навигация -->
-    <div class="ball-escape-nav">
-        <button class="nav-btn active">Маркет</button>
-        <button class="nav-btn">Соло</button>
-        <button class="nav-btn">Арена</button>
-        <button class="nav-btn">Ивент</button>
-    </div>
-</div>
-
-<script>
-    // ===== ПЕРЕМЕННЫЕ РЕЖИМА ESCAPE =====
-    let ballInterval = null;
-    let ballRotationInterval = null;
-    let ballMultiplier = 1.0;
-    let ballGameActive = false;
-    let ballBet = 0.1;
-    let ballHits = 0;
-    let ballExitTimer = null;
-    let ballRotationAngle = 0;
-    let ballIsWaitingForExit = false;
-    let ballMode = 'epic';
-    let gravity = 0.15;
-    let friction = 0.99;
-    let bounceFactor = 0.75;
-
-    // ===== ФУНКЦИИ =====
-    function setBallMode(mode) {
-        ballMode = mode;
-        document.querySelectorAll('.ball-escape-modes .mode').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.ball-escape-modes .mode').forEach(b => {
-            if (b.textContent.toLowerCase() === mode) b.classList.add('active');
-        });
-        const multipliers = { lite: 0.15, mid: 0.25, epic: 0.40 };
-        document.getElementById('hitMultiplier').textContent = multipliers[mode] + 'x';
-        showToast(`Режим: ${mode}`, 'info', 1500);
-    }
-
-    function resetBallGame() {
-        if (ballInterval) { clearInterval(ballInterval); ballInterval = null; }
-        if (ballRotationInterval) { clearInterval(ballRotationInterval); ballRotationInterval = null; }
-        if (ballExitTimer) { clearTimeout(ballExitTimer); ballExitTimer = null; }
-        ballGameActive = false;
-        ballIsWaitingForExit = false;
-        ballMultiplier = 1.0;
-        ballHits = 0;
-        ballRotationAngle = 0;
-        const ball = document.getElementById('ball');
-        if (ball) { ball.style.top = '50%'; ball.style.left = '50%'; ball.style.transform = 'translate(-50%,-50%)'; }
-        const layer = document.getElementById('ballRotationLayer');
-        if (layer) { layer.style.transform = `rotate(0deg)`; }
-        const zones = document.querySelectorAll('.zone');
-        zones.forEach(z => z.classList.remove('active'));
-        document.getElementById('ballMultiplierDisplay').textContent = 'x1.0';
-        document.getElementById('ballResultDisplay').textContent = '—';
-        const btn = document.getElementById('ballStartBtn');
-        if (btn) { btn.disabled = false; btn.textContent = 'Запустить'; }
-    }
-
-    function startBallGame() {
-        if (ballGameActive) return;
-        const betInput = document.getElementById('ballBetInput');
-        let bet = parseFloat(betInput.value) || 0.1;
-        if (bet < 0.1) { showToast('❌ Минимальная ставка 0.1⭐', 'error'); return; }
-        if (bet > balance) { showToast('❌ Недостаточно звёзд', 'error'); return; }
-        ballBet = bet;
-        balance -= ballBet;
-        updateUI();
-        saveData();
-        document.getElementById('ballBetDisplay').textContent = ballBet + '⭐';
-        const btn = document.getElementById('ballStartBtn');
-        btn.disabled = true;
-        btn.textContent = '⏳ Игра...';
-        ballGameActive = true;
-        ballIsWaitingForExit = false;
-        ballMultiplier = 1.0;
-        ballHits = 0;
-        document.getElementById('ballMultiplierDisplay').textContent = 'x1.0';
-        document.getElementById('ballResultDisplay').textContent = '...';
-        const zones = document.querySelectorAll('.zone');
-        zones.forEach(z => z.classList.remove('active'));
-
-        // Вращение круга
-        if (ballRotationInterval) clearInterval(ballRotationInterval);
-        ballRotationInterval = setInterval(() => {
-            ballRotationAngle += 1.5;
-            document.getElementById('ballRotationLayer').style.transform = `rotate(${ballRotationAngle}deg)`;
-        }, 30);
-
-        const circle = document.getElementById('ballCircle');
-        const ball = document.getElementById('ball');
-        const circleRect = circle.getBoundingClientRect();
-        const centerX = circleRect.width / 2;
-        const centerY = circleRect.height / 2;
-        let x = centerX, y = centerY - 40;
-        let dx = (Math.random() - 0.5) * 4;
-        let dy = -1 + Math.random() * 2;
-        const radius = 8;
-        const circleRadius = circleRect.width / 2 - radius;
-
-        if (ballInterval) clearInterval(ballInterval);
-        let lastHitTime = 0;
-        const startTime = Date.now();
-
-        ballInterval = setInterval(() => {
-            if (!ballGameActive) { clearInterval(ballInterval); return; }
-            const elapsed = Date.now() - startTime;
-
-            // Гравитация
-            dy += gravity;
-            x += dx;
-            y += dy;
-
-            let hitWall = false;
-            // Отскоки от стен
-            if (x - radius < 0 || x + radius > circleRect.width) {
-                dx *= -bounceFactor;
-                x = Math.max(radius, Math.min(circleRect.width - radius, x));
-                hitWall = true;
-            }
-            if (y - radius < 0 || y + radius > circleRect.height) {
-                dy *= -bounceFactor;
-                y = Math.max(radius, Math.min(circleRect.height - radius, y));
-                hitWall = true;
-            }
-
-            // Отскок от отверстия снизу
-            const holeX = circleRect.width / 2;
-            const holeY = circleRect.height;
-            const distToHole = Math.sqrt((x - holeX) ** 2 + (y - holeY) ** 2);
-            if (distToHole < 28 && y > circleRect.height - 35) {
-                dy *= -0.5;
-                y = circleRect.height - 35;
-                hitWall = true;
-            }
-
-            // Если шарик ударился об стену — увеличиваем множитель
-            if (hitWall && Date.now() - lastHitTime > 150) {
-                ballHits++;
-                lastHitTime = Date.now();
-                const hitMultiplier = { lite: 0.15, mid: 0.25, epic: 0.40 }[ballMode] || 0.15;
-                ballMultiplier = 1 + ballHits * hitMultiplier;
-                document.getElementById('ballMultiplierDisplay').textContent = 'x' + ballMultiplier.toFixed(2);
-
-                const hitEffect = document.createElement('div');
-                hitEffect.className = 'ball-escape-hit';
-                hitEffect.textContent = '+' + (ballMultiplier - 1).toFixed(2) + 'x';
-                hitEffect.style.left = x + 'px';
-                hitEffect.style.top = y - 12 + 'px';
-                document.getElementById('ballCircle').appendChild(hitEffect);
-                setTimeout(() => hitEffect.remove(), 800);
-            }
-
-            ball.style.top = y + 'px';
-            ball.style.left = x + 'px';
-
-            // Проверка вылета через отверстие (только когда шарик внизу и у дырки)
-            const distFromCenter = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
-            const isNearHole = y > circleRect.height - 25 && Math.abs(x - holeX) < 20;
-            const isFallingDown = dy > 0.5;
-
-            if (isNearHole && isFallingDown && elapsed > 1500 && !ballIsWaitingForExit) {
-                ballIsWaitingForExit = true;
-                ballExitTimer = setTimeout(() => {
-                    if (!ballGameActive) return;
-                    ballGameActive = false;
-                    clearInterval(ballInterval);
-                    clearInterval(ballRotationInterval);
-
-                    const rand = Math.random();
-                    let redChance = 0.3 + (ballMultiplier - 1) * 0.05;
-                    if (redChance > 0.85) redChance = 0.85;
-                    const isWin = rand > redChance;
-                    const greenZone = document.getElementById('zoneGreen');
-                    const redZone = document.getElementById('zoneRed');
-
-                    if (isWin) {
-                        const winAmount = Math.round(ballBet * ballMultiplier * 10) / 10;
-                        balance += winAmount;
-                        addHistory(`Шарик: выигрыш x${ballMultiplier.toFixed(2)}`, winAmount);
-                        greenZone.classList.add('active');
-                        document.getElementById('ballResultDisplay').textContent = `💸 +${winAmount}⭐`;
-                        showToast(`💸 Выигрыш! +${winAmount}⭐ (x${ballMultiplier.toFixed(2)})`, 'success', 3000);
-                    } else {
-                        addHistory(`Шарик: проигрыш -${ballBet}⭐`, -ballBet);
-                        redZone.classList.add('active');
-                        document.getElementById('ballResultDisplay').textContent = `💀 -${ballBet}⭐`;
-                        showToast(`💀 Проигрыш! -${ballBet}⭐`, 'error', 3000);
-                    }
-                    updateUI();
-                    saveData();
-                    const btn2 = document.getElementById('ballStartBtn');
-                    btn2.disabled = false;
-                    btn2.textContent = 'Запустить';
-                    ballExitTimer = null;
-                    ballIsWaitingForExit = false;
-                }, 300 + Math.random() * 500);
-            }
-        }, 16);
-    }
-</div>
-
-    
 
     <!-- ===== МЕНЮ ===== -->
     <div id="page-menu" class="page active">
@@ -706,15 +476,17 @@
         let ballExitTimer = null;
         let ballRotationAngle = 0;
         let ballIsWaitingForExit = false;
-        let ballMode = 'lite';
+        let ballMode = 'epic';
+        let gravity = 0.15;
+        let friction = 0.99;
+        let bounceFactor = 0.75;
 
         function renderBall(content) {
             const hash = 'd0d5' + Math.random().toString(36).substring(2, 6) + 'af51';
             content.innerHTML = `
                 <div class="ball-escape-container">
-                    <div class="ball-escape-title">ESCAPE</div>
                     <div class="ball-escape-header">
-                        <span class="multiplier">Каждый отскок: +<span id="hitMultiplier">0.15x</span></span>
+                        <span class="multiplier">Каждый отскок: +<span id="hitMultiplier">0.4x</span></span>
                         <span class="hash" id="gameHash">Хеш: ${hash}</span>
                     </div>
                     <div class="ball-escape-circle-wrapper">
@@ -726,8 +498,8 @@
                         </div>
                     </div>
                     <div class="ball-escape-zones" id="ballZones">
-                        <div class="zone green" id="zoneGreen">💸</div>
-                        <div class="zone red" id="zoneRed">💀</div>
+                        <div class="zone green" id="zoneGreen">💸<span class="zone-label">win</span></div>
+                        <div class="zone red" id="zoneRed">💀<span class="zone-label">lose</span></div>
                     </div>
                     <div class="ball-escape-info">
                         <div class="item">Ставка<br><span id="ballBetDisplay">${ballBet}⭐</span></div>
@@ -736,7 +508,7 @@
                     </div>
                     <div class="ball-escape-bet-row">
                         <input type="number" class="ball-escape-bet-input" id="ballBetInput" value="${ballBet}" min="0.1" step="0.1" placeholder="Ставка">
-                        <button class="ball-escape-bet-btn" id="ballStartBtn" onclick="startBallGame()">🎯 Запустить</button>
+                        <button class="ball-escape-bet-btn" id="ballStartBtn" onclick="startBallGame()">Запустить</button>
                     </div>
                     <div class="ball-escape-modes">
                         <button class="mode ${ballMode==='lite'?'active':''}" onclick="setBallMode('lite')">Lite</button>
@@ -784,7 +556,7 @@
             document.getElementById('ballMultiplierDisplay').textContent = 'x1.0';
             document.getElementById('ballResultDisplay').textContent = '—';
             const btn = document.getElementById('ballStartBtn');
-            if (btn) { btn.disabled = false; btn.textContent = '🎯 Запустить'; }
+            if (btn) { btn.disabled = false; btn.textContent = 'Запустить'; }
         }
 
         function startBallGame() {
@@ -821,10 +593,10 @@
             const circleRect = circle.getBoundingClientRect();
             const centerX = circleRect.width / 2;
             const centerY = circleRect.height / 2;
-            let x = centerX, y = centerY;
-            let dx = (Math.random() - 0.5) * 5;
-            let dy = (Math.random() - 0.5) * 5;
-            const radius = 7;
+            let x = centerX, y = centerY - 40;
+            let dx = (Math.random() - 0.5) * 4;
+            let dy = -1 + Math.random() * 2;
+            const radius = 8;
             const circleRadius = circleRect.width / 2 - radius;
 
             if (ballInterval) clearInterval(ballInterval);
@@ -835,17 +607,18 @@
                 if (!ballGameActive) { clearInterval(ballInterval); return; }
                 const elapsed = Date.now() - startTime;
 
+                dy += gravity;
                 x += dx;
                 y += dy;
 
                 let hitWall = false;
                 if (x - radius < 0 || x + radius > circleRect.width) {
-                    dx *= -1;
+                    dx *= -bounceFactor;
                     x = Math.max(radius, Math.min(circleRect.width - radius, x));
                     hitWall = true;
                 }
                 if (y - radius < 0 || y + radius > circleRect.height) {
-                    dy *= -1;
+                    dy *= -bounceFactor;
                     y = Math.max(radius, Math.min(circleRect.height - radius, y));
                     hitWall = true;
                 }
@@ -853,9 +626,9 @@
                 const holeX = circleRect.width / 2;
                 const holeY = circleRect.height;
                 const distToHole = Math.sqrt((x - holeX) ** 2 + (y - holeY) ** 2);
-                if (distToHole < 25 && y > circleRect.height - 30) {
-                    dy *= -0.8;
-                    y = circleRect.height - 30;
+                if (distToHole < 28 && y > circleRect.height - 35) {
+                    dy *= -0.5;
+                    y = circleRect.height - 35;
                     hitWall = true;
                 }
 
@@ -870,7 +643,7 @@
                     hitEffect.className = 'ball-escape-hit';
                     hitEffect.textContent = '+' + (ballMultiplier - 1).toFixed(2) + 'x';
                     hitEffect.style.left = x + 'px';
-                    hitEffect.style.top = y - 10 + 'px';
+                    hitEffect.style.top = y - 12 + 'px';
                     document.getElementById('ballCircle').appendChild(hitEffect);
                     setTimeout(() => hitEffect.remove(), 800);
                 }
@@ -879,7 +652,10 @@
                 ball.style.left = x + 'px';
 
                 const distFromCenter = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
-                if (distFromCenter > circleRadius - 8 && elapsed > 2000 && !ballIsWaitingForExit) {
+                const isNearHole = y > circleRect.height - 25 && Math.abs(x - holeX) < 20;
+                const isFallingDown = dy > 0.5;
+
+                if (isNearHole && isFallingDown && elapsed > 1500 && !ballIsWaitingForExit) {
                     ballIsWaitingForExit = true;
                     ballExitTimer = setTimeout(() => {
                         if (!ballGameActive) return;
@@ -888,7 +664,7 @@
                         clearInterval(ballRotationInterval);
 
                         const rand = Math.random();
-                        let redChance = 0.3 + (ballMultiplier - 1) * 0.06;
+                        let redChance = 0.3 + (ballMultiplier - 1) * 0.05;
                         if (redChance > 0.85) redChance = 0.85;
                         const isWin = rand > redChance;
                         const greenZone = document.getElementById('zoneGreen');
@@ -911,10 +687,10 @@
                         saveData();
                         const btn2 = document.getElementById('ballStartBtn');
                         btn2.disabled = false;
-                        btn2.textContent = '🎯 Запустить';
+                        btn2.textContent = 'Запустить';
                         ballExitTimer = null;
                         ballIsWaitingForExit = false;
-                    }, 300 + Math.random() * 800);
+                    }, 300 + Math.random() * 500);
                 }
             }, 16);
         }
