@@ -206,12 +206,14 @@
         /* Карта */
         .ball-escape-map{position:relative;width:320px;height:340px;background:rgba(13,13,20,0.4);border-radius:20px;border:1px solid rgba(255,255,255,0.02);overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.3)}
         
-        /* СИНИЙ КРУГ С ДЫРКОЙ 1/6 */
-        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(30,60,114,0.3);border:3px solid rgba(52,102,184,0.6);box-shadow:0 0 40px rgba(52,102,184,0.1), inset 0 0 60px rgba(52,102,184,0.05)}
+        /* КРУГ С РАЗРЫВОМ (ДЫРКА) */
+        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(30,60,114,0.15);border:3px solid rgba(52,102,184,0.3);box-shadow:0 0 40px rgba(52,102,184,0.05), inset 0 0 60px rgba(52,102,184,0.05)}
         .ball-escape-rotation-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;transition:transform 0.05s linear;will-change:transform}
-        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, rgba(52,102,184,0.1), rgba(20,40,80,0.2))}
-        .ball-escape-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:33px;height:10px;background:#0a0a0f;border-bottom:2px solid rgba(52,102,184,0.2);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;box-shadow:inset 0 -4px 12px rgba(0,0,0,0.8)}
-        .ball-escape-hole::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:24px;height:6px;background:rgba(52,102,184,0.05);border-radius:50%}
+        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, rgba(52,102,184,0.05), rgba(20,40,80,0.1))}
+        
+        /* ДЫРКА — РАЗРЫВ В КРУГЕ (1/6) */
+        .ball-escape-hole{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:33px;height:6px;background:rgba(13,13,20,0.4);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:2px solid rgba(52,102,184,0.1)}
+        .ball-escape-hole::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;height:6px;background:rgba(13,13,20,0.3);border-radius:50%}
 
         /* Шарик */
         .ball-escape-ball{position:absolute;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 25px rgba(240,185,11,0.15), inset 0 -2px 6px rgba(0,0,0,0.3);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
@@ -484,7 +486,7 @@
         let ballRotationAngle = 0;
         let ballIsWaitingForExit = false;
         let ballMode = 'epic';
-        const GRAVITY = 0.18;
+        const GRAVITY = 0.2;
         const BOUNCE_FACTOR = 0.85;
 
         function renderBall(content) {
@@ -604,7 +606,6 @@
             const circle = document.getElementById('ballCircle');
             const ball = document.getElementById('ball');
             const circleRect = circle.getBoundingClientRect();
-            const mapRect = document.querySelector('.ball-escape-map').getBoundingClientRect();
             const centerX = circleRect.width / 2;
             const centerY = circleRect.height / 2;
             let x = centerX, y = centerY - 20;
@@ -612,8 +613,7 @@
             let dy = -0.5;
             const radius = 7;
             const circleRadius = circleRect.width / 2 - radius;
-            const mapWidth = mapRect.width;
-            const mapHeight = mapRect.height;
+            const mapWidth = circleRect.width;
 
             if (ballInterval) clearInterval(ballInterval);
             let lastHitTime = 0;
@@ -642,7 +642,7 @@
                     hitWall = true;
                 }
 
-                // Отскок от отверстия снизу
+                // Отскок от отверстия снизу (разрыв в круге)
                 const holeX = circleRect.width / 2;
                 const holeY = circleRect.height;
                 const distToHole = Math.sqrt((x - holeX) ** 2 + (y - holeY) ** 2);
@@ -672,7 +672,7 @@
                 ball.style.top = y + 'px';
                 ball.style.left = x + 'px';
 
-                // Проверка вылета через отверстие
+                // Проверка вылета через отверстие (разрыв в круге)
                 const isNearHole = y > circleRect.height - 20 && Math.abs(x - holeX) < 18;
                 const isFallingDown = dy > 0.8;
 
