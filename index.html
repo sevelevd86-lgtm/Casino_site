@@ -197,37 +197,33 @@
         .rating-item .name{color:#aaa;font-size:12px;flex:1;margin:0 6px}
         .rating-item .score{color:#f0b90b;font-weight:500;font-size:11px}
         
-        /* ===== РЕЖИМ ШАРИК (ИСПРАВЛЕННЫЙ) ===== */
+        /* ===== ШАРИК (НОВАЯ ВЕРСИЯ) ===== */
         .ball-escape-container{display:flex;flex-direction:column;align-items:center;gap:8px;padding:4px 0;max-width:400px;margin:0 auto;width:100%}
         .ball-escape-header{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:4px 12px;background:rgba(13,13,20,0.6);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
         .ball-escape-header .multiplier{color:#f0b90b;font-size:11px;font-weight:500}
         .ball-escape-header .hash{color:#555;font-size:9px;font-family:monospace}
 
-        /* Карта */
         .ball-escape-map{position:relative;width:320px;height:340px;background:rgba(13,13,20,0.4);border-radius:20px;border:1px solid rgba(255,255,255,0.02);overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.3)}
         
-        /* КРУГ С РАЗРЫВОМ (ДЫРКА) */
         .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(30,60,114,0.15);border:3px solid rgba(52,102,184,0.3);box-shadow:0 0 40px rgba(52,102,184,0.05), inset 0 0 60px rgba(52,102,184,0.05)}
         .ball-escape-rotation-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;transition:transform 0.05s linear;will-change:transform}
         .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, rgba(52,102,184,0.05), rgba(20,40,80,0.1))}
         
-        /* ДЫРКА — РАЗРЫВ В КРУГЕ (1/6) */
-        .ball-escape-hole{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:33px;height:6px;background:rgba(13,13,20,0.4);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:2px solid rgba(52,102,184,0.1)}
-        .ball-escape-hole::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;height:6px;background:rgba(13,13,20,0.3);border-radius:50%}
+        /* ДЫРКА (разрыв в круге) */
+        .ball-escape-hole{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:36px;height:8px;background:rgba(13,13,20,0.7);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:3px solid rgba(52,102,184,0.15)}
+        .ball-escape-hole::before{content:'';position:absolute;top:-3px;left:-4px;right:-4px;height:8px;background:rgba(13,13,20,0.5);border-radius:50%}
 
-        /* Шарик */
-        .ball-escape-ball{position:absolute;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 25px rgba(240,185,11,0.15), inset 0 -2px 6px rgba(0,0,0,0.3);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
-        .ball-escape-hit{color:#f0b90b;font-size:9px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .8s ease forwards;font-weight:600}
-        @keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-30px)}}
+        .ball-escape-ball{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 30px rgba(240,185,11,0.2), inset 0 -2px 6px rgba(0,0,0,0.3);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
+        .ball-escape-hit{color:#f0b90b;font-size:10px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .8s ease forwards;font-weight:700}
+        @keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-35px)}}
 
-        /* Зоны */
-        .ball-escape-zones{position:absolute;bottom:0;left:0;right:0;height:36px;display:flex;border-radius:0 0 20px 20px;overflow:hidden;border-top:1px solid rgba(255,255,255,0.02)}
-        .ball-escape-zones .zone{flex:1;display:flex;justify-content:center;align-items:center;font-size:18px;font-weight:700;transition:all .3s;position:relative}
+        .ball-escape-zones{position:absolute;bottom:0;left:0;right:0;height:40px;display:flex;border-radius:0 0 20px 20px;overflow:hidden;border-top:1px solid rgba(255,255,255,0.02)}
+        .ball-escape-zones .zone{flex:1;display:flex;justify-content:center;align-items:center;font-size:22px;font-weight:700;transition:all .4s;position:relative}
         .ball-escape-zones .zone.green{background:rgba(46,204,113,0.04);color:#2ecc71;border-right:1px solid rgba(255,255,255,0.01)}
         .ball-escape-zones .zone.red{background:rgba(231,76,60,0.04);color:#e74c3c}
-        .ball-escape-zones .zone.active.green{background:rgba(46,204,113,0.15);box-shadow:inset 0 0 40px rgba(46,204,113,0.04)}
-        .ball-escape-zones .zone.active.red{background:rgba(231,76,60,0.15);box-shadow:inset 0 0 40px rgba(231,76,60,0.04)}
-        .ball-escape-zones .zone .zone-label{position:absolute;bottom:2px;font-size:7px;color:rgba(255,255,255,0.08);text-transform:uppercase;letter-spacing:1px}
+        .ball-escape-zones .zone.active.green{background:rgba(46,204,113,0.18);box-shadow:inset 0 0 60px rgba(46,204,113,0.06)}
+        .ball-escape-zones .zone.active.red{background:rgba(231,76,60,0.18);box-shadow:inset 0 0 60px rgba(231,76,60,0.06)}
+        .ball-escape-zones .zone .zone-label{position:absolute;bottom:3px;font-size:8px;color:rgba(255,255,255,0.06);text-transform:uppercase;letter-spacing:1px}
 
         .ball-escape-info{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:4px 12px;background:rgba(13,13,20,0.4);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
         .ball-escape-info .item{text-align:center;font-size:9px;color:#555;flex:1}
@@ -475,7 +471,7 @@
         function spinUpgrade(){if(!selectedSkin){showToast('❌ Выберите скин','error');return;}if(isSpinning)return;isSpinning=true;const canvas=document.getElementById('wheelCanvas');if(!canvas)return;const ctx=canvas.getContext('2d');const w=200,h=200,cx=100,cy=100,r=90;const win=getWinChance();const isWin=Math.random()*100<win;const arrow=document.getElementById('wheelArrow');const totalRot=4*Math.PI+(isWin?0:Math.PI);const duration=2000+Math.random()*800;const start=Date.now();const startAng=wheelAngle;const resultEl=document.getElementById('upgrade-result');if(resultEl){resultEl.className='upgrade-result';resultEl.textContent='';}
         function anim(){const elapsed=Date.now()-start;const progress=Math.min(elapsed/duration,1);const ease=1-Math.pow(1-progress,3);const current=startAng+totalRot*ease;arrow.style.transform=`translateX(-50%) rotate(${current}rad)`;ctx.clearRect(0,0,w,h);const winNow=getWinChance();const loseNow=100-winNow;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+current,-Math.PI/2+(winNow/100)*2*Math.PI+current);ctx.closePath();ctx.fillStyle='#2ecc71';ctx.fill();ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+(winNow/100)*2*Math.PI+current,-Math.PI/2+2*Math.PI+current);ctx.closePath();ctx.fillStyle='#e74c3c';ctx.fill();ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.strokeStyle='rgba(240,185,11,0.04)';ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const mid=-Math.PI/2+current+(winNow/100)*Math.PI;ctx.fillText(`${winNow}%`,cx+r*0.6*Math.cos(mid),cy+r*0.6*Math.sin(mid));const lAng=-Math.PI/2+current+(winNow/100)*2*Math.PI+((100-winNow)/100)*Math.PI;ctx.fillText(`${loseNow}%`,cx+r*0.6*Math.cos(lAng),cy+r*0.6*Math.sin(lAng));if(progress<1){requestAnimationFrame(anim);}else{wheelAngle=current;isSpinning=false;if(isWin){const upgraded={...selectedSkin,value:Math.round(selectedSkin.value*multiplier)};inventory=inventory.filter(i=>i.id!==selectedSkin.id);inventory.push(upgraded);achievements.upgradesDone++;addHistory(`Апгрейд "${selectedSkin.name}" +${multiplier}x`,upgraded.value-selectedSkin.value);if(resultEl){resultEl.className='upgrade-result success';resultEl.textContent=`🎉 Успех! +${multiplier}x (${upgraded.value}⭐)`;}showToast(`🎉 Апгрейд успешен! +${multiplier}x`,'success');}else{const oldValue=selectedSkin.value;inventory=inventory.filter(i=>i.id!==selectedSkin.id);addHistory(`Апгрейд "${selectedSkin.name}" сгорел`,-oldValue);if(resultEl){resultEl.className='upgrade-result fail';resultEl.textContent=`💥 Скин сгорел (-${oldValue}⭐)`;}showToast('💥 Скин сгорел','error');}selectedSkin=null;document.getElementById('selected-skin-info').innerHTML='Выбран: <span>Нет</span>';saveData();renderInventory();renderUpgrade(document.getElementById('game-content'));}}anim();}
 
-        // ===== РЕЖИМ ШАРИК (ИСПРАВЛЕННЫЙ) =====
+        // ===== ШАРИК (НОВАЯ ВЕРСИЯ) =====
         let ballInterval = null;
         let ballRotationInterval = null;
         let ballMultiplier = 1.0;
@@ -486,15 +482,15 @@
         let ballRotationAngle = 0;
         let ballIsWaitingForExit = false;
         let ballMode = 'epic';
-        const GRAVITY = 0.2;
-        const BOUNCE_FACTOR = 0.85;
+        const GRAVITY = 0.25;
+        const BOUNCE_FACTOR = 0.82;
 
         function renderBall(content) {
             const hash = 'd0d5' + Math.random().toString(36).substring(2, 6) + 'af51';
             content.innerHTML = `
                 <div class="ball-escape-container">
                     <div class="ball-escape-header">
-                        <span class="multiplier">Каждый отскок: +<span id="hitMultiplier">0.4x</span></span>
+                        <span class="multiplier">Каждый отскок: +<span id="hitMultiplier">0.40x</span></span>
                         <span class="hash" id="gameHash">Хеш: ${hash}</span>
                     </div>
                     <div class="ball-escape-map">
@@ -599,7 +595,7 @@
 
             if (ballRotationInterval) clearInterval(ballRotationInterval);
             ballRotationInterval = setInterval(() => {
-                ballRotationAngle += 1.5;
+                ballRotationAngle += 1.2;
                 document.getElementById('ballRotationLayer').style.transform = `rotate(${ballRotationAngle}deg)`;
             }, 30);
 
@@ -608,10 +604,10 @@
             const circleRect = circle.getBoundingClientRect();
             const centerX = circleRect.width / 2;
             const centerY = circleRect.height / 2;
-            let x = centerX, y = centerY - 20;
-            let dx = (Math.random() - 0.5) * 2.5;
-            let dy = -0.5;
-            const radius = 7;
+            let x = centerX, y = centerY - 15;
+            let dx = (Math.random() - 0.5) * 3.0;
+            let dy = -0.3;
+            const radius = 8;
             const circleRadius = circleRect.width / 2 - radius;
             const mapWidth = circleRect.width;
 
@@ -623,7 +619,6 @@
                 if (!ballGameActive) { clearInterval(ballInterval); return; }
                 const elapsed = Date.now() - startTime;
 
-                // Гравитация
                 dy += GRAVITY;
                 x += dx;
                 y += dy;
@@ -642,17 +637,17 @@
                     hitWall = true;
                 }
 
-                // Отскок от отверстия снизу (разрыв в круге)
+                // Отскок от отверстия снизу
                 const holeX = circleRect.width / 2;
                 const holeY = circleRect.height;
                 const distToHole = Math.sqrt((x - holeX) ** 2 + (y - holeY) ** 2);
-                if (distToHole < 25 && y > circleRect.height - 30) {
-                    dy *= -0.6;
-                    y = circleRect.height - 30;
+                if (distToHole < 28 && y > circleRect.height - 32) {
+                    dy *= -0.5;
+                    y = circleRect.height - 32;
                     hitWall = true;
                 }
 
-                // Увеличиваем множитель при ударе
+                // Множитель при ударе
                 if (hitWall && Date.now() - lastHitTime > 150) {
                     ballHits++;
                     lastHitTime = Date.now();
@@ -664,7 +659,7 @@
                     hitEffect.className = 'ball-escape-hit';
                     hitEffect.textContent = '+' + (ballMultiplier - 1).toFixed(2) + 'x';
                     hitEffect.style.left = x + 'px';
-                    hitEffect.style.top = y - 12 + 'px';
+                    hitEffect.style.top = y - 14 + 'px';
                     document.getElementById('ballCircle').appendChild(hitEffect);
                     setTimeout(() => hitEffect.remove(), 800);
                 }
@@ -672,9 +667,9 @@
                 ball.style.top = y + 'px';
                 ball.style.left = x + 'px';
 
-                // Проверка вылета через отверстие (разрыв в круге)
-                const isNearHole = y > circleRect.height - 20 && Math.abs(x - holeX) < 18;
-                const isFallingDown = dy > 0.8;
+                // Выход через дырку
+                const isNearHole = y > circleRect.height - 18 && Math.abs(x - holeX) < 20;
+                const isFallingDown = dy > 0.5;
 
                 if (isNearHole && isFallingDown && elapsed > 1500 && !ballIsWaitingForExit) {
                     ballIsWaitingForExit = true;
@@ -684,10 +679,10 @@
                         clearInterval(ballInterval);
                         clearInterval(ballRotationInterval);
 
-                        const rand = Math.random();
-                        let redChance = 0.3 + (ballMultiplier - 1) * 0.05;
-                        if (redChance > 0.85) redChance = 0.85;
-                        const isWin = rand > redChance;
+                        // Шанс на проигрыш растёт с множителем
+                        let redChance = 0.30 + (ballMultiplier - 1) * 0.06;
+                        if (redChance > 0.88) redChance = 0.88;
+                        const isWin = Math.random() > redChance;
                         const greenZone = document.getElementById('zoneGreen');
                         const redZone = document.getElementById('zoneRed');
 
@@ -697,12 +692,12 @@
                             addHistory(`Шарик: выигрыш x${ballMultiplier.toFixed(2)}`, winAmount);
                             greenZone.classList.add('active');
                             document.getElementById('ballResultDisplay').textContent = `💸 +${winAmount}⭐`;
-                            showToast(`💸 Выигрыш! +${winAmount}⭐ (x${ballMultiplier.toFixed(2)})`, 'success', 3000);
+                            showToast(`💸 Выигрыш! +${winAmount}⭐ (x${ballMultiplier.toFixed(2)})`, 'success', 3500);
                         } else {
                             addHistory(`Шарик: проигрыш -${ballBet}⭐`, -ballBet);
                             redZone.classList.add('active');
                             document.getElementById('ballResultDisplay').textContent = `💀 -${ballBet}⭐`;
-                            showToast(`💀 Проигрыш! -${ballBet}⭐`, 'error', 3000);
+                            showToast(`💀 Проигрыш! -${ballBet}⭐`, 'error', 3500);
                         }
                         updateUI();
                         saveData();
@@ -711,7 +706,7 @@
                         btn2.textContent = 'Запустить';
                         ballExitTimer = null;
                         ballIsWaitingForExit = false;
-                    }, 300 + Math.random() * 400);
+                    }, 250 + Math.random() * 400);
                 }
             }, 16);
         }
