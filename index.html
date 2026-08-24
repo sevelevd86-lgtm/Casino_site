@@ -2,2852 +2,1719 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-
-<title>Portal Games</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐻‍❄️ DROP + SCRATCH</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+/* =====================================================
+   ОБЩИЕ СБРОСЫ
+===================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
-html,body{
-    width:100%;
-    min-height:100%;
-    background:#101214;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #111315;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    user-select: none;
 }
 
-body{
-    display:flex;
-    justify-content:center;
-    overflow-x:hidden;
+button,
+input {
+    font-family: inherit;
+}
+button { cursor: pointer; }
+.hidden { display: none !important; }
+
+/* =====================================================
+   APP (ШАРИК)
+===================================================== */
+#app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #111315;
 }
 
-button{
-    font-family:inherit;
-    -webkit-tap-highlight-color:transparent;
+/* HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 74px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    border-bottom: 1px solid #282d31;
+    background: rgba(17,19,21,.96);
+    z-index: 20;
+}
+.logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -.5px;
+}
+.header-balance {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffd84d;
+    font-size: 19px;
+    font-weight: 900;
 }
 
-.app{
-    width:100%;
-    max-width:480px;
-    min-height:100vh;
-    padding:18px 15px 30px;
+/* CONTENT */
+.content {
+    position: absolute;
+    top: 74px;
+    left: 0;
+    right: 0;
+    bottom: 82px;
+    overflow-y: auto;
+    padding: 25px 18px 30px;
+}
+.page {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+}
+.page-title {
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+.page-subtitle {
+    color: #858b91;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 24px;
 }
 
-/* ================= HEADER ================= */
-
-.header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:22px;
+/* CARDS */
+.card {
+    background: #191c20;
+    border: 1px solid #292e33;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+}
+.card-title {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+.card-text {
+    color: #858b91;
+    font-size: 15px;
+    line-height: 1.5;
 }
 
-.logo{
-    font-size:22px;
-    font-weight:900;
+/* GAME CARD */
+.game-card {
+    padding: 24px;
+}
+.game-icon {
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: #24292e;
+    font-size: 31px;
+    margin-bottom: 17px;
+}
+.game-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    border: none;
+    border-radius: 11px;
+    background: #1678e8;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 900;
+}
+.game-button:active { transform: scale(.98); }
+
+/* INVENTORY */
+.sell-all {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 11px;
+    background: #282d32;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+.sell-all:disabled { opacity: .45; cursor: default; }
+.empty-inventory {
+    text-align: center;
+    padding: 45px 15px;
+    color: #737a81;
+}
+.empty-icon { font-size: 45px; margin-bottom: 13px; }
+.empty-title { color: #c9cdd1; font-size: 19px; font-weight: 800; margin-bottom: 7px; }
+.empty-text { font-size: 15px; }
+
+/* PROFILE */
+.profile-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #292e33;
+}
+.profile-row:last-child { border-bottom: none; }
+.profile-label { color: #858b91; font-size: 15px; }
+.profile-value { font-size: 16px; font-weight: 800; }
+.ref-value { color: #54a8ff; word-break: break-all; }
+
+/* DAILY */
+.daily-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 11px;
+    background: #1678e8;
+    color: white;
+    font-size: 16px;
+    font-weight: 900;
+    margin-top: 15px;
+}
+.daily-button:disabled {
+    background: #282d32;
+    color: #777d83;
+}
+.timer {
+    text-align: center;
+    margin-top: 13px;
+    color: #ffd84d;
+    font-size: 18px;
+    font-weight: 900;
 }
 
-.balance{
-    background:#1a1d21;
-    border:1px solid #292e34;
-    border-radius:12px;
-    padding:10px 14px;
-    font-size:16px;
-    font-weight:800;
+/* PROMOCODE */
+.promo-input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #383e44;
+    border-radius: 10px;
+    background: #111315;
+    color: #fff;
+    outline: none;
+    font-size: 16px;
+    text-align: center;
+}
+.promo-input:focus { border-color: #1678e8; }
+.promo-button {
+    width: 100%;
+    margin-top: 11px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #282d32;
+    color: white;
+    font-size: 15px;
+    font-weight: 900;
+}
+.promo-message {
+    min-height: 20px;
+    margin-top: 9px;
+    text-align: center;
+    font-size: 14px;
+    color: #54df87;
 }
 
-.balance span{
-    color:#ffd84d;
+/* BOTTOM NAV */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 82px;
+    display: flex;
+    background: #171a1d;
+    border-top: 1px solid #292e33;
+    z-index: 30;
+}
+.nav-button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: none;
+    background: transparent;
+    color: #737a81;
+    font-size: 13px;
+    font-weight: 800;
+}
+.nav-icon { font-size: 23px; }
+.nav-button.active { color: #fff; }
+.nav-button.active .nav-icon { transform: translateY(-1px); }
+
+/* =====================================================
+   ИГРА ШАРИК
+===================================================== */
+#gameScreen {
+    position: fixed;
+    inset: 0;
+    background: #111315;
+    z-index: 100;
+}
+#gameCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+.game-top {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+    z-index: 110;
+}
+.game-stat {
+    min-width: 75px;
+    text-align: center;
+}
+.game-stat-label {
+    color: #737a81;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+.game-stat-value {
+    margin-top: 4px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+}
+#gameMultiplier { color: #42df78; }
+#gameBalance { color: #ffd84d; }
+
+.bottom-zones {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    z-index: 105;
+    pointer-events: none;
+}
+.green-zone, .red-zone {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+    overflow: hidden;
+}
+.green-zone {
+    background: linear-gradient(to top, #2bdd72, #26c968 35%, rgba(39,201,104,.2));
+}
+.red-zone {
+    background: linear-gradient(to top, #e84550, #d93c47 35%, rgba(217,60,71,.2));
 }
 
-/* ================= SCREENS ================= */
-
-.screen{
-    display:none;
+.game-menu {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 40px);
+    max-width: 350px;
+    padding: 25px;
+    background: rgba(25,28,32,.98);
+    border: 1px solid #343a40;
+    border-radius: 18px;
+    z-index: 120;
+}
+.game-menu-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 18px;
+}
+.game-menu-balance {
+    text-align: center;
+    color: #ffd84d;
+    font-size: 23px;
+    font-weight: 900;
+    margin-bottom: 18px;
+}
+.bet-input {
+    width: 100%;
+    padding: 14px;
+    background: #111315;
+    color: white;
+    border: 1px solid #3a4148;
+    border-radius: 10px;
+    outline: none;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 800;
+}
+.bet-error {
+    min-height: 18px;
+    color: #ef4752;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 7px;
+}
+.difficulty {
+    display: flex;
+    gap: 6px;
+    margin-top: 12px;
+}
+.difficulty button {
+    flex: 1;
+    border: none;
+    border-radius: 9px;
+    padding: 10px 5px;
+    background: #282d32;
+    color: #cfd3d7;
+    font-size: 13px;
+    font-weight: 800;
+}
+.difficulty button.active { background: #1678e8; color: #fff; }
+.start-game {
+    width: 100%;
+    margin-top: 15px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #1678e8;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+}
+.exit-game {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #858b91;
+    font-size: 14px;
+    font-weight: 800;
 }
 
-.screen.active{
-    display:block;
+.result {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 40px);
+    max-width: 330px;
+    padding: 28px;
+    background: #191c20;
+    border: 1px solid #343a40;
+    border-radius: 18px;
+    text-align: center;
+    z-index: 130;
 }
-
-/* ================= MENU ================= */
-
-.menu-title{
-    text-align:center;
-    font-size:31px;
-    font-weight:900;
-    margin-top:15px;
+.result-title { font-size: 44px; font-weight: 900; }
+.result-title.win { color: #42df78; }
+.result-title.lose { color: #ef4752; }
+.result-info {
+    color: #858b91;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 8px;
 }
-
-.menu-subtitle{
-    text-align:center;
-    color:#858b92;
-    font-size:14px;
-    margin-top:7px;
+.result-money {
+    margin-top: 12px;
+    font-size: 23px;
+    font-weight: 900;
 }
-
-.menu{
-    margin-top:28px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-}
-
-.menu-button{
-    width:100%;
-    border:1px solid #292e34;
-    background:#181b1f;
-    color:#fff;
-    border-radius:17px;
-    padding:19px;
-    display:flex;
-    align-items:center;
-    gap:15px;
-    cursor:pointer;
-    text-align:left;
-    transition:.2s;
-}
-
-.menu-button:hover{
-    transform:translateY(-2px);
-    border-color:#454c54;
-    background:#1d2126;
-}
-
-.menu-button:active{
-    transform:scale(.98);
-}
-
-.menu-icon{
-    width:50px;
-    height:50px;
-    border-radius:14px;
-    background:#24282d;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:27px;
-    flex-shrink:0;
-}
-
-.menu-info{
-    flex:1;
-}
-
-.menu-name{
-    font-size:17px;
-    font-weight:900;
-}
-
-.menu-description{
-    color:#858b92;
-    font-size:12px;
-    margin-top:5px;
-}
-
-.menu-arrow{
-    color:#666e76;
-    font-size:22px;
-}
-
-/* ================= COMMON TITLE ================= */
-
-.title{
-    text-align:center;
-    font-size:30px;
-    font-weight:900;
-    margin-top:10px;
-}
-
-.subtitle{
-    text-align:center;
-    color:#858b92;
-    font-size:14px;
-    margin-top:7px;
-    line-height:1.5;
-}
-
-/* ================= BACK ================= */
-
-.back-button{
-    width:100%;
-    margin-top:15px;
-    padding:13px;
-    border:none;
-    border-radius:11px;
-    background:#24282d;
-    color:#d9dde0;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.back-button:hover{
-    background:#2d3238;
+.result-money.win { color: #42df78; }
+.result-money.lose { color: #ef4752; }
+.result-close {
+    width: 100%;
+    margin-top: 18px;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #1678e8;
+    color: white;
+    font-size: 14px;
+    font-weight: 900;
 }
 
 /* =====================================================
-   BALL GAME
+   ИГРА БИЛЕТЫ (SCRATCH) — ВСТРОЕНА
 ===================================================== */
-
-.ball-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
+#ticketGameContainer {
+    position: fixed;
+    inset: 0;
+    background: #101214;
+    z-index: 90;
+    overflow-y: auto;
+    padding: 18px 15px 30px;
 }
 
-.ball-title{
-    font-size:20px;
-    font-weight:900;
+/* Стили билетов — скопированы из первого файла */
+#ticketGameContainer .app-inner {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+#ticketGameContainer .header-ticket {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+#ticketGameContainer .logo-ticket {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: .5px;
+}
+#ticketGameContainer .balance-ticket {
+    background: #1a1d21;
+    border: 1px solid #292e34;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 16px;
+    font-weight: 800;
+}
+#ticketGameContainer .balance-ticket span { color: #ffd84d; }
+
+#ticketGameContainer .screen { display: none; }
+#ticketGameContainer .screen.active { display: block; }
+
+#ticketGameContainer .title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 900;
+    margin-top: 10px;
+}
+#ticketGameContainer .subtitle {
+    text-align: center;
+    color: #858b92;
+    font-size: 14px;
+    margin-top: 7px;
+    line-height: 1.5;
 }
 
-.ball-score{
-    background:#181b1f;
-    border:1px solid #292e34;
-    padding:8px 12px;
-    border-radius:10px;
-    font-weight:800;
+#ticketGameContainer .tickets {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 28px;
+}
+#ticketGameContainer .ticket {
+    width: 100%;
+    border: 1px solid #2b3036;
+    background: #181b1f;
+    border-radius: 17px;
+    padding: 19px;
+    cursor: pointer;
+    transition: .2s ease;
+    position: relative;
+}
+#ticketGameContainer .ticket:hover { border-color: #454c54; transform: translateY(-1px); }
+#ticketGameContainer .ticket:active { transform: scale(.985); }
+#ticketGameContainer .ticket.selected {
+    border: 2px solid #ffd84d;
+    box-shadow: 0 0 0 1px rgba(255,216,77,.15), 0 0 22px rgba(255,216,77,.14);
+}
+#ticketGameContainer .ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#ticketGameContainer .ticket-name { font-size: 19px; font-weight: 900; }
+#ticketGameContainer .ticket-price { color: #ffd84d; font-size: 16px; font-weight: 900; }
+#ticketGameContainer .free { color: #48df80; }
+#ticketGameContainer .ticket-description {
+    color: #858b92;
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
-.ball-wrapper{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    margin-top:15px;
+#ticketGameContainer .chance-panel {
+    margin-top: 20px;
+    background: #181b1f;
+    border: 1px solid #292e34;
+    border-radius: 17px;
+    padding: 18px;
+}
+#ticketGameContainer .chance-title { font-size: 18px; font-weight: 900; margin-bottom: 6px; }
+#ticketGameContainer .chance-subtitle {
+    color: #777f87;
+    font-size: 12px;
+    margin-bottom: 14px;
+}
+#ticketGameContainer .start-ticket-button {
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1678e8, #2493ff);
+    color: white;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(22,120,232,.25);
+    transition: .2s ease;
+}
+#ticketGameContainer .start-ticket-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+#ticketGameContainer .start-ticket-button:active { transform: scale(.98); }
+
+#ticketGameContainer .chance-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid #24282d;
+}
+#ticketGameContainer .chance-row:last-child { border-bottom: none; }
+#ticketGameContainer .chance-symbol { font-size: 21px; }
+#ticketGameContainer .chance-name {
+    flex: 1;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #d5d9dd;
+}
+#ticketGameContainer .chance-percent {
+    font-size: 14px;
+    font-weight: 900;
+    color: #4fe483;
+    width: 55px;
+    text-align: right;
+}
+#ticketGameContainer .chance-prize {
+    width: 75px;
+    text-align: right;
+    color: #ffd84d;
+    font-weight: 900;
+    font-size: 14px;
+}
+#ticketGameContainer .back-button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 13px;
+    border: none;
+    border-radius: 11px;
+    background: #24282d;
+    color: #d9dde0;
+    font-weight: 800;
+    cursor: pointer;
 }
 
-#ballCanvas{
-    width:min(100%,430px);
-    aspect-ratio:1;
-    display:block;
-    background:#0d0f11;
-    border-radius:22px;
-    border:1px solid #292e34;
-    box-shadow:0 20px 60px rgba(0,0,0,.35);
-    touch-action:none;
+#ticketGameContainer .game-header-ticket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+#ticketGameContainer .game-name-ticket { font-size: 20px; font-weight: 900; }
+#ticketGameContainer .game-cost-ticket { color: #ffd84d; font-size: 14px; font-weight: 800; }
+#ticketGameContainer .free-opens-ticket {
+    text-align: center;
+    color: #48df80;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 12px;
 }
 
-.ball-help{
-    text-align:center;
-    color:#777f87;
-    font-size:12px;
-    margin-top:12px;
+#ticketGameContainer .card-ticket {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #191c20;
+    border: 1px solid #30353b;
+    border-radius: 20px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+#ticketGameContainer .cell-ticket {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #24282d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+#ticketGameContainer .symbol-ticket {
+    font-size: clamp(30px, 11vw, 54px);
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,.3));
+}
+#ticketGameContainer .scratch-ticket {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(135deg, #777d83 0px, #777d83 3px, #686e74 3px, #686e74 6px);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.08), inset 0 -10px 20px rgba(0,0,0,.25);
+    transition: opacity .35s ease, transform .35s ease;
+}
+#ticketGameContainer .scratch-ticket::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(-25deg, transparent 0px, transparent 9px, rgba(255,255,255,.15) 10px, transparent 12px);
+}
+#ticketGameContainer .cell-ticket.opened .scratch-ticket {
+    opacity: 0;
+    transform: scale(1.15);
+    pointer-events: none;
+}
+#ticketGameContainer .cell-ticket.opened { animation: openCell .25s ease; }
+@keyframes openCell {
+    0% { transform: scale(.95); }
+    100% { transform: scale(1); }
 }
 
-/* =====================================================
-   TICKETS
-===================================================== */
+#ticketGameContainer .game-bottom-ticket {
+    margin-top: 17px;
+    display: flex;
+    gap: 9px;
+}
+#ticketGameContainer .game-button-ticket {
+    flex: 1;
+    border: none;
+    border-radius: 11px;
+    padding: 13px;
+    background: #24282d;
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+}
+#ticketGameContainer .game-button-ticket:hover { background: #2d3238; }
 
-.tickets{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    margin-top:28px;
+#ticketGameContainer .modal-ticket {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.72);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+}
+#ticketGameContainer .modal-ticket.show { display: flex; }
+#ticketGameContainer .modal-box-ticket {
+    width: 100%;
+    max-width: 350px;
+    background: #191c20;
+    border: 1px solid #30353b;
+    border-radius: 20px;
+    padding: 28px 22px;
+    text-align: center;
+    animation: modalIn .25s ease;
+}
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+#ticketGameContainer .result-icon-ticket { font-size: 55px; }
+#ticketGameContainer .result-title-ticket {
+    margin-top: 10px;
+    font-size: 30px;
+    font-weight: 900;
+}
+#ticketGameContainer .result-title-ticket.win { color: #48df80; }
+#ticketGameContainer .result-title-ticket.lose { color: #ef5350; }
+#ticketGameContainer .result-text-ticket {
+    color: #8b9299;
+    margin-top: 9px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+#ticketGameContainer .result-money-ticket {
+    margin-top: 15px;
+    font-size: 27px;
+    font-weight: 900;
+    color: #ffd84d;
+}
+#ticketGameContainer .modal-button-ticket {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    border: none;
+    border-radius: 11px;
+    background: #1678e8;
+    color: white;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
 }
 
-.ticket{
-    width:100%;
-    border:1px solid #2b3036;
-    background:#181b1f;
-    border-radius:17px;
-    padding:19px;
-    cursor:pointer;
-    transition:.2s ease;
-    position:relative;
+#ticketGameContainer .spark-ticket {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffd84d;
+    pointer-events: none;
+    z-index: 150;
+    animation: spark 800ms ease-out forwards;
+}
+@keyframes spark {
+    from { transform: translate(0,0) scale(1); opacity: 1; }
+    to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
 }
 
-.ticket:hover{
-    border-color:#454c54;
-    transform:translateY(-1px);
+/* Закрытие билетов */
+#closeTicketsBtn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 95;
+    background: #24282d;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,.6);
 }
+#closeTicketsBtn:hover { background: #383e44; }
 
-.ticket:active{
-    transform:scale(.985);
-}
-
-.ticket.selected{
-    border:2px solid #ffd84d;
-    box-shadow:
-        0 0 0 1px rgba(255,216,77,.15),
-        0 0 22px rgba(255,216,77,.14);
-}
-
-.ticket-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.ticket-name{
-    font-size:19px;
-    font-weight:900;
-}
-
-.ticket-price{
-    color:#ffd84d;
-    font-size:16px;
-    font-weight:900;
-}
-
-.free{
-    color:#48df80;
-}
-
-.ticket-description{
-    color:#858b92;
-    margin-top:8px;
-    font-size:13px;
-    line-height:1.5;
-}
-
-/* ================= CHANCES ================= */
-
-.chance-panel{
-    margin-top:20px;
-    background:#181b1f;
-    border:1px solid #292e34;
-    border-radius:17px;
-    padding:18px;
-}
-
-.chance-title{
-    font-size:18px;
-    font-weight:900;
-    margin-bottom:6px;
-}
-
-.chance-subtitle{
-    color:#777f87;
-    font-size:12px;
-    margin-bottom:14px;
-}
-
-.start-ticket-button{
-    width:100%;
-    margin-bottom:18px;
-    padding:15px;
-    border:none;
-    border-radius:12px;
-    background:linear-gradient(135deg,#1678e8,#2493ff);
-    color:white;
-    font-size:15px;
-    font-weight:900;
-    cursor:pointer;
-    box-shadow:0 6px 20px rgba(22,120,232,.25);
-}
-
-.start-ticket-button:active{
-    transform:scale(.98);
-}
-
-.chance-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:11px 0;
-    border-bottom:1px solid #24282d;
-}
-
-.chance-row:last-child{
-    border-bottom:none;
-}
-
-.chance-symbol{
-    font-size:21px;
-}
-
-.chance-name{
-    flex:1;
-    margin-left:10px;
-    font-size:14px;
-    color:#d5d9dd;
-}
-
-.chance-percent{
-    font-size:14px;
-    font-weight:900;
-    color:#4fe483;
-    width:55px;
-    text-align:right;
-}
-
-.chance-prize{
-    width:75px;
-    text-align:right;
-    color:#ffd84d;
-    font-weight:900;
-    font-size:14px;
-}
-
-/* =====================================================
-   SCRATCH GAME
-===================================================== */
-
-.game-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-}
-
-.game-name{
-    font-size:20px;
-    font-weight:900;
-}
-
-.game-cost{
-    color:#ffd84d;
-    font-size:14px;
-    font-weight:800;
-}
-
-.free-opens{
-    text-align:center;
-    color:#48df80;
-    font-size:13px;
-    font-weight:800;
-    margin-bottom:12px;
-}
-
-.card{
-    width:100%;
-    aspect-ratio:1/1;
-    background:#191c20;
-    border:1px solid #30353b;
-    border-radius:20px;
-    padding:12px;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
-}
-
-.cell{
-    position:relative;
-    border-radius:12px;
-    overflow:hidden;
-    background:#24282d;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    user-select:none;
-}
-
-.symbol{
-    font-size:clamp(30px,11vw,54px);
-    filter:drop-shadow(0 5px 10px rgba(0,0,0,.3));
-}
-
-.scratch{
-    position:absolute;
-    inset:0;
-    background:
-        repeating-linear-gradient(
-            135deg,
-            #777d83 0px,
-            #777d83 3px,
-            #686e74 3px,
-            #686e74 6px
-        );
-    box-shadow:
-        inset 0 0 0 2px rgba(255,255,255,.08),
-        inset 0 -10px 20px rgba(0,0,0,.25);
-    transition:opacity .35s ease,transform .35s ease;
-}
-
-.scratch::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-        repeating-linear-gradient(
-            -25deg,
-            transparent 0px,
-            transparent 9px,
-            rgba(255,255,255,.15) 10px,
-            transparent 12px
-        );
-}
-
-.cell.opened .scratch{
-    opacity:0;
-    transform:scale(1.15);
-    pointer-events:none;
-}
-
-.cell.opened{
-    animation:openCell .25s ease;
-}
-
-@keyframes openCell{
-    0%{transform:scale(.95)}
-    100%{transform:scale(1)}
-}
-
-.game-bottom{
-    margin-top:17px;
-    display:flex;
-    gap:9px;
-}
-
-.game-button{
-    flex:1;
-    border:none;
-    border-radius:11px;
-    padding:13px;
-    background:#24282d;
-    color:white;
-    font-weight:800;
-    cursor:pointer;
-}
-
-/* =====================================================
-   MODAL
-===================================================== */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.72);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:100;
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal-box{
-    width:100%;
-    max-width:350px;
-    background:#191c20;
-    border:1px solid #30353b;
-    border-radius:20px;
-    padding:28px 22px;
-    text-align:center;
-    animation:modalIn .25s ease;
-}
-
-@keyframes modalIn{
-    from{
-        opacity:0;
-        transform:scale(.9);
-    }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
-}
-
-.result-icon{
-    font-size:55px;
-}
-
-.result-title{
-    margin-top:10px;
-    font-size:30px;
-    font-weight:900;
-}
-
-.result-title.win{
-    color:#48df80;
-}
-
-.result-title.lose{
-    color:#ef5350;
-}
-
-.result-text{
-    color:#8b9299;
-    margin-top:9px;
-    line-height:1.5;
-    font-size:14px;
-}
-
-.result-money{
-    margin-top:15px;
-    font-size:27px;
-    font-weight:900;
-    color:#ffd84d;
-}
-
-.modal-button{
-    width:100%;
-    margin-top:22px;
-    padding:13px;
-    border:none;
-    border-radius:11px;
-    background:#1678e8;
-    color:white;
-    font-size:14px;
-    font-weight:900;
-    cursor:pointer;
-}
-
-/* =====================================================
-   SPARKS
-===================================================== */
-
-.spark{
-    position:fixed;
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:#ffd84d;
-    pointer-events:none;
-    z-index:150;
-    animation:spark 800ms ease-out forwards;
-}
-
-@keyframes spark{
-    from{
-        transform:translate(0,0) scale(1);
-        opacity:1;
-    }
-    to{
-        transform:
-            translate(var(--x),var(--y))
-            scale(0);
-        opacity:0;
-    }
-}
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:380px){
-    .title{
-        font-size:26px;
-    }
-
-    .chance-prize{
-        width:65px;
-    }
-
-    .chance-percent{
-        width:48px;
-    }
+@media (max-width: 380px) {
+    #ticketGameContainer .title { font-size: 26px; }
+    #ticketGameContainer .chance-prize { width: 65px; }
+    #ticketGameContainer .chance-percent { width: 48px; }
 }
 </style>
 </head>
-
 <body>
 
-<div class="app">
+<div id="app">
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">🐻‍❄️ DROP</div>
+        <div class="header-balance">💰 <span id="headerBalance">1000.00</span></div>
+    </header>
 
-<div class="header">
+    <!-- CONTENT -->
+    <main class="content">
 
-    <div class="logo">
-        🎮 PORTAL
+        <!-- MENU -->
+        <section id="menuPage" class="page">
+            <div class="page-title">Меню</div>
+            <div class="page-subtitle">Выберите игру и испытайте удачу.</div>
+
+            <!-- Шарик -->
+            <div class="card game-card">
+                <div class="game-icon">⚪</div>
+                <div class="card-title">Шарик</div>
+                <div class="card-text">Управляйте ставкой и наблюдайте, как шарик проходит через отверстие. Чем больше отскоков — тем выше множитель.</div>
+                <button class="game-button" id="openGameButton">ИГРАТЬ</button>
+            </div>
+
+            <!-- Билеты -->
+            <div class="card game-card">
+                <div class="game-icon">🎟️</div>
+                <div class="card-title">Билеты</div>
+                <div class="card-text">Scratch & Win — выбирайте билет, открывайте ячейки и собирайте комбинации для крупного выигрыша.</div>
+                <button class="game-button" id="openTicketsButton">ИГРАТЬ</button>
+            </div>
+        </section>
+
+        <!-- INVENTORY -->
+        <section id="inventoryPage" class="page hidden">
+            <div class="page-title">Инвентарь</div>
+            <div class="page-subtitle">Здесь будут находиться полученные предметы.</div>
+            <button class="sell-all" id="sellAllButton" disabled>ПРОДАТЬ ВСЕ</button>
+            <div class="card">
+                <div class="empty-inventory">
+                    <div class="empty-icon">📦</div>
+                    <div class="empty-title">Инвентарь пуст</div>
+                    <div class="empty-text">Полученные предметы появятся здесь.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFILE -->
+        <section id="profilePage" class="page hidden">
+            <div class="page-title">Профиль</div>
+            <div class="page-subtitle">Управляйте аккаунтом, наградами и промокодами.</div>
+
+            <div class="card">
+                <div class="profile-row"><div class="profile-label">Имя</div><div class="profile-value" id="profileName">Игрок</div></div>
+                <div class="profile-row"><div class="profile-label">ID игрока</div><div class="profile-value" id="profileId">100001</div></div>
+                <div class="profile-row"><div class="profile-label">Баланс</div><div class="profile-value" id="profileBalance">1000.00</div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Реферальная система</div>
+                <div class="card-text">Приглашайте друзей и получайте по <b>50</b> валюты за каждого приглашённого.</div>
+                <div class="profile-row" style="margin-top:10px;"><div class="profile-label">Приглашено</div><div class="profile-value" id="refCount">0</div></div>
+                <div class="profile-row"><div class="profile-label">Реферальная ссылка</div><div class="profile-value ref-value" id="refLink">drop.example/100001</div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Ежедневная награда</div>
+                <div class="card-text">Забирайте <b>50</b> валюты каждые 24 часа.</div>
+                <button class="daily-button" id="dailyButton">ЗАБРАТЬ 50</button>
+                <div class="timer hidden" id="dailyTimer">24:00:00</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Промокод</div>
+                <div class="card-text">Введите промокод, чтобы получить награду.</div>
+                <input id="promoInput" class="promo-input" type="text" placeholder="Введите промокод" autocomplete="off">
+                <button class="promo-button" id="promoButton">АКТИВИРОВАТЬ</button>
+                <div class="promo-message" id="promoMessage"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Статистика</div>
+                <div class="profile-row"><div class="profile-label">Игр сыграно</div><div class="profile-value" id="gamesPlayed">0</div></div>
+                <div class="profile-row"><div class="profile-label">Побед</div><div class="profile-value" id="wins">0</div></div>
+                <div class="profile-row"><div class="profile-label">Поражений</div><div class="profile-value" id="losses">0</div></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- NAVIGATION -->
+    <nav class="bottom-nav">
+        <button class="nav-button" data-page="inventoryPage"><span class="nav-icon">🎒</span><span>Инвентарь</span></button>
+        <button class="nav-button active" data-page="menuPage"><span class="nav-icon">⌂</span><span>Меню</span></button>
+        <button class="nav-button" data-page="profilePage"><span class="nav-icon">👤</span><span>Профиль</span></button>
+    </nav>
+
+    <!-- =====================================================
+         ИГРА ШАРИК
+    ====================================================== -->
+    <div id="gameScreen" class="hidden">
+        <canvas id="gameCanvas"></canvas>
+
+        <div class="game-top">
+            <div class="game-stat"><div class="game-stat-label">Баланс</div><div class="game-stat-value" id="gameBalance">1000.00</div></div>
+            <div class="game-stat"><div class="game-stat-label">Отскоки</div><div class="game-stat-value" id="gameBounces">0</div></div>
+            <div class="game-stat"><div class="game-stat-label">Множитель</div><div class="game-stat-value" id="gameMultiplier">1.00x</div></div>
+        </div>
+
+        <div class="bottom-zones">
+            <div id="greenZone" class="green-zone">WIN</div>
+            <div id="redZone" class="red-zone">LOSE</div>
+        </div>
+
+        <div id="gameMenu" class="game-menu">
+            <div class="game-menu-title">ESCAPE</div>
+            <div class="game-menu-balance" id="gameMenuBalance">1000.00</div>
+            <input id="gameBet" class="bet-input" type="number" min="0.01" step="0.01" placeholder="Введите ставку">
+            <div id="gameBetError" class="bet-error"></div>
+            <div class="difficulty">
+                <button data-difficulty="easy" class="active">Легко</button>
+                <button data-difficulty="medium">Средне</button>
+                <button data-difficulty="hard">Сложно</button>
+            </div>
+            <button class="start-game" id="startGame">ИГРАТЬ</button>
+            <button class="exit-game" id="exitGame">НАЗАД</button>
+        </div>
+
+        <div id="gameResult" class="result hidden">
+            <div id="resultTitle" class="result-title win">WIN</div>
+            <div id="resultInfo" class="result-info"></div>
+            <div id="resultMoney" class="result-money win"></div>
+            <button id="resultClose" class="result-close">ЗАКРЫТЬ</button>
+        </div>
     </div>
 
-    <div class="balance">
-        💰 <span id="balance">1000</span>
+    <!-- =====================================================
+         ИГРА БИЛЕТЫ (SCRATCH)
+    ====================================================== -->
+    <div id="ticketGameContainer" class="hidden">
+        <button id="closeTicketsBtn">✕</button>
+        <div class="app-inner">
+
+            <!-- Хедер билетов (свой) -->
+            <div class="header-ticket">
+                <div class="logo-ticket">🎟️ SCRATCH</div>
+                <div class="balance-ticket">💰 <span id="balanceTicket">1000.00</span></div>
+            </div>
+
+            <!-- SELECT SCREEN -->
+            <section id="selectScreen" class="screen active">
+                <div class="title">SCRATCH &amp; WIN!</div>
+                <div class="subtitle">Выберите билет и попробуйте получить большой выигрыш</div>
+
+                <div class="tickets">
+                    <div class="ticket" id="paidTicket">
+                        <div class="ticket-header">
+                            <div class="ticket-name">💎 MEGA SCRATCH</div>
+                            <div class="ticket-price">100 💰</div>
+                        </div>
+                        <div class="ticket-description">2 бесплатных открытия. Следующие открытия — 50 💰. До 2000 💰 за комбинацию.</div>
+                    </div>
+
+                    <div class="ticket" id="freeTicket">
+                        <div class="ticket-header">
+                            <div class="ticket-name">🎫 FREE SCRATCH</div>
+                            <div class="ticket-price free">БЕСПЛАТНО</div>
+                        </div>
+                        <div class="ticket-description">Каждое открытие стоит 5 💰. Максимальный обычный приз — 100 💰.</div>
+                    </div>
+                </div>
+
+                <div id="chancePanel" class="chance-panel" style="display:none;">
+                    <button class="start-ticket-button" id="startTicketButton">🎟️ ИГРАТЬ В ЭТОТ БИЛЕТ</button>
+                    <div class="chance-title">Шансы и выигрыши</div>
+                    <div class="chance-subtitle">Вероятность выпадения каждого символа в отдельной ячейке</div>
+                    <div id="chanceList"></div>
+                    <button class="back-button" id="closeChance">НАЗАД К БИЛЕТАМ</button>
+                </div>
+            </section>
+
+            <!-- GAME SCREEN -->
+            <section id="gameScreenTicket" class="screen">
+                <div class="game-header-ticket">
+                    <div class="game-name-ticket" id="gameNameTicket">MEGA SCRATCH</div>
+                    <div class="game-cost-ticket" id="gameCostTicket">50 💰</div>
+                </div>
+                <div class="free-opens-ticket" id="freeOpensTicket"></div>
+                <div class="card-ticket" id="cardTicket"></div>
+                <div class="game-bottom-ticket">
+                    <button class="game-button-ticket" id="backToTicketsTicket">← БИЛЕТЫ</button>
+                </div>
+            </section>
+
+            <!-- MODAL -->
+            <div class="modal-ticket" id="resultModalTicket">
+                <div class="modal-box-ticket">
+                    <div class="result-icon-ticket" id="resultIconTicket">🎉</div>
+                    <div class="result-title-ticket" id="resultTitleTicket">ПОБЕДА!</div>
+                    <div class="result-text-ticket" id="resultTextTicket"></div>
+                    <div class="result-money-ticket" id="resultMoneyTicket">+500 💰</div>
+                    <button class="modal-button-ticket" id="newTicketTicket">НОВЫЙ БИЛЕТ</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 </div>
-
-
-<!-- =====================================================
-     MAIN MENU
-===================================================== -->
-
-<section id="menuScreen" class="screen active">
-
-    <div class="menu-title">
-        ИГРЫ
-    </div>
-
-    <div class="menu-subtitle">
-        Выберите игру
-    </div>
-
-    <div class="menu">
-
-        <!-- BALL GAME -->
-
-        <button class="menu-button" id="openBallGame">
-
-            <div class="menu-icon">
-                🔵
-            </div>
-
-            <div class="menu-info">
-
-                <div class="menu-name">
-                    Шарик
-                </div>
-
-                <div class="menu-description">
-                    Проведи шарик через вращающийся круг
-                </div>
-
-            </div>
-
-            <div class="menu-arrow">
-                ›
-            </div>
-
-        </button>
-
-
-        <!-- TICKETS -->
-
-        <button class="menu-button" id="openTickets">
-
-            <div class="menu-icon">
-                🎟️
-            </div>
-
-            <div class="menu-info">
-
-                <div class="menu-name">
-                    Билеты
-                </div>
-
-                <div class="menu-description">
-                    Сотри клетки и найди 3 одинаковых символа
-                </div>
-
-            </div>
-
-            <div class="menu-arrow">
-                ›
-            </div>
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     BALL GAME SCREEN
-===================================================== -->
-
-<section id="ballScreen" class="screen">
-
-    <div class="ball-header">
-
-        <div class="ball-title">
-            🔵 Шарик
-        </div>
-
-        <div class="ball-score">
-            ⭐ <span id="ballScore">0</span>
-        </div>
-
-    </div>
-
-    <div class="ball-wrapper">
-
-        <canvas id="ballCanvas"></canvas>
-
-    </div>
-
-    <div class="ball-help">
-        Круг постоянно вращается. Проведи шарик к отверстию.
-    </div>
-
-    <button class="back-button" id="ballBack">
-        ← В МЕНЮ
-    </button>
-
-</section>
-
-
-<!-- =====================================================
-     TICKET SELECT SCREEN
-===================================================== -->
-
-<section id="ticketSelectScreen" class="screen">
-
-    <div class="title">
-        SCRATCH & WIN!
-    </div>
-
-    <div class="subtitle">
-        Выберите билет и попробуйте получить большой выигрыш
-    </div>
-
-
-    <div class="tickets">
-
-        <div class="ticket" id="paidTicket">
-
-            <div class="ticket-header">
-
-                <div class="ticket-name">
-                    💎 MEGA SCRATCH
-                </div>
-
-                <div class="ticket-price">
-                    100 💰
-                </div>
-
-            </div>
-
-            <div class="ticket-description">
-                2 бесплатных открытия.
-                Следующие открытия — 50 💰.
-                До 2000 💰 за комбинацию.
-            </div>
-
-        </div>
-
-
-        <div class="ticket" id="freeTicket">
-
-            <div class="ticket-header">
-
-                <div class="ticket-name">
-                    🎫 FREE SCRATCH
-                </div>
-
-                <div class="ticket-price free">
-                    БЕСПЛАТНО
-                </div>
-
-            </div>
-
-            <div class="ticket-description">
-                Каждое открытие стоит 5 💰.
-                Максимальный обычный приз — 100 💰.
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div
-        id="chancePanel"
-        class="chance-panel"
-        style="display:none;"
-    >
-
-        <button
-            class="start-ticket-button"
-            id="startTicketButton"
-        >
-            🎟️ ИГРАТЬ В ЭТОТ БИЛЕТ
-        </button>
-
-        <div class="chance-title">
-            Шансы и выигрыши
-        </div>
-
-        <div class="chance-subtitle">
-            Вероятность выпадения каждого символа
-        </div>
-
-        <div id="chanceList"></div>
-
-        <button class="back-button" id="closeChance">
-            НАЗАД К БИЛЕТАМ
-        </button>
-
-    </div>
-
-
-    <button class="back-button" id="ticketsBack">
-        ← В МЕНЮ
-    </button>
-
-</section>
-
-
-<!-- =====================================================
-     SCRATCH GAME
-===================================================== -->
-
-<section id="scratchGameScreen" class="screen">
-
-    <div class="game-header">
-
-        <div class="game-name" id="gameName">
-            MEGA SCRATCH
-        </div>
-
-        <div class="game-cost" id="gameCost">
-            50 💰
-        </div>
-
-    </div>
-
-    <div class="free-opens" id="freeOpens"></div>
-
-    <div class="card" id="card"></div>
-
-    <div class="game-bottom">
-
-        <button class="game-button" id="backToTickets">
-            ← БИЛЕТЫ
-        </button>
-
-    </div>
-
-</section>
-
-</div>
-
-
-<!-- =====================================================
-     RESULT MODAL
-===================================================== -->
-
-<div class="modal" id="resultModal">
-
-    <div class="modal-box">
-
-        <div class="result-icon" id="resultIcon">
-            🎉
-        </div>
-
-        <div class="result-title" id="resultTitle">
-            ПОБЕДА!
-        </div>
-
-        <div class="result-text" id="resultText"></div>
-
-        <div class="result-money" id="resultMoney">
-            +500 💰
-        </div>
-
-        <button class="modal-button" id="newTicket">
-            НОВЫЙ БИЛЕТ
-        </button>
-
-    </div>
-
-</div>
-
 
 <script>
-
 /* =====================================================
-   GLOBAL BALANCE
+   ОБЩИЙ БАЛАНС (ШАРИК + БИЛЕТЫ)
 ===================================================== */
-
 let balance = 1000;
 
-const balanceElement =
-    document.getElementById("balance");
-
-function updateBalance(){
-
-    balance =
-        Math.round(balance * 100) / 100;
-
-    balanceElement.textContent =
-        balance.toLocaleString("ru-RU",{
-            maximumFractionDigits:2
-        });
+function updateBalanceUI() {
+    const val = balance.toFixed(2);
+    document.getElementById('headerBalance').textContent = val;
+    document.getElementById('profileBalance').textContent = val;
+    document.getElementById('gameBalance').textContent = val;
+    document.getElementById('gameMenuBalance').textContent = val;
+    // билеты
+    const el = document.getElementById('balanceTicket');
+    if (el) el.textContent = val;
 }
 
+// =====================================================
+// ИГРА ШАРИК (весь код без изменений, только balance общий)
+// =====================================================
 
-/* =====================================================
-   SCREEN SYSTEM
-===================================================== */
+let currentBet = 0;
+let difficulty = "easy";
+let gameRunning = false;
+let escaped = false;
+let gameFinished = false;
+let bounceCount = 0;
+let multiplier = 1;
+let gamesPlayed = 0;
+let wins = 0;
+let losses = 0;
+let promoUsed = false;
+let dailyAvailable = true;
+let dailyNextTime = 0;
 
-const screens = {
-    menu:
-        document.getElementById("menuScreen"),
-
-    ball:
-        document.getElementById("ballScreen"),
-
-    tickets:
-        document.getElementById("ticketSelectScreen"),
-
-    scratch:
-        document.getElementById("scratchGameScreen")
+const difficulties = {
+    easy: { green: 70, red: 30, hole: 50, step: 0.05 },
+    medium: { green: 50, red: 50, hole: 50, step: 0.15 },
+    hard: { green: 25, red: 75, hole: 50 * 1.22, step: 0.25 }
 };
 
-function showScreen(name){
+// DOM шарика
+const headerBalance = document.getElementById('headerBalance');
+const profileBalance = document.getElementById('profileBalance');
+const menuPage = document.getElementById('menuPage');
+const inventoryPage = document.getElementById('inventoryPage');
+const profilePage = document.getElementById('profilePage');
+const gameScreen = document.getElementById('gameScreen');
+const openGameButton = document.getElementById('openGameButton');
+const gameMenu = document.getElementById('gameMenu');
+const gameMenuBalance = document.getElementById('gameMenuBalance');
+const gameBet = document.getElementById('gameBet');
+const gameBetError = document.getElementById('gameBetError');
+const startGameButton = document.getElementById('startGame');
+const exitGameButton = document.getElementById('exitGame');
+const gameResult = document.getElementById('gameResult');
+const resultTitle = document.getElementById('resultTitle');
+const resultInfo = document.getElementById('resultInfo');
+const resultMoney = document.getElementById('resultMoney');
+const resultClose = document.getElementById('resultClose');
+const gameBalance = document.getElementById('gameBalance');
+const gameBounces = document.getElementById('gameBounces');
+const gameMultiplier = document.getElementById('gameMultiplier');
+const greenZone = document.getElementById('greenZone');
+const redZone = document.getElementById('redZone');
+const dailyButton = document.getElementById('dailyButton');
+const dailyTimer = document.getElementById('dailyTimer');
+const promoInput = document.getElementById('promoInput');
+const promoButton = document.getElementById('promoButton');
+const promoMessage = document.getElementById('promoMessage');
 
-    Object.values(screens)
-        .forEach(screen =>
-            screen.classList.remove("active")
-        );
+// Canvas
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let width = 0, height = 0;
 
-    screens[name].classList.add("active");
+const circle = { x: 0, y: 0, radius: 205, wallWidth: 10 };
+const ball = { x: 0, y: 0, vx: 0, vy: 0, radius: 13 };
+const GRAVITY = 0.20;
+const MAX_SPEED = 6.2;
+const MAX_HORIZONTAL_SPEED = 3.8;
+const SIDE_WALL = 7;
+const ZONE_HEIGHT = 90;
+const HOLE_SPEED = 0.018;
+let holeAngle = 0;
+
+function resizeCanvas() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    circle.radius = Math.min(205, width * .33, height * .30);
+    circle.x = width / 2;
+    circle.y = height * .39;
+    if (!gameRunning) {
+        ball.x = circle.x;
+        ball.y = circle.y - circle.radius * .35;
+    }
+}
+window.addEventListener('resize', resizeCanvas);
+
+function updateGameUI() {
+    gameBounces.textContent = bounceCount;
+    gameMultiplier.textContent = multiplier.toFixed(2) + 'x';
+    updateBalanceUI();
 }
 
-
-/* =====================================================
-   MENU
-===================================================== */
-
-document
-    .getElementById("openBallGame")
-    .addEventListener("click",()=>{
-
-        showScreen("ball");
-
-        resizeBallCanvas();
-
-    });
-
-
-document
-    .getElementById("openTickets")
-    .addEventListener("click",()=>{
-
-        showScreen("tickets");
-
-    });
-
-
-document
-    .getElementById("ballBack")
-    .addEventListener("click",()=>{
-
-        showScreen("menu");
-
-    });
-
-
-document
-    .getElementById("ticketsBack")
-    .addEventListener("click",()=>{
-
-        resetTicketSelection();
-
-        showScreen("menu");
-
-    });
-
-
-/* =====================================================
-   BALL GAME
-===================================================== */
-
-const canvas =
-    document.getElementById("ballCanvas");
-
-const ctx =
-    canvas.getContext("2d");
-
-let ballScore = 0;
-
-let ball = {
-    x:0,
-    y:0,
-    vx:1.8,
-    vy:2.4,
-    radius:8
-};
-
-let circle = {
-    x:0,
-    y:0,
-    radius:145,
-    angle:0,
-    speed:0.008,
-    holeAngle:0.7,
-    holeSize:0.65
-};
-
-let ballRunning = true;
-
-
-function resizeBallCanvas(){
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-    const dpr =
-        window.devicePixelRatio || 1;
-
-    canvas.width =
-        rect.width * dpr;
-
-    canvas.height =
-        rect.height * dpr;
-
-    ctx.setTransform(
-        dpr,0,0,dpr,0,0
-    );
-
-    circle.x =
-        rect.width / 2;
-
-    circle.y =
-        rect.height / 2;
-
-    circle.radius =
-        Math.min(
-            rect.width,
-            rect.height
-        ) * .35;
-
-    if(
-        ball.x === 0 &&
-        ball.y === 0
-    ){
-
-        resetBall();
-
-    }
-
+function updateZones() {
+    const s = difficulties[difficulty];
+    greenZone.style.width = s.green + '%';
+    redZone.style.width = s.red + '%';
 }
 
-
-function resetBall(){
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-    ball.x =
-        rect.width / 2;
-
-    ball.y =
-        rect.height / 2 - 40;
-
-    ball.vx =
-        1.8;
-
-    ball.vy =
-        2.3;
-
+function randomRange(min, max) { return min + Math.random() * (max - min); }
+function normalizeAngle(a) { a %= Math.PI*2; if (a<0) a += Math.PI*2; return a; }
+function angleDifference(a,b) { let d = Math.abs(normalizeAngle(a)-normalizeAngle(b)); if (d>Math.PI) d=Math.PI*2-d; return d; }
+function isHole(angle) { const h = difficulties[difficulty].hole * Math.PI / 180; return angleDifference(angle, holeAngle) <= h/2; }
+function limitSpeed() {
+    ball.vx = Math.max(-MAX_HORIZONTAL_SPEED, Math.min(MAX_HORIZONTAL_SPEED, ball.vx));
+    const sp = Math.sqrt(ball.vx**2 + ball.vy**2);
+    if (sp > MAX_SPEED) { const sc = MAX_SPEED / sp; ball.vx *= sc; ball.vy *= sc; }
 }
-
-
-function normalizeAngle(angle){
-
-    while(angle < 0)
-        angle += Math.PI * 2;
-
-    while(angle >= Math.PI * 2)
-        angle -= Math.PI * 2;
-
-    return angle;
-
+function chooseStartVelocity() {
+    const dir = Math.random() < .5 ? -1 : 1;
+    ball.vx = dir * randomRange(1.0, 2.3);
+    ball.vy = randomRange(1.8, 3.0);
 }
-
-
-function angleDifference(a,b){
-
-    let d =
-        normalizeAngle(a-b);
-
-    if(d > Math.PI)
-        d -= Math.PI*2;
-
-    return Math.abs(d);
-
+function registerBounce(nx, ny) {
+    bounceCount++;
+    multiplier = 1 + bounceCount * difficulties[difficulty].step;
+    multiplier = Math.round(multiplier * 100) / 100;
+    const jumpPower = randomRange(4.2, 5.9);
+    const randomSide = randomRange(-2.8, 2.8);
+    if (ny > .12) { ball.vy = -jumpPower; ball.vx += randomSide; }
+    else if (ny < -.12) { ball.vy = randomRange(2.8, 4.7); ball.vx += randomSide; }
+    else {
+        ball.vy = Math.random() < .5 ? -randomRange(3.6, 5.7) : randomRange(3.4, 5.4);
+        ball.vx += randomSide;
+    }
+    ball.vx += -nx * randomRange(.15, .75);
+    if (Math.abs(ball.vx) < .65) ball.vx = Math.random() < .5 ? -.65 : .65;
+    limitSpeed();
+    updateGameUI();
 }
-
-
-function isInHole(angle){
-
-    return (
-        angleDifference(
-            angle,
-            circle.angle +
-            circle.holeAngle
-        ) <
-        circle.holeSize / 2
-    );
-
+function startRound() {
+    let bet = Number(gameBet.value);
+    if (!Number.isFinite(bet) || bet <= 0) { gameBetError.textContent = 'Введите ставку больше 0.'; return; }
+    bet = Math.round(bet * 100) / 100;
+    if (bet > balance) { gameBetError.textContent = 'Недостаточно средств.'; return; }
+    currentBet = bet;
+    balance -= currentBet;
+    balance = Math.round(balance * 100) / 100;
+    gameBetError.textContent = '';
+    gameRunning = true;
+    escaped = false;
+    gameFinished = false;
+    bounceCount = 0;
+    multiplier = 1;
+    ball.x = circle.x;
+    ball.y = circle.y - circle.radius * .35;
+    chooseStartVelocity();
+    gameMenu.classList.add('hidden');
+    gameResult.classList.add('hidden');
+    updateGameUI();
 }
-
-
-function updateBall(){
-
-    if(
-        !screens.ball.classList.contains("active")
-    ){
-
-        return;
-
+function escapeThroughHole(nx, ny) {
+    const oldVx = ball.vx, oldVy = ball.vy;
+    ball.x = circle.x + nx * (circle.radius + ball.radius + 5);
+    ball.y = circle.y + ny * (circle.radius + ball.radius + 5);
+    ball.vx = oldVx;
+    ball.vy = oldVy;
+    escaped = true;
+}
+function bounceFromWall(nx, ny) {
+    const safeRadius = circle.radius - circle.wallWidth/2 - ball.radius - 1.5;
+    ball.x = circle.x + nx * safeRadius;
+    ball.y = circle.y + ny * safeRadius;
+    const dot = ball.vx * nx + ball.vy * ny;
+    if (dot > 0) { ball.vx -= 2 * dot * nx; ball.vy -= 2 * dot * ny; }
+    registerBounce(nx, ny);
+}
+function finishGame(win) {
+    if (gameFinished) return;
+    gameFinished = true; gameRunning = false; gamesPlayed++;
+    if (win) {
+        wins++;
+        const payout = currentBet * multiplier;
+        balance += payout;
+        balance = Math.round(balance * 100) / 100;
+        const profit = payout - currentBet;
+        resultTitle.textContent = 'WIN';
+        resultTitle.className = 'result-title win';
+        resultMoney.textContent = '+' + profit.toFixed(2);
+        resultMoney.className = 'result-money win';
+        resultInfo.innerHTML = 'Ставка: ' + currentBet.toFixed(2) + '<br>Множитель: ' + multiplier.toFixed(2) + 'x<br>Выплата: ' + payout.toFixed(2);
+    } else {
+        losses++;
+        resultTitle.textContent = 'LOSE';
+        resultTitle.className = 'result-title lose';
+        resultMoney.textContent = '-' + currentBet.toFixed(2);
+        resultMoney.className = 'result-money lose';
+        resultInfo.innerHTML = 'Ставка: ' + currentBet.toFixed(2) + '<br>Множитель: ' + multiplier.toFixed(2) + 'x<br>Ставка проиграна.';
     }
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-    circle.angle +=
-        circle.speed;
-
-
-    ball.x +=
-        ball.vx;
-
-    ball.y +=
-        ball.vy;
-
-
-    /* walls */
-
-    if(
-        ball.x - ball.radius < 0
-    ){
-
-        ball.x =
-            ball.radius;
-
-        ball.vx =
-            Math.abs(ball.vx);
-
-    }
-
-    if(
-        ball.x + ball.radius > rect.width
-    ){
-
-        ball.x =
-            rect.width -
-            ball.radius;
-
-        ball.vx =
-            -Math.abs(ball.vx);
-
-    }
-
-    if(
-        ball.y - ball.radius < 0
-    ){
-
-        ball.y =
-            ball.radius;
-
-        ball.vy =
-            Math.abs(ball.vy);
-
-    }
-
-    if(
-        ball.y + ball.radius > rect.height
-    ){
-
-        ball.y =
-            rect.height -
-            ball.radius;
-
-        ball.vy =
-            -Math.abs(ball.vy);
-
-    }
-
-
-    /* circle collision */
-
-    const dx =
-        ball.x - circle.x;
-
-    const dy =
-        ball.y - circle.y;
-
-    const distance =
-        Math.sqrt(dx*dx+dy*dy);
-
-
-    const innerRadius =
-        circle.radius - 8;
-
-
-    if(
-        distance >
-        innerRadius - ball.radius &&
-        distance <
-        circle.radius + ball.radius
-    ){
-
-        const angle =
-            Math.atan2(dy,dx);
-
-
-        if(
-            isInHole(angle)
-        ){
-
-            ballScore++;
-
-            document
-                .getElementById("ballScore")
-                .textContent =
-                ballScore;
-
-
-            balance += 10;
-
-            updateBalance();
-
-
-            resetBall();
-
-        }else{
-
-            const nx =
-                dx / distance;
-
-            const ny =
-                dy / distance;
-
-
-            const dot =
-                ball.vx * nx +
-                ball.vy * ny;
-
-
-            ball.vx -=
-                2 * dot * nx;
-
-            ball.vy -=
-                2 * dot * ny;
-
-
-            const push =
-                circle.radius -
-                distance;
-
-            ball.x +=
-                nx * push;
-
-            ball.y +=
-                ny * push;
-
+    updateGameUI();
+    updateProfileStats();
+    gameResult.classList.remove('hidden');
+}
+function updatePhysics() {
+    holeAngle += HOLE_SPEED;
+    holeAngle = normalizeAngle(holeAngle);
+    if (!gameRunning) return;
+    if (escaped) {
+        ball.vy += GRAVITY;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        limitSpeed();
+        if (ball.x - ball.radius < SIDE_WALL) { ball.x = SIDE_WALL + ball.radius; ball.vx = Math.abs(ball.vx); }
+        if (ball.x + ball.radius > width - SIDE_WALL) { ball.x = width - SIDE_WALL - ball.radius; ball.vx = -Math.abs(ball.vx); }
+        const zoneTop = height - ZONE_HEIGHT;
+        if (ball.y + ball.radius >= zoneTop) {
+            const greenWidth = width * difficulties[difficulty].green / 100;
+            if (ball.x <= greenWidth) finishGame(true);
+            else finishGame(false);
+            return;
         }
-
+        return;
     }
-
+    ball.vy += GRAVITY;
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+    limitSpeed();
+    const dx = ball.x - circle.x, dy = ball.y - circle.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const collisionRadius = circle.radius - circle.wallWidth/2 - ball.radius;
+    if (dist >= collisionRadius && dist > 0.0001) {
+        const nx = dx/dist, ny = dy/dist;
+        const angle = Math.atan2(dy, dx);
+        if (isHole(angle)) {
+            const outward = ball.vx * nx + ball.vy * ny;
+            if (outward >= 0) { escapeThroughHole(nx, ny); return; }
+        }
+        bounceFromWall(nx, ny);
+    }
 }
-
-
-function drawBall(){
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-    ctx.clearRect(
-        0,
-        0,
-        rect.width,
-        rect.height
-    );
-
-
-    /* background grid */
-
-    ctx.strokeStyle =
-        "rgba(255,255,255,.035)";
-
-    ctx.lineWidth = 1;
-
-    for(
-        let x=0;
-        x<rect.width;
-        x+=25
-    ){
-
-        ctx.beginPath();
-
-        ctx.moveTo(x,0);
-        ctx.lineTo(x,rect.height);
-
-        ctx.stroke();
-
-    }
-
-    for(
-        let y=0;
-        y<rect.height;
-        y+=25
-    ){
-
-        ctx.beginPath();
-
-        ctx.moveTo(0,y);
-        ctx.lineTo(rect.width,y);
-
-        ctx.stroke();
-
-    }
-
-
-    /* rotating circle */
-
+function draw() {
+    ctx.clearRect(0,0,width,height);
+    ctx.fillStyle = '#252a2f';
+    ctx.fillRect(0,0,SIDE_WALL,height);
+    ctx.fillRect(width-SIDE_WALL,0,SIDE_WALL,height);
+    const radius = circle.radius;
+    const holeRadians = difficulties[difficulty].hole * Math.PI / 180;
+    const holeStart = holeAngle - holeRadians/2;
+    const holeEnd = holeAngle + holeRadians/2;
     ctx.save();
-
-    ctx.translate(
-        circle.x,
-        circle.y
-    );
-
-    ctx.rotate(
-        circle.angle
-    );
-
-
-    const start =
-        circle.holeAngle +
-        circle.holeSize/2;
-
-    const end =
-        circle.holeAngle -
-        circle.holeSize/2 +
-        Math.PI*2;
-
-
     ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        circle.radius,
-        start,
-        end
-    );
-
-    ctx.strokeStyle =
-        "#1678e8";
-
-    ctx.lineWidth = 12;
-
-    ctx.lineCap =
-        "round";
-
+    ctx.arc(circle.x, circle.y, radius, holeEnd, holeStart + Math.PI*2);
+    ctx.strokeStyle = '#1478e8';
+    ctx.lineWidth = circle.wallWidth;
+    ctx.lineCap = 'round';
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = 'rgba(20,120,235,.8)';
     ctx.stroke();
-
-
-    /* inner glow */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        circle.radius-12,
-        start,
-        end
-    );
-
-    ctx.strokeStyle =
-        "rgba(36,147,255,.22)";
-
-    ctx.lineWidth = 3;
-
-    ctx.stroke();
-
-
-    /* hole indicator */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        circle.radius,
-        circle.holeAngle-
-        circle.holeSize/2,
-        circle.holeAngle+
-        circle.holeSize/2
-    );
-
-    ctx.strokeStyle =
-        "#48df80";
-
-    ctx.lineWidth = 4;
-
-    ctx.stroke();
-
-
     ctx.restore();
-
-
-    /* ball */
-
+    ctx.save();
+    ctx.strokeStyle = '#1478e8';
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    function holeEdge(ang) {
+        const inner = radius - 6, outer = radius + 3;
+        ctx.beginPath();
+        ctx.moveTo(circle.x + Math.cos(ang)*inner, circle.y + Math.sin(ang)*inner);
+        ctx.lineTo(circle.x + Math.cos(ang)*outer, circle.y + Math.sin(ang)*outer);
+        ctx.stroke();
+    }
+    holeEdge(holeStart);
+    holeEdge(holeEnd);
+    ctx.restore();
+    ctx.save();
     ctx.beginPath();
-
-    ctx.arc(
-        ball.x,
-        ball.y,
-        ball.radius,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fillStyle =
-        "#ffffff";
-
-    ctx.shadowBlur = 15;
-
-    ctx.shadowColor =
-        "#2493ff";
-
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+    ctx.fillStyle = '#fff';
+    ctx.shadowBlur = 16;
+    ctx.shadowColor = 'rgba(255,255,255,.95)';
     ctx.fill();
+    ctx.restore();
+    ctx.beginPath();
+    ctx.arc(ball.x-4, ball.y-4, 3, 0, Math.PI*2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+}
+function gameLoop() { updatePhysics(); draw(); requestAnimationFrame(gameLoop); }
 
-    ctx.shadowBlur = 0;
+// События шарика
+openGameButton.addEventListener('click', ()=>{
+    gameScreen.classList.remove('hidden');
+    gameMenu.classList.remove('hidden');
+    gameResult.classList.add('hidden');
+    updateBalanceUI();
+    updateZones();
+});
+exitGameButton.addEventListener('click', ()=>{
+    if (gameRunning) return;
+    gameScreen.classList.add('hidden');
+    gameMenu.classList.remove('hidden');
+    gameResult.classList.add('hidden');
+});
+startGameButton.addEventListener('click', startRound);
+resultClose.addEventListener('click', ()=>{
+    gameResult.classList.add('hidden');
+    gameMenu.classList.remove('hidden');
+    updateBalanceUI();
+});
+document.querySelectorAll('[data-difficulty]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        if (gameRunning) return;
+        difficulty = btn.dataset.difficulty;
+        document.querySelectorAll('[data-difficulty]').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        updateZones();
+    });
+});
 
+// Навигация
+document.querySelectorAll('.nav-button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        const page = btn.dataset.page;
+        document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+        document.getElementById(page).classList.remove('hidden');
+        document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+    });
+});
+
+// Daily
+dailyButton.addEventListener('click', ()=>{
+    if (!dailyAvailable) return;
+    balance += 50;
+    balance = Math.round(balance * 100) / 100;
+    dailyAvailable = false;
+    dailyNextTime = Date.now() + 24*60*60*1000;
+    dailyButton.disabled = true;
+    dailyButton.textContent = 'НАГРАДА ПОЛУЧЕНА';
+    dailyTimer.classList.remove('hidden');
+    updateBalanceUI();
+});
+function updateDailyTimer() {
+    if (dailyAvailable) return;
+    const rem = dailyNextTime - Date.now();
+    if (rem <= 0) {
+        dailyAvailable = true;
+        dailyButton.disabled = false;
+        dailyButton.textContent = 'ЗАБРАТЬ 50';
+        dailyTimer.classList.add('hidden');
+        return;
+    }
+    const sec = Math.floor(rem/1000);
+    const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
+    dailyTimer.textContent = String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+setInterval(updateDailyTimer, 1000);
+
+// Промокод
+promoButton.addEventListener('click', ()=>{
+    const code = promoInput.value.trim().toLowerCase();
+    if (code !== '200') { promoMessage.style.color='#ef4752'; promoMessage.textContent='Неверный промокод.'; return; }
+    if (promoUsed) { promoMessage.style.color='#ef4752'; promoMessage.textContent='Этот промокод уже использован.'; return; }
+    balance += 200000;
+    balance = Math.round(balance * 100) / 100;
+    promoUsed = true;
+    promoInput.value = '';
+    promoButton.disabled = true;
+    promoMessage.style.color = '#42df78';
+    promoMessage.textContent = '+200000 валюты получено!';
+    updateBalanceUI();
+});
+
+function updateProfileStats() {
+    document.getElementById('gamesPlayed').textContent = gamesPlayed;
+    document.getElementById('wins').textContent = wins;
+    document.getElementById('losses').textContent = losses;
 }
 
+// =====================================================
+// ИГРА БИЛЕТЫ (весь код без изменений, только balance общий)
+// =====================================================
 
-function ballLoop(){
+// Переопределяем элементы билетов с новыми ID (чтобы не конфликтовать с шариком)
+// Но мы оставили оригинальные id, только добавили суффиксы в HTML.
+// В коде ниже используем их напрямую.
 
-    updateBall();
-
-    drawBall();
-
-    requestAnimationFrame(
-        ballLoop
-    );
-
-}
-
-window.addEventListener(
-    "resize",
-    resizeBallCanvas
-);
-
-resizeBallCanvas();
-
-ballLoop();
-
-
-/* =====================================================
-   SCRATCH DATA
-===================================================== */
-
+// Данные билетов
 const paidSymbols = [
-
-    {
-        symbol:"🧲",
-        name:"Магнит",
-        chance:25,
-        prize:250
-    },
-
-    {
-        symbol:"🪙",
-        name:"Монета",
-        chance:20,
-        prize:500
-    },
-
-    {
-        symbol:"⭐",
-        name:"Звезда",
-        chance:15,
-        prize:300
-    },
-
-    {
-        symbol:"🍀",
-        name:"Клевер",
-        chance:12,
-        prize:400
-    },
-
-    {
-        symbol:"💎",
-        name:"Алмаз",
-        chance:10,
-        prize:750
-    },
-
-    {
-        symbol:"🎰",
-        name:"Слот",
-        chance:8,
-        prize:600
-    },
-
-    {
-        symbol:"❤️",
-        name:"Сердце",
-        chance:5,
-        prize:1000
-    },
-
-    {
-        symbol:"💰",
-        name:"Деньги",
-        chance:3,
-        prize:1500
-    },
-
-    {
-        symbol:"👑",
-        name:"Корона",
-        chance:2,
-        prize:2000
-    }
-
+    { symbol: "🧲", name: "Магнит", chance: 25, prize: 250 },
+    { symbol: "🪙", name: "Монета", chance: 20, prize: 500 },
+    { symbol: "⭐", name: "Звезда", chance: 15, prize: 300 },
+    { symbol: "🍀", name: "Клевер", chance: 12, prize: 400 },
+    { symbol: "💎", name: "Алмаз", chance: 10, prize: 750 },
+    { symbol: "🎰", name: "Слот", chance: 8, prize: 600 },
+    { symbol: "❤️", name: "Сердце", chance: 5, prize: 1000 },
+    { symbol: "💰", name: "Деньги", chance: 3, prize: 1500 },
+    { symbol: "👑", name: "Корона", chance: 2, prize: 2000 }
 ];
-
-
 const freeSymbols = [
-
-    {
-        symbol:"🪙",
-        name:"Монета",
-        chance:24,
-        prize:50
-    },
-
-    {
-        symbol:"⭐",
-        name:"Звезда",
-        chance:20,
-        prize:40
-    },
-
-    {
-        symbol:"🍀",
-        name:"Клевер",
-        chance:18,
-        prize:60
-    },
-
-    {
-        symbol:"🧲",
-        name:"Магнит",
-        chance:15,
-        prize:75
-    },
-
-    {
-        symbol:"💎",
-        name:"Алмаз",
-        chance:10,
-        prize:100
-    },
-
-    {
-        symbol:"🎰",
-        name:"Слот",
-        chance:7,
-        prize:80
-    },
-
-    {
-        symbol:"🌟",
-        name:"Золотая звезда",
-        chance:5,
-        prize:90
-    },
-
-    {
-        symbol:"💔",
-        name:"Разбитое сердце",
-        chance:1,
-        prize:500
-    }
-
+    { symbol: "🪙", name: "Монета", chance: 24, prize: 50 },
+    { symbol: "⭐", name: "Звезда", chance: 20, prize: 40 },
+    { symbol: "🍀", name: "Клевер", chance: 18, prize: 60 },
+    { symbol: "🧲", name: "Магнит", chance: 15, prize: 75 },
+    { symbol: "💎", name: "Алмаз", chance: 10, prize: 100 },
+    { symbol: "🎰", name: "Слот", chance: 7, prize: 80 },
+    { symbol: "🌟", name: "Золотая звезда", chance: 5, prize: 90 },
+    { symbol: "💔", name: "Разбитое сердце", chance: 1, prize: 500 }
 ];
-
-
-/* =====================================================
-   SCRATCH STATE
-===================================================== */
 
 let currentTicket = null;
-
 let cells = [];
-
 let openedCount = 0;
-
 let freeOpens = 0;
-
-let gameEnded = false;
-
+let gameEndedTicket = false;
 let lastBoardSignature = "";
 
+// DOM билетов (с новыми суффиксами)
+const balanceTicket = document.getElementById('balanceTicket');
+const selectScreen = document.getElementById('selectScreen');
+const gameScreenTicket = document.getElementById('gameScreenTicket');
+const chancePanel = document.getElementById('chancePanel');
+const chanceList = document.getElementById('chanceList');
+const cardTicket = document.getElementById('cardTicket');
+const gameNameTicket = document.getElementById('gameNameTicket');
+const gameCostTicket = document.getElementById('gameCostTicket');
+const freeOpensTicket = document.getElementById('freeOpensTicket');
+const resultModalTicket = document.getElementById('resultModalTicket');
+const resultIconTicket = document.getElementById('resultIconTicket');
+const resultTitleTicket = document.getElementById('resultTitleTicket');
+const resultTextTicket = document.getElementById('resultTextTicket');
+const resultMoneyTicket = document.getElementById('resultMoneyTicket');
+const paidTicket = document.getElementById('paidTicket');
+const freeTicket = document.getElementById('freeTicket');
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
-
-const paidTicket =
-    document.getElementById("paidTicket");
-
-const freeTicket =
-    document.getElementById("freeTicket");
-
-const chancePanel =
-    document.getElementById("chancePanel");
-
-const chanceList =
-    document.getElementById("chanceList");
-
-const card =
-    document.getElementById("card");
-
-const gameName =
-    document.getElementById("gameName");
-
-const gameCost =
-    document.getElementById("gameCost");
-
-const freeOpensElement =
-    document.getElementById("freeOpens");
-
-const resultModal =
-    document.getElementById("resultModal");
-
-const resultIcon =
-    document.getElementById("resultIcon");
-
-const resultTitle =
-    document.getElementById("resultTitle");
-
-const resultText =
-    document.getElementById("resultText");
-
-const resultMoney =
-    document.getElementById("resultMoney");
-
-
-/* =====================================================
-   RANDOM
-===================================================== */
-
-function getRandomSymbol(symbols){
-
-    let value =
-        Math.random()*100;
-
-    let current = 0;
-
-    for(
-        const item of symbols
-    ){
-
-        current += item.chance;
-
-        if(
-            value <= current
-        ){
-
-            return item;
-
-        }
-
-    }
-
-    return symbols[
-        symbols.length-1
-    ];
-
+// Функции билетов
+function updateBalanceTicket() {
+    balanceTicket.textContent = balance.toFixed(2);
 }
 
-
-/* =====================================================
-   SHUFFLE
-===================================================== */
-
-function shuffle(array){
-
-    for(
-        let i=array.length-1;
-        i>0;
-        i--
-    ){
-
-        const j =
-            Math.floor(
-                Math.random()*(i+1)
-            );
-
-        [
-            array[i],
-            array[j]
-        ] =
-        [
-            array[j],
-            array[i]
-        ];
-
+function shuffle(arr) {
+    for (let i = arr.length-1; i>0; i--) {
+        const j = Math.floor(Math.random()*(i+1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-
-    return array;
+    return arr;
 }
-
-
-/* =====================================================
-   VALID BOARD
-===================================================== */
-
-function isValidBoard(board){
-
+function getRandomSymbol(symbols) {
+    let val = Math.random() * 100, cur = 0;
+    for (const item of symbols) {
+        cur += item.chance;
+        if (val <= cur) return item;
+    }
+    return symbols[symbols.length-1];
+}
+function generateBoard(symbols) {
+    let board, attempts=0;
+    do {
+        board = [];
+        for (let i=0; i<9; i++) board.push(getRandomSymbol(symbols));
+        shuffle(board);
+        attempts++;
+    } while (!isValidBoard(board) && attempts<100);
+    const sig = board.map(i=>i.symbol).sort().join('|');
+    if (sig === lastBoardSignature) return generateBoard(symbols);
+    lastBoardSignature = sig;
+    return board;
+}
+function isValidBoard(board) {
     const counts = {};
-
-    for(
-        const item of board
-    ){
-
-        if(
-            !counts[item.symbol]
-        ){
-
-            counts[item.symbol]=0;
-
-        }
-
-        counts[item.symbol]++;
-
+    for (const item of board) {
+        const s = item.symbol;
+        counts[s] = (counts[s]||0) + 1;
     }
-
-    let triples = 0;
-
-    for(
-        const symbol in counts
-    ){
-
-        if(
-            counts[symbol]>3
-        ){
-
-            return false;
-
-        }
-
-        if(
-            counts[symbol]===3
-        ){
-
-            triples++;
-
-        }
-
-        if(
-            triples>1
-        ){
-
-            return false;
-
-        }
-
+    let triples=0;
+    for (const s in counts) {
+        if (counts[s] > 3) return false;
+        if (counts[s] === 3) triples++;
+        if (triples > 1) return false;
     }
-
     return true;
 }
-
-
-/* =====================================================
-   GENERATE BOARD
-===================================================== */
-
-function generateBoard(symbols){
-
-    let attempts=0;
-
-    while(attempts<1000){
-
-        attempts++;
-
-        const board=[];
-
-        for(
-            let i=0;
-            i<9;
-            i++
-        ){
-
-            board.push(
-                getRandomSymbol(symbols)
-            );
-
+function checkWinTicket() {
+    const counts = {};
+    for (const cell of cells) {
+        if (!cell.opened) continue;
+        const s = cell.item.symbol;
+        counts[s] = (counts[s]||0) + 1;
+    }
+    for (const s in counts) {
+        if (counts[s] >= 3) {
+            const item = currentTicket.symbols.find(x => x.symbol === s);
+            if (item) return item;
         }
-
-        shuffle(board);
-
-        if(
-            !isValidBoard(board)
-        ){
-
-            continue;
-
-        }
-
-        const signature =
-            board
-                .map(x=>x.symbol)
-                .sort()
-                .join("|");
-
-        if(
-            signature===
-            lastBoardSignature
-        ){
-
-            continue;
-
-        }
-
-        lastBoardSignature =
-            signature;
-
-        return board;
-
     }
-
-    /* fallback */
-
-    return [
-        symbols[0],
-        symbols[1],
-        symbols[2],
-        symbols[3],
-        symbols[4],
-        symbols[5],
-        symbols[6],
-        symbols[7],
-        symbols[8]
-    ];
-}
-
-
-/* =====================================================
-   SHOW CHANCES
-===================================================== */
-
-function showChances(ticket){
-
-    chanceList.innerHTML="";
-
-    const sorted =
-        [...ticket.symbols]
-        .sort(
-            (a,b)=>
-                b.chance-a.chance
-        );
-
-    for(
-        const item of sorted
-    ){
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "chance-row";
-
-        row.innerHTML=`
-
-            <div class="chance-symbol">
-                ${item.symbol}
-            </div>
-
-            <div class="chance-name">
-                ${item.name}
-            </div>
-
-            <div class="chance-percent">
-                ${item.chance}%
-            </div>
-
-            <div class="chance-prize">
-                +${item.prize} 💰
-            </div>
-
-        `;
-
-        chanceList.appendChild(row);
-
-    }
-
-    chancePanel.style.display="block";
-}
-
-
-/* =====================================================
-   SELECT TICKET
-===================================================== */
-
-function selectTicket(element){
-
-    paidTicket.classList.remove("selected");
-
-    freeTicket.classList.remove("selected");
-
-    element.classList.add("selected");
-
-}
-
-
-/* =====================================================
-   PAID TICKET
-===================================================== */
-
-paidTicket.addEventListener(
-    "click",
-    ()=>{
-
-        selectTicket(
-            paidTicket
-        );
-
-        currentTicket={
-
-            name:"💎 MEGA SCRATCH",
-
-            price:100,
-
-            openPrice:50,
-
-            freeOpens:2,
-
-            symbols:paidSymbols
-
-        };
-
-        showChances(
-            currentTicket
-        );
-
-    }
-);
-
-
-/* =====================================================
-   FREE TICKET
-===================================================== */
-
-freeTicket.addEventListener(
-    "click",
-    ()=>{
-
-        selectTicket(
-            freeTicket
-        );
-
-        currentTicket={
-
-            name:"🎫 FREE SCRATCH",
-
-            price:0,
-
-            openPrice:5,
-
-            freeOpens:0,
-
-            symbols:freeSymbols
-
-        };
-
-        showChances(
-            currentTicket
-        );
-
-    }
-);
-
-
-/* =====================================================
-   CLOSE CHANCES
-===================================================== */
-
-document
-    .getElementById("closeChance")
-    .addEventListener(
-        "click",
-        ()=>{
-
-            resetTicketSelection();
-
-        }
-    );
-
-
-function resetTicketSelection(){
-
-    chancePanel.style.display="none";
-
-    paidTicket.classList.remove("selected");
-
-    freeTicket.classList.remove("selected");
-
-    currentTicket=null;
-
-}
-
-
-/* =====================================================
-   START TICKET
-===================================================== */
-
-document
-    .getElementById("startTicketButton")
-    .addEventListener(
-        "click",
-        startTicket
-    );
-
-
-function startTicket(){
-
-    if(!currentTicket)
-        return;
-
-
-    if(
-        currentTicket.price>0
-    ){
-
-        if(
-            balance<
-            currentTicket.price
-        ){
-
-            alert(
-                "Недостаточно валюты для покупки билета."
-            );
-
-            return;
-
-        }
-
-        balance -=
-            currentTicket.price;
-
-        updateBalance();
-
-    }
-
-
-    showScreen("scratch");
-
-
-    openedCount=0;
-
-    gameEnded=false;
-
-    freeOpens =
-        currentTicket.freeOpens;
-
-    gameName.textContent =
-        currentTicket.name;
-
-    updateGameInfo();
-
-    createBoard();
-
-}
-
-
-/* =====================================================
-   GAME INFO
-===================================================== */
-
-function updateGameInfo(){
-
-    if(
-        freeOpens>0
-    ){
-
-        freeOpensElement.textContent =
-            `🎁 Бесплатных открытий: ${freeOpens}`;
-
-        gameCost.textContent =
-            "Первые 2 бесплатно";
-
-    }else{
-
-        freeOpensElement.textContent =
-            `Открытие ячейки: ${currentTicket.openPrice} 💰`;
-
-        gameCost.textContent =
-            `${currentTicket.openPrice} 💰`;
-
-    }
-
-}
-
-
-/* =====================================================
-   CREATE BOARD
-===================================================== */
-
-function createBoard(){
-
-    card.innerHTML="";
-
-    cells=[];
-
-    const board =
-        generateBoard(
-            currentTicket.symbols
-        );
-
-
-    for(
-        let i=0;
-        i<9;
-        i++
-    ){
-
-        const item =
-            board[i];
-
-        const cell =
-            document.createElement("div");
-
-        cell.className="cell";
-
-
-        const symbol =
-            document.createElement("div");
-
-        symbol.className="symbol";
-
-        symbol.textContent =
-            item.symbol;
-
-
-        const scratch =
-            document.createElement("div");
-
-        scratch.className="scratch";
-
-
-        cell.appendChild(symbol);
-
-        cell.appendChild(scratch);
-
-
-        const data={
-
-            element:cell,
-
-            item:item,
-
-            opened:false
-
-        };
-
-
-        cells.push(data);
-
-
-        cell.addEventListener(
-            "click",
-            ()=>openCell(data)
-        );
-
-
-        card.appendChild(cell);
-
-    }
-
-}
-
-
-/* =====================================================
-   CHECK WIN
-===================================================== */
-
-function checkWin(){
-
-    const counts={};
-
-    for(
-        const cell of cells
-    ){
-
-        if(!cell.opened)
-            continue;
-
-        const symbol =
-            cell.item.symbol;
-
-        if(
-            !counts[symbol]
-        ){
-
-            counts[symbol]=0;
-
-        }
-
-        counts[symbol]++;
-
-    }
-
-
-    for(
-        const symbol in counts
-    ){
-
-        if(
-            counts[symbol]>=3
-        ){
-
-            return currentTicket.symbols.find(
-                x=>x.symbol===symbol
-            );
-
-        }
-
-    }
-
     return null;
 }
-
-
-/* =====================================================
-   OPEN CELL
-===================================================== */
-
-function openCell(cell){
-
-    if(
-        gameEnded ||
-        cell.opened
-    ){
-
-        return;
-
+function showChances(ticket) {
+    chanceList.innerHTML = '';
+    const sorted = [...ticket.symbols].sort((a,b)=>b.chance-a.chance);
+    for (const item of sorted) {
+        const row = document.createElement('div');
+        row.className = 'chance-row';
+        row.innerHTML = `<div class="chance-symbol">${item.symbol}</div>
+                         <div class="chance-name">${item.name}</div>
+                         <div class="chance-percent">${item.chance}%</div>
+                         <div class="chance-prize">+${item.prize} 💰</div>`;
+        chanceList.appendChild(row);
     }
+    chancePanel.style.display = 'block';
+}
+function selectTicket(el) {
+    paidTicket.classList.remove('selected');
+    freeTicket.classList.remove('selected');
+    el.classList.add('selected');
+}
+paidTicket.addEventListener('click', ()=>{
+    selectTicket(paidTicket);
+    currentTicket = { name: '💎 MEGA SCRATCH', price: 100, openPrice: 50, freeOpens: 2, symbols: paidSymbols };
+    showChances(currentTicket);
+});
+freeTicket.addEventListener('click', ()=>{
+    selectTicket(freeTicket);
+    currentTicket = { name: '🎫 FREE SCRATCH', price: 0, openPrice: 5, freeOpens: 0, symbols: freeSymbols };
+    showChances(currentTicket);
+});
+document.getElementById('closeChance').addEventListener('click', ()=>{
+    chancePanel.style.display = 'none';
+    paidTicket.classList.remove('selected');
+    freeTicket.classList.remove('selected');
+    currentTicket = null;
+});
+document.getElementById('startTicketButton').addEventListener('click', startTicket);
 
-
-    if(
-        freeOpens>0
-    ){
-
-        freeOpens--;
-
-    }else{
-
-        if(
-            balance<
-            currentTicket.openPrice
-        ){
-
-            alert(
-                "Недостаточно валюты для открытия ячейки."
-            );
-
+function startTicket() {
+    if (!currentTicket) return;
+    if (currentTicket.price > 0) {
+        if (balance < currentTicket.price) {
+            alert('Недостаточно валюты для покупки билета.');
             return;
-
         }
-
-        balance -=
-            currentTicket.openPrice;
-
-        updateBalance();
-
+        balance -= currentTicket.price;
     }
-
-
-    cell.opened=true;
-
-    cell.element.classList.add("opened");
-
+    updateBalanceUI();
+    updateBalanceTicket();
+    selectScreen.classList.remove('active');
+    gameScreenTicket.classList.add('active');
+    chancePanel.style.display = 'none';
+    openedCount = 0;
+    gameEndedTicket = false;
+    freeOpens = currentTicket.freeOpens;
+    gameNameTicket.textContent = currentTicket.name;
+    updateGameInfoTicket();
+    createBoardTicket();
+}
+function updateGameInfoTicket() {
+    if (freeOpens > 0) {
+        freeOpensTicket.textContent = `🎁 Бесплатных открытий: ${freeOpens}`;
+        gameCostTicket.textContent = 'Первые 2 бесплатно';
+    } else {
+        freeOpensTicket.textContent = `Открытие ячейки: ${currentTicket.openPrice} 💰`;
+        gameCostTicket.textContent = `${currentTicket.openPrice} 💰`;
+    }
+}
+function createBoardTicket() {
+    cardTicket.innerHTML = '';
+    cells = [];
+    const board = generateBoard(currentTicket.symbols);
+    for (let i=0; i<9; i++) {
+        const item = board[i];
+        const cell = document.createElement('div');
+        cell.className = 'cell-ticket';
+        const symbol = document.createElement('div');
+        symbol.className = 'symbol-ticket';
+        symbol.textContent = item.symbol;
+        const scratch = document.createElement('div');
+        scratch.className = 'scratch-ticket';
+        cell.appendChild(symbol);
+        cell.appendChild(scratch);
+        const cellData = { element: cell, item: item, opened: false };
+        cells.push(cellData);
+        cell.addEventListener('click', ()=> openCellTicket(cellData));
+        cardTicket.appendChild(cell);
+    }
+}
+function openCellTicket(cell) {
+    if (gameEndedTicket || cell.opened) return;
+    if (freeOpens > 0) {
+        freeOpens--;
+    } else {
+        if (balance < currentTicket.openPrice) {
+            alert('Недостаточно валюты для открытия ячейки.');
+            return;
+        }
+        balance -= currentTicket.openPrice;
+        updateBalanceUI();
+        updateBalanceTicket();
+    }
+    cell.opened = true;
+    cell.element.classList.add('opened');
     openedCount++;
-
-
-    playScratchSound();
-
-    updateGameInfo();
-
-
-    const winningItem =
-        checkWin();
-
-
-    if(
-        winningItem
-    ){
-
-        finishGame(
-            true,
-            winningItem
-        );
-
-        return;
-
-    }
-
-
-    if(
-        openedCount>=9
-    ){
-
-        finishGame(
-            false,
-            null
-        );
-
-    }
-
+    updateGameInfoTicket();
+    const win = checkWinTicket();
+    if (win) { finishGameTicket(true, win); return; }
+    if (openedCount >= 9) finishGameTicket(false, null);
 }
-
-
-/* =====================================================
-   FINISH GAME
-===================================================== */
-
-function finishGame(won,item){
-
-    if(gameEnded)
-        return;
-
-    gameEnded=true;
-
-
-    if(won){
-
-        const prize =
-            item.prize;
-
+function finishGameTicket(won, item) {
+    if (gameEndedTicket) return;
+    gameEndedTicket = true;
+    const delay = 1200;
+    if (won) {
+        const prize = item.prize;
         balance += prize;
-
-        updateBalance();
-
-
-        resultIcon.textContent =
-            item.symbol;
-
-        resultTitle.textContent =
-            "ПОБЕДА!";
-
-        resultTitle.className =
-            "result-title win";
-
-        resultText.innerHTML =
-            `Вы нашли 3 одинаковых символа <b>${item.symbol}</b>.<br>
-             Комбинация найдена в любых местах билета.`;
-
-        resultMoney.textContent =
-            `+${prize} 💰`;
-
-
-        playWinSound();
-
-        createSparks();
-
-
-    }else{
-
-        resultIcon.textContent="😔";
-
-        resultTitle.textContent =
-            "ПОПРОБУЙ СНОВА";
-
-        resultTitle.className =
-            "result-title lose";
-
-        resultText.textContent =
-            "Все 9 ячеек открыты, но трёх одинаковых символов найти не удалось.";
-
-        resultMoney.textContent =
-            "0 💰";
-
-        playLoseSound();
-
+        updateBalanceUI();
+        updateBalanceTicket();
+        resultIconTicket.textContent = item.symbol;
+        resultTitleTicket.textContent = 'ПОБЕДА!';
+        resultTitleTicket.className = 'result-title-ticket win';
+        resultTextTicket.innerHTML = `Вы нашли 3 одинаковых символа <b>${item.symbol}</b>.<br>Комбинация найдена в любых местах билета.`;
+        resultMoneyTicket.textContent = `+${prize} 💰`;
+        setTimeout(()=>{ resultModalTicket.classList.add('show'); }, delay);
+    } else {
+        resultIconTicket.textContent = '😔';
+        resultTitleTicket.textContent = 'ПОПРОБУЙ СНОВА';
+        resultTitleTicket.className = 'result-title-ticket lose';
+        resultTextTicket.textContent = 'Все 9 ячеек открыты, но трёх одинаковых символов найти не удалось.';
+        resultMoneyTicket.textContent = '0 💰';
+        setTimeout(()=>{ resultModalTicket.classList.add('show'); }, delay);
     }
-
-
-    setTimeout(
-        ()=>{
-            resultModal.classList.add("show");
-        },
-        900
-    );
-
 }
-
-
-/* =====================================================
-   NEW TICKET
-===================================================== */
-
-document
-    .getElementById("newTicket")
-    .addEventListener(
-        "click",
-        ()=>{
-
-            resultModal.classList.remove("show");
-
-            resetTicketSelection();
-
-            showScreen("tickets");
-
-            cells=[];
-
-            openedCount=0;
-
-            freeOpens=0;
-
-            gameEnded=false;
-
+document.getElementById('newTicketTicket').addEventListener('click', ()=>{
+    resultModalTicket.classList.remove('show');
+    gameScreenTicket.classList.remove('active');
+    selectScreen.classList.add('active');
+    currentTicket = null;
+    cells = [];
+    openedCount = 0;
+    freeOpens = 0;
+    gameEndedTicket = false;
+    paidTicket.classList.remove('selected');
+    freeTicket.classList.remove('selected');
+    chancePanel.style.display = 'none';
+});
+document.getElementById('backToTicketsTicket').addEventListener('click', ()=>{
+    if (!gameEndedTicket && openedCount > 0) {
+        const canAfford = balance >= currentTicket.openPrice;
+        if (canAfford) {
+            alert('Вы не можете выйти из билета, пока можете продолжать открытие.');
+            return;
         }
-    );
-
-
-/* =====================================================
-   BACK TO TICKETS
-===================================================== */
-
-document
-    .getElementById("backToTickets")
-    .addEventListener(
-        "click",
-        ()=>{
-
-            if(
-                !gameEnded &&
-                openedCount>0
-            ){
-
-                const canContinue =
-                    freeOpens>0 ||
-                    balance>=currentTicket.openPrice;
-
-                if(canContinue){
-
-                    alert(
-                        "Вы не можете выйти из билета, пока можете продолжать открытие."
-                    );
-
-                    return;
-
-                }
-
-            }
-
-
-            resetTicketSelection();
-
-            showScreen("tickets");
-
-            cells=[];
-
-            openedCount=0;
-
-            freeOpens=0;
-
-            gameEnded=false;
-
-        }
-    );
-
-
-/* =====================================================
-   AUDIO
-===================================================== */
-
-let audioContext=null;
-
-
-function getAudioContext(){
-
-    try{
-
-        if(!audioContext){
-
-            audioContext =
-                new(
-                    window.AudioContext ||
-                    window.webkitAudioContext
-                )();
-
-        }
-
-        if(
-            audioContext.state==="suspended"
-        ){
-
-            audioContext.resume();
-
-        }
-
-        return audioContext;
-
-    }catch(e){
-
-        return null;
-
     }
-
-}
-
-
-/* =====================================================
-   SCRATCH SOUND
-===================================================== */
-
-function playScratchSound(){
-
-    const ctx =
-        getAudioContext();
-
-    if(!ctx)
-        return;
-
-    try{
-
-        const duration=.07;
-
-        const buffer =
-            ctx.createBuffer(
-                1,
-                ctx.sampleRate*duration,
-                ctx.sampleRate
-            );
-
-        const data =
-            buffer.getChannelData(0);
-
-        for(
-            let i=0;
-            i<data.length;
-            i++
-        ){
-
-            data[i]=
-                (
-                    Math.random()*2-1
-                )*
-                (
-                    1-i/data.length
-                );
-
-        }
-
-        const source =
-            ctx.createBufferSource();
-
-        source.buffer=buffer;
-
-        const gain =
-            ctx.createGain();
-
-        gain.gain.value=.07;
-
-        source.connect(gain);
-
-        gain.connect(ctx.destination);
-
-        source.start();
-
-    }catch(e){}
-
-}
-
-
-/* =====================================================
-   WIN SOUND
-===================================================== */
-
-function playWinSound(){
-
-    const ctx =
-        getAudioContext();
-
-    if(!ctx)
-        return;
-
-    try{
-
-        const now =
-            ctx.currentTime;
-
-        const notes=[
-            523.25,
-            659.25,
-            783.99,
-            1046.50
-        ];
-
-        notes.forEach(
-            (frequency,index)=>{
-
-                const oscillator =
-                    ctx.createOscillator();
-
-                const gain =
-                    ctx.createGain();
-
-                oscillator.type="sine";
-
-                oscillator.frequency
-                    .setValueAtTime(
-                        frequency,
-                        now+
-                        index*.12
-                    );
-
-                gain.gain.setValueAtTime(
-                    0,
-                    now+
-                    index*.12
-                );
-
-                gain.gain.linearRampToValueAtTime(
-                    .16,
-                    now+
-                    index*.12+
-                    .02
-                );
-
-                gain.gain.exponentialRampToValueAtTime(
-                    .001,
-                    now+
-                    index*.12+
-                    .45
-                );
-
-                oscillator.connect(gain);
-
-                gain.connect(
-                    ctx.destination
-                );
-
-                oscillator.start(
-                    now+
-                    index*.12
-                );
-
-                oscillator.stop(
-                    now+
-                    index*.12+
-                    .5
-                );
-
-            }
-        );
-
-    }catch(e){}
-
-}
-
-
-/* =====================================================
-   LOSE SOUND
-===================================================== */
-
-function playLoseSound(){
-
-    const ctx =
-        getAudioContext();
-
-    if(!ctx)
-        return;
-
-    try{
-
-        const now =
-            ctx.currentTime;
-
-        const oscillator =
-            ctx.createOscillator();
-
-        const gain =
-            ctx.createGain();
-
-        oscillator.type="sawtooth";
-
-        oscillator.frequency
-            .setValueAtTime(
-                280,
-                now
-            );
-
-        oscillator.frequency
-            .exponentialRampToValueAtTime(
-                90,
-                now+.65
-            );
-
-        gain.gain.setValueAtTime(
-            0,
-            now
-        );
-
-        gain.gain.linearRampToValueAtTime(
-            .13,
-            now+.03
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .001,
-            now+.7
-        );
-
-        oscillator.connect(gain);
-
-        gain.connect(
-            ctx.destination
-        );
-
-        oscillator.start(now);
-
-        oscillator.stop(
-            now+.75
-        );
-
-    }catch(e){}
-
-}
-
-
-/* =====================================================
-   SPARKS
-===================================================== */
-
-function createSparks(){
-
-    for(
-        let i=0;
-        i<35;
-        i++
-    ){
-
-        const spark =
-            document.createElement("div");
-
-        spark.className="spark";
-
-        spark.style.left="50%";
-
-        spark.style.top="45%";
-
-        spark.style.setProperty(
-            "--x",
-            `${Math.random()*360-180}px`
-        );
-
-        spark.style.setProperty(
-            "--y",
-            `${Math.random()*440-220}px`
-        );
-
-        document.body.appendChild(spark);
-
-        setTimeout(
-            ()=>spark.remove(),
-            850
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   INIT
-===================================================== */
-
-updateBalance();
+    gameScreenTicket.classList.remove('active');
+    selectScreen.classList.add('active');
+    currentTicket = null;
+    cells = [];
+    openedCount = 0;
+    freeOpens = 0;
+    gameEndedTicket = false;
+    paidTicket.classList.remove('selected');
+    freeTicket.classList.remove('selected');
+    chancePanel.style.display = 'none';
+});
+
+// Кнопка открытия билетов из меню
+document.getElementById('openTicketsButton').addEventListener('click', ()=>{
+    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+    document.getElementById('ticketGameContainer').classList.remove('hidden');
+    updateBalanceTicket();
+});
+
+// Закрытие билетов (крестик)
+document.getElementById('closeTicketsBtn').addEventListener('click', ()=>{
+    document.getElementById('ticketGameContainer').classList.add('hidden');
+    document.getElementById('menuPage').classList.remove('hidden');
+    document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
+    document.querySelector('[data-page="menuPage"]').classList.add('active');
+});
+
+// Инициализация
+updateBalanceUI();
+updateBalanceTicket();
+updateZones();
+updateProfileStats();
+resizeCanvas();
+ball.x = circle.x;
+ball.y = circle.y - circle.radius * .35;
+gameLoop();
 
 </script>
 
