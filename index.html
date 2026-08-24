@@ -11,6 +11,7 @@
         ::-webkit-scrollbar-track{background:#0a0a0f}
         ::-webkit-scrollbar-thumb{background:#f0b90b;border-radius:10px}
         
+        /* ===== ЗАГРУЗКА ===== */
         .loading-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#0a0a0f;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity .5s ease}
         .loading-overlay.hide{opacity:0;pointer-events:none}
         .loading-spinner{width:40px;height:40px;border:2px solid rgba(240,185,11,0.04);border-top:2px solid #f0b90b;border-radius:50%;animation:spin 1s linear infinite}
@@ -21,55 +22,57 @@
         .top-bar{background:rgba(13,13,20,0.6);backdrop-filter:blur(20px);padding:12px 20px;border-bottom:1px solid rgba(240,185,11,0.04);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50}
         .top-bar .logo{font-weight:600;color:#f0b90b;font-size:15px;letter-spacing:2px}
         .top-bar .balance{color:#f0b90b;font-weight:500;font-size:14px;background:rgba(240,185,11,0.04);padding:4px 14px;border-radius:30px;border:1px solid rgba(240,185,11,0.04);cursor:pointer}
-        .top-bar .balance:active{transform:scale(0.95)}
         
         .page{display:none;flex-direction:column;flex:1;padding:16px 18px 20px;animation:fade .3s ease}
         .page.active{display:flex}
         @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-        .page-title{font-size:20px;font-weight:500;margin-bottom:14px;color:#f0b90b;letter-spacing:-0.3px}
+        .page-title{font-size:20px;font-weight:500;margin-bottom:14px;color:#f0b90b}
         
         .menu-hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
         .menu-hero h1{font-size:56px;font-weight:200;color:#f0b90b;letter-spacing:6px}
         .menu-hero .subtitle{color:#555;font-size:13px;margin-top:4px;letter-spacing:3px}
-        .menu-hero .game-btn{background:rgba(240,185,11,0.04);color:#f0b90b;padding:12px 40px;border-radius:50px;font-size:14px;font-weight:500;border:1px solid rgba(240,185,11,0.06);cursor:pointer;margin-top:16px;width:80%;max-width:240px;transition:all .2s;letter-spacing:1px}
+        .menu-hero .game-btn{background:rgba(240,185,11,0.04);color:#f0b90b;padding:12px 40px;border-radius:50px;font-size:14px;font-weight:500;border:1px solid rgba(240,185,11,0.06);cursor:pointer;margin-top:16px;width:80%;max-width:240px;transition:all .2s}
         .menu-hero .game-btn:active{transform:scale(0.96);background:rgba(240,185,11,0.08)}
         .menu-hero .game-btn.secondary{border-color:rgba(255,255,255,0.03);color:#888}
         
         /* ===== РЕЖИМ ШАРИК ===== */
-        .ball-container{display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 0;max-width:400px;margin:0 auto;width:100%}
+        .ball-container{display:flex;flex-direction:column;align-items:center;gap:10px;padding:4px 0;max-width:400px;margin:0 auto;width:100%}
         .ball-title{font-size:18px;font-weight:500;color:#f0b90b;letter-spacing:1px}
-        .ball-game-area{position:relative;width:280px;height:280px;margin:0 auto}
-        .ball-circle{position:relative;width:280px;height:280px;border-radius:50%;border:2px solid rgba(240,185,11,0.08);background:rgba(13,13,20,0.6);overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.5)}
-        .ball-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:40px;height:20px;background:transparent;border-bottom:2px solid rgba(240,185,11,0.08);z-index:2}
-        .ball-hole::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:30px;height:10px;background:rgba(240,185,11,0.03);border-radius:50%}
-        .ball{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 20px rgba(240,185,11,0.3);z-index:5;transition:none;will-change:transform}
-        .ball-exit-zone{position:absolute;bottom:0;left:0;right:0;height:30px;display:flex;justify-content:space-between;padding:0 10px;z-index:1}
-        .ball-exit-zone .zone{width:50%;height:100%;display:flex;justify-content:center;align-items:center;font-size:20px;border-radius:0 0 50% 50% / 0 0 100% 100%;transition:all .3s}
-        .ball-exit-zone .zone.green{background:rgba(46,204,113,0.05);border-right:1px solid rgba(46,204,113,0.05);color:#2ecc71}
-        .ball-exit-zone .zone.red{background:rgba(231,76,60,0.05);border-left:1px solid rgba(231,76,60,0.05);color:#e74c3c}
-        .ball-exit-zone .zone.active.green{background:rgba(46,204,113,0.15);box-shadow:0 0 30px rgba(46,204,113,0.05)}
-        .ball-exit-zone .zone.active.red{background:rgba(231,76,60,0.15);box-shadow:0 0 30px rgba(231,76,60,0.05)}
         
-        .ball-info{display:flex;justify-content:space-between;width:100%;max-width:280px;padding:4px 8px;background:rgba(13,13,20,0.2);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
-        .ball-info .item{text-align:center;font-size:12px;color:#666}
-        .ball-info .item span{display:block;font-size:16px;font-weight:600;color:#f0b90b}
-        .ball-info .item .multiplier{font-size:22px;color:#f0b90b;font-weight:700}
+        .ball-game-area{position:relative;width:300px;height:420px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+        .ball-circle-wrapper{position:relative;width:240px;height:240px;border-radius:50%;border:2px solid rgba(240,185,11,0.06);background:rgba(13,13,20,0.4)}
+        .ball-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden}
+        .ball-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:30px;height:12px;background:transparent;border-bottom:2px solid rgba(240,185,11,0.04);z-index:2}
+        .ball{position:absolute;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 20px rgba(240,185,11,0.2);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
+        .ball-wall-hit{color:#f0b90b;font-size:10px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .8s ease forwards}
+        @keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-30px)}}
         
-        .ball-controls{display:flex;flex-direction:column;gap:8px;width:100%;max-width:280px}
-        .ball-controls .row{display:flex;gap:8px}
-        .ball-controls .btn{flex:1;padding:12px;border-radius:50px;border:none;font-weight:600;font-size:14px;cursor:pointer;transition:all .1s;letter-spacing:0.5px}
+        .ball-zones{display:flex;width:240px;height:40px;margin-top:10px;border-radius:0 0 20px 20px;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
+        .ball-zones .zone{flex:1;display:flex;justify-content:center;align-items:center;font-size:20px;font-weight:700;transition:all .3s}
+        .ball-zones .zone.green{background:rgba(46,204,113,0.04);color:#2ecc71;border-right:1px solid rgba(255,255,255,0.01)}
+        .ball-zones .zone.red{background:rgba(231,76,60,0.04);color:#e74c3c;border-left:1px solid rgba(255,255,255,0.01)}
+        .ball-zones .zone.active.green{background:rgba(46,204,113,0.15);box-shadow:inset 0 0 30px rgba(46,204,113,0.03)}
+        .ball-zones .zone.active.red{background:rgba(231,76,60,0.15);box-shadow:inset 0 0 30px rgba(231,76,60,0.03)}
+        
+        .ball-info{display:flex;justify-content:space-between;width:100%;max-width:260px;padding:4px 10px;background:rgba(13,13,20,0.2);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
+        .ball-info .item{text-align:center;font-size:11px;color:#666}
+        .ball-info .item span{display:block;font-size:15px;font-weight:600;color:#f0b90b}
+        .ball-info .item .multiplier{font-size:20px;color:#f0b90b;font-weight:700}
+        
+        .ball-controls{display:flex;flex-direction:column;gap:6px;width:100%;max-width:260px}
+        .ball-controls .row{display:flex;gap:6px}
+        .ball-controls .btn{flex:1;padding:10px;border-radius:50px;border:none;font-weight:600;font-size:13px;cursor:pointer;transition:all .1s}
         .ball-controls .btn:active{transform:scale(0.96)}
         .ball-controls .btn.primary{background:#f0b90b;color:#0a0a0f}
         .ball-controls .btn.secondary{background:rgba(26,26,36,0.2);border:1px solid rgba(240,185,11,0.02);color:#f0b90b}
-        .ball-controls .btn.danger{background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.05);color:#e74c3c}
+        .ball-controls .btn.danger{background:rgba(231,76,60,0.08);border:1px solid rgba(231,76,60,0.04);color:#e74c3c}
         .ball-controls .btn:disabled{opacity:0.3;pointer-events:none}
-        .ball-bet-input{background:rgba(10,10,15,0.3);border:1px solid rgba(255,255,255,0.02);border-radius:50px;padding:12px 16px;color:#fff;font-size:16px;text-align:center;width:100%;outline:none}
+        .ball-bet-input{background:rgba(10,10,15,0.3);border:1px solid rgba(255,255,255,0.02);border-radius:50px;padding:10px 14px;color:#fff;font-size:15px;text-align:center;width:100%;outline:none}
         .ball-bet-input:focus{border-color:rgba(240,185,11,0.04)}
-        .ball-bet-input::placeholder{color:#444}
         
         .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
         .case-item{background:rgba(26,26,36,0.3);border:1px solid rgba(255,255,255,0.02);border-radius:14px;padding:16px 10px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-        .case-item:active{transform:scale(0.94);border-color:rgba(240,185,11,0.05)}
+        .case-item:active{transform:scale(0.94)}
         .case-item .case-rare{position:absolute;top:0;left:0;right:0;height:2px}
         .case-item .case-rare.common{background:linear-gradient(90deg,#888,#aaa)}
         .case-item .case-rare.uncommon{background:linear-gradient(90deg,#4CAF50,#8BC34A)}
@@ -90,7 +93,7 @@
         .case-preview .items-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
         .case-preview .preview-item{background:rgba(13,13,20,0.3);border-radius:8px;padding:6px 2px;text-align:center;border:1px solid rgba(255,255,255,0.02)}
         .case-preview .preview-item .icon{font-size:18px}
-        .case-preview .preview-item .name{font-size:8px;color:#888;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .case-preview .preview-item .name{font-size:8px;color:#888;margin-top:2px}
         .case-preview .preview-item .price{font-size:7px;color:#f0b90b}
         .case-preview .case-actions{display:flex;gap:8px;margin-top:8px}
         .case-preview .case-actions .btn{flex:1;padding:10px;border-radius:50px;border:none;font-weight:600;font-size:12px;cursor:pointer;transition:all .1s}
@@ -104,7 +107,7 @@
         .slot-item{background:rgba(26,26,36,0.2);border:2px solid rgba(255,255,255,0.02);border-radius:8px;padding:6px 2px;text-align:center;width:46px;transition:all .2s ease;opacity:0.4}
         .slot-item.show{opacity:1}
         .slot-item .icon{font-size:18px}
-        .slot-item .name{font-size:6px;color:#666;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40px}
+        .slot-item .name{font-size:6px;color:#666;margin-top:2px}
         .slot-item .slot-price{font-size:6px;color:#444}
         .slot-item.winner{border-color:#f0b90b;box-shadow:0 0 30px rgba(240,185,11,0.06);transform:scale(1.06);background:rgba(240,185,11,0.02);opacity:1}
         .slot-item.winner .name{color:#f0b90b}
@@ -128,7 +131,7 @@
         .selected-skin-info span{color:#f0b90b;font-weight:500}
         .upgrade-controls{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;max-width:280px}
         .upgrade-controls .row{display:flex;gap:6px;width:100%}
-        .upgrade-controls .btn{flex:1;padding:10px;border-radius:50px;border:none;font-weight:500;font-size:12px;cursor:pointer;background:rgba(26,26,36,0.2);border:1px solid rgba(240,185,11,0.02);color:#f0b90b;transition:all .1s;letter-spacing:0.5px}
+        .upgrade-controls .btn{flex:1;padding:10px;border-radius:50px;border:none;font-weight:500;font-size:12px;cursor:pointer;background:rgba(26,26,36,0.2);border:1px solid rgba(240,185,11,0.02);color:#f0b90b;transition:all .1s}
         .upgrade-controls .btn:active{transform:scale(0.96)}
         .upgrade-controls .btn.primary{background:#f0b90b;color:#0a0a0f;border:none;font-weight:600}
         .upgrade-controls .multipliers{display:flex;gap:4px;width:100%}
@@ -229,7 +232,7 @@
         .rating-item .name{color:#aaa;font-size:12px;flex:1;margin:0 6px}
         .rating-item .score{color:#f0b90b;font-weight:500;font-size:11px}
         
-        @media(max-width:420px){.inventory-grid,.cases-grid{grid-template-columns:1fr 1fr}.case-preview .items-preview{grid-template-columns:repeat(3,1fr)}.slot-item{width:38px}.slot-item .icon{font-size:14px}.deposit-grid{grid-template-columns:repeat(2,1fr)}.deposit-custom{grid-column:span 2}.ball-game-area{width:220px;height:220px}.ball-circle{width:220px;height:220px}.ball{width:14px;height:14px}}
+        @media(max-width:420px){.ball-game-area{width:260px;height:380px}.ball-circle-wrapper{width:200px;height:200px}.ball-zones{width:200px}.ball{width:12px;height:12px}.cases-grid,.inventory-grid{grid-template-columns:1fr 1fr}.case-preview .items-preview{grid-template-columns:repeat(3,1fr)}.slot-item{width:38px}.slot-item .icon{font-size:14px}.deposit-grid{grid-template-columns:repeat(2,1fr)}.deposit-custom{grid-column:span 2}}
     </style>
 </head>
 <body>
@@ -398,37 +401,40 @@
         function spinUpgrade(){if(!selectedSkin){showToast('❌ Выберите скин','error');return;}if(isSpinning)return;isSpinning=true;const canvas=document.getElementById('wheelCanvas');if(!canvas)return;const ctx=canvas.getContext('2d');const w=200,h=200,cx=100,cy=100,r=90;const win=getWinChance();const isWin=Math.random()*100<win;const arrow=document.getElementById('wheelArrow');const totalRot=4*Math.PI+(isWin?0:Math.PI);const duration=2000+Math.random()*800;const start=Date.now();const startAng=wheelAngle;const resultEl=document.getElementById('upgrade-result');if(resultEl){resultEl.className='upgrade-result';resultEl.textContent='';}
         function anim(){const elapsed=Date.now()-start;const progress=Math.min(elapsed/duration,1);const ease=1-Math.pow(1-progress,3);const current=startAng+totalRot*ease;arrow.style.transform=`translateX(-50%) rotate(${current}rad)`;ctx.clearRect(0,0,w,h);const winNow=getWinChance();const loseNow=100-winNow;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+current,-Math.PI/2+(winNow/100)*2*Math.PI+current);ctx.closePath();ctx.fillStyle='#2ecc71';ctx.fill();ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+(winNow/100)*2*Math.PI+current,-Math.PI/2+2*Math.PI+current);ctx.closePath();ctx.fillStyle='#e74c3c';ctx.fill();ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.strokeStyle='rgba(240,185,11,0.04)';ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const mid=-Math.PI/2+current+(winNow/100)*Math.PI;ctx.fillText(`${winNow}%`,cx+r*0.6*Math.cos(mid),cy+r*0.6*Math.sin(mid));const lAng=-Math.PI/2+current+(winNow/100)*2*Math.PI+((100-winNow)/100)*Math.PI;ctx.fillText(`${loseNow}%`,cx+r*0.6*Math.cos(lAng),cy+r*0.6*Math.sin(lAng));if(progress<1){requestAnimationFrame(anim);}else{wheelAngle=current;isSpinning=false;if(isWin){const upgraded={...selectedSkin,value:Math.round(selectedSkin.value*multiplier)};inventory=inventory.filter(i=>i.id!==selectedSkin.id);inventory.push(upgraded);achievements.upgradesDone++;addHistory(`Апгрейд "${selectedSkin.name}" +${multiplier}x`,upgraded.value-selectedSkin.value);if(resultEl){resultEl.className='upgrade-result success';resultEl.textContent=`🎉 Успех! +${multiplier}x (${upgraded.value}⭐)`;}showToast(`🎉 Апгрейд успешен! +${multiplier}x`,'success');}else{const oldValue=selectedSkin.value;inventory=inventory.filter(i=>i.id!==selectedSkin.id);addHistory(`Апгрейд "${selectedSkin.name}" сгорел`,-oldValue);if(resultEl){resultEl.className='upgrade-result fail';resultEl.textContent=`💥 Скин сгорел (-${oldValue}⭐)`;}showToast('💥 Скин сгорел','error');}selectedSkin=null;document.getElementById('selected-skin-info').innerHTML='Выбран: <span>Нет</span>';saveData();renderInventory();renderUpgrade(document.getElementById('game-content'));}}anim();}
 
-        // ===== РЕЖИМ ШАРИК =====
+        // ===== РЕЖИМ ШАРИК (ИСПРАВЛЕННЫЙ) =====
         let ballInterval = null;
-        let ballMultiplier = 0;
+        let ballMultiplier = 1;
         let ballGameActive = false;
         let ballBet = 100;
-        let ballResult = null;
+        let ballHits = 0;
+        let ballExitTimer = null;
 
         function renderBall(content) {
             content.innerHTML = `
                 <div class="ball-container">
                     <div class="ball-title">Шарик</div>
                     <div class="ball-game-area">
-                        <div class="ball-circle" id="ballCircle">
-                            <div class="ball" id="ball" style="top:50%;left:50%;transform:translate(-50%,-50%)"></div>
-                            <div class="ball-hole"></div>
-                            <div class="ball-exit-zone">
-                                <div class="zone green" id="zoneGreen">💸</div>
-                                <div class="zone red" id="zoneRed">💀</div>
+                        <div class="ball-circle-wrapper">
+                            <div class="ball-circle" id="ballCircle">
+                                <div class="ball" id="ball" style="top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+                                <div class="ball-hole"></div>
                             </div>
+                        </div>
+                        <div class="ball-zones" id="ballZones">
+                            <div class="zone green" id="zoneGreen">💸</div>
+                            <div class="zone red" id="zoneRed">💀</div>
                         </div>
                     </div>
                     <div class="ball-info">
                         <div class="item">Ставка<br><span id="ballBetDisplay">100⭐</span></div>
-                        <div class="item">Множитель<br><span class="multiplier" id="ballMultiplierDisplay">x0.0</span></div>
+                        <div class="item">Множитель<br><span class="multiplier" id="ballMultiplierDisplay">x1.0</span></div>
                         <div class="item">Результат<br><span id="ballResultDisplay">—</span></div>
                     </div>
                     <div class="ball-controls">
                         <input type="number" class="ball-bet-input" id="ballBetInput" value="100" min="100" placeholder="Ставка от 100⭐">
                         <div class="row">
-                            <button class="btn primary" id="ballStartBtn" onclick="startBallGame()">🎯 Начать</button>
-                            <button class="btn danger" id="ballResetBtn" onclick="resetBallGame()">↺ Сброс</button>
+                            <button class="btn primary" id="ballStartBtn" onclick="startBallGame()">🎯 Запустить</button>
+                            <button class="btn secondary" onclick="resetBallGame()">↺ Сброс</button>
                         </div>
                     </div>
                 </div>
@@ -438,17 +444,18 @@
 
         function resetBallGame() {
             if (ballInterval) { clearInterval(ballInterval); ballInterval = null; }
+            if (ballExitTimer) { clearTimeout(ballExitTimer); ballExitTimer = null; }
             ballGameActive = false;
-            ballMultiplier = 0;
-            ballResult = null;
+            ballMultiplier = 1;
+            ballHits = 0;
             const ball = document.getElementById('ball');
             if (ball) { ball.style.top = '50%'; ball.style.left = '50%'; ball.style.transform = 'translate(-50%,-50%)'; }
             const zones = document.querySelectorAll('.zone');
             zones.forEach(z => z.classList.remove('active'));
-            document.getElementById('ballMultiplierDisplay').textContent = 'x0.0';
+            document.getElementById('ballMultiplierDisplay').textContent = 'x1.0';
             document.getElementById('ballResultDisplay').textContent = '—';
             document.getElementById('ballStartBtn').disabled = false;
-            document.getElementById('ballStartBtn').textContent = '🎯 Начать';
+            document.getElementById('ballStartBtn').textContent = '🎯 Запустить';
         }
 
         function startBallGame() {
@@ -465,8 +472,8 @@
             document.getElementById('ballStartBtn').disabled = true;
             document.getElementById('ballStartBtn').textContent = '⏳ Игра...';
             ballGameActive = true;
-            ballMultiplier = 0;
-            ballResult = null;
+            ballMultiplier = 1;
+            ballHits = 0;
             const zones = document.querySelectorAll('.zone');
             zones.forEach(z => z.classList.remove('active'));
             document.getElementById('ballResultDisplay').textContent = '...';
@@ -480,82 +487,102 @@
             let x = centerX, y = centerY;
             let dx = (Math.random() - 0.5) * 3;
             let dy = (Math.random() - 0.5) * 3;
-            const radius = 10;
+            const radius = 7;
             const circleRadius = circleRect.width / 2 - radius;
 
             if (ballInterval) clearInterval(ballInterval);
 
-            let time = 0;
-            const maxTime = 5000 + Math.random() * 3000;
-            const exitTime = 2000 + Math.random() * 3000;
-            let exited = false;
+            let wallHitCount = 0;
+            let lastHitTime = 0;
+            const exitDelay = 2000 + Math.random() * 3000;
+            const startTime = Date.now();
 
             ballInterval = setInterval(() => {
                 if (!ballGameActive) { clearInterval(ballInterval); return; }
-                time += 16;
-
-                // Обновляем множитель
-                if (time < exitTime) {
-                    ballMultiplier = Math.min(5, time / 800);
-                    document.getElementById('ballMultiplierDisplay').textContent = 'x' + ballMultiplier.toFixed(1);
-                }
+                const elapsed = Date.now() - startTime;
 
                 // Движение шарика
                 x += dx;
                 y += dy;
 
+                let hitWall = false;
                 // Отскоки от стен
-                if (x - radius < 0 || x + radius > circleRect.width) { dx *= -1; x = Math.max(radius, Math.min(circleRect.width - radius, x)); }
-                if (y - radius < 0 || y + radius > circleRect.height) { dy *= -1; y = Math.max(radius, Math.min(circleRect.height - radius, y)); }
+                if (x - radius < 0 || x + radius > circleRect.width) {
+                    dx *= -1;
+                    x = Math.max(radius, Math.min(circleRect.width - radius, x));
+                    hitWall = true;
+                }
+                if (y - radius < 0 || y + radius > circleRect.height) {
+                    dy *= -1;
+                    y = Math.max(radius, Math.min(circleRect.height - radius, y));
+                    hitWall = true;
+                }
 
                 // Отскок от отверстия снизу
                 const holeX = circleRect.width / 2;
                 const holeY = circleRect.height;
                 const distToHole = Math.sqrt((x - holeX) ** 2 + (y - holeY) ** 2);
-                if (distToHole < 30 && y > circleRect.height - 40) {
+                if (distToHole < 25 && y > circleRect.height - 30) {
                     dy *= -0.8;
-                    y = circleRect.height - 40;
+                    y = circleRect.height - 30;
+                    hitWall = true;
+                }
+
+                // Если шарик ударился об стену
+                if (hitWall && Date.now() - lastHitTime > 200) {
+                    wallHitCount++;
+                    lastHitTime = Date.now();
+                    ballMultiplier = 1 + wallHitCount * 0.1;
+                    document.getElementById('ballMultiplierDisplay').textContent = 'x' + ballMultiplier.toFixed(1);
+
+                    // Эффект удара
+                    const hitEffect = document.createElement('div');
+                    hitEffect.className = 'ball-wall-hit';
+                    hitEffect.textContent = '+' + (ballMultiplier - 1).toFixed(1) + 'x';
+                    hitEffect.style.left = x + 'px';
+                    hitEffect.style.top = y - 10 + 'px';
+                    document.getElementById('ballCircle').appendChild(hitEffect);
+                    setTimeout(() => hitEffect.remove(), 800);
                 }
 
                 ball.style.top = y + 'px';
                 ball.style.left = x + 'px';
 
-                // Выход из круга
+                // Выход из круга через отверстие
                 const distFromCenter = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
-                if (distFromCenter > circleRadius - 5 && time > exitTime && !exited) {
-                    exited = true;
-                    ballGameActive = false;
-                    clearInterval(ballInterval);
+                if (distFromCenter > circleRadius - 5 && elapsed > 1500 && !ballExitTimer) {
+                    ballExitTimer = setTimeout(() => {
+                        if (!ballGameActive) return;
+                        ballGameActive = false;
+                        clearInterval(ballInterval);
 
-                    // Определяем результат
-                    const rand = Math.random();
-                    // Если множитель > 5, почти всегда красный
-                    let redChance = 0.5;
-                    if (ballMultiplier > 5) redChance = 0.95;
-                    else if (ballMultiplier > 3) redChance = 0.7;
-                    else if (ballMultiplier > 2) redChance = 0.6;
+                        // Определяем результат
+                        const rand = Math.random();
+                        let redChance = 0.35 + (ballMultiplier - 1) * 0.08;
+                        if (redChance > 0.85) redChance = 0.85;
+                        const isWin = rand > redChance;
+                        const greenZone = document.getElementById('zoneGreen');
+                        const redZone = document.getElementById('zoneRed');
 
-                    const isWin = rand > redChance;
-                    const greenZone = document.getElementById('zoneGreen');
-                    const redZone = document.getElementById('zoneRed');
-
-                    if (isWin) {
-                        const winAmount = Math.round(ballBet * ballMultiplier);
-                        balance += winAmount;
-                        addHistory(`Шарик: выигрыш x${ballMultiplier.toFixed(1)}`, winAmount);
-                        greenZone.classList.add('active');
-                        document.getElementById('ballResultDisplay').textContent = `💸 +${winAmount}⭐`;
-                        showToast(`💸 Выигрыш! +${winAmount}⭐ (x${ballMultiplier.toFixed(1)})`, 'success', 3000);
-                    } else {
-                        addHistory(`Шарик: проигрыш -${ballBet}⭐`, -ballBet);
-                        redZone.classList.add('active');
-                        document.getElementById('ballResultDisplay').textContent = `💀 -${ballBet}⭐`;
-                        showToast(`💀 Проигрыш! -${ballBet}⭐`, 'error', 3000);
-                    }
-                    updateUI();
-                    saveData();
-                    document.getElementById('ballStartBtn').disabled = false;
-                    document.getElementById('ballStartBtn').textContent = '🎯 Начать';
+                        if (isWin) {
+                            const winAmount = Math.round(ballBet * ballMultiplier);
+                            balance += winAmount;
+                            addHistory(`Шарик: выигрыш x${ballMultiplier.toFixed(1)}`, winAmount);
+                            greenZone.classList.add('active');
+                            document.getElementById('ballResultDisplay').textContent = `💸 +${winAmount}⭐`;
+                            showToast(`💸 Выигрыш! +${winAmount}⭐ (x${ballMultiplier.toFixed(1)})`, 'success', 3000);
+                        } else {
+                            addHistory(`Шарик: проигрыш -${ballBet}⭐`, -ballBet);
+                            redZone.classList.add('active');
+                            document.getElementById('ballResultDisplay').textContent = `💀 -${ballBet}⭐`;
+                            showToast(`💀 Проигрыш! -${ballBet}⭐`, 'error', 3000);
+                        }
+                        updateUI();
+                        saveData();
+                        document.getElementById('ballStartBtn').disabled = false;
+                        document.getElementById('ballStartBtn').textContent = '🎯 Запустить';
+                        ballExitTimer = null;
+                    }, 300 + Math.random() * 500);
                 }
             }, 16);
         }
