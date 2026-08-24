@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Scratch & Win</title>
+<title>🐻‍❄️ DROP — Scratch</title>
 
 <style>
+
 * {
     margin: 0;
     padding: 0;
@@ -17,9 +18,12 @@ html,
 body {
     width: 100%;
     min-height: 100%;
+
     background: #111315;
     color: white;
+
     font-family: Arial, sans-serif;
+
     user-select: none;
 }
 
@@ -31,79 +35,179 @@ body {
 .app {
     width: 100%;
     max-width: 480px;
+
     min-height: 100vh;
-    padding: 20px 18px 30px;
+
+    padding:
+        20px
+        18px
+        35px;
 }
 
 
-/* ================================
+/* =====================================================
    HEADER
-================================ */
+===================================================== */
 
 .header {
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
+    justify-content: space-between;
 
     margin-bottom: 30px;
 }
 
 .logo {
     font-size: 22px;
+
     font-weight: 900;
-    letter-spacing: -0.5px;
+
+    letter-spacing: -.5px;
 }
 
 .balance-box {
     background: #1b1e21;
+
     border: 1px solid #30353a;
-    border-radius: 10px;
-    padding: 9px 13px;
+
+    border-radius: 11px;
+
+    padding:
+        9px 13px;
+
     text-align: right;
 }
 
 .balance-label {
-    font-size: 10px;
     color: #858b91;
+
+    font-size: 10px;
+
     text-transform: uppercase;
+
+    letter-spacing: .5px;
 }
 
 .balance {
     margin-top: 2px;
+
     color: #ffd84d;
+
     font-size: 18px;
+
     font-weight: 900;
 }
 
 
-/* ================================
+/* =====================================================
    TITLE
-================================ */
+===================================================== */
 
 .title {
     text-align: center;
+
     font-size: 31px;
+
     font-weight: 900;
+
     letter-spacing: -1px;
 }
 
 .subtitle {
     margin-top: 8px;
+
     text-align: center;
+
     color: #858b91;
+
     font-size: 14px;
+
     line-height: 1.5;
 }
 
 
-/* ================================
-   TICKET INFO
-================================ */
+/* =====================================================
+   TICKET SELECT
+===================================================== */
 
-.ticket-info {
-    margin-top: 24px;
+.ticket-select {
+    margin-top: 25px;
 
     display: flex;
+
+    gap: 9px;
+}
+
+.ticket-card {
+    flex: 1;
+
+    padding: 15px 10px;
+
+    background: #191c1f;
+
+    border: 1px solid #30353a;
+
+    border-radius: 13px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: .18s;
+}
+
+.ticket-card:hover {
+    border-color: #4a5158;
+}
+
+.ticket-card.active {
+    border-color: #1678e8;
+
+    background:
+        rgba(22,120,232,.09);
+
+    box-shadow:
+        0 0 0 1px
+        rgba(22,120,232,.15);
+}
+
+.ticket-icon {
+    font-size: 25px;
+}
+
+.ticket-name {
+    margin-top: 7px;
+
+    font-size: 13px;
+
+    font-weight: 900;
+}
+
+.ticket-price {
+    margin-top: 5px;
+
+    color: #ffd84d;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.ticket-card.free .ticket-price {
+    color: #42df78;
+}
+
+
+/* =====================================================
+   TICKET INFO
+===================================================== */
+
+.ticket-info {
+    margin-top: 17px;
+
+    display: flex;
+
     gap: 8px;
 }
 
@@ -111,47 +215,56 @@ body {
     flex: 1;
 
     background: #191c1f;
-    border: 1px solid #30353a;
-    border-radius: 12px;
 
-    padding: 13px 8px;
+    border: 1px solid #30353a;
+
+    border-radius: 11px;
+
+    padding: 12px 6px;
 
     text-align: center;
 }
 
 .info-label {
     color: #777e85;
-    font-size: 10px;
+
+    font-size: 9px;
+
     text-transform: uppercase;
 }
 
 .info-value {
     margin-top: 5px;
-    font-size: 17px;
+
+    font-size: 15px;
+
     font-weight: 900;
 }
 
 
-/* ================================
+/* =====================================================
    PURCHASE
-================================ */
+===================================================== */
 
 .purchase {
-    margin-top: 24px;
+    margin-top: 18px;
 }
 
 .main-button {
     width: 100%;
 
     border: none;
+
     border-radius: 12px;
 
     padding: 15px;
 
     background: #1678e8;
+
     color: white;
 
     font-size: 16px;
+
     font-weight: 900;
 
     cursor: pointer;
@@ -169,19 +282,24 @@ body {
 
 .purchase-note {
     margin-top: 9px;
+
     text-align: center;
 
     color: #70777e;
+
     font-size: 12px;
+
+    line-height: 1.5;
 }
 
 
-/* ================================
+/* =====================================================
    GAME
-================================ */
+===================================================== */
 
 .game {
     display: none;
+
     margin-top: 28px;
 }
 
@@ -191,7 +309,9 @@ body {
 
 .game-status {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     margin-bottom: 14px;
@@ -199,19 +319,22 @@ body {
 
 .status-text {
     font-size: 14px;
+
     font-weight: 800;
 }
 
 .free-info {
     color: #42df78;
+
     font-size: 12px;
+
     font-weight: 700;
 }
 
 
-/* ================================
+/* =====================================================
    GRID
-================================ */
+===================================================== */
 
 .grid {
     display: grid;
@@ -222,6 +345,7 @@ body {
     gap: 10px;
 
     width: 100%;
+
     aspect-ratio: 1 / 1;
 }
 
@@ -237,14 +361,21 @@ body {
     border: 1px solid #363c42;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     cursor: pointer;
 }
 
 .icon {
-    font-size: clamp(36px, 12vw, 58px);
+    font-size:
+        clamp(
+            36px,
+            12vw,
+            58px
+        );
 
     filter:
         drop-shadow(
@@ -262,9 +393,9 @@ body {
 }
 
 
-/* ================================
-   SCRATCH LAYER
-================================ */
+/* =====================================================
+   SCRATCH
+===================================================== */
 
 .scratch {
     position: absolute;
@@ -276,18 +407,28 @@ body {
     background:
         repeating-linear-gradient(
             115deg,
-            rgba(255,255,255,.08) 0px,
-            rgba(255,255,255,.08) 2px,
-            transparent 2px,
-            transparent 6px
+            rgba(255,255,255,.08)
+            0px,
+            rgba(255,255,255,.08)
+            2px,
+            transparent
+            2px,
+            transparent
+            6px
         ),
+
         repeating-linear-gradient(
             35deg,
-            rgba(0,0,0,.16) 0px,
-            rgba(0,0,0,.16) 2px,
-            transparent 2px,
-            transparent 7px
+            rgba(0,0,0,.16)
+            0px,
+            rgba(0,0,0,.16)
+            2px,
+            transparent
+            2px,
+            transparent
+            7px
         ),
+
         linear-gradient(
             135deg,
             #858b91,
@@ -295,7 +436,9 @@ body {
         );
 
     box-shadow:
-        inset 0 0 20px rgba(0,0,0,.3);
+        inset
+        0 0 20px
+        rgba(0,0,0,.3);
 }
 
 .scratch::after {
@@ -307,40 +450,56 @@ body {
     left: 50%;
 
     transform:
-        translate(-50%, -50%);
+        translate(
+            -50%,
+            -50%
+        );
 
     font-size: 34px;
+
     font-weight: 900;
 
-    color: rgba(255,255,255,.35);
+    color:
+        rgba(255,255,255,.35);
 }
 
 .cell.opened .scratch {
-    animation: scratchOff .35s forwards;
+    animation:
+        scratchOff
+        .35s
+        forwards;
+
     pointer-events: none;
 }
 
 @keyframes scratchOff {
+
     0% {
         opacity: 1;
-        transform: scale(1);
+
+        transform:
+            scale(1);
     }
 
     50% {
         opacity: .65;
-        transform: scale(1.04);
+
+        transform:
+            scale(1.04);
     }
 
     100% {
         opacity: 0;
-        transform: scale(1.12);
+
+        transform:
+            scale(1.12);
     }
 }
 
 
-/* ================================
-   CELL PRICE
-================================ */
+/* =====================================================
+   PRICE
+===================================================== */
 
 .cell-price {
     position: absolute;
@@ -350,15 +509,48 @@ body {
 
     z-index: 2;
 
-    color: rgba(255,255,255,.5);
+    color:
+        rgba(255,255,255,.5);
 
     font-size: 9px;
 }
 
 
-/* ================================
-   WIN EFFECT
-================================ */
+/* =====================================================
+   HEART SPECIAL EFFECT
+===================================================== */
+
+.heart-glow {
+    animation:
+        heartGlow
+        .7s
+        ease-in-out
+        infinite alternate;
+}
+
+@keyframes heartGlow {
+
+    from {
+        filter:
+            drop-shadow(
+                0 0 5px
+                rgba(255,60,80,.5)
+            );
+    }
+
+    to {
+        filter:
+            drop-shadow(
+                0 0 22px
+                rgba(255,60,80,1)
+            );
+    }
+}
+
+
+/* =====================================================
+   SPARKS
+===================================================== */
 
 .spark {
     position: fixed;
@@ -375,11 +567,14 @@ body {
     z-index: 999;
 
     animation:
-        sparkle 700ms
-        ease-out forwards;
+        sparkle
+        700ms
+        ease-out
+        forwards;
 }
 
 @keyframes sparkle {
+
     from {
         transform:
             translate(0,0)
@@ -401,9 +596,9 @@ body {
 }
 
 
-/* ================================
+/* =====================================================
    MODAL
-================================ */
+===================================================== */
 
 .modal {
     position: fixed;
@@ -413,6 +608,7 @@ body {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     padding: 20px;
@@ -431,20 +627,25 @@ body {
 
 .modal.show {
     opacity: 1;
+
     pointer-events: auto;
 }
 
 .modal-box {
     width: 100%;
+
     max-width: 330px;
 
-    padding: 28px 22px;
+    padding:
+        28px 22px;
 
     border-radius: 18px;
 
     background: #191c1f;
 
-    border: 1px solid #343a40;
+    border:
+        1px solid
+        #343a40;
 
     text-align: center;
 
@@ -452,17 +653,20 @@ body {
         0 25px 80px
         rgba(0,0,0,.6);
 
-    transform: scale(.85);
+    transform:
+        scale(.85);
 
     transition: .25s;
 }
 
 .modal.show .modal-box {
-    transform: scale(1);
+    transform:
+        scale(1);
 }
 
 .modal-title {
     font-size: 34px;
+
     font-weight: 900;
 }
 
@@ -488,6 +692,7 @@ body {
     margin-top: 14px;
 
     font-size: 27px;
+
     font-weight: 900;
 }
 
@@ -507,6 +712,7 @@ body {
     padding: 14px;
 
     border: none;
+
     border-radius: 11px;
 
     background: #1678e8;
@@ -514,15 +720,16 @@ body {
     color: white;
 
     font-size: 15px;
+
     font-weight: 900;
 
     cursor: pointer;
 }
 
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:360px) {
 
@@ -539,14 +746,19 @@ body {
         gap: 7px;
     }
 }
+
 </style>
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <!-- HEADER -->
+
+    <!-- =================================================
+         HEADER
+    ================================================= -->
 
     <div class="header">
 
@@ -573,19 +785,70 @@ body {
     </div>
 
 
-    <!-- TITLE -->
+    <!-- =================================================
+         TITLE
+    ================================================= -->
 
     <div class="title">
         SCRATCH & WIN!
     </div>
 
     <div class="subtitle">
-        Купите билет и найдите<br>
-        3 одинаковых предмета
+        Выберите билет и найдите<br>
+        одинаковые символы
     </div>
 
 
-    <!-- INFO -->
+    <!-- =================================================
+         TICKET SELECT
+    ================================================= -->
+
+    <div class="ticket-select">
+
+
+        <div
+            class="ticket-card active"
+            id="paidTicket">
+
+            <div class="ticket-icon">
+                🎟️
+            </div>
+
+            <div class="ticket-name">
+                CLASSIC
+            </div>
+
+            <div class="ticket-price">
+                100 валюты
+            </div>
+
+        </div>
+
+
+        <div
+            class="ticket-card free"
+            id="freeTicket">
+
+            <div class="ticket-icon">
+                🆓
+            </div>
+
+            <div class="ticket-name">
+                FREE
+            </div>
+
+            <div class="ticket-price">
+                БЕСПЛАТНО
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         TICKET INFO
+    ================================================= -->
 
     <div class="ticket-info">
 
@@ -595,8 +858,12 @@ body {
                 Билет
             </div>
 
-            <div class="info-value">
+            <div
+                class="info-value"
+                id="ticketCost">
+
                 100
+
             </div>
 
         </div>
@@ -608,8 +875,12 @@ body {
                 Открытие
             </div>
 
-            <div class="info-value">
+            <div
+                class="info-value"
+                id="cellCost">
+
                 50
+
             </div>
 
         </div>
@@ -621,8 +892,12 @@ body {
                 Приз
             </div>
 
-            <div class="info-value">
+            <div
+                class="info-value"
+                id="maxPrize">
+
                 500
+
             </div>
 
         </div>
@@ -630,7 +905,9 @@ body {
     </div>
 
 
-    <!-- PURCHASE -->
+    <!-- =================================================
+         PURCHASE
+    ================================================= -->
 
     <div
         class="purchase"
@@ -644,14 +921,20 @@ body {
 
         </button>
 
-        <div class="purchase-note">
+        <div
+            class="purchase-note"
+            id="purchaseNote">
+
             Первые 2 открытия бесплатно
+
         </div>
 
     </div>
 
 
-    <!-- GAME -->
+    <!-- =================================================
+         GAME
+    ================================================= -->
 
     <div
         class="game"
@@ -689,7 +972,9 @@ body {
 </div>
 
 
-<!-- RESULT -->
+<!-- =====================================================
+     RESULT MODAL
+===================================================== -->
 
 <div
     class="modal"
@@ -705,11 +990,13 @@ body {
 
         </div>
 
+
         <div
             class="modal-text"
             id="modalText">
 
         </div>
+
 
         <div
             class="modal-money"
@@ -717,11 +1004,12 @@ body {
 
         </div>
 
+
         <button
             class="modal-button"
             id="againButton">
 
-            ИГРАТЬ СНОВА
+            ВЫБРАТЬ БИЛЕТ
 
         </button>
 
@@ -733,38 +1021,93 @@ body {
 <script>
 
 /* =====================================================
-   НАСТРОЙКИ
+   НАСТРОЙКИ БИЛЕТОВ
 ===================================================== */
 
-const TICKET_PRICE = 100;
+const TICKETS = {
 
-const EXTRA_CELL_PRICE = 50;
+    classic: {
 
-const WIN_REWARD = 500;
+        name: "CLASSIC",
 
-const FREE_CELLS = 2;
+        price: 100,
+
+        cellPrice: 50,
+
+        freeCells: 2,
+
+        winReward: 500,
+
+        maxPrize: 500
+
+    },
+
+
+    free: {
+
+        name: "FREE",
+
+        price: 0,
+
+        cellPrice: 5,
+
+        freeCells: 0,
+
+        winReward: 100,
+
+        maxPrize: 100
+
+    }
+
+};
+
+
+/* =====================================================
+   БАЛАНС
+===================================================== */
+
+let balance = 1000;
 
 
 /* =====================================================
    СОСТОЯНИЕ
 ===================================================== */
 
-let balance = 1000;
+let selectedTicket =
+    "classic";
+
+let currentTicket = null;
 
 let ticketActive = false;
 
+let gameFinished = false;
+
 let openedCells = 0;
 
-let freeCellsLeft = FREE_CELLS;
+let freeCellsLeft = 0;
 
-let gameFinished = false;
+let board = [];
 
 
 /* =====================================================
-   ИКОНКИ
+   ОПЫТНЫЙ / РЕДКИЙ HEART
 ===================================================== */
 
-const ICONS = [
+/*
+    Вероятность одного 💔
+    здесь очень маленькая.
+
+    0.035 = 3.5%
+*/
+
+const HEART_CHANCE = 0.035;
+
+
+/* =====================================================
+   СИМВОЛЫ CLASSIC
+===================================================== */
+
+const CLASSIC_SYMBOLS = [
 
     "🪙",
     "⭐",
@@ -772,6 +1115,31 @@ const ICONS = [
     "🍀",
     "🧲",
     "🎰"
+
+];
+
+
+/* =====================================================
+   СИМВОЛЫ FREE
+===================================================== */
+
+const FREE_SYMBOLS = [
+
+    "🪙",
+    "⭐",
+    "💎",
+    "🍀",
+    "🧲",
+    "🎰",
+    "🍒",
+    "🍋",
+    "🔔",
+    "👑",
+    "🔥",
+    "🎁",
+    "💰",
+    "🌟",
+    "💫"
 
 ];
 
@@ -785,6 +1153,31 @@ const balanceElement =
         "balance"
     );
 
+const paidTicket =
+    document.getElementById(
+        "paidTicket"
+    );
+
+const freeTicket =
+    document.getElementById(
+        "freeTicket"
+    );
+
+const ticketCost =
+    document.getElementById(
+        "ticketCost"
+    );
+
+const cellCost =
+    document.getElementById(
+        "cellCost"
+    );
+
+const maxPrize =
+    document.getElementById(
+        "maxPrize"
+    );
+
 const buyButton =
     document.getElementById(
         "buyButton"
@@ -793,6 +1186,11 @@ const buyButton =
 const purchase =
     document.getElementById(
         "purchase"
+    );
+
+const purchaseNote =
+    document.getElementById(
+        "purchaseNote"
     );
 
 const game =
@@ -842,7 +1240,7 @@ const againButton =
 
 
 /* =====================================================
-   БАЛАНС
+   BALANCE
 ===================================================== */
 
 function updateBalance() {
@@ -853,28 +1251,28 @@ function updateBalance() {
 
 
 /* =====================================================
-   СЛУЧАЙНЫЙ ЭЛЕМЕНТ
+   RANDOM
 ===================================================== */
 
-function randomIcon() {
+function randomItem(array) {
 
-    return ICONS[
+    return array[
         Math.floor(
             Math.random() *
-            ICONS.length
+            array.length
         )
     ];
 }
 
 
 /* =====================================================
-   СОЗДАНИЕ РАСКЛАДКИ
+   GENERATE CLASSIC BOARD
 ===================================================== */
 
-let board = [];
+function generateClassicBoard() {
 
-
-function generateBoard() {
+    const symbols =
+        CLASSIC_SYMBOLS;
 
     board = [];
 
@@ -885,28 +1283,23 @@ function generateBoard() {
     ) {
 
         board.push(
-            randomIcon()
+            randomItem(symbols)
         );
     }
 
+
     /*
-        ВАЖНО:
-
-        Нам нужно, чтобы победа
-        вообще была возможна.
-
-        С вероятностью 50%
-        гарантированно создаём
-        3 одинаковых предмета
-        в разных местах.
+        Делаем шанс,
+        что на поле вообще
+        будет выигрыш.
     */
 
     if (
-        Math.random() < 0.5
+        Math.random() < 0.50
     ) {
 
-        const icon =
-            randomIcon();
+        const winner =
+            randomItem(symbols);
 
         const positions = [
             0,
@@ -914,11 +1307,13 @@ function generateBoard() {
             8
         ];
 
+
         positions.forEach(
             position => {
 
                 board[position] =
-                    icon;
+                    winner;
+
             }
         );
     }
@@ -926,7 +1321,110 @@ function generateBoard() {
 
 
 /* =====================================================
-   СОЗДАНИЕ ПОЛЯ
+   GENERATE FREE BOARD
+===================================================== */
+
+function generateFreeBoard() {
+
+    const symbols =
+        FREE_SYMBOLS;
+
+    board = [];
+
+
+    /*
+        Сначала обычная
+        случайная раскладка.
+    */
+
+    for (
+        let i = 0;
+        i < 9;
+        i++
+    ) {
+
+        /*
+            💔 появляется
+            крайне редко.
+        */
+
+        if (
+            Math.random() <
+            HEART_CHANCE
+        ) {
+
+            board.push("💔");
+
+        }
+
+        else {
+
+            board.push(
+                randomItem(symbols)
+            );
+
+        }
+    }
+
+
+    /*
+        Очень редко создаём
+        специальную комбинацию
+        3 × 💔.
+
+        Это намного реже
+        обычного выигрыша.
+    */
+
+    if (
+        Math.random() <
+        0.01
+    ) {
+
+        const positions = [
+            1,
+            4,
+            7
+        ];
+
+
+        positions.forEach(
+            position => {
+
+                board[position] =
+                    "💔";
+
+            }
+        );
+    }
+}
+
+
+/* =====================================================
+   GENERATE BOARD
+===================================================== */
+
+function generateBoard() {
+
+    if (
+        currentTicket.name ===
+        "CLASSIC"
+    ) {
+
+        generateClassicBoard();
+
+    }
+
+    else {
+
+        generateFreeBoard();
+
+    }
+}
+
+
+/* =====================================================
+   CREATE BOARD
 ===================================================== */
 
 function createBoard() {
@@ -936,9 +1434,10 @@ function createBoard() {
     openedCells = 0;
 
     freeCellsLeft =
-        FREE_CELLS;
+        currentTicket.freeCells;
 
     gameFinished = false;
+
 
     generateBoard();
 
@@ -958,10 +1457,6 @@ function createBoard() {
             "cell";
 
 
-        /*
-            Иконка
-        */
-
         const icon =
             document.createElement(
                 "div"
@@ -975,8 +1470,20 @@ function createBoard() {
 
 
         /*
-            Scratch слой
+            Особый стиль
+            для 💔.
         */
+
+        if (
+            board[i] ===
+            "💔"
+        ) {
+
+            icon.classList.add(
+                "heart-glow"
+            );
+        }
+
 
         const scratch =
             document.createElement(
@@ -987,10 +1494,6 @@ function createBoard() {
             "scratch";
 
 
-        /*
-            Подсказка стоимости
-        */
-
         const price =
             document.createElement(
                 "div"
@@ -999,17 +1502,36 @@ function createBoard() {
         price.className =
             "cell-price";
 
-        price.textContent =
-            "50";
+
+        if (
+            currentTicket.freeCells >
+            0 &&
+            i < currentTicket.freeCells
+        ) {
+
+            price.textContent =
+                "FREE";
+
+        }
+
+        else {
+
+            price.textContent =
+                currentTicket.cellPrice;
+        }
 
 
-        cell.appendChild(icon);
+        cell.appendChild(
+            icon
+        );
 
         cell.appendChild(
             scratch
         );
 
-        cell.appendChild(price);
+        cell.appendChild(
+            price
+        );
 
 
         cell.dataset.index =
@@ -1029,7 +1551,9 @@ function createBoard() {
         );
 
 
-        grid.appendChild(cell);
+        grid.appendChild(
+            cell
+        );
     }
 
 
@@ -1038,35 +1562,167 @@ function createBoard() {
 
 
 /* =====================================================
-   ПОКУПКА БИЛЕТА
+   SELECT TICKET
+===================================================== */
+
+function selectTicket(
+    type
+) {
+
+    if (
+        ticketActive
+    ) {
+
+        return;
+    }
+
+
+    selectedTicket =
+        type;
+
+
+    if (
+        type === "classic"
+    ) {
+
+        paidTicket.classList.add(
+            "active"
+        );
+
+        freeTicket.classList.remove(
+            "active"
+        );
+
+    }
+
+    else {
+
+        freeTicket.classList.add(
+            "active"
+        );
+
+        paidTicket.classList.remove(
+            "active"
+        );
+    }
+
+
+    updateTicketInfo();
+}
+
+
+/* =====================================================
+   UPDATE TICKET INFO
+===================================================== */
+
+function updateTicketInfo() {
+
+    const ticket =
+        TICKETS[selectedTicket];
+
+
+    ticketCost.textContent =
+        ticket.price;
+
+
+    cellCost.textContent =
+        ticket.cellPrice;
+
+
+    maxPrize.textContent =
+        ticket.maxPrize;
+
+
+    if (
+        selectedTicket ===
+        "classic"
+    ) {
+
+        buyButton.textContent =
+            "КУПИТЬ БИЛЕТ — 100";
+
+
+        purchaseNote.textContent =
+            "Первые 2 открытия бесплатно";
+
+    }
+
+    else {
+
+        buyButton.textContent =
+            "ПОЛУЧИТЬ БЕСПЛАТНЫЙ БИЛЕТ";
+
+
+        purchaseNote.textContent =
+            "Каждое открытие стоит 5 валюты";
+    }
+}
+
+
+/* =====================================================
+   SELECT EVENTS
+===================================================== */
+
+paidTicket.addEventListener(
+    "click",
+    () => {
+
+        selectTicket(
+            "classic"
+        );
+
+    }
+);
+
+
+freeTicket.addEventListener(
+    "click",
+    () => {
+
+        selectTicket(
+            "free"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   START TICKET
 ===================================================== */
 
 buyButton.addEventListener(
     "click",
     () => {
 
-        if (
-            ticketActive
-        ) {
-            return;
-        }
+        const ticket =
+            TICKETS[selectedTicket];
 
+
+        /*
+            Проверка стоимости
+            билета.
+        */
 
         if (
             balance <
-            TICKET_PRICE
+            ticket.price
         ) {
 
             alert(
-                "Недостаточно валюты."
+                "Недостаточно валюты для покупки билета."
             );
 
             return;
         }
 
 
+        /*
+            Оплата билета.
+        */
+
         balance -=
-            TICKET_PRICE;
+            ticket.price;
 
 
         balance =
@@ -1075,7 +1731,13 @@ buyButton.addEventListener(
             ) / 100;
 
 
+        currentTicket =
+            ticket;
+
+
         ticketActive = true;
+
+        gameFinished = false;
 
 
         updateBalance();
@@ -1096,7 +1758,7 @@ buyButton.addEventListener(
 
 
 /* =====================================================
-   ОТКРЫТИЕ ЯЧЕЙКИ
+   OPEN CELL
 ===================================================== */
 
 function openCell(
@@ -1116,13 +1778,14 @@ function openCell(
             "opened"
         )
     ) {
+
         return;
     }
 
 
     /*
-        Первые 2 —
-        бесплатно.
+        Если есть бесплатные
+        открытия — используем их.
     */
 
     if (
@@ -1136,17 +1799,16 @@ function openCell(
     else {
 
         /*
-            Следующие клетки
-            стоят 50.
+            Платим за открытие.
         */
 
         if (
             balance <
-            EXTRA_CELL_PRICE
+            currentTicket.cellPrice
         ) {
 
             alert(
-                "Недостаточно валюты для открытия клетки."
+                "Недостаточно валюты для открытия."
             );
 
             return;
@@ -1154,7 +1816,7 @@ function openCell(
 
 
         balance -=
-            EXTRA_CELL_PRICE;
+            currentTicket.cellPrice;
 
 
         balance =
@@ -1175,16 +1837,12 @@ function openCell(
     );
 
 
-    /*
-        Scratch звук
-    */
-
     playScratchSound();
 
 
     /*
-        После анимации
-        проверяем победу.
+        Проверяем результат
+        после анимации.
     */
 
     setTimeout(
@@ -1193,7 +1851,7 @@ function openCell(
             checkWin();
 
         },
-        300
+        320
     );
 
 
@@ -1202,7 +1860,7 @@ function openCell(
 
 
 /* =====================================================
-   СТАТУС
+   UPDATE STATUS
 ===================================================== */
 
 function updateGameStatus() {
@@ -1213,14 +1871,33 @@ function updateGameStatus() {
         " / 9";
 
 
-    freeInfo.textContent =
-        "Бесплатно: " +
-        freeCellsLeft;
+    if (
+        currentTicket &&
+        currentTicket.freeCells >
+        0
+    ) {
+
+        freeInfo.textContent =
+            "Бесплатно: " +
+            freeCellsLeft;
+
+    }
+
+    else {
+
+        freeInfo.textContent =
+            "Открытие: " +
+            (
+                currentTicket
+                    ? currentTicket.cellPrice
+                    : 0
+            );
+    }
 }
 
 
 /* =====================================================
-   ПРОВЕРКА ТРЁХ ОДИНАКОВЫХ
+   CHECK WIN
 ===================================================== */
 
 function checkWin() {
@@ -1238,7 +1915,7 @@ function checkWin() {
         );
 
 
-    const openedValues = [];
+    const counts = {};
 
 
     cells.forEach(
@@ -1250,9 +1927,15 @@ function checkWin() {
                 )
             ) {
 
-                openedValues.push(
-                    board[index]
-                );
+                const icon =
+                    board[index];
+
+
+                counts[icon] =
+                    (
+                        counts[icon] ||
+                        0
+                    ) + 1;
             }
 
         }
@@ -1260,30 +1943,28 @@ function checkWin() {
 
 
     /*
-        Считаем количество
-        каждого предмета.
-
-        Позиция вообще
-        не имеет значения.
+        Сначала проверяем
+        особый 💔.
     */
 
-    const counts = {};
+    if (
+        currentTicket.name ===
+        "FREE" &&
+        counts["💔"] >= 3
+    ) {
 
+        finishWin(
+            "💔",
+            500,
+            true
+        );
 
-    openedValues.forEach(
-        icon => {
-
-            counts[icon] =
-                (counts[icon] || 0) + 1;
-
-        }
-    );
+        return;
+    }
 
 
     /*
-        Если найдено 3 одинаковых
-        в любых местах —
-        победа.
+        Обычная победа.
     */
 
     for (
@@ -1291,11 +1972,14 @@ function checkWin() {
     ) {
 
         if (
+            icon !== "💔" &&
             counts[icon] >= 3
         ) {
 
             finishWin(
-                icon
+                icon,
+                currentTicket.winReward,
+                false
             );
 
             return;
@@ -1304,8 +1988,7 @@ function checkWin() {
 
 
     /*
-        Если открыты все 9
-        и трёх одинаковых нет —
+        Все клетки открыты —
         проигрыш.
     */
 
@@ -1319,10 +2002,14 @@ function checkWin() {
 
 
 /* =====================================================
-   ПОБЕДА
+   WIN
 ===================================================== */
 
-function finishWin(icon) {
+function finishWin(
+    icon,
+    reward,
+    special
+) {
 
     gameFinished = true;
 
@@ -1330,7 +2017,7 @@ function finishWin(icon) {
 
 
     balance +=
-        WIN_REWARD;
+        reward;
 
 
     balance =
@@ -1350,18 +2037,32 @@ function finishWin(icon) {
         "modal-title win";
 
 
-    modalText.innerHTML =
-        "Вы нашли 3 одинаковых предмета<br>" +
-        icon +
-        " " +
-        icon +
-        " " +
-        icon;
+    if (
+        special
+    ) {
+
+        modalText.innerHTML =
+            "Невероятно редкая комбинация!<br><br>" +
+            "💔 💔 💔<br><br>" +
+            "Вы нашли 3 редких 💔.";
+
+    }
+
+    else {
+
+        modalText.innerHTML =
+            "Вы нашли 3 одинаковых предмета:<br><br>" +
+            icon +
+            " " +
+            icon +
+            " " +
+            icon;
+    }
 
 
     modalMoney.textContent =
         "+" +
-        WIN_REWARD;
+        reward;
 
 
     modalMoney.className =
@@ -1378,7 +2079,7 @@ function finishWin(icon) {
 
 
 /* =====================================================
-   ПРОИГРЫШ
+   LOSE
 ===================================================== */
 
 function finishLose() {
@@ -1397,8 +2098,9 @@ function finishLose() {
 
 
     modalText.innerHTML =
-        "В этот раз трёх одинаковых<br>" +
-        "предметов найти не удалось.";
+        "Все 9 ячеек открыты,<br>" +
+        "но трёх одинаковых предметов<br>" +
+        "найти не удалось.";
 
 
     modalMoney.textContent =
@@ -1416,7 +2118,7 @@ function finishLose() {
 
 
 /* =====================================================
-   ИГРАТЬ СНОВА
+   AGAIN
 ===================================================== */
 
 againButton.addEventListener(
@@ -1439,12 +2141,13 @@ againButton.addEventListener(
 
         ticketActive = false;
 
+        gameFinished = false;
+
+        currentTicket = null;
 
         openedCells = 0;
 
-
-        freeCellsLeft =
-            FREE_CELLS;
+        freeCellsLeft = 0;
 
 
         updateGameStatus();
@@ -1463,14 +2166,15 @@ function playScratchSound() {
 
     try {
 
-        if (!audioContext) {
+        if (
+            !audioContext
+        ) {
 
             audioContext =
                 new (
                     window.AudioContext ||
                     window.webkitAudioContext
                 )();
-
         }
 
 
@@ -1484,7 +2188,9 @@ function playScratchSound() {
 
 
         const data =
-            buffer.getChannelData(0);
+            buffer.getChannelData(
+                0
+            );
 
 
         for (
@@ -1495,10 +2201,11 @@ function playScratchSound() {
 
             data[i] =
                 (
-                    Math.random() * 2 -
+                    Math.random() *
+                    2 -
                     1
                 ) *
-                0.18;
+                .18;
         }
 
 
@@ -1527,7 +2234,7 @@ function playScratchSound() {
 
 
         gain.gain.value =
-            0.45;
+            .45;
 
 
         source
@@ -1540,11 +2247,12 @@ function playScratchSound() {
 
         source.start();
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         /*
-            Если браузер
-            заблокировал звук —
+            Если звук заблокирован,
             игра всё равно работает.
         */
 
@@ -1553,7 +2261,7 @@ function playScratchSound() {
 
 
 /* =====================================================
-   ИСКРЫ
+   SPARKLES
 ===================================================== */
 
 function createSparkles() {
@@ -1568,6 +2276,7 @@ function createSparkles() {
             document.createElement(
                 "div"
             );
+
 
         spark.className =
             "spark";
@@ -1626,10 +2335,12 @@ function createSparkles() {
 
 
 /* =====================================================
-   ИНИЦИАЛИЗАЦИЯ
+   INIT
 ===================================================== */
 
 updateBalance();
+
+updateTicketInfo();
 
 </script>
 
