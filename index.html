@@ -31,7 +31,6 @@
         .page.active{display:flex}
         @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
         
-        /* ===== УДАЧА ===== */
         .luck-section{display:flex;gap:6px;margin-bottom:10px}
         .luck-card{flex:1;background:rgba(26,26,36,0.3);border-radius:12px;padding:8px 10px;border:1px solid rgba(255,255,255,0.02);text-align:center}
         .luck-card .label{color:#555;font-size:8px;text-transform:uppercase;letter-spacing:0.5px}
@@ -39,7 +38,7 @@
         .luck-card .value{color:#2ecc71;font-size:12px;font-weight:500}
         .luck-card .value .fire{color:#ff6b35}
         
-        /* ===== ШАРИК ===== */
+        /* ===== ШАРИК — ТОЧНО КАК НА IMG_0724 ===== */
         .ball-escape-container{display:flex;flex-direction:column;align-items:center;gap:6px;max-width:400px;margin:0 auto;width:100%}
         
         .ball-escape-header{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:3px 10px;background:rgba(13,13,20,0.4);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
@@ -48,15 +47,18 @@
 
         .ball-escape-map{position:relative;width:320px;height:340px;background:rgba(13,13,20,0.4);border-radius:20px;border:1px solid rgba(255,255,255,0.02);overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.3)}
         
-        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(30,60,114,0.15);border:3px solid rgba(52,102,184,0.3);box-shadow:0 0 40px rgba(52,102,184,0.05), inset 0 0 60px rgba(52,102,184,0.05)}
+        /* ===== КРУГ — КАК НА СКРИНЕ ===== */
+        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(20,20,30,0.6);border:2px solid rgba(255,255,255,0.04);box-shadow:none}
         .ball-escape-rotation-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;transition:transform 0.05s linear;will-change:transform}
-        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, rgba(52,102,184,0.05), rgba(20,40,80,0.1))}
+        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:rgba(10,10,18,0.5)}
         
-        .ball-escape-hole{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:36px;height:8px;background:rgba(13,13,20,0.7);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:3px solid rgba(52,102,184,0.15)}
-        .ball-escape-hole::before{content:'';position:absolute;top:-3px;left:-4px;right:-4px;height:8px;background:rgba(13,13,20,0.5);border-radius:50%}
+        /* ===== ДЫРКА (разрыв) — УЗКАЯ, ЧЁРНАЯ, ВНИЗУ ===== */
+        .ball-escape-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:28px;height:8px;background:#0a0a0f;z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;border-bottom:2px solid rgba(255,255,255,0.02);box-shadow:inset 0 -4px 8px rgba(0,0,0,0.8)}
+        .ball-escape-hole::before{content:'';position:absolute;top:-2px;left:-4px;right:-4px;height:6px;background:#0a0a0f;border-radius:50%}
 
-        .ball-escape-ball{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 30px rgba(240,185,11,0.2), inset 0 -2px 6px rgba(0,0,0,0.3);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
-        .ball-escape-hit{color:#f0b90b;font-size:11px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .9s ease forwards;font-weight:700;text-shadow:0 0 20px rgba(240,185,11,0.2)}
+        /* ===== ШАРИК — МАЛЕНЬКИЙ, ЯРКО-ЖЁЛТЫЙ ===== */
+        .ball-escape-ball{position:absolute;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #f0b90b);box-shadow:0 0 20px rgba(240,185,11,0.15), 0 2px 8px rgba(0,0,0,0.5);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
+        .ball-escape-hit{color:#f0b90b;font-size:11px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .9s ease forwards;font-weight:700;text-shadow:0 0 20px rgba(240,185,11,0.15)}
         @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(1.1)}}
 
         .ball-escape-zones{position:absolute;bottom:0;left:0;right:0;height:40px;display:flex;border-radius:0 0 20px 20px;overflow:hidden;border-top:1px solid rgba(255,255,255,0.02)}
@@ -91,14 +93,12 @@
         .ball-escape-nav .nav-btn:active{transform:scale(0.95)}
         .ball-escape-nav .nav-btn.active{color:#f0b90b;border-color:rgba(240,185,11,0.02)}
         
-        /* ===== ДРУГИЕ СТРАНИЦЫ (минимально) ===== */
         .menu-hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
         .menu-hero h1{font-size:48px;font-weight:200;color:#f0b90b;letter-spacing:6px}
         .menu-hero .subtitle{color:#555;font-size:13px;margin-top:4px;letter-spacing:3px}
         .menu-hero .game-btn{background:rgba(240,185,11,0.04);color:#f0b90b;padding:12px 40px;border-radius:50px;font-size:14px;font-weight:500;border:1px solid rgba(240,185,11,0.06);cursor:pointer;margin-top:16px;width:80%;max-width:240px;transition:all .2s;letter-spacing:1px}
         .menu-hero .game-btn:active{transform:scale(0.96);background:rgba(240,185,11,0.08)}
         .menu-hero .game-btn.secondary{border-color:rgba(255,255,255,0.03);color:#888}
-        .page-title{font-size:20px;font-weight:500;margin-bottom:14px;color:#f0b90b;letter-spacing:-0.3px}
         .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(13,13,20,0.85);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-around;padding:6px 0 12px;z-index:100}
         .nav-item{display:flex;flex-direction:column;align-items:center;color:#444;font-size:9px;cursor:pointer;padding:4px 8px;background:none;border:none;font-family:inherit;flex:1;max-width:70px;transition:color .15s;gap:1px}
         .nav-item .icon{font-size:20px;margin-bottom:1px;transition:transform .15s}
@@ -121,14 +121,12 @@
 
     <div id="toast" class="toast"></div>
 
-    <!-- ===== ВЕРХНЯЯ ПАНЕЛЬ ===== -->
     <div class="top-bar">
         <button class="back-btn" id="backBtn" onclick="goBack()">← Назад</button>
         <span class="online"><span class="dot"></span> <span id="onlineCount">8</span> онлайн</span>
         <span class="balance" id="top-balance" onclick="openDeposit()">0.03 GRAM</span>
     </div>
 
-    <!-- ===== СТРАНИЦЫ ===== -->
     <div id="page-menu" class="page active">
         <div class="menu-hero">
             <h1>DROP</h1>
@@ -144,7 +142,6 @@
         <div id="game-content"></div>
     </div>
 
-    <!-- ===== НИЖНЯЯ НАВИГАЦИЯ ===== -->
     <div class="bottom-nav">
         <button class="nav-item" data-page="page-inventory" onclick="switchPage('page-inventory')"><span class="icon">⏤</span><span>Инвентарь</span></button>
         <button class="nav-item active" data-page="page-menu" onclick="switchPage('page-menu')"><span class="icon">⏤</span><span>Меню</span></button>
@@ -152,14 +149,12 @@
     </div>
 
     <script>
-        // ===== ЗАГРУЗКА =====
         window.addEventListener('load', function() {
             setTimeout(function() { document.getElementById('loading-overlay').classList.add('hide'); }, 1500);
             updateUI();
             renderBall(document.getElementById('game-content'));
         });
 
-        // ===== ДАННЫЕ =====
         let balance = 0.03, inventory = [], usedPromoCodes = [], history = [], achievements = { casesOpened: 0, itemsSold: 0, upgradesDone: 0 }, lastDailyBonus = 0;
         let ballMode = 'lite';
         let ballGameActive = false;
@@ -192,7 +187,6 @@
         }
         function openDeposit() { showToast('💰 Пополнение: +100 GRAM', 'success'); balance += 100; updateUI(); saveData(); }
 
-        // ===== ШАРИК =====
         function renderBall(content) {
             const hash = 'd0d5' + Math.random().toString(36).substring(2, 6) + 'af51';
             content.innerHTML = `
@@ -325,7 +319,7 @@
             let x = centerX, y = centerY - 15;
             let dx = (Math.random() - 0.5) * 3.0;
             let dy = -0.3;
-            const radius = 8;
+            const radius = 7;
             const GRAVITY = 0.25, BOUNCE = 0.82;
 
             if (ballInterval) clearInterval(ballInterval);
@@ -345,7 +339,7 @@
 
                 const holeX = circleRect.width / 2, holeY = circleRect.height;
                 const distToHole = Math.sqrt((x - holeX) ** 2 + (y - holeY) ** 2);
-                if (distToHole < 28 && y > circleRect.height - 32) { dy *= -0.5; y = circleRect.height - 32; hitWall = true; }
+                if (distToHole < 25 && y > circleRect.height - 28) { dy *= -0.4; y = circleRect.height - 28; hitWall = true; }
 
                 if (hitWall && Date.now() - lastHitTime > 150) {
                     ballHits++;
@@ -366,7 +360,7 @@
                 ball.style.top = y + 'px';
                 ball.style.left = x + 'px';
 
-                const isNearHole = y > circleRect.height - 18 && Math.abs(x - holeX) < 20;
+                const isNearHole = y > circleRect.height - 16 && Math.abs(x - holeX) < 18;
                 const isFallingDown = dy > 0.5;
                 if (isNearHole && isFallingDown && elapsed > 1500 && !ballIsWaitingForExit) {
                     ballIsWaitingForExit = true;
@@ -403,11 +397,9 @@
             }, 16);
         }
 
-        // ===== КЕЙСЫ (минимально для работоспособности) =====
         function renderCases(content) { content.innerHTML = `<div style="color:#555;text-align:center;padding:40px 0;">Кейсы будут позже</div>`; }
         function renderUpgrade(content) { content.innerHTML = `<div style="color:#555;text-align:center;padding:40px 0;">Апгрейд будет позже</div>`; }
 
-        // ===== СТАРТ =====
         loadData();
         updateUI();
         renderBall(document.getElementById('game-content'));
