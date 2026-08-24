@@ -2,197 +2,300 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Scratch & Win</title>
 
 <style>
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
 }
 
 html,
 body {
     width: 100%;
     min-height: 100%;
-}
-
-body {
     background: #111315;
-    color: #fff;
+    color: white;
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    overflow-x: hidden;
     user-select: none;
 }
 
-.game {
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.app {
     width: 100%;
     max-width: 480px;
     min-height: 100vh;
-    padding: 24px 18px 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 20px 18px 30px;
 }
 
 
-/* =====================================================
+/* ================================
    HEADER
-===================================================== */
+================================ */
 
 .header {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 30px;
 }
 
 .logo {
-    font-size: 32px;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+}
+
+.balance-box {
+    background: #1b1e21;
+    border: 1px solid #30353a;
+    border-radius: 10px;
+    padding: 9px 13px;
+    text-align: right;
+}
+
+.balance-label {
+    font-size: 10px;
+    color: #858b91;
+    text-transform: uppercase;
+}
+
+.balance {
+    margin-top: 2px;
+    color: #ffd84d;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+
+/* ================================
+   TITLE
+================================ */
+
+.title {
+    text-align: center;
+    font-size: 31px;
     font-weight: 900;
     letter-spacing: -1px;
 }
 
 .subtitle {
-    margin-top: 9px;
+    margin-top: 8px;
+    text-align: center;
     color: #858b91;
-    font-size: 15px;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
-.prize {
-    margin-top: 8px;
-    color: #42df78;
-    font-size: 20px;
+
+/* ================================
+   TICKET INFO
+================================ */
+
+.ticket-info {
+    margin-top: 24px;
+
+    display: flex;
+    gap: 8px;
+}
+
+.info-card {
+    flex: 1;
+
+    background: #191c1f;
+    border: 1px solid #30353a;
+    border-radius: 12px;
+
+    padding: 13px 8px;
+
+    text-align: center;
+}
+
+.info-label {
+    color: #777e85;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.info-value {
+    margin-top: 5px;
+    font-size: 17px;
     font-weight: 900;
 }
 
 
-/* =====================================================
-   CARD
-===================================================== */
+/* ================================
+   PURCHASE
+================================ */
 
-.lottery-card {
+.purchase {
+    margin-top: 24px;
+}
+
+.main-button {
     width: 100%;
-    padding: 16px;
-    background: #1a1d20;
-    border: 1px solid #30353a;
-    border-radius: 22px;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, .35);
+
+    border: none;
+    border-radius: 12px;
+
+    padding: 15px;
+
+    background: #1678e8;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition: .15s;
+}
+
+.main-button:hover {
+    background: #2687f5;
+}
+
+.main-button:active {
+    transform: scale(.98);
+}
+
+.purchase-note {
+    margin-top: 9px;
+    text-align: center;
+
+    color: #70777e;
+    font-size: 12px;
 }
 
 
-/* =====================================================
+/* ================================
+   GAME
+================================ */
+
+.game {
+    display: none;
+    margin-top: 28px;
+}
+
+.game.active {
+    display: block;
+}
+
+.game-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 14px;
+}
+
+.status-text {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.free-info {
+    color: #42df78;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* ================================
    GRID
-===================================================== */
+================================ */
 
 .grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
     width: 100%;
     aspect-ratio: 1 / 1;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
 }
-
-
-/* =====================================================
-   CELL
-===================================================== */
 
 .cell {
     position: relative;
+
     overflow: hidden;
 
     border-radius: 14px;
-    background: #292e33;
+
+    background: #1d2024;
+
+    border: 1px solid #363c42;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     cursor: pointer;
-
-    border: 1px solid #3b4248;
-
-    perspective: 600px;
 }
 
 .icon {
-    position: absolute;
+    font-size: clamp(36px, 12vw, 58px);
 
-    font-size: clamp(38px, 13vw, 65px);
+    filter:
+        drop-shadow(
+            0 5px 12px
+            rgba(0,0,0,.35)
+        );
 
-    transform: scale(.75);
+    transform: scale(.8);
 
-    opacity: 0;
-
-    transition:
-        transform .35s ease,
-        opacity .35s ease;
+    transition: .25s;
 }
 
-.cell.open .icon {
+.cell.opened .icon {
     transform: scale(1);
-    opacity: 1;
 }
 
 
-/* =====================================================
+/* ================================
    SCRATCH LAYER
-===================================================== */
+================================ */
 
 .scratch {
     position: absolute;
+
     inset: 0;
 
     z-index: 5;
 
-    border-radius: 13px;
-
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.08) 0%,
-            rgba(255,255,255,0) 25%,
-            rgba(255,255,255,.08) 50%,
-            rgba(255,255,255,0) 75%
-        ),
         repeating-linear-gradient(
             115deg,
-            #777d82 0px,
-            #777d82 3px,
-            #6b7176 3px,
-            #6b7176 6px
+            rgba(255,255,255,.08) 0px,
+            rgba(255,255,255,.08) 2px,
+            transparent 2px,
+            transparent 6px
+        ),
+        repeating-linear-gradient(
+            35deg,
+            rgba(0,0,0,.16) 0px,
+            rgba(0,0,0,.16) 2px,
+            transparent 2px,
+            transparent 7px
+        ),
+        linear-gradient(
+            135deg,
+            #858b91,
+            #5f666d
         );
 
     box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.08),
-        inset 0 0 18px rgba(0,0,0,.35);
-
-    transition:
-        opacity .35s ease,
-        transform .35s ease;
-}
-
-.scratch::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-        repeating-linear-gradient(
-            165deg,
-            transparent 0px,
-            transparent 7px,
-            rgba(255,255,255,.13) 8px,
-            transparent 10px
-        );
-
-    opacity: .65;
+        inset 0 0 20px rgba(0,0,0,.3);
 }
 
 .scratch::after {
@@ -200,22 +303,24 @@ body {
 
     position: absolute;
 
-    left: 50%;
     top: 50%;
+    left: 50%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
-    color: rgba(255,255,255,.25);
-
-    font-size: 38px;
+    font-size: 34px;
     font-weight: 900;
+
+    color: rgba(255,255,255,.35);
 }
 
-.cell.scratching .scratch {
-    animation: scratchAnimation .35s ease forwards;
+.cell.opened .scratch {
+    animation: scratchOff .35s forwards;
+    pointer-events: none;
 }
 
-@keyframes scratchAnimation {
+@keyframes scratchOff {
     0% {
         opacity: 1;
         transform: scale(1);
@@ -228,198 +333,62 @@ body {
 
     100% {
         opacity: 0;
-        transform: scale(1.15);
-        pointer-events: none;
+        transform: scale(1.12);
     }
 }
 
 
-/* =====================================================
-   OPENED CELL
-===================================================== */
+/* ================================
+   CELL PRICE
+================================ */
 
-.cell.open {
-    background: #20252a;
-    border-color: #414950;
+.cell-price {
+    position: absolute;
+
+    bottom: 7px;
+    right: 8px;
+
+    z-index: 2;
+
+    color: rgba(255,255,255,.5);
+
+    font-size: 9px;
 }
 
 
-/* =====================================================
-   INFO
-===================================================== */
-
-.info {
-    margin-top: 18px;
-
-    text-align: center;
-
-    color: #858b91;
-
-    font-size: 14px;
-
-    line-height: 1.5;
-}
-
-.info strong {
-    color: #fff;
-}
-
-
-/* =====================================================
-   MODAL
-===================================================== */
-
-.modal {
-    position: fixed;
-    inset: 0;
-
-    z-index: 100;
-
-    background: rgba(0,0,0,.72);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    opacity: 0;
-    pointer-events: none;
-
-    transition: opacity .25s ease;
-}
-
-.modal.show {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-box {
-    width: 100%;
-    max-width: 350px;
-
-    padding: 30px 24px;
-
-    background: #1a1d20;
-
-    border: 1px solid #353b40;
-
-    border-radius: 22px;
-
-    text-align: center;
-
-    transform: scale(.85);
-
-    transition: transform .25s ease;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.6);
-}
-
-.modal.show .modal-box {
-    transform: scale(1);
-}
-
-.result-icon {
-    font-size: 60px;
-    margin-bottom: 10px;
-}
-
-.result-title {
-    font-size: 34px;
-    font-weight: 900;
-}
-
-.result-title.win {
-    color: #42df78;
-}
-
-.result-title.lose {
-    color: #ef4752;
-}
-
-.result-text {
-    margin-top: 12px;
-
-    color: #858b91;
-
-    font-size: 15px;
-
-    line-height: 1.5;
-}
-
-.win-amount {
-    margin-top: 10px;
-
-    color: #42df78;
-
-    font-size: 32px;
-    font-weight: 900;
-}
-
-.play-again {
-    width: 100%;
-
-    margin-top: 25px;
-
-    padding: 15px;
-
-    border: none;
-    border-radius: 12px;
-
-    background: #1678e8;
-
-    color: white;
-
-    font-size: 15px;
-    font-weight: 900;
-
-    cursor: pointer;
-
-    transition:
-        background .2s ease,
-        transform .1s ease;
-}
-
-.play-again:active {
-    transform: scale(.97);
-}
-
-.play-again:hover {
-    background: #2687f5;
-}
-
-
-/* =====================================================
-   CONFETTI / SPARKS
-===================================================== */
+/* ================================
+   WIN EFFECT
+================================ */
 
 .spark {
     position: fixed;
 
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
 
     border-radius: 50%;
 
+    background: #ffd84d;
+
     pointer-events: none;
 
-    z-index: 150;
+    z-index: 999;
 
     animation:
-        sparkFly 1s ease-out forwards;
+        sparkle 700ms
+        ease-out forwards;
 }
 
-@keyframes sparkFly {
-    0% {
+@keyframes sparkle {
+    from {
         transform:
-            translate(0, 0)
+            translate(0,0)
             scale(1);
 
         opacity: 1;
     }
 
-    100% {
+    to {
         transform:
             translate(
                 var(--x),
@@ -432,27 +401,142 @@ body {
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* ================================
+   MODAL
+================================ */
 
-@media (max-width: 360px) {
+.modal {
+    position: fixed;
 
-    .game {
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.72);
+
+    z-index: 100;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: .25s;
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 330px;
+
+    padding: 28px 22px;
+
+    border-radius: 18px;
+
+    background: #191c1f;
+
+    border: 1px solid #343a40;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.6);
+
+    transform: scale(.85);
+
+    transition: .25s;
+}
+
+.modal.show .modal-box {
+    transform: scale(1);
+}
+
+.modal-title {
+    font-size: 34px;
+    font-weight: 900;
+}
+
+.modal-title.win {
+    color: #42df78;
+}
+
+.modal-title.lose {
+    color: #ef4752;
+}
+
+.modal-text {
+    margin-top: 10px;
+
+    color: #858b91;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+.modal-money {
+    margin-top: 14px;
+
+    font-size: 27px;
+    font-weight: 900;
+}
+
+.modal-money.win {
+    color: #42df78;
+}
+
+.modal-money.lose {
+    color: #ef4752;
+}
+
+.modal-button {
+    width: 100%;
+
+    margin-top: 22px;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #1678e8;
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media(max-width:360px) {
+
+    .app {
         padding-left: 12px;
         padding-right: 12px;
     }
 
-    .lottery-card {
-        padding: 11px;
+    .title {
+        font-size: 27px;
     }
 
     .grid {
         gap: 7px;
-    }
-
-    .logo {
-        font-size: 28px;
     }
 }
 </style>
@@ -460,35 +544,144 @@ body {
 
 <body>
 
-<div class="game">
+<div class="app">
 
-    <header class="header">
+    <!-- HEADER -->
+
+    <div class="header">
 
         <div class="logo">
-            SCRATCH & WIN!
+            🐻‍❄️ DROP
         </div>
 
-        <div class="subtitle">
-            Лотерея • Номинал $5
+        <div class="balance-box">
+
+            <div class="balance-label">
+                Баланс
+            </div>
+
+            <div
+                class="balance"
+                id="balance">
+
+                1000.00
+
+            </div>
+
         </div>
 
-        <div class="prize">
-            Выигрыш до $100,000
+    </div>
+
+
+    <!-- TITLE -->
+
+    <div class="title">
+        SCRATCH & WIN!
+    </div>
+
+    <div class="subtitle">
+        Купите билет и найдите<br>
+        3 одинаковых предмета
+    </div>
+
+
+    <!-- INFO -->
+
+    <div class="ticket-info">
+
+        <div class="info-card">
+
+            <div class="info-label">
+                Билет
+            </div>
+
+            <div class="info-value">
+                100
+            </div>
+
         </div>
 
-    </header>
+
+        <div class="info-card">
+
+            <div class="info-label">
+                Открытие
+            </div>
+
+            <div class="info-value">
+                50
+            </div>
+
+        </div>
 
 
-    <div class="lottery-card">
+        <div class="info-card">
+
+            <div class="info-label">
+                Приз
+            </div>
+
+            <div class="info-value">
+                500
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PURCHASE -->
+
+    <div
+        class="purchase"
+        id="purchase">
+
+        <button
+            class="main-button"
+            id="buyButton">
+
+            КУПИТЬ БИЛЕТ — 100
+
+        </button>
+
+        <div class="purchase-note">
+            Первые 2 открытия бесплатно
+        </div>
+
+    </div>
+
+
+    <!-- GAME -->
+
+    <div
+        class="game"
+        id="game">
+
+        <div class="game-status">
+
+            <div
+                class="status-text"
+                id="statusText">
+
+                Открыто: 0 / 9
+
+            </div>
+
+            <div
+                class="free-info"
+                id="freeInfo">
+
+                Бесплатно: 2
+
+            </div>
+
+        </div>
+
 
         <div
             class="grid"
             id="grid">
-        </div>
 
-        <div class="info">
-            Откройте карточки и найдите
-            <strong>3 одинаковых символа</strong>
         </div>
 
     </div>
@@ -496,9 +689,7 @@ body {
 </div>
 
 
-<!-- =====================================================
-     RESULT MODAL
-===================================================== -->
+<!-- RESULT -->
 
 <div
     class="modal"
@@ -507,31 +698,31 @@ body {
     <div class="modal-box">
 
         <div
-            class="result-icon"
-            id="resultIcon">
-            🎉
-        </div>
+            class="modal-title"
+            id="modalTitle">
 
-        <div
-            class="result-title"
-            id="resultTitle">
             ПОБЕДА!
+
         </div>
 
         <div
-            class="result-text"
-            id="resultText">
+            class="modal-text"
+            id="modalText">
+
         </div>
 
         <div
-            class="win-amount"
-            id="winAmount">
+            class="modal-money"
+            id="modalMoney">
+
         </div>
 
         <button
-            class="play-again"
-            id="playAgain">
+            class="modal-button"
+            id="againButton">
+
             ИГРАТЬ СНОВА
+
         </button>
 
     </div>
@@ -545,79 +736,730 @@ body {
    НАСТРОЙКИ
 ===================================================== */
 
-const icons = [
+const TICKET_PRICE = 100;
+
+const EXTRA_CELL_PRICE = 50;
+
+const WIN_REWARD = 500;
+
+const FREE_CELLS = 2;
+
+
+/* =====================================================
+   СОСТОЯНИЕ
+===================================================== */
+
+let balance = 1000;
+
+let ticketActive = false;
+
+let openedCells = 0;
+
+let freeCellsLeft = FREE_CELLS;
+
+let gameFinished = false;
+
+
+/* =====================================================
+   ИКОНКИ
+===================================================== */
+
+const ICONS = [
+
     "🪙",
     "⭐",
     "💎",
     "🍀",
     "🧲",
     "🎰"
+
 ];
 
-const grid = document.getElementById("grid");
+
+/* =====================================================
+   DOM
+===================================================== */
+
+const balanceElement =
+    document.getElementById(
+        "balance"
+    );
+
+const buyButton =
+    document.getElementById(
+        "buyButton"
+    );
+
+const purchase =
+    document.getElementById(
+        "purchase"
+    );
+
+const game =
+    document.getElementById(
+        "game"
+    );
+
+const grid =
+    document.getElementById(
+        "grid"
+    );
+
+const statusText =
+    document.getElementById(
+        "statusText"
+    );
+
+const freeInfo =
+    document.getElementById(
+        "freeInfo"
+    );
 
 const modal =
-    document.getElementById("modal");
+    document.getElementById(
+        "modal"
+    );
 
-const resultIcon =
-    document.getElementById("resultIcon");
+const modalTitle =
+    document.getElementById(
+        "modalTitle"
+    );
 
-const resultTitle =
-    document.getElementById("resultTitle");
+const modalText =
+    document.getElementById(
+        "modalText"
+    );
 
-const resultText =
-    document.getElementById("resultText");
+const modalMoney =
+    document.getElementById(
+        "modalMoney"
+    );
 
-const winAmount =
-    document.getElementById("winAmount");
-
-const playAgain =
-    document.getElementById("playAgain");
-
-
-/* =====================================================
-   СОСТОЯНИЕ ИГРЫ
-===================================================== */
-
-let cells = [];
-
-let openedCount = 0;
-
-let gameOver = false;
+const againButton =
+    document.getElementById(
+        "againButton"
+    );
 
 
 /* =====================================================
-   RANDOM
+   БАЛАНС
 ===================================================== */
 
-function randomItem(array) {
+function updateBalance() {
 
-    return array[
+    balanceElement.textContent =
+        balance.toFixed(2);
+}
+
+
+/* =====================================================
+   СЛУЧАЙНЫЙ ЭЛЕМЕНТ
+===================================================== */
+
+function randomIcon() {
+
+    return ICONS[
         Math.floor(
             Math.random() *
-            array.length
+            ICONS.length
         )
     ];
 }
 
 
-function randomMoney(min, max) {
+/* =====================================================
+   СОЗДАНИЕ РАСКЛАДКИ
+===================================================== */
 
-    return Math.floor(
-        Math.random() *
-        (max - min + 1)
-    ) + min;
+let board = [];
+
+
+function generateBoard() {
+
+    board = [];
+
+    for (
+        let i = 0;
+        i < 9;
+        i++
+    ) {
+
+        board.push(
+            randomIcon()
+        );
+    }
+
+    /*
+        ВАЖНО:
+
+        Нам нужно, чтобы победа
+        вообще была возможна.
+
+        С вероятностью 50%
+        гарантированно создаём
+        3 одинаковых предмета
+        в разных местах.
+    */
+
+    if (
+        Math.random() < 0.5
+    ) {
+
+        const icon =
+            randomIcon();
+
+        const positions = [
+            0,
+            4,
+            8
+        ];
+
+        positions.forEach(
+            position => {
+
+                board[position] =
+                    icon;
+            }
+        );
+    }
 }
 
 
 /* =====================================================
-   ЗВУК SCRATCH
+   СОЗДАНИЕ ПОЛЯ
+===================================================== */
+
+function createBoard() {
+
+    grid.innerHTML = "";
+
+    openedCells = 0;
+
+    freeCellsLeft =
+        FREE_CELLS;
+
+    gameFinished = false;
+
+    generateBoard();
+
+
+    for (
+        let i = 0;
+        i < 9;
+        i++
+    ) {
+
+        const cell =
+            document.createElement(
+                "div"
+            );
+
+        cell.className =
+            "cell";
+
+
+        /*
+            Иконка
+        */
+
+        const icon =
+            document.createElement(
+                "div"
+            );
+
+        icon.className =
+            "icon";
+
+        icon.textContent =
+            board[i];
+
+
+        /*
+            Scratch слой
+        */
+
+        const scratch =
+            document.createElement(
+                "div"
+            );
+
+        scratch.className =
+            "scratch";
+
+
+        /*
+            Подсказка стоимости
+        */
+
+        const price =
+            document.createElement(
+                "div"
+            );
+
+        price.className =
+            "cell-price";
+
+        price.textContent =
+            "50";
+
+
+        cell.appendChild(icon);
+
+        cell.appendChild(
+            scratch
+        );
+
+        cell.appendChild(price);
+
+
+        cell.dataset.index =
+            i;
+
+
+        cell.addEventListener(
+            "click",
+            () => {
+
+                openCell(
+                    cell,
+                    i
+                );
+
+            }
+        );
+
+
+        grid.appendChild(cell);
+    }
+
+
+    updateGameStatus();
+}
+
+
+/* =====================================================
+   ПОКУПКА БИЛЕТА
+===================================================== */
+
+buyButton.addEventListener(
+    "click",
+    () => {
+
+        if (
+            ticketActive
+        ) {
+            return;
+        }
+
+
+        if (
+            balance <
+            TICKET_PRICE
+        ) {
+
+            alert(
+                "Недостаточно валюты."
+            );
+
+            return;
+        }
+
+
+        balance -=
+            TICKET_PRICE;
+
+
+        balance =
+            Math.round(
+                balance * 100
+            ) / 100;
+
+
+        ticketActive = true;
+
+
+        updateBalance();
+
+
+        purchase.style.display =
+            "none";
+
+
+        game.classList.add(
+            "active"
+        );
+
+
+        createBoard();
+    }
+);
+
+
+/* =====================================================
+   ОТКРЫТИЕ ЯЧЕЙКИ
+===================================================== */
+
+function openCell(
+    cell,
+    index
+) {
+
+    if (
+        gameFinished
+    ) {
+        return;
+    }
+
+
+    if (
+        cell.classList.contains(
+            "opened"
+        )
+    ) {
+        return;
+    }
+
+
+    /*
+        Первые 2 —
+        бесплатно.
+    */
+
+    if (
+        freeCellsLeft > 0
+    ) {
+
+        freeCellsLeft--;
+
+    }
+
+    else {
+
+        /*
+            Следующие клетки
+            стоят 50.
+        */
+
+        if (
+            balance <
+            EXTRA_CELL_PRICE
+        ) {
+
+            alert(
+                "Недостаточно валюты для открытия клетки."
+            );
+
+            return;
+        }
+
+
+        balance -=
+            EXTRA_CELL_PRICE;
+
+
+        balance =
+            Math.round(
+                balance * 100
+            ) / 100;
+
+
+        updateBalance();
+    }
+
+
+    openedCells++;
+
+
+    cell.classList.add(
+        "opened"
+    );
+
+
+    /*
+        Scratch звук
+    */
+
+    playScratchSound();
+
+
+    /*
+        После анимации
+        проверяем победу.
+    */
+
+    setTimeout(
+        () => {
+
+            checkWin();
+
+        },
+        300
+    );
+
+
+    updateGameStatus();
+}
+
+
+/* =====================================================
+   СТАТУС
+===================================================== */
+
+function updateGameStatus() {
+
+    statusText.textContent =
+        "Открыто: " +
+        openedCells +
+        " / 9";
+
+
+    freeInfo.textContent =
+        "Бесплатно: " +
+        freeCellsLeft;
+}
+
+
+/* =====================================================
+   ПРОВЕРКА ТРЁХ ОДИНАКОВЫХ
+===================================================== */
+
+function checkWin() {
+
+    if (
+        gameFinished
+    ) {
+        return;
+    }
+
+
+    const cells =
+        document.querySelectorAll(
+            ".cell"
+        );
+
+
+    const openedValues = [];
+
+
+    cells.forEach(
+        (cell, index) => {
+
+            if (
+                cell.classList.contains(
+                    "opened"
+                )
+            ) {
+
+                openedValues.push(
+                    board[index]
+                );
+            }
+
+        }
+    );
+
+
+    /*
+        Считаем количество
+        каждого предмета.
+
+        Позиция вообще
+        не имеет значения.
+    */
+
+    const counts = {};
+
+
+    openedValues.forEach(
+        icon => {
+
+            counts[icon] =
+                (counts[icon] || 0) + 1;
+
+        }
+    );
+
+
+    /*
+        Если найдено 3 одинаковых
+        в любых местах —
+        победа.
+    */
+
+    for (
+        const icon in counts
+    ) {
+
+        if (
+            counts[icon] >= 3
+        ) {
+
+            finishWin(
+                icon
+            );
+
+            return;
+        }
+    }
+
+
+    /*
+        Если открыты все 9
+        и трёх одинаковых нет —
+        проигрыш.
+    */
+
+    if (
+        openedCells >= 9
+    ) {
+
+        finishLose();
+    }
+}
+
+
+/* =====================================================
+   ПОБЕДА
+===================================================== */
+
+function finishWin(icon) {
+
+    gameFinished = true;
+
+    ticketActive = false;
+
+
+    balance +=
+        WIN_REWARD;
+
+
+    balance =
+        Math.round(
+            balance * 100
+        ) / 100;
+
+
+    updateBalance();
+
+
+    modalTitle.textContent =
+        "ПОБЕДА!";
+
+
+    modalTitle.className =
+        "modal-title win";
+
+
+    modalText.innerHTML =
+        "Вы нашли 3 одинаковых предмета<br>" +
+        icon +
+        " " +
+        icon +
+        " " +
+        icon;
+
+
+    modalMoney.textContent =
+        "+" +
+        WIN_REWARD;
+
+
+    modalMoney.className =
+        "modal-money win";
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
+    createSparkles();
+}
+
+
+/* =====================================================
+   ПРОИГРЫШ
+===================================================== */
+
+function finishLose() {
+
+    gameFinished = true;
+
+    ticketActive = false;
+
+
+    modalTitle.textContent =
+        "ПОПРОБУЙ СНОВА";
+
+
+    modalTitle.className =
+        "modal-title lose";
+
+
+    modalText.innerHTML =
+        "В этот раз трёх одинаковых<br>" +
+        "предметов найти не удалось.";
+
+
+    modalMoney.textContent =
+        "0";
+
+
+    modalMoney.className =
+        "modal-money lose";
+
+
+    modal.classList.add(
+        "show"
+    );
+}
+
+
+/* =====================================================
+   ИГРАТЬ СНОВА
+===================================================== */
+
+againButton.addEventListener(
+    "click",
+    () => {
+
+        modal.classList.remove(
+            "show"
+        );
+
+
+        purchase.style.display =
+            "block";
+
+
+        game.classList.remove(
+            "active"
+        );
+
+
+        ticketActive = false;
+
+
+        openedCells = 0;
+
+
+        freeCellsLeft =
+            FREE_CELLS;
+
+
+        updateGameStatus();
+    }
+);
+
+
+/* =====================================================
+   SCRATCH SOUND
 ===================================================== */
 
 let audioContext = null;
 
 
-function scratchSound() {
+function playScratchSound() {
 
     try {
 
@@ -628,25 +1470,15 @@ function scratchSound() {
                     window.AudioContext ||
                     window.webkitAudioContext
                 )();
+
         }
 
-
-        if (
-            audioContext.state ===
-            "suspended"
-        ) {
-
-            audioContext.resume();
-        }
-
-
-        const duration = .18;
 
         const buffer =
             audioContext.createBuffer(
                 1,
                 audioContext.sampleRate *
-                duration,
+                0.08,
                 audioContext.sampleRate
             );
 
@@ -661,29 +1493,18 @@ function scratchSound() {
             i++
         ) {
 
-            /*
-                Шум.
-
-                Чем дальше,
-                тем тише.
-            */
-
-            const fade =
-                1 -
-                i / data.length;
-
-
             data[i] =
                 (
                     Math.random() * 2 -
                     1
                 ) *
-                fade;
+                0.18;
         }
 
 
         const source =
             audioContext.createBufferSource();
+
 
         source.buffer =
             buffer;
@@ -692,21 +1513,21 @@ function scratchSound() {
         const filter =
             audioContext.createBiquadFilter();
 
+
         filter.type =
-            "bandpass";
+            "highpass";
+
 
         filter.frequency.value =
-            1700;
-
-        filter.Q.value =
-            .8;
+            900;
 
 
         const gain =
             audioContext.createGain();
 
+
         gain.gain.value =
-            .22;
+            0.45;
 
 
         source
@@ -726,354 +1547,8 @@ function scratchSound() {
             заблокировал звук —
             игра всё равно работает.
         */
+
     }
-}
-
-
-/* =====================================================
-   СОЗДАНИЕ ПОЛЯ
-===================================================== */
-
-function createGame() {
-
-    grid.innerHTML = "";
-
-    cells = [];
-
-    openedCount = 0;
-
-    gameOver = false;
-
-
-    /*
-        Создаём 9 случайных
-        символов.
-    */
-
-    const values = [];
-
-    for (
-        let i = 0;
-        i < 9;
-        i++
-    ) {
-
-        values.push(
-            randomItem(icons)
-        );
-    }
-
-
-    for (
-        let i = 0;
-        i < 9;
-        i++
-    ) {
-
-        const cell =
-            document.createElement("div");
-
-        cell.className =
-            "cell";
-
-
-        const icon =
-            document.createElement("div");
-
-        icon.className =
-            "icon";
-
-        icon.textContent =
-            values[i];
-
-
-        const scratch =
-            document.createElement("div");
-
-        scratch.className =
-            "scratch";
-
-
-        cell.appendChild(icon);
-
-        cell.appendChild(scratch);
-
-
-        cell.dataset.value =
-            values[i];
-
-        cell.dataset.index =
-            i;
-
-
-        cell.addEventListener(
-            "click",
-            () => openCell(cell)
-        );
-
-
-        grid.appendChild(cell);
-
-        cells.push(cell);
-    }
-}
-
-
-/* =====================================================
-   ОТКРЫТИЕ ЯЧЕЙКИ
-===================================================== */
-
-function openCell(cell) {
-
-    if (gameOver)
-        return;
-
-
-    if (
-        cell.classList.contains("open")
-    )
-        return;
-
-
-    if (
-        cell.classList.contains(
-            "scratching"
-        )
-    )
-        return;
-
-
-    /*
-        Запускаем звук.
-    */
-
-    scratchSound();
-
-
-    /*
-        Анимация стирания.
-    */
-
-    cell.classList.add(
-        "scratching"
-    );
-
-
-    /*
-        Небольшая задержка,
-        чтобы символ появился
-        после стирания.
-    */
-
-    setTimeout(
-        () => {
-
-            if (gameOver)
-                return;
-
-
-            cell.classList.add(
-                "open"
-            );
-
-            openedCount++;
-
-
-            /*
-                Проверяем победу
-                сразу после открытия.
-            */
-
-            if (
-                checkWin()
-            ) {
-
-                showWin();
-
-                return;
-            }
-
-
-            /*
-                Если открыты все —
-                проигрыш.
-            */
-
-            if (
-                openedCount >= 9
-            ) {
-
-                showLose();
-            }
-
-        },
-        320
-    );
-}
-
-
-/* =====================================================
-   ПРОВЕРКА ТРЁХ В РЯД
-===================================================== */
-
-function checkWin() {
-
-    const board =
-        cells.map(
-            cell =>
-                cell.dataset.value
-        );
-
-
-    /*
-        Все возможные линии:
-        3 горизонтальные,
-        3 вертикальные,
-        2 диагонали.
-    */
-
-    const lines = [
-
-        [0, 1, 2],
-
-        [3, 4, 5],
-
-        [6, 7, 8],
-
-        [0, 3, 6],
-
-        [1, 4, 7],
-
-        [2, 5, 8],
-
-        [0, 4, 8],
-
-        [2, 4, 6]
-
-    ];
-
-
-    for (
-        const line of lines
-    ) {
-
-        const [a, b, c] =
-            line;
-
-
-        /*
-            Проверяем только
-            открытые клетки.
-
-            Благодаря этому нельзя
-            выиграть через закрытые.
-        */
-
-        if (
-            cells[a].classList.contains("open") &&
-            cells[b].classList.contains("open") &&
-            cells[c].classList.contains("open") &&
-            board[a] === board[b] &&
-            board[b] === board[c]
-        ) {
-
-            return true;
-        }
-    }
-
-
-    return false;
-}
-
-
-/* =====================================================
-   ПОБЕДА
-===================================================== */
-
-function showWin() {
-
-    gameOver = true;
-
-
-    const amount =
-        randomMoney(
-            10,
-            50000
-        );
-
-
-    resultIcon.textContent =
-        "🎉";
-
-
-    resultTitle.textContent =
-        "ПОБЕДА!";
-
-
-    resultTitle.className =
-        "result-title win";
-
-
-    resultText.textContent =
-        "Три одинаковых символа!";
-
-
-    winAmount.textContent =
-        "$" +
-        amount.toLocaleString(
-            "en-US"
-        );
-
-
-    winAmount.style.display =
-        "block";
-
-
-    modal.classList.add(
-        "show"
-    );
-
-
-    createSparks();
-}
-
-
-/* =====================================================
-   ПРОИГРЫШ
-===================================================== */
-
-function showLose() {
-
-    gameOver = true;
-
-
-    resultIcon.textContent =
-        "😔";
-
-
-    resultTitle.textContent =
-        "ПОПРОБУЙ СНОВА";
-
-
-    resultTitle.className =
-        "result-title lose";
-
-
-    resultText.textContent =
-        "Трёх одинаковых символов не найдено.";
-
-
-    winAmount.textContent =
-        "";
-
-
-    winAmount.style.display =
-        "none";
-
-
-    modal.classList.add(
-        "show"
-    );
 }
 
 
@@ -1081,14 +1556,11 @@ function showLose() {
    ИСКРЫ
 ===================================================== */
 
-function createSparks() {
-
-    const count = 45;
-
+function createSparkles() {
 
     for (
         let i = 0;
-        i < count;
+        i < 35;
         i++
     ) {
 
@@ -1097,15 +1569,9 @@ function createSparks() {
                 "div"
             );
 
-
         spark.className =
             "spark";
 
-
-        /*
-            Начальная точка —
-            центр экрана.
-        */
 
         spark.style.left =
             "50%";
@@ -1114,10 +1580,6 @@ function createSparks() {
             "50%";
 
 
-        /*
-            Случайное направление.
-        */
-
         const angle =
             Math.random() *
             Math.PI *
@@ -1125,47 +1587,25 @@ function createSparks() {
 
 
         const distance =
-            100 +
+            80 +
             Math.random() *
-            280;
-
-
-        const x =
-            Math.cos(angle) *
-            distance;
-
-
-        const y =
-            Math.sin(angle) *
-            distance;
+            220;
 
 
         spark.style.setProperty(
             "--x",
-            x + "px"
+            Math.cos(angle) *
+            distance +
+            "px"
         );
 
 
         spark.style.setProperty(
             "--y",
-            y + "px"
+            Math.sin(angle) *
+            distance +
+            "px"
         );
-
-
-        /*
-            Разный размер.
-        */
-
-        const size =
-            4 +
-            Math.random() * 7;
-
-
-        spark.style.width =
-            size + "px";
-
-        spark.style.height =
-            size + "px";
 
 
         document.body.appendChild(
@@ -1175,46 +1615,21 @@ function createSparks() {
 
         setTimeout(
             () => {
+
                 spark.remove();
+
             },
-            1100
+            750
         );
     }
 }
 
 
 /* =====================================================
-   НОВАЯ ИГРА
+   ИНИЦИАЛИЗАЦИЯ
 ===================================================== */
 
-playAgain.addEventListener(
-    "click",
-    () => {
-
-        modal.classList.remove(
-            "show"
-        );
-
-
-        /*
-            Небольшая задержка,
-            чтобы модальное окно
-            успело исчезнуть.
-        */
-
-        setTimeout(
-            createGame,
-            200
-        );
-    }
-);
-
-
-/* =====================================================
-   START
-===================================================== */
-
-createGame();
+updateBalance();
 
 </script>
 
