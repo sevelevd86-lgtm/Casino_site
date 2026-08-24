@@ -122,9 +122,22 @@ input {
     transition: .2s;
 }
 
+/* ЯРКАЯ ОБВОДКА ВЫБРАННОГО БИЛЕТА */
+
+.ticket.selected {
+    border: 2px solid #ffd84d;
+    box-shadow:
+        0 0 0 1px rgba(255, 216, 77, .15),
+        0 0 18px rgba(255, 216, 77, .12);
+}
+
 .ticket:hover {
     border-color: #454c54;
     transform: translateY(-1px);
+}
+
+.ticket.selected:hover {
+    border-color: #ffd84d;
 }
 
 .ticket:active {
@@ -236,6 +249,35 @@ input {
     color: #d9dde0;
     font-weight: 800;
     cursor: pointer;
+}
+
+/* =========================
+   PLAY BUTTON
+========================= */
+
+.play-ticket-button {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 18px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #1678e8;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(22,120,232,.25);
+    transition: .2s;
+}
+
+.play-ticket-button:hover {
+    background: #2185f5;
+    transform: translateY(-1px);
+}
+
+.play-ticket-button:active {
+    transform: scale(.985);
 }
 
 /* =========================
@@ -388,7 +430,7 @@ input {
 }
 
 /* =========================
-   RESULT MODAL
+   RESULT
 ========================= */
 
 .modal {
@@ -533,6 +575,8 @@ input {
 
 <div class="app">
 
+    <!-- HEADER -->
+
     <div class="header">
 
         <div class="logo">
@@ -546,9 +590,7 @@ input {
     </div>
 
 
-    <!-- =====================
-         SELECT SCREEN
-    ====================== -->
+    <!-- SELECT SCREEN -->
 
     <section
         id="selectScreen"
@@ -565,6 +607,8 @@ input {
 
 
         <div class="tickets">
+
+            <!-- PAID -->
 
             <div
                 class="ticket"
@@ -590,6 +634,8 @@ input {
 
             </div>
 
+
+            <!-- FREE -->
 
             <div
                 class="ticket"
@@ -618,14 +664,23 @@ input {
         </div>
 
 
-        <!-- =====================
-             CHANCES
-        ====================== -->
+        <!-- CHANCES -->
 
         <div
             id="chancePanel"
             class="chance-panel"
             style="display:none;">
+
+            <!-- КНОПКА ТЕПЕРЬ НАД ШАНСАМИ -->
+
+            <button
+                class="play-ticket-button"
+                id="startTicketButton">
+
+                ИГРАТЬ В ЭТОТ БИЛЕТ
+
+            </button>
+
 
             <div class="chance-title">
                 Шансы и выигрыши
@@ -640,14 +695,6 @@ input {
 
             <button
                 class="back-button"
-                id="startTicket">
-
-                ИГРАТЬ В ЭТОТ БИЛЕТ
-
-            </button>
-
-            <button
-                class="back-button"
                 id="closeChance">
 
                 НАЗАД К БИЛЕТАМ
@@ -659,9 +706,7 @@ input {
     </section>
 
 
-    <!-- =====================
-         GAME SCREEN
-    ====================== -->
+    <!-- GAME SCREEN -->
 
     <section
         id="gameScreen"
@@ -713,9 +758,7 @@ input {
 </div>
 
 
-<!-- =========================
-     RESULT MODAL
-========================= -->
+<!-- RESULT MODAL -->
 
 <div
     class="modal"
@@ -769,7 +812,7 @@ let balance = 1000;
 
 
 /* =====================================================
-   SYMBOL DATA
+   DATA
 ===================================================== */
 
 const paidSymbols = [
@@ -885,17 +928,17 @@ const freeSymbols = [
     },
 
     {
-        symbol: "🌟",
-        name: "Золотая звезда",
-        chance: 5,
-        prize: 90
-    },
-
-    {
         symbol: "💔",
         name: "Разбитое сердце",
         chance: 1,
         prize: 500
+    },
+
+    {
+        symbol: "🌟",
+        name: "Золотая звезда",
+        chance: 5,
+        prize: 90
     }
 
 ];
@@ -906,11 +949,14 @@ const freeSymbols = [
 ===================================================== */
 
 let currentTicket = null;
+
 let cells = [];
+
 let openedCount = 0;
+
 let freeOpens = 0;
+
 let gameEnded = false;
-let resultTimer = null;
 
 
 /* =====================================================
@@ -959,18 +1005,28 @@ const resultText =
 const resultMoney =
     document.getElementById("resultMoney");
 
+const paidTicket =
+    document.getElementById("paidTicket");
+
+const freeTicket =
+    document.getElementById("freeTicket");
+
 const startTicketButton =
-    document.getElementById("startTicket");
+    document.getElementById(
+        "startTicketButton"
+    );
 
 
 /* =====================================================
-   BALANCE
+   BALANCE UPDATE
 ===================================================== */
 
 function updateBalance() {
 
     balance =
-        Math.round(balance * 100) / 100;
+        Math.round(
+            balance * 100
+        ) / 100;
 
     balanceElement.textContent =
         balance.toLocaleString(
@@ -988,34 +1044,36 @@ function updateBalance() {
 
 function random(min, max) {
 
-    return Math.random() *
-        (max - min) + min;
+    return (
+        Math.random() *
+        (max - min) +
+        min
+    );
 }
 
 
 /* =====================================================
-   WEIGHTED RANDOM
+   WEIGHTED SYMBOL
 ===================================================== */
 
 function getRandomSymbol(symbols) {
 
-    const totalChance =
-        symbols.reduce(
-            (sum, item) =>
-                sum + item.chance,
-            0
-        );
-
     let value =
-        Math.random() * totalChance;
+        Math.random() * 100;
 
     let current = 0;
 
-    for (const item of symbols) {
+    for (
+        const item of symbols
+    ) {
 
-        current += item.chance;
+        current +=
+            item.chance;
 
-        if (value <= current) {
+        if (
+            value <= current
+        ) {
+
             return item;
         }
     }
@@ -1059,12 +1117,12 @@ function shuffle(array) {
 
 
 /* =====================================================
-   CREATE BOARD
+   CREATE RANDOM BOARD
 ===================================================== */
 
 function generateBoard(symbols) {
 
-    const board = [];
+    let board = [];
 
     for (
         let i = 0;
@@ -1073,11 +1131,15 @@ function generateBoard(symbols) {
     ) {
 
         board.push(
-            getRandomSymbol(symbols)
+            getRandomSymbol(
+                symbols
+            )
         );
     }
 
-    return shuffle(board);
+    shuffle(board);
+
+    return board;
 }
 
 
@@ -1089,37 +1151,53 @@ function checkWin() {
 
     const counts = {};
 
-    for (const cell of cells) {
 
-        if (!cell.opened) {
+    for (
+        const cell of cells
+    ) {
+
+        if (!cell.opened)
             continue;
-        }
+
 
         const symbol =
             cell.item.symbol;
 
+
         if (!counts[symbol]) {
+
             counts[symbol] = 0;
         }
+
 
         counts[symbol]++;
     }
 
-    for (const symbol in counts) {
 
-        if (counts[symbol] >= 3) {
+    for (
+        const symbol in counts
+    ) {
+
+        if (
+            counts[symbol] >= 3
+        ) {
 
             const item =
-                currentTicket.symbols.find(
+                currentTicket.symbols
+                .find(
                     x =>
-                        x.symbol === symbol
+                        x.symbol ===
+                        symbol
                 );
 
+
             if (item) {
+
                 return item;
             }
         }
     }
+
 
     return null;
 }
@@ -1133,22 +1211,32 @@ function showChances(ticket) {
 
     chanceList.innerHTML = "";
 
+
     const sorted =
         [...ticket.symbols]
         .sort(
             (a, b) =>
-                b.chance - a.chance
+                b.chance -
+                a.chance
         );
 
-    for (const item of sorted) {
+
+    for (
+        const item of sorted
+    ) {
 
         const row =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         row.className =
             "chance-row";
 
+
         row.innerHTML = `
+
             <div class="chance-symbol">
                 ${item.symbol}
             </div>
@@ -1164,83 +1252,97 @@ function showChances(ticket) {
             <div class="chance-prize">
                 +${item.prize} 💰
             </div>
+
         `;
 
-        chanceList.appendChild(row);
+
+        chanceList.appendChild(
+            row
+        );
     }
 
-    chancePanel.style.display = "block";
+
+    chancePanel.style.display =
+        "block";
 }
 
 
 /* =====================================================
-   PAID TICKET
+   SELECT TICKET
 ===================================================== */
 
-document
-    .getElementById("paidTicket")
-    .addEventListener(
-        "click",
-        () => {
+paidTicket.addEventListener(
+    "click",
+    () => {
 
-            currentTicket = {
+        currentTicket = {
 
-                name:
-                    "💎 MEGA SCRATCH",
+            name:
+                "💎 MEGA SCRATCH",
 
-                price:
-                    100,
+            price:
+                100,
 
-                openPrice:
-                    50,
+            openPrice:
+                50,
 
-                freeOpens:
-                    2,
+            freeOpens:
+                2,
 
-                symbols:
-                    paidSymbols
-            };
-
-            showChances(
-                currentTicket
-            );
-        }
-    );
+            symbols:
+                paidSymbols
+        };
 
 
-/* =====================================================
-   FREE TICKET
-===================================================== */
+        paidTicket.classList
+            .add("selected");
 
-document
-    .getElementById("freeTicket")
-    .addEventListener(
-        "click",
-        () => {
+        freeTicket.classList
+            .remove("selected");
 
-            currentTicket = {
 
-                name:
-                    "🎫 FREE SCRATCH",
+        showChances(
+            currentTicket
+        );
+    }
+);
 
-                price:
-                    0,
 
-                openPrice:
-                    5,
+freeTicket.addEventListener(
+    "click",
+    () => {
 
-                freeOpens:
-                    0,
+        currentTicket = {
 
-                symbols:
-                    freeSymbols
-            };
+            name:
+                "🎫 FREE SCRATCH",
 
-            showChances(
-                currentTicket
-            );
-        }
-    );
+            price:
+                0,
+
+            openPrice:
+                5,
+
+            freeOpens:
+                0,
+
+            symbols:
+                freeSymbols
+        };
+
+
+        freeTicket.classList
+            .add("selected");
+
+        paidTicket.classList
+            .remove("selected");
+
+
+        showChances(
+            currentTicket
+        );
+    }
+);
 
 
 /* =====================================================
@@ -1256,13 +1358,20 @@ document
             chancePanel.style.display =
                 "none";
 
-            currentTicket = null;
+            currentTicket =
+                null;
+
+            paidTicket.classList
+                .remove("selected");
+
+            freeTicket.classList
+                .remove("selected");
         }
     );
 
 
 /* =====================================================
-   START GAME
+   START TICKET
 ===================================================== */
 
 startTicketButton.addEventListener(
@@ -1273,16 +1382,14 @@ startTicketButton.addEventListener(
 
 function startTicket() {
 
-    if (!currentTicket) {
+    if (!currentTicket)
         return;
-    }
 
-    /*
-       Платный билет стоит 100.
-       Бесплатный — 0.
-    */
 
-    if (currentTicket.price > 0) {
+    if (
+        currentTicket.price >
+        0
+    ) {
 
         if (
             balance <
@@ -1296,34 +1403,41 @@ function startTicket() {
             return;
         }
 
+
         balance -=
             currentTicket.price;
     }
 
+
     updateBalance();
 
-    selectScreen.classList.remove(
-        "active"
-    );
 
-    gameScreen.classList.add(
-        "active"
-    );
+    selectScreen.classList
+        .remove("active");
+
+    gameScreen.classList
+        .add("active");
+
 
     chancePanel.style.display =
         "none";
+
 
     openedCount = 0;
 
     gameEnded = false;
 
+
     freeOpens =
         currentTicket.freeOpens;
+
 
     gameName.textContent =
         currentTicket.name;
 
+
     updateGameInfo();
+
 
     createBoard();
 }
@@ -1335,7 +1449,9 @@ function startTicket() {
 
 function updateGameInfo() {
 
-    if (freeOpens > 0) {
+    if (
+        freeOpens > 0
+    ) {
 
         freeOpensElement.textContent =
             `🎁 Бесплатных открытий: ${freeOpens}`;
@@ -1364,10 +1480,12 @@ function createBoard() {
 
     cells = [];
 
+
     const board =
         generateBoard(
             currentTicket.symbols
         );
+
 
     for (
         let i = 0;
@@ -1375,51 +1493,85 @@ function createBoard() {
         i++
     ) {
 
-        const item = board[i];
+        const item =
+            board[i];
+
 
         const cell =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        cell.className = "cell";
+
+        cell.className =
+            "cell";
+
 
         const symbol =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        symbol.className = "symbol";
+
+        symbol.className =
+            "symbol";
 
         symbol.textContent =
             item.symbol;
 
+
         const scratch =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         scratch.className =
             "scratch";
 
-        cell.appendChild(symbol);
-        cell.appendChild(scratch);
+
+        cell.appendChild(
+            symbol
+        );
+
+        cell.appendChild(
+            scratch
+        );
+
 
         const cellData = {
 
-            element: cell,
+            element:
+                cell,
 
-            item: item,
+            item:
+                item,
 
-            opened: false
+            opened:
+                false
         };
 
-        cells.push(cellData);
+
+        cells.push(
+            cellData
+        );
+
 
         cell.addEventListener(
             "click",
             () => {
 
-                openCell(cellData);
+                openCell(
+                    cellData
+                );
 
             }
         );
 
-        card.appendChild(cell);
+
+        card.appendChild(
+            cell
+        );
     }
 }
 
@@ -1434,15 +1586,14 @@ function openCell(cell) {
         gameEnded ||
         cell.opened
     ) {
+
         return;
     }
 
-    /*
-       Первые 2 открытия
-       платного билета бесплатны.
-    */
 
-    if (freeOpens > 0) {
+    if (
+        freeOpens > 0
+    ) {
 
         freeOpens--;
 
@@ -1460,52 +1611,72 @@ function openCell(cell) {
             return;
         }
 
+
         balance -=
             currentTicket.openPrice;
 
         updateBalance();
     }
 
+
     cell.opened = true;
 
-    cell.element.classList.add(
-        "opened"
-    );
+    cell.element.classList
+        .add("opened");
+
 
     openedCount++;
 
+
     playScratchSound();
+
 
     updateGameInfo();
 
-    /*
-       Проверяем комбинацию
-       после каждого открытия.
-    */
 
     const winningItem =
         checkWin();
 
-    if (winningItem) {
 
-        finishGame(
-            true,
-            winningItem
+    if (
+        winningItem
+    ) {
+
+        /*
+         * Небольшая задержка перед
+         * появлением результата.
+         */
+
+        setTimeout(
+            () => {
+
+                finishGame(
+                    true,
+                    winningItem
+                );
+
+            },
+            1500
         );
 
         return;
     }
 
-    /*
-       Если открыты все 9,
-       игрок проиграл.
-    */
 
-    if (openedCount >= 9) {
+    if (
+        openedCount >= 9
+    ) {
 
-        finishGame(
-            false,
-            null
+        setTimeout(
+            () => {
+
+                finishGame(
+                    false,
+                    null
+                );
+
+            },
+            1000
         );
     }
 }
@@ -1515,41 +1686,42 @@ function openCell(cell) {
    FINISH GAME
 ===================================================== */
 
-function finishGame(won, item) {
+function finishGame(
+    won,
+    item
+) {
 
-    if (gameEnded) {
+    if (gameEnded)
         return;
-    }
+
 
     gameEnded = true;
 
-    /*
-       Важно:
-       окно результата появляется
-       не сразу.
-
-       Сначала игрок видит открытую
-       комбинацию, затем через 1.5 сек
-       появляется результат.
-    */
 
     if (won) {
 
         const prize =
             item.prize;
 
-        balance += prize;
+
+        balance +=
+            prize;
+
 
         updateBalance();
+
 
         resultIcon.textContent =
             item.symbol;
 
+
         resultTitle.textContent =
             "ПОБЕДА!";
 
+
         resultTitle.className =
             "result-title win";
+
 
         resultText.innerHTML =
             `Вы нашли 3 одинаковых символа
@@ -1557,71 +1729,43 @@ function finishGame(won, item) {
              Комбинация найдена в любых местах
              билета.`;
 
+
         resultMoney.textContent =
             `+${prize} 💰`;
 
-        /*
-           Звук победы запускается
-           после небольшой задержки,
-           вместе с результатом.
-        */
 
-        clearTimeout(resultTimer);
+        playWinSound();
 
-        resultTimer =
-            setTimeout(
-                () => {
-
-                    playWinSound();
-
-                    resultModal.classList.add(
-                        "show"
-                    );
-
-                    createSparks();
-
-                },
-                1500
-            );
+        createSparks();
 
     } else {
 
         resultIcon.textContent =
             "😔";
 
+
         resultTitle.textContent =
             "ПОПРОБУЙ СНОВА";
+
 
         resultTitle.className =
             "result-title lose";
 
+
         resultText.textContent =
             "Все 9 ячеек открыты, но трёх одинаковых символов найти не удалось.";
+
 
         resultMoney.textContent =
             "0 💰";
 
-        /*
-           Звук проигрыша также
-           после задержки 1.5 секунды.
-        */
 
-        clearTimeout(resultTimer);
-
-        resultTimer =
-            setTimeout(
-                () => {
-
-                    playLoseSound();
-
-                    resultModal.classList.add(
-                        "show"
-                    );
-
-                },
-                1500
-            );
+        playLoseSound();
     }
+
+
+    resultModal.classList
+        .add("show");
 }
 
 
@@ -1635,29 +1779,32 @@ document
         "click",
         () => {
 
-            clearTimeout(resultTimer);
+            resultModal.classList
+                .remove("show");
 
-            resultModal.classList.remove(
-                "show"
-            );
 
-            gameScreen.classList.remove(
-                "active"
-            );
+            gameScreen.classList
+                .remove("active");
 
-            selectScreen.classList.add(
-                "active"
-            );
 
-            currentTicket = null;
+            selectScreen.classList
+                .add("active");
+
+
+            currentTicket =
+                null;
 
             cells = [];
 
             openedCount = 0;
 
-            freeOpens = 0;
-
             gameEnded = false;
+
+            paidTicket.classList
+                .remove("selected");
+
+            freeTicket.classList
+                .remove("selected");
         }
     );
 
@@ -1682,30 +1829,33 @@ document
                         "Вы уже начали билет. Выйти?"
                     );
 
-                if (!leave) {
+
+                if (!leave)
                     return;
-                }
             }
 
-            clearTimeout(resultTimer);
 
-            gameScreen.classList.remove(
-                "active"
-            );
+            gameScreen.classList
+                .remove("active");
 
-            selectScreen.classList.add(
-                "active"
-            );
+            selectScreen.classList
+                .add("active");
 
-            currentTicket = null;
+
+            currentTicket =
+                null;
 
             cells = [];
 
             openedCount = 0;
 
-            freeOpens = 0;
-
             gameEnded = false;
+
+            paidTicket.classList
+                .remove("selected");
+
+            freeTicket.classList
+                .remove("selected");
         }
     );
 
@@ -1751,6 +1901,7 @@ function playScratchSound() {
         const ctx =
             getAudioContext();
 
+
         const buffer =
             ctx.createBuffer(
                 1,
@@ -1758,8 +1909,10 @@ function playScratchSound() {
                 ctx.sampleRate
             );
 
+
         const data =
             buffer.getChannelData(0);
+
 
         for (
             let i = 0;
@@ -1776,15 +1929,22 @@ function playScratchSound() {
                 );
         }
 
+
         const source =
             ctx.createBufferSource();
 
-        source.buffer = buffer;
+
+        source.buffer =
+            buffer;
+
 
         const gain =
             ctx.createGain();
 
-        gain.gain.value = 0.07;
+
+        gain.gain.value =
+            0.07;
+
 
         source.connect(gain);
 
@@ -1792,12 +1952,13 @@ function playScratchSound() {
             ctx.destination
         );
 
+
         source.start();
 
     } catch (error) {
 
         console.log(
-            "Scratch audio unavailable"
+            "Audio unavailable"
         );
     }
 }
@@ -1817,10 +1978,6 @@ function playWinSound() {
         const now =
             ctx.currentTime;
 
-        /*
-           Небольшая приятная
-           последовательность нот.
-        */
 
         const notes = [
             523.25,
@@ -1828,6 +1985,7 @@ function playWinSound() {
             783.99,
             1046.50
         ];
+
 
         notes.forEach(
             (frequency, index) => {
@@ -1838,13 +1996,13 @@ function playWinSound() {
                 const gain =
                     ctx.createGain();
 
+
                 oscillator.type =
                     "sine";
 
-                oscillator.frequency.setValueAtTime(
-                    frequency,
-                    now + index * 0.12
-                );
+                oscillator.frequency.value =
+                    frequency;
+
 
                 gain.gain.setValueAtTime(
                     0,
@@ -1853,13 +2011,14 @@ function playWinSound() {
 
                 gain.gain.linearRampToValueAtTime(
                     0.16,
-                    now + index * 0.12 + 0.02
+                    now + index * 0.12 + 0.03
                 );
 
                 gain.gain.exponentialRampToValueAtTime(
                     0.001,
-                    now + index * 0.12 + 0.35
+                    now + index * 0.12 + 0.4
                 );
+
 
                 oscillator.connect(gain);
 
@@ -1867,12 +2026,13 @@ function playWinSound() {
                     ctx.destination
                 );
 
+
                 oscillator.start(
                     now + index * 0.12
                 );
 
                 oscillator.stop(
-                    now + index * 0.12 + 0.4
+                    now + index * 0.12 + 0.45
                 );
             }
         );
@@ -1880,7 +2040,7 @@ function playWinSound() {
     } catch (error) {
 
         console.log(
-            "Win audio unavailable"
+            "Audio unavailable"
         );
     }
 }
@@ -1900,45 +2060,54 @@ function playLoseSound() {
         const now =
             ctx.currentTime;
 
+
         const oscillator =
             ctx.createOscillator();
 
         const gain =
             ctx.createGain();
 
+
         oscillator.type =
             "sawtooth";
+
 
         oscillator.frequency.setValueAtTime(
             260,
             now
         );
 
+
         oscillator.frequency.exponentialRampToValueAtTime(
-            110,
+            100,
             now + 0.55
         );
+
 
         gain.gain.setValueAtTime(
             0.001,
             now
         );
 
-        gain.gain.exponentialRampToValueAtTime(
-            0.13,
+
+        gain.gain.linearRampToValueAtTime(
+            0.12,
             now + 0.03
         );
+
 
         gain.gain.exponentialRampToValueAtTime(
             0.001,
             now + 0.6
         );
 
+
         oscillator.connect(gain);
 
         gain.connect(
             ctx.destination
         );
+
 
         oscillator.start(now);
 
@@ -1949,14 +2118,14 @@ function playLoseSound() {
     } catch (error) {
 
         console.log(
-            "Lose audio unavailable"
+            "Audio unavailable"
         );
     }
 }
 
 
 /* =====================================================
-   WIN SPARKS
+   SPARKS
 ===================================================== */
 
 function createSparks() {
@@ -1972,8 +2141,10 @@ function createSparks() {
                 "div"
             );
 
+
         spark.className =
             "spark";
+
 
         spark.style.left =
             "50%";
@@ -1981,19 +2152,23 @@ function createSparks() {
         spark.style.top =
             "45%";
 
+
         spark.style.setProperty(
             "--x",
             `${random(-180, 180)}px`
         );
+
 
         spark.style.setProperty(
             "--y",
             `${random(-220, 220)}px`
         );
 
+
         document.body.appendChild(
             spark
         );
+
 
         setTimeout(
             () => {
