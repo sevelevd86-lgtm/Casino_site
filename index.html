@@ -2,864 +2,802 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🐻‍❄️ DROP</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#111315;
-    color:#fff;
-    font-family:Arial,sans-serif;
-    user-select:none;
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #111315;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    user-select: none;
 }
 
 button,
-input{
-    font:inherit;
+input {
+    font-family: inherit;
 }
 
-button{
-    cursor:pointer;
+button {
+    cursor: pointer;
 }
 
-.hidden{
-    display:none!important;
+.hidden {
+    display: none !important;
 }
 
-/* =====================================================
+/* =========================
    APP
-===================================================== */
+========================= */
 
-#app{
-    width:100%;
-    height:100%;
-    position:relative;
-    overflow:hidden;
-    background:#111315;
+#app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #111315;
 }
 
-/* =====================================================
+/* =========================
    HEADER
-===================================================== */
+========================= */
 
-.header{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:76px;
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 74px;
 
-    padding:0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    padding: 0 22px;
 
-    border-bottom:1px solid #25292d;
+    border-bottom: 1px solid #282d31;
+    background: rgba(17,19,21,.96);
 
-    background:#111315;
-
-    z-index:20;
+    z-index: 20;
 }
 
-.logo{
-    font-size:23px;
-    font-weight:900;
-    letter-spacing:-.5px;
+.logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -.5px;
 }
 
-.header-balance{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
+.header-balance {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #ffd84d;
+    font-size: 19px;
+    font-weight: 900;
 }
 
-.header-balance-label{
-    color:#777e85;
-    font-size:12px;
-    margin-bottom:3px;
-}
-
-.header-balance-value{
-    color:#ffd84d;
-    font-size:20px;
-    font-weight:900;
-}
-
-/* =====================================================
+/* =========================
    CONTENT
-===================================================== */
+========================= */
 
-.content{
-    position:absolute;
-    top:76px;
-    left:0;
-    right:0;
-    bottom:78px;
+.content {
+    position: absolute;
+    top: 74px;
+    left: 0;
+    right: 0;
+    bottom: 82px;
 
-    overflow-y:auto;
-    padding:24px 18px 35px;
+    overflow-y: auto;
+    padding: 25px 18px 30px;
 }
 
-.page{
-    width:100%;
-    max-width:620px;
-    margin:0 auto;
+.page {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
 }
 
-.page-title{
-    font-size:31px;
-    line-height:1.15;
-    font-weight:900;
-    margin-bottom:8px;
+/* =========================
+   TITLES
+========================= */
+
+.page-title {
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 8px;
 }
 
-.page-subtitle{
-    color:#858c93;
-    font-size:16px;
-    line-height:1.5;
-    margin-bottom:25px;
+.page-subtitle {
+    color: #858b91;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 24px;
 }
 
-/* =====================================================
+/* =========================
    CARDS
-===================================================== */
+========================= */
 
-.card{
-    background:#181b1f;
-    border:1px solid #292e33;
-    border-radius:18px;
-    padding:20px;
+.card {
+    background: #191c20;
+    border: 1px solid #292e33;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
 }
 
-.card + .card{
-    margin-top:14px;
+.card-title {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 7px;
 }
 
-.card-title{
-    font-size:20px;
-    font-weight:900;
-    margin-bottom:7px;
+.card-text {
+    color: #858b91;
+    font-size: 15px;
+    line-height: 1.5;
 }
 
-.card-text{
-    color:#8b9299;
-    font-size:15px;
-    line-height:1.5;
+/* =========================
+   GAME CARD
+========================= */
+
+.game-card {
+    padding: 24px;
 }
 
-/* =====================================================
-   BUTTON
-===================================================== */
+.game-icon {
+    width: 62px;
+    height: 62px;
 
-.primary-button{
-    width:100%;
-    border:0;
-    border-radius:12px;
-    padding:15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    background:#1678e8;
-    color:#fff;
+    border-radius: 16px;
+    background: #24292e;
 
-    font-size:17px;
-    font-weight:900;
+    font-size: 31px;
 
-    transition:.15s;
+    margin-bottom: 17px;
 }
 
-.primary-button:hover{
-    background:#2587f3;
+.game-button {
+    width: 100%;
+    margin-top: 18px;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #1678e8;
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 900;
 }
 
-.primary-button:active{
-    transform:scale(.98);
+.game-button:active {
+    transform: scale(.98);
 }
 
-.secondary-button{
-    width:100%;
-    border:1px solid #343a40;
-    border-radius:12px;
-    padding:14px;
-
-    background:#20252a;
-    color:#fff;
-
-    font-size:16px;
-    font-weight:800;
-}
-
-.danger-button{
-    width:100%;
-    border:0;
-    border-radius:12px;
-    padding:14px;
-
-    background:#292d32;
-    color:#ff6972;
-
-    font-size:16px;
-    font-weight:900;
-}
-
-/* =====================================================
-   HOME
-===================================================== */
-
-.game-card{
-    padding:24px;
-}
-
-.game-icon{
-    width:64px;
-    height:64px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:16px;
-
-    background:#20252a;
-
-    font-size:32px;
-
-    margin-bottom:18px;
-}
-
-.game-title{
-    font-size:25px;
-    font-weight:900;
-    margin-bottom:8px;
-}
-
-.game-description{
-    color:#858c93;
-    font-size:16px;
-    line-height:1.55;
-    margin-bottom:20px;
-}
-
-/* =====================================================
+/* =========================
    INVENTORY
-===================================================== */
+========================= */
 
-.inventory-empty{
-    text-align:center;
-    padding:45px 20px;
+.sell-all {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #282d32;
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    margin-bottom: 16px;
 }
 
-.empty-icon{
-    font-size:46px;
-    margin-bottom:14px;
-    opacity:.7;
+.sell-all:disabled {
+    opacity: .45;
+    cursor: default;
 }
 
-.empty-title{
-    font-size:21px;
-    font-weight:900;
-    margin-bottom:7px;
+.empty-inventory {
+    text-align: center;
+    padding: 45px 15px;
+
+    color: #737a81;
 }
 
-.empty-text{
-    color:#777e85;
-    font-size:15px;
-    line-height:1.5;
+.empty-icon {
+    font-size: 45px;
+    margin-bottom: 13px;
 }
 
-.sell-all{
-    margin-bottom:14px;
+.empty-title {
+    color: #c9cdd1;
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 7px;
 }
 
-/* =====================================================
+.empty-text {
+    font-size: 15px;
+}
+
+/* =========================
    PROFILE
-===================================================== */
+========================= */
 
-.profile-header{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    margin-bottom:22px;
+.profile-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #292e33;
 }
 
-.avatar{
-    width:70px;
-    height:70px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:#20252a;
-
-    font-size:34px;
+.profile-row:last-child {
+    border-bottom: none;
 }
 
-.profile-name{
-    font-size:23px;
-    font-weight:900;
-    margin-bottom:5px;
+.profile-label {
+    color: #858b91;
+    font-size: 15px;
 }
 
-.profile-id{
-    color:#777e85;
-    font-size:14px;
+.profile-value {
+    font-size: 16px;
+    font-weight: 800;
 }
 
-.profile-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:16px 0;
-
-    border-bottom:1px solid #292e33;
+.ref-value {
+    color: #54a8ff;
+    word-break: break-all;
 }
 
-.profile-row:last-child{
-    border-bottom:0;
-}
-
-.profile-row-title{
-    font-size:16px;
-    font-weight:800;
-}
-
-.profile-row-value{
-    color:#ffd84d;
-    font-size:16px;
-    font-weight:900;
-}
-
-/* =====================================================
-   REFERRAL
-===================================================== */
-
-.referral-box{
-    background:#111315;
-    border:1px solid #292e33;
-    border-radius:12px;
-    padding:14px;
-
-    margin-top:15px;
-}
-
-.referral-id{
-    color:#fff;
-    font-size:15px;
-    font-weight:800;
-
-    word-break:break-all;
-    line-height:1.5;
-}
-
-.referral-reward{
-    color:#777e85;
-    font-size:14px;
-    line-height:1.5;
-
-    margin-top:7px;
-}
-
-/* =====================================================
+/* =========================
    DAILY
-===================================================== */
+========================= */
 
-.reward-value{
-    color:#4be580;
-    font-size:24px;
-    font-weight:900;
-    margin:8px 0 15px;
+.daily-button {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: #1678e8;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 900;
+
+    margin-top: 15px;
 }
 
-.timer{
-    color:#858c93;
-    font-size:15px;
-    margin-top:10px;
-    text-align:center;
+.daily-button:disabled {
+    background: #282d32;
+    color: #777d83;
 }
 
-/* =====================================================
-   PROMO
-===================================================== */
+.timer {
+    text-align: center;
 
-.input{
-    width:100%;
+    margin-top: 13px;
 
-    padding:14px;
+    color: #ffd84d;
 
-    border:1px solid #343a40;
-    border-radius:11px;
-
-    outline:none;
-
-    background:#111315;
-    color:#fff;
-
-    font-size:17px;
-    font-weight:700;
-
-    text-align:center;
+    font-size: 18px;
+    font-weight: 900;
 }
 
-.input:focus{
-    border-color:#1678e8;
+/* =========================
+   PROMOCODE
+========================= */
+
+.promo-input {
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #383e44;
+    border-radius: 10px;
+
+    background: #111315;
+    color: #fff;
+
+    outline: none;
+
+    font-size: 16px;
+    text-align: center;
 }
 
-.promo-message{
-    min-height:22px;
-    margin-top:8px;
-
-    text-align:center;
-
-    color:#4be580;
-
-    font-size:14px;
-    font-weight:700;
+.promo-input:focus {
+    border-color: #1678e8;
 }
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+.promo-button {
+    width: 100%;
 
-.bottom-nav{
-    position:absolute;
+    margin-top: 11px;
 
-    left:0;
-    bottom:0;
+    padding: 14px;
 
-    width:100%;
-    height:78px;
+    border: none;
+    border-radius: 10px;
 
-    display:flex;
+    background: #282d32;
+    color: white;
 
-    background:#15181b;
-
-    border-top:1px solid #292e33;
-
-    z-index:30;
+    font-size: 15px;
+    font-weight: 900;
 }
 
-.nav-button{
-    flex:1;
+.promo-message {
+    min-height: 20px;
 
-    border:0;
-    background:transparent;
+    margin-top: 9px;
 
-    color:#6f767d;
+    text-align: center;
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    gap:5px;
-
-    font-size:13px;
-    font-weight:800;
+    font-size: 14px;
+    color: #54df87;
 }
 
-.nav-icon{
-    font-size:22px;
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 82px;
+
+    display: flex;
+
+    background: #171a1d;
+    border-top: 1px solid #292e33;
+
+    z-index: 30;
 }
 
-.nav-button.active{
-    color:#fff;
+.nav-button {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    border: none;
+    background: transparent;
+
+    color: #737a81;
+
+    font-size: 13px;
+    font-weight: 800;
 }
 
-/* =====================================================
+.nav-icon {
+    font-size: 23px;
+}
+
+.nav-button.active {
+    color: #fff;
+}
+
+.nav-button.active .nav-icon {
+    transform: translateY(-1px);
+}
+
+/* =========================
    GAME
-===================================================== */
+========================= */
 
-#gameScreen{
-    position:absolute;
-    inset:0;
+#gameScreen {
+    position: fixed;
+    inset: 0;
 
-    background:#111315;
+    background: #111315;
 
-    z-index:100;
+    z-index: 100;
 }
 
-#gameCanvas{
-    position:absolute;
-    inset:0;
+#gameCanvas {
+    position: fixed;
+    inset: 0;
 
-    width:100%;
-    height:100%;
-
-    display:block;
+    width: 100%;
+    height: 100%;
 }
 
-/* =====================================================
-   GAME TOP
-===================================================== */
+.game-top {
+    position: fixed;
 
-.game-ui{
-    position:absolute;
+    top: 16px;
+    left: 50%;
 
-    top:17px;
-    left:50%;
+    transform: translateX(-50%);
 
-    transform:translateX(-50%);
+    display: flex;
+    gap: 30px;
 
-    display:flex;
-    gap:35px;
-
-    z-index:5;
-
-    text-align:center;
+    z-index: 110;
 }
 
-.game-stat{
-    min-width:75px;
+.game-stat {
+    min-width: 75px;
+    text-align: center;
 }
 
-.game-label{
-    color:#737a81;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:1px;
+.game-stat-label {
+    color: #737a81;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
 }
 
-.game-value{
-    margin-top:4px;
+.game-stat-value {
+    margin-top: 4px;
 
-    color:#fff;
+    color: #fff;
 
-    font-size:22px;
-    font-weight:900;
+    font-size: 20px;
+    font-weight: 900;
 }
 
-#gameMultiplier{
-    color:#42df78;
+#gameMultiplier {
+    color: #42df78;
 }
 
-#gameBalance{
-    color:#ffd84d;
+#gameBalance {
+    color: #ffd84d;
 }
 
-/* =====================================================
+/* =========================
    GAME ZONES
-===================================================== */
+========================= */
 
-.game-zones{
-    position:absolute;
+.bottom-zones {
+    position: fixed;
+    left: 0;
+    bottom: 0;
 
-    left:0;
-    bottom:0;
+    width: 100%;
+    height: 90px;
 
-    width:100%;
-    height:90px;
+    display: flex;
 
-    display:flex;
+    z-index: 105;
 
-    z-index:4;
+    pointer-events: none;
 }
 
-.win-zone,
-.lose-zone{
-    position:relative;
+.green-zone,
+.red-zone {
+    height: 100%;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    color:#fff;
+    color: #fff;
 
-    font-size:20px;
-    font-weight:900;
+    font-size: 20px;
+    font-weight: 900;
 
-    transition:width .2s;
+    overflow: hidden;
 }
 
-.win-zone{
+.green-zone {
     background:
         linear-gradient(
             to top,
             #2bdd72,
-            rgba(43,221,114,0)
+            #26c968 35%,
+            rgba(39,201,104,.2)
         );
 }
 
-.lose-zone{
+.red-zone {
     background:
         linear-gradient(
             to top,
             #e84550,
-            rgba(232,69,80,0)
+            #d93c47 35%,
+            rgba(217,60,71,.2)
         );
 }
 
-/* =====================================================
+/* =========================
    GAME MENU
-===================================================== */
+========================= */
 
-.game-menu{
-    position:absolute;
+.game-menu {
+    position: fixed;
 
-    top:50%;
-    left:50%;
+    left: 50%;
+    top: 50%;
 
-    transform:translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 
-    width:min(350px,calc(100vw - 36px));
+    width: calc(100% - 40px);
+    max-width: 350px;
 
-    padding:25px;
+    padding: 25px;
 
-    border:1px solid #343a40;
-    border-radius:18px;
+    background: rgba(25,28,32,.98);
 
-    background:rgba(20,23,26,.98);
+    border: 1px solid #343a40;
+    border-radius: 18px;
 
-    z-index:10;
-
-    box-shadow:0 20px 70px rgba(0,0,0,.5);
+    z-index: 120;
 }
 
-.game-menu-title{
-    text-align:center;
+.game-menu-title {
+    text-align: center;
 
-    font-size:29px;
-    font-weight:900;
+    font-size: 28px;
+    font-weight: 900;
 
-    margin-bottom:20px;
+    margin-bottom: 18px;
 }
 
-.game-balance{
-    padding:14px;
+.game-menu-balance {
+    text-align: center;
 
-    border-radius:11px;
+    color: #ffd84d;
 
-    background:#171a1e;
+    font-size: 23px;
+    font-weight: 900;
 
-    text-align:center;
-
-    margin-bottom:17px;
+    margin-bottom: 18px;
 }
 
-.game-balance-label{
-    color:#777e85;
-    font-size:12px;
+.bet-input {
+    width: 100%;
+
+    padding: 14px;
+
+    background: #111315;
+
+    color: white;
+
+    border: 1px solid #3a4148;
+    border-radius: 10px;
+
+    outline: none;
+
+    text-align: center;
+
+    font-size: 17px;
+    font-weight: 800;
 }
 
-.game-balance-value{
-    color:#ffd84d;
+.bet-error {
+    min-height: 18px;
 
-    font-size:25px;
-    font-weight:900;
+    color: #ef4752;
 
-    margin-top:4px;
+    text-align: center;
+
+    font-size: 12px;
+
+    margin-top: 7px;
 }
 
-.field-label{
-    color:#8b9299;
+.difficulty {
+    display: flex;
+    gap: 6px;
 
-    font-size:13px;
-    font-weight:700;
-
-    margin-bottom:7px;
-    display:block;
+    margin-top: 12px;
 }
 
-.bet-error{
-    min-height:20px;
+.difficulty button {
+    flex: 1;
 
-    margin-top:6px;
+    border: none;
+    border-radius: 9px;
 
-    color:#ef4752;
+    padding: 10px 5px;
 
-    font-size:13px;
+    background: #282d32;
+    color: #cfd3d7;
+
+    font-size: 13px;
+    font-weight: 800;
 }
 
-.difficulty{
-    display:flex;
-    gap:6px;
-    margin-top:7px;
-    margin-bottom:16px;
+.difficulty button.active {
+    background: #1678e8;
+    color: #fff;
 }
 
-.difficulty button{
-    flex:1;
+.start-game {
+    width: 100%;
 
-    border:0;
-    border-radius:9px;
+    margin-top: 15px;
 
-    padding:10px 5px;
+    padding: 14px;
 
-    background:#282d32;
+    border: none;
+    border-radius: 10px;
 
-    color:#cfd3d7;
+    background: #1678e8;
+    color: #fff;
 
-    font-size:13px;
-    font-weight:800;
+    font-size: 15px;
+    font-weight: 900;
 }
 
-.difficulty button.active{
-    background:#1678e8;
-    color:#fff;
+.exit-game {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+    color: #858b91;
+
+    font-size: 14px;
+    font-weight: 800;
 }
 
-/* =====================================================
+/* =========================
    RESULT
-===================================================== */
+========================= */
 
-.result{
-    position:absolute;
+.result {
+    position: fixed;
 
-    top:50%;
-    left:50%;
+    left: 50%;
+    top: 50%;
 
-    transform:translate(-50%,-50%) scale(.9);
+    transform: translate(-50%, -50%);
 
-    width:min(320px,calc(100vw - 36px));
+    width: calc(100% - 40px);
+    max-width: 330px;
 
-    padding:28px;
+    padding: 28px;
 
-    background:#171a1e;
+    background: #191c20;
 
-    border:1px solid #343a40;
-    border-radius:18px;
+    border: 1px solid #343a40;
+    border-radius: 18px;
 
-    text-align:center;
+    text-align: center;
 
-    opacity:0;
-    pointer-events:none;
-
-    transition:.2s;
-
-    z-index:20;
+    z-index: 130;
 }
 
-.result.show{
-    opacity:1;
-    pointer-events:auto;
-
-    transform:translate(-50%,-50%) scale(1);
+.result-title {
+    font-size: 44px;
+    font-weight: 900;
 }
 
-.result-title{
-    font-size:43px;
-    font-weight:900;
+.result-title.win {
+    color: #42df78;
 }
 
-.result-title.win{
-    color:#3ee57b;
+.result-title.lose {
+    color: #ef4752;
 }
 
-.result-title.lose{
-    color:#ef4752;
+.result-info {
+    color: #858b91;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    margin-top: 8px;
 }
 
-.result-info{
-    margin-top:10px;
+.result-money {
+    margin-top: 12px;
 
-    color:#858c93;
-
-    font-size:15px;
-    line-height:1.7;
+    font-size: 23px;
+    font-weight: 900;
 }
 
-.result-money{
-    margin-top:12px;
-
-    font-size:23px;
-    font-weight:900;
+.result-money.win {
+    color: #42df78;
 }
 
-.result-money.win{
-    color:#3ee57b;
+.result-money.lose {
+    color: #ef4752;
 }
 
-.result-money.lose{
-    color:#ef4752;
+.result-close {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #1678e8;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 900;
 }
 
-/* =====================================================
-   BACK GAME
-===================================================== */
-
-.game-close{
-    position:absolute;
-
-    top:16px;
-    left:16px;
-
-    z-index:15;
-
-    border:1px solid #343a40;
-
-    background:#181b1f;
-
-    color:#fff;
-
-    border-radius:10px;
-
-    padding:9px 13px;
-
-    font-size:14px;
-    font-weight:800;
-}
-
-/* =====================================================
+/* =========================
    MOBILE
-===================================================== */
+========================= */
 
-@media(max-width:600px){
+@media (max-width: 600px) {
 
-    .header{
-        height:70px;
-        padding:0 16px;
+    .header {
+        padding: 0 17px;
     }
 
-    .content{
-        top:70px;
-        bottom:76px;
-        padding:22px 15px 30px;
+    .logo {
+        font-size: 20px;
     }
 
-    .page-title{
-        font-size:28px;
+    .header-balance {
+        font-size: 17px;
     }
 
-    .page-subtitle{
-        font-size:15px;
+    .content {
+        padding: 22px 15px 25px;
     }
 
-    .game-ui{
-        gap:18px;
+    .page-title {
+        font-size: 28px;
     }
 
-    .game-value{
-        font-size:19px;
+    .page-subtitle {
+        font-size: 15px;
     }
 
-    .game-label{
-        font-size:9px;
+    .game-top {
+        gap: 17px;
     }
 
-    .game-zones{
-        height:78px;
+    .game-stat {
+        min-width: 65px;
     }
 
-    .win-zone,
-    .lose-zone{
-        font-size:17px;
+    .game-stat-value {
+        font-size: 18px;
     }
 
-    .game-close{
-        top:12px;
-        left:12px;
+    .bottom-zones {
+        height: 76px;
     }
 }
 </style>
@@ -869,53 +807,31 @@ button{
 
 <div id="app">
 
-    <!-- =================================================
-         HEADER
-    ================================================== -->
-
+    <!-- HEADER -->
     <header class="header">
-
-        <div class="logo">
-            🐻‍❄️DROP
-        </div>
+        <div class="logo">🐻‍❄️ DROP</div>
 
         <div class="header-balance">
-
-            <div class="header-balance-label">
-                Баланс
-            </div>
-
-            <div
-                class="header-balance-value"
-                id="headerBalance">
-                1000.00
-            </div>
-
+            💰 <span id="headerBalance">1000.00</span>
         </div>
-
     </header>
 
 
-    <!-- =================================================
-         CONTENT
-    ================================================== -->
-
+    <!-- CONTENT -->
     <main class="content">
 
-        <!-- ================= MENU ================= -->
-
+        <!-- MENU -->
         <section
-            class="page"
-            id="menuPage">
+            id="menuPage"
+            class="page">
 
-            <h1 class="page-title">
+            <div class="page-title">
                 Меню
-            </h1>
+            </div>
 
-            <p class="page-subtitle">
-                Выбирай игру и используй свой баланс.
-            </p>
-
+            <div class="page-subtitle">
+                Выберите игру и испытайте удачу.
+            </div>
 
             <div class="card game-card">
 
@@ -923,18 +839,18 @@ button{
                     ⚪
                 </div>
 
-                <div class="game-title">
-                    Escape
+                <div class="card-title">
+                    Шарик
                 </div>
 
-                <div class="game-description">
-                    Управляй ставкой, следи за отскоками
-                    шарика и забирай выигрыш,
-                    когда он попадёт в зелёную зону.
+                <div class="card-text">
+                    Управляйте ставкой и наблюдайте,
+                    как шарик проходит через отверстие.
+                    Чем больше отскоков — тем выше множитель.
                 </div>
 
                 <button
-                    class="primary-button"
+                    class="game-button"
                     id="openGameButton">
 
                     ИГРАТЬ
@@ -946,33 +862,31 @@ button{
         </section>
 
 
-        <!-- ================= INVENTORY ================= -->
-
+        <!-- INVENTORY -->
         <section
-            class="page hidden"
-            id="inventoryPage">
+            id="inventoryPage"
+            class="page hidden">
 
-            <h1 class="page-title">
+            <div class="page-title">
                 Инвентарь
-            </h1>
+            </div>
 
-            <p class="page-subtitle">
-                Здесь будут храниться полученные предметы.
-            </p>
-
+            <div class="page-subtitle">
+                Здесь будут находиться полученные предметы.
+            </div>
 
             <button
-                class="danger-button sell-all"
-                id="sellAllButton">
+                class="sell-all"
+                id="sellAllButton"
+                disabled>
 
-                ПРОДАТЬ ВСЁ
+                ПРОДАТЬ ВСЕ
 
             </button>
 
-
             <div class="card">
 
-                <div class="inventory-empty">
+                <div class="empty-inventory">
 
                     <div class="empty-icon">
                         📦
@@ -983,8 +897,7 @@ button{
                     </div>
 
                     <div class="empty-text">
-                        Здесь появятся предметы,
-                        которые ты получишь в играх.
+                        Полученные предметы появятся здесь.
                     </div>
 
                 </div>
@@ -994,40 +907,34 @@ button{
         </section>
 
 
-        <!-- ================= PROFILE ================= -->
-
+        <!-- PROFILE -->
         <section
-            class="page hidden"
-            id="profilePage">
+            id="profilePage"
+            class="page hidden">
 
-            <h1 class="page-title">
+            <div class="page-title">
                 Профиль
-            </h1>
+            </div>
 
-            <p class="page-subtitle">
-                Твои данные, награды и реферальная система.
-            </p>
+            <div class="page-subtitle">
+                Управляйте аккаунтом, наградами и промокодами.
+            </div>
 
 
+            <!-- USER -->
             <div class="card">
 
-                <div class="profile-header">
+                <div class="profile-row">
 
-                    <div class="avatar">
-                        🐻‍❄️
+                    <div class="profile-label">
+                        Имя
                     </div>
 
-                    <div>
+                    <div
+                        class="profile-value"
+                        id="profileName">
 
-                        <div class="profile-name">
-                            Игрок
-                        </div>
-
-                        <div
-                            class="profile-id"
-                            id="playerId">
-                            ID: —
-                        </div>
+                        Игрок
 
                     </div>
 
@@ -1036,29 +943,33 @@ button{
 
                 <div class="profile-row">
 
-                    <div class="profile-row-title">
+                    <div class="profile-label">
+                        ID игрока
+                    </div>
+
+                    <div
+                        class="profile-value"
+                        id="profileId">
+
+                        100001
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <div class="profile-label">
                         Баланс
                     </div>
 
                     <div
-                        class="profile-row-value"
+                        class="profile-value"
                         id="profileBalance">
+
                         1000.00
-                    </div>
 
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-row-title">
-                        Приглашено
-                    </div>
-
-                    <div
-                        class="profile-row-value"
-                        id="referralsCount">
-                        0
                     </div>
 
                 </div>
@@ -1067,48 +978,56 @@ button{
 
 
             <!-- REFERRAL -->
-
             <div class="card">
 
                 <div class="card-title">
-                    Пригласить друга
+                    Реферальная система
                 </div>
 
                 <div class="card-text">
-                    За каждого приглашённого игрока
-                    ты получишь <b>50</b> валюты.
+                    Приглашайте друзей и получайте
+                    по <b>50</b> валюты за каждого приглашённого.
                 </div>
 
-                <div class="referral-box">
+                <div
+                    class="profile-row"
+                    style="margin-top:10px;">
+
+                    <div class="profile-label">
+                        Приглашено
+                    </div>
 
                     <div
-                        class="referral-id"
-                        id="referralLink">
-                        —
-                    </div>
+                        class="profile-value"
+                        id="refCount">
 
-                    <div class="referral-reward">
-                        Реферальная ссылка.
-                        Пока система работает локально
-                        без Telegram.
+                        0
+
                     </div>
 
                 </div>
 
-                <button
-                    class="secondary-button"
-                    id="copyReferralButton"
-                    style="margin-top:12px">
+                <div
+                    class="profile-row">
 
-                    КОПИРОВАТЬ ССЫЛКУ
+                    <div class="profile-label">
+                        Реферальная ссылка
+                    </div>
 
-                </button>
+                    <div
+                        class="profile-value ref-value"
+                        id="refLink">
+
+                        drop.example/100001
+
+                    </div>
+
+                </div>
 
             </div>
 
 
             <!-- DAILY -->
-
             <div class="card">
 
                 <div class="card-title">
@@ -1116,31 +1035,29 @@ button{
                 </div>
 
                 <div class="card-text">
-                    Забирай награду каждые 24 часа.
-                </div>
-
-                <div class="reward-value">
-                    +50
+                    Забирайте <b>50</b> валюты каждые 24 часа.
                 </div>
 
                 <button
-                    class="primary-button"
+                    class="daily-button"
                     id="dailyButton">
 
-                    ПОЛУЧИТЬ НАГРАДУ
+                    ЗАБРАТЬ 50
 
                 </button>
 
                 <div
-                    class="timer"
+                    class="timer hidden"
                     id="dailyTimer">
+
+                    24:00:00
+
                 </div>
 
             </div>
 
 
-            <!-- PROMOCODE -->
-
+            <!-- PROMO -->
             <div class="card">
 
                 <div class="card-title">
@@ -1148,24 +1065,20 @@ button{
                 </div>
 
                 <div class="card-text">
-                    Введи действующий промокод
-                    и получи бонус.
+                    Введите промокод, чтобы получить награду.
                 </div>
 
-                <div style="margin-top:15px">
-
-                    <input
-                        class="input"
-                        id="promoInput"
-                        placeholder="Введите промокод"
-                        autocomplete="off">
-
-                </div>
+                <input
+                    id="promoInput"
+                    class="promo-input"
+                    type="text"
+                    placeholder="Введите промокод"
+                    autocomplete="off"
+                >
 
                 <button
-                    class="primary-button"
-                    id="promoButton"
-                    style="margin-top:10px">
+                    class="promo-button"
+                    id="promoButton">
 
                     АКТИВИРОВАТЬ
 
@@ -1174,13 +1087,13 @@ button{
                 <div
                     class="promo-message"
                     id="promoMessage">
+
                 </div>
 
             </div>
 
 
             <!-- EXTRA -->
-
             <div class="card">
 
                 <div class="card-title">
@@ -1189,42 +1102,48 @@ button{
 
                 <div class="profile-row">
 
-                    <div class="profile-row-title">
+                    <div class="profile-label">
                         Игр сыграно
                     </div>
 
                     <div
-                        class="profile-row-value"
+                        class="profile-value"
                         id="gamesPlayed">
+
                         0
+
                     </div>
 
                 </div>
 
                 <div class="profile-row">
 
-                    <div class="profile-row-title">
+                    <div class="profile-label">
                         Побед
                     </div>
 
                     <div
-                        class="profile-row-value"
+                        class="profile-value"
                         id="wins">
+
                         0
+
                     </div>
 
                 </div>
 
                 <div class="profile-row">
 
-                    <div class="profile-row-title">
-                        Проигрышей
+                    <div class="profile-label">
+                        Поражений
                     </div>
 
                     <div
-                        class="profile-row-value"
+                        class="profile-value"
                         id="losses">
+
                         0
+
                     </div>
 
                 </div>
@@ -1236,87 +1155,63 @@ button{
     </main>
 
 
-    <!-- =================================================
-         NAVIGATION
-    ================================================== -->
-
+    <!-- NAVIGATION -->
     <nav class="bottom-nav">
 
         <button
             class="nav-button"
-            data-page="inventory">
+            data-page="inventoryPage">
 
-            <span class="nav-icon">
-                📦
-            </span>
-
-            Инвентарь
+            <span class="nav-icon">🎒</span>
+            <span>Инвентарь</span>
 
         </button>
 
 
         <button
             class="nav-button active"
-            data-page="menu">
+            data-page="menuPage">
 
-            <span class="nav-icon">
-                🏠
-            </span>
-
-            Меню
+            <span class="nav-icon">⌂</span>
+            <span>Меню</span>
 
         </button>
 
 
         <button
             class="nav-button"
-            data-page="profile">
+            data-page="profilePage">
 
-            <span class="nav-icon">
-                👤
-            </span>
-
-            Профиль
+            <span class="nav-icon">👤</span>
+            <span>Профиль</span>
 
         </button>
 
     </nav>
 
 
-    <!-- =================================================
-         GAME
-    ================================================== -->
-
-    <section
+    <!-- GAME -->
+    <div
         id="gameScreen"
         class="hidden">
 
         <canvas id="gameCanvas"></canvas>
 
 
-        <button
-            class="game-close"
-            id="gameCloseButton">
-
-            ← Назад
-
-        </button>
-
-
-        <!-- GAME UI -->
-
-        <div class="game-ui">
+        <div class="game-top">
 
             <div class="game-stat">
 
-                <div class="game-label">
+                <div class="game-stat-label">
                     Баланс
                 </div>
 
                 <div
-                    class="game-value"
+                    class="game-stat-value"
                     id="gameBalance">
+
                     1000.00
+
                 </div>
 
             </div>
@@ -1324,14 +1219,16 @@ button{
 
             <div class="game-stat">
 
-                <div class="game-label">
+                <div class="game-stat-label">
                     Отскоки
                 </div>
 
                 <div
-                    class="game-value"
+                    class="game-stat-value"
                     id="gameBounces">
+
                     0
+
                 </div>
 
             </div>
@@ -1339,14 +1236,16 @@ button{
 
             <div class="game-stat">
 
-                <div class="game-label">
+                <div class="game-stat-label">
                     Множитель
                 </div>
 
                 <div
-                    class="game-value"
+                    class="game-stat-value"
                     id="gameMultiplier">
+
                     1.00x
+
                 </div>
 
             </div>
@@ -1354,102 +1253,97 @@ button{
         </div>
 
 
-        <!-- ZONES -->
-
-        <div class="game-zones">
+        <div class="bottom-zones">
 
             <div
-                class="win-zone"
-                id="winZone">
+                id="greenZone"
+                class="green-zone">
+
                 WIN
+
             </div>
 
             <div
-                class="lose-zone"
-                id="loseZone">
+                id="redZone"
+                class="red-zone">
+
                 LOSE
+
             </div>
 
         </div>
 
 
-        <!-- START MENU -->
-
+        <!-- GAME MENU -->
         <div
-            class="game-menu"
-            id="gameMenu">
+            id="gameMenu"
+            class="game-menu">
 
             <div class="game-menu-title">
                 ESCAPE
             </div>
 
+            <div
+                class="game-menu-balance"
+                id="gameMenuBalance">
 
-            <div class="game-balance">
-
-                <div class="game-balance-label">
-                    Ваш баланс
-                </div>
-
-                <div
-                    class="game-balance-value"
-                    id="gameMenuBalance">
-                    1000.00
-                </div>
+                1000.00
 
             </div>
 
-
-            <label class="field-label">
-                Ставка
-            </label>
-
             <input
-                class="input"
-                id="betInput"
+                id="gameBet"
+                class="bet-input"
                 type="number"
                 min="0.01"
                 step="0.01"
-                placeholder="Введите сумму">
-
+                placeholder="Введите ставку"
+            >
 
             <div
-                class="bet-error"
-                id="betError">
+                id="gameBetError"
+                class="bet-error">
             </div>
-
-
-            <label class="field-label">
-                Сложность
-            </label>
 
             <div class="difficulty">
 
                 <button
-                    class="difficulty-button active"
-                    data-mode="easy">
+                    data-difficulty="easy"
+                    class="active">
+
                     Легко
+
                 </button>
 
                 <button
-                    class="difficulty-button"
-                    data-mode="medium">
+                    data-difficulty="medium">
+
                     Средне
+
                 </button>
 
                 <button
-                    class="difficulty-button"
-                    data-mode="hard">
+                    data-difficulty="hard">
+
                     Сложно
+
                 </button>
 
             </div>
 
-
             <button
-                class="primary-button"
-                id="startGameButton">
+                class="start-game"
+                id="startGame">
 
                 ИГРАТЬ
+
+            </button>
+
+            <button
+                class="exit-game"
+                id="exitGame">
+
+                НАЗАД
 
             </button>
 
@@ -1457,30 +1351,31 @@ button{
 
 
         <!-- RESULT -->
-
         <div
-            class="result"
-            id="result">
+            id="gameResult"
+            class="result hidden">
 
             <div
-                class="result-title"
-                id="resultTitle">
+                id="resultTitle"
+                class="result-title win">
+
                 WIN
+
             </div>
 
             <div
-                class="result-info"
-                id="resultInfo">
+                id="resultInfo"
+                class="result-info">
             </div>
 
             <div
-                class="result-money"
-                id="resultMoney">
+                id="resultMoney"
+                class="result-money win">
             </div>
 
             <button
-                class="primary-button"
-                id="resultCloseButton">
+                id="resultClose"
+                class="result-close">
 
                 ЗАКРЫТЬ
 
@@ -1488,713 +1383,164 @@ button{
 
         </div>
 
-    </section>
+    </div>
 
 </div>
 
 
 <script>
-"use strict";
-
 /* =====================================================
-   STORAGE
+   СОСТОЯНИЕ ИГРЫ
 ===================================================== */
 
-const STORAGE_KEY = "drop_game_data_v1";
+let balance = 1000;
 
+let currentBet = 0;
 
-function generatePlayerId(){
+let difficulty = "easy";
 
-    return "DROP-" +
-        Math.random()
-            .toString(36)
-            .substring(2,8)
-            .toUpperCase();
-}
+let gameRunning = false;
 
+let escaped = false;
 
-function loadData(){
+let gameFinished = false;
 
-    try{
+let bounceCount = 0;
 
-        const saved =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
+let multiplier = 1;
 
-        if(saved){
+let gamesPlayed = 0;
 
-            const data =
-                JSON.parse(saved);
+let wins = 0;
 
-            return {
+let losses = 0;
 
-                balance:
-                    Number.isFinite(data.balance)
-                        ? data.balance
-                        : 1000,
+let promoUsed = false;
 
-                playerId:
-                    data.playerId ||
-                    generatePlayerId(),
+let dailyAvailable = true;
 
-                referrals:
-                    Number.isFinite(data.referrals)
-                        ? data.referrals
-                        : 0,
-
-                dailyClaim:
-                    Number.isFinite(data.dailyClaim)
-                        ? data.dailyClaim
-                        : 0,
-
-                promoUsed:
-                    data.promoUsed === true,
-
-                games:
-                    Number.isFinite(data.games)
-                        ? data.games
-                        : 0,
-
-                wins:
-                    Number.isFinite(data.wins)
-                        ? data.wins
-                        : 0,
-
-                losses:
-                    Number.isFinite(data.losses)
-                        ? data.losses
-                        : 0
-
-            };
-        }
-
-    }catch(e){}
-
-    return {
-
-        balance:1000,
-
-        playerId:
-            generatePlayerId(),
-
-        referrals:0,
-
-        dailyClaim:0,
-
-        promoUsed:false,
-
-        games:0,
-
-        wins:0,
-
-        losses:0
-
-    };
-}
-
-
-const data =
-    loadData();
-
-
-function saveData(){
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(data)
-    );
-}
+let dailyNextTime = 0;
 
 
 /* =====================================================
-   BASIC UI
+   НАСТРОЙКИ СЛОЖНОСТИ
 ===================================================== */
 
-const headerBalance =
-    document.getElementById(
-        "headerBalance"
-    );
+const difficulties = {
 
-const profileBalance =
-    document.getElementById(
-        "profileBalance"
-    );
+    easy: {
+        green: 70,
+        red: 30,
+        hole: 50,
+        step: 0.05
+    },
 
+    medium: {
+        green: 50,
+        red: 50,
+        hole: 50,
+        step: 0.15
+    },
 
-function updateAllBalances(){
+    hard: {
+        green: 25,
+        red: 75,
 
-    const value =
-        data.balance.toFixed(2);
+        // На 22% больше обычного
+        hole: 50 * 1.22,
 
-
-    headerBalance.textContent =
-        value;
-
-
-    profileBalance.textContent =
-        value;
-
-
-    gameBalance.textContent =
-        value;
-
-
-    gameMenuBalance.textContent =
-        value;
-}
-
-
-function updateProfile(){
-
-    playerId.textContent =
-        "ID: " +
-        data.playerId;
-
-
-    referralsCount.textContent =
-        data.referrals;
-
-
-    gamesPlayed.textContent =
-        data.games;
-
-
-    wins.textContent =
-        data.wins;
-
-
-    losses.textContent =
-        data.losses;
-
-
-    referralLink.textContent =
-        location.origin +
-        location.pathname +
-        "?ref=" +
-        data.playerId;
-
-}
-
-
-/* =====================================================
-   PAGE NAVIGATION
-===================================================== */
-
-const pages = {
-
-    menu:
-        document.getElementById(
-            "menuPage"
-        ),
-
-    inventory:
-        document.getElementById(
-            "inventoryPage"
-        ),
-
-    profile:
-        document.getElementById(
-            "profilePage"
-        )
-
+        step: 0.25
+    }
 };
 
 
-function showPage(name){
-
-    Object.values(pages)
-        .forEach(page => {
-
-            page.classList.add(
-                "hidden"
-            );
-
-        });
-
-
-    pages[name]
-        .classList.remove(
-            "hidden"
-        );
-
-
-    document
-        .querySelectorAll(
-            ".nav-button"
-        )
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.page === name
-            );
-
-        });
-
-
-    updateAllBalances();
-
-    updateProfile();
-
-    updateDaily();
-}
-
-
-document
-    .querySelectorAll(
-        ".nav-button"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                showPage(
-                    button.dataset.page
-                );
-
-            }
-        );
-
-    });
-
-
 /* =====================================================
-   INVENTORY
+   DOM
 ===================================================== */
 
-document
-    .getElementById(
-        "sellAllButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
+const headerBalance =
+    document.getElementById("headerBalance");
 
-            alert(
-                "Инвентарь пуст."
-            );
+const profileBalance =
+    document.getElementById("profileBalance");
 
-        }
-    );
+const menuPage =
+    document.getElementById("menuPage");
 
+const inventoryPage =
+    document.getElementById("inventoryPage");
 
-/* =====================================================
-   REFERRAL
-===================================================== */
-
-document
-    .getElementById(
-        "copyReferralButton"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-            const link =
-                referralLink.textContent;
-
-
-            try{
-
-                await navigator.clipboard
-                    .writeText(link);
-
-                alert(
-                    "Реферальная ссылка скопирована."
-                );
-
-            }catch(e){
-
-                alert(
-                    link
-                );
-
-            }
-
-        }
-    );
-
-
-/* =====================================================
-   DAILY REWARD
-===================================================== */
-
-const dailyButton =
-    document.getElementById(
-        "dailyButton"
-    );
-
-const dailyTimer =
-    document.getElementById(
-        "dailyTimer"
-    );
-
-
-const DAY =
-    24 * 60 * 60 * 1000;
-
-
-function updateDaily(){
-
-    const now =
-        Date.now();
-
-
-    const remaining =
-        Math.max(
-            0,
-            DAY -
-            (now - data.dailyClaim)
-        );
-
-
-    if(
-        data.dailyClaim === 0 ||
-        remaining <= 0
-    ){
-
-        dailyButton.disabled =
-            false;
-
-        dailyButton.style.opacity =
-            "1";
-
-        dailyButton.textContent =
-            "ПОЛУЧИТЬ НАГРАДУ";
-
-        dailyTimer.textContent =
-            "Награда доступна.";
-
-        return;
-    }
-
-
-    dailyButton.disabled =
-        true;
-
-    dailyButton.style.opacity =
-        ".5";
-
-    dailyButton.textContent =
-        "УЖЕ ПОЛУЧЕНО";
-
-
-    const hours =
-        Math.floor(
-            remaining /
-            (60 * 60 * 1000)
-        );
-
-    const minutes =
-        Math.floor(
-            (remaining %
-            (60 * 60 * 1000)) /
-            (60 * 1000)
-        );
-
-    const seconds =
-        Math.floor(
-            (remaining %
-            (60 * 1000)) /
-            1000
-        );
-
-
-    dailyTimer.textContent =
-        "Следующая награда через " +
-        String(hours).padStart(2,"0") +
-        ":" +
-        String(minutes).padStart(2,"0") +
-        ":" +
-        String(seconds).padStart(2,"0");
-}
-
-
-dailyButton.addEventListener(
-    "click",
-    () => {
-
-        const now =
-            Date.now();
-
-
-        if(
-            data.dailyClaim !== 0 &&
-            now - data.dailyClaim < DAY
-        ){
-
-            return;
-        }
-
-
-        data.balance += 50;
-
-        data.balance =
-            Math.round(
-                data.balance * 100
-            ) / 100;
-
-
-        data.dailyClaim =
-            now;
-
-
-        saveData();
-
-        updateAllBalances();
-
-        updateDaily();
-
-        alert(
-            "Получено +50 валюты!"
-        );
-
-    }
-);
-
-
-/* =====================================================
-   PROMOCODE
-===================================================== */
-
-const promoInput =
-    document.getElementById(
-        "promoInput"
-    );
-
-const promoButton =
-    document.getElementById(
-        "promoButton"
-    );
-
-const promoMessage =
-    document.getElementById(
-        "promoMessage"
-    );
-
-
-promoButton.addEventListener(
-    "click",
-    () => {
-
-        const code =
-            promoInput.value
-                .trim()
-                .toLowerCase();
-
-
-        if(
-            data.promoUsed
-        ){
-
-            promoMessage.style.color =
-                "#ef4752";
-
-            promoMessage.textContent =
-                "Промокод уже был использован.";
-
-            return;
-        }
-
-
-        if(
-            code !== "200"
-        ){
-
-            promoMessage.style.color =
-                "#ef4752";
-
-            promoMessage.textContent =
-                "Промокод не найден.";
-
-            return;
-        }
-
-
-        data.balance +=
-            200000;
-
-
-        data.balance =
-            Math.round(
-                data.balance * 100
-            ) / 100;
-
-
-        data.promoUsed =
-            true;
-
-
-        saveData();
-
-        updateAllBalances();
-
-        promoInput.value = "";
-
-
-        promoMessage.style.color =
-            "#4be580";
-
-        promoMessage.textContent =
-            "Промокод активирован: +200000";
-
-    }
-);
-
-
-/* =====================================================
-   REFERRAL DEMO
-===================================================== */
-
-/*
-   Пока Telegram не подключён,
-   рефералы работают локально.
-
-   Можно открыть сайт с:
-
-   ?ref=DROP-XXXXXX
-
-   Если это другой ID,
-   ему засчитывается приглашение.
-*/
-
-function processReferral(){
-
-    const params =
-        new URLSearchParams(
-            location.search
-        );
-
-
-    const ref =
-        params.get("ref");
-
-
-    if(
-        !ref ||
-        ref === data.playerId
-    ){
-
-        return;
-    }
-
-
-    const referralKey =
-        "drop_ref_" +
-        ref +
-        "_" +
-        data.playerId;
-
-
-    if(
-        localStorage.getItem(
-            referralKey
-        )
-    ){
-
-        return;
-    }
-
-
-    localStorage.setItem(
-        referralKey,
-        "1"
-    );
-
-
-    /*
-       В полноценной версии
-       здесь будет запрос
-       к серверу/Telegram backend.
-
-       Сейчас это только
-       демонстрационная локальная
-       механика.
-    */
-}
-
-
-/* =====================================================
-   GAME REFERENCES
-===================================================== */
+const profilePage =
+    document.getElementById("profilePage");
 
 const gameScreen =
-    document.getElementById(
-        "gameScreen"
-    );
+    document.getElementById("gameScreen");
+
+const openGameButton =
+    document.getElementById("openGameButton");
 
 const gameMenu =
-    document.getElementById(
-        "gameMenu"
-    );
+    document.getElementById("gameMenu");
 
-const gameCloseButton =
-    document.getElementById(
-        "gameCloseButton"
-    );
+const gameMenuBalance =
+    document.getElementById("gameMenuBalance");
+
+const gameBet =
+    document.getElementById("gameBet");
+
+const gameBetError =
+    document.getElementById("gameBetError");
 
 const startGameButton =
-    document.getElementById(
-        "startGameButton"
-    );
+    document.getElementById("startGame");
 
-const betInput =
-    document.getElementById(
-        "betInput"
-    );
+const exitGameButton =
+    document.getElementById("exitGame");
 
-const betError =
-    document.getElementById(
-        "betError"
-    );
-
-const gameBounces =
-    document.getElementById(
-        "gameBounces"
-    );
-
-const gameMultiplier =
-    document.getElementById(
-        "gameMultiplier"
-    );
-
-const result =
-    document.getElementById(
-        "result"
-    );
+const gameResult =
+    document.getElementById("gameResult");
 
 const resultTitle =
-    document.getElementById(
-        "resultTitle"
-    );
+    document.getElementById("resultTitle");
 
 const resultInfo =
-    document.getElementById(
-        "resultInfo"
-    );
+    document.getElementById("resultInfo");
 
 const resultMoney =
-    document.getElementById(
-        "resultMoney"
-    );
+    document.getElementById("resultMoney");
 
-const resultCloseButton =
-    document.getElementById(
-        "resultCloseButton"
-    );
+const resultClose =
+    document.getElementById("resultClose");
 
-const winZone =
-    document.getElementById(
-        "winZone"
-    );
+const gameBalance =
+    document.getElementById("gameBalance");
 
-const loseZone =
-    document.getElementById(
-        "loseZone"
-    );
+const gameBounces =
+    document.getElementById("gameBounces");
+
+const gameMultiplier =
+    document.getElementById("gameMultiplier");
+
+const greenZone =
+    document.getElementById("greenZone");
+
+const redZone =
+    document.getElementById("redZone");
+
+const dailyButton =
+    document.getElementById("dailyButton");
+
+const dailyTimer =
+    document.getElementById("dailyTimer");
+
+const promoInput =
+    document.getElementById("promoInput");
+
+const promoButton =
+    document.getElementById("promoButton");
+
+const promoMessage =
+    document.getElementById("promoMessage");
 
 
 /* =====================================================
@@ -2202,19 +1548,75 @@ const loseZone =
 ===================================================== */
 
 const canvas =
-    document.getElementById(
-        "gameCanvas"
-    );
+    document.getElementById("gameCanvas");
 
 const ctx =
     canvas.getContext("2d");
-
 
 let width = 0;
 let height = 0;
 
 
-function resize(){
+/* =====================================================
+   КРУГ
+===================================================== */
+
+const circle = {
+
+    x: 0,
+    y: 0,
+
+    radius: 205,
+
+    wallWidth: 10
+};
+
+
+/* =====================================================
+   ШАР
+===================================================== */
+
+const ball = {
+
+    x: 0,
+    y: 0,
+
+    vx: 0,
+    vy: 0,
+
+    radius: 13
+};
+
+
+/* =====================================================
+   ФИЗИКА
+===================================================== */
+
+const GRAVITY = 0.20;
+
+const MAX_SPEED = 6.2;
+
+const MAX_HORIZONTAL_SPEED = 3.8;
+
+const SIDE_WALL = 7;
+
+const ZONE_HEIGHT = 90;
+
+const HOLE_SPEED = 0.018;
+
+
+/* =====================================================
+   ОТВЕРСТИЕ
+===================================================== */
+
+let holeAngle = 0;
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+function resizeCanvas() {
 
     width =
         window.innerWidth;
@@ -2222,13 +1624,11 @@ function resize(){
     height =
         window.innerHeight;
 
-
     const dpr =
         Math.min(
             window.devicePixelRatio || 1,
             2
         );
-
 
     canvas.width =
         width * dpr;
@@ -2236,13 +1636,11 @@ function resize(){
     canvas.height =
         height * dpr;
 
-
     canvas.style.width =
         width + "px";
 
     canvas.style.height =
         height + "px";
-
 
     ctx.setTransform(
         dpr,
@@ -2253,15 +1651,6 @@ function resize(){
         0
     );
 
-
-    circle.x =
-        width / 2;
-
-
-    circle.y =
-        height * .39;
-
-
     circle.radius =
         Math.min(
             205,
@@ -2269,11 +1658,13 @@ function resize(){
             height * .30
         );
 
+    circle.x =
+        width / 2;
 
-    if(
-        !gameRunning &&
-        !ballEscaped
-    ){
+    circle.y =
+        height * .39;
+
+    if (!gameRunning) {
 
         ball.x =
             circle.x;
@@ -2281,204 +1672,101 @@ function resize(){
         ball.y =
             circle.y -
             circle.radius * .35;
-
     }
 }
 
-
 window.addEventListener(
     "resize",
-    resize
+    resizeCanvas
 );
 
 
 /* =====================================================
-   GAME STATE
+   UI БАЛАНС
 ===================================================== */
 
-let difficulty =
-    "easy";
+function updateBalanceUI() {
 
-let currentBet =
-    0;
+    const value =
+        balance.toFixed(2);
 
-let gameRunning =
-    false;
+    headerBalance.textContent =
+        value;
 
-let ballEscaped =
-    false;
+    profileBalance.textContent =
+        value;
 
-let gameFinished =
-    false;
+    gameBalance.textContent =
+        value;
 
-let bounceCount =
-    0;
-
-let multiplier =
-    1;
-
-let holeAngle =
-    0;
+    gameMenuBalance.textContent =
+        value;
+}
 
 
 /* =====================================================
-   DIFFICULTY
+   ИГРОВАЯ UI
 ===================================================== */
 
-const difficulties = {
+function updateGameUI() {
 
-    easy:{
-        green:70,
-        hole:50,
-        step:.05
-    },
+    gameBounces.textContent =
+        bounceCount;
 
-    medium:{
-        green:50,
-        hole:50,
-        step:.15
-    },
+    gameMultiplier.textContent =
+        multiplier.toFixed(2) + "x";
 
-    hard:{
-        green:25,
-        hole:65,
-        step:.25
-    }
-
-};
+    updateBalanceUI();
+}
 
 
-function updateZones(){
+/* =====================================================
+   ЗОНЫ
+===================================================== */
+
+function updateZones() {
 
     const settings =
         difficulties[difficulty];
 
-
-    winZone.style.width =
+    greenZone.style.width =
         settings.green + "%";
 
-
-    loseZone.style.width =
-        (100 - settings.green) + "%";
+    redZone.style.width =
+        settings.red + "%";
 }
 
 
-document
-    .querySelectorAll(
-        ".difficulty-button"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                /*
-                   Нельзя менять
-                   сложность во время игры.
-                */
-
-                if(gameRunning)
-                    return;
-
-
-                difficulty =
-                    button.dataset.mode;
-
-
-                document
-                    .querySelectorAll(
-                        ".difficulty-button"
-                    )
-                    .forEach(other => {
-
-                        other.classList.remove(
-                            "active"
-                        );
-
-                    });
-
-
-                button.classList.add(
-                    "active"
-                );
-
-
-                updateZones();
-
-            }
-        );
-
-    });
-
-
 /* =====================================================
-   GAME PHYSICS
+   СЛУЧАЙНОЕ ЧИСЛО
 ===================================================== */
 
-const GRAVITY =
-    .20;
-
-const MAX_SPEED =
-    6.5;
-
-const MAX_X_SPEED =
-    3.6;
-
-const SIDE_WALL =
-    7;
-
-const ZONE_HEIGHT =
-    90;
-
-
-const circle = {
-
-    x:0,
-    y:0,
-    radius:205,
-    wall:10
-
-};
-
-
-const ball = {
-
-    x:0,
-    y:0,
-
-    vx:0,
-    vy:0,
-
-    radius:13
-
-};
-
-
-function random(min,max){
+function randomRange(min, max) {
 
     return (
         min +
         Math.random() *
-        (max-min)
+        (max - min)
     );
 }
 
 
-function normalizeAngle(angle){
+/* =====================================================
+   НОРМАЛИЗАЦИЯ УГЛА
+===================================================== */
+
+function normalizeAngle(angle) {
 
     angle %= Math.PI * 2;
 
-
-    if(angle < 0)
+    if (angle < 0)
         angle += Math.PI * 2;
-
 
     return angle;
 }
 
 
-function angleDifference(a,b){
+function angleDifference(a, b) {
 
     let d =
         Math.abs(
@@ -2486,23 +1774,23 @@ function angleDifference(a,b){
             normalizeAngle(b)
         );
 
-
-    if(d > Math.PI)
+    if (d > Math.PI)
         d =
             Math.PI * 2 - d;
-
 
     return d;
 }
 
 
-function isHole(angle){
+/* =====================================================
+   ПРОВЕРКА ДЫРКИ
+===================================================== */
+
+function isHole(angle) {
 
     const hole =
-        difficulties[difficulty]
-            .hole *
+        difficulties[difficulty].hole *
         Math.PI / 180;
-
 
     return (
         angleDifference(
@@ -2515,310 +1803,90 @@ function isHole(angle){
 
 
 /* =====================================================
-   SPEED LIMIT
+   ОГРАНИЧЕНИЕ СКОРОСТИ
 ===================================================== */
 
-function limitSpeed(){
+function limitSpeed() {
 
     ball.vx =
         Math.max(
-            -MAX_X_SPEED,
+            -MAX_HORIZONTAL_SPEED,
             Math.min(
-                MAX_X_SPEED,
+                MAX_HORIZONTAL_SPEED,
                 ball.vx
             )
         );
 
-
     const speed =
         Math.sqrt(
-            ball.vx * ball.vx +
-            ball.vy * ball.vy
+            ball.vx ** 2 +
+            ball.vy ** 2
         );
 
-
-    if(
-        speed > MAX_SPEED
-    ){
+    if (speed > MAX_SPEED) {
 
         const scale =
-            MAX_SPEED /
-            speed;
+            MAX_SPEED / speed;
 
-
-        ball.vx *=
-            scale;
-
-        ball.vy *=
-            scale;
-
+        ball.vx *= scale;
+        ball.vy *= scale;
     }
 }
 
 
 /* =====================================================
-   START DIRECTION
+   РАЗНООБРАЗНЫЙ СТАРТ
 ===================================================== */
 
-function chooseStartDirection(){
+function chooseStartVelocity() {
 
     const direction =
         Math.random() < .5
             ? -1
             : 1;
 
-
     ball.vx =
         direction *
-        random(
-            .8,
-            1.8
+        randomRange(
+            1.0,
+            2.3
         );
-
 
     ball.vy =
-        random(
+        randomRange(
             1.8,
-            2.5
+            3.0
         );
 }
 
 
 /* =====================================================
-   OPEN GAME
+   РАЗНЫЙ ОТСКОК
 ===================================================== */
 
-document
-    .getElementById(
-        "openGameButton"
-    )
-    .addEventListener(
-        "click",
-        openGame
-    );
-
-
-function openGame(){
-
-    gameScreen.classList.remove(
-        "hidden"
-    );
-
-
-    gameMenu.classList.remove(
-        "hidden"
-    );
-
-
-    result.classList.remove(
-        "show"
-    );
-
-
-    gameRunning =
-        false;
-
-    ballEscaped =
-        false;
-
-    gameFinished =
-        false;
-
-
-    updateGameUI();
-
-}
-
-
-/* =====================================================
-   CLOSE GAME
-===================================================== */
-
-gameCloseButton.addEventListener(
-    "click",
-    () => {
-
-        if(gameRunning)
-            return;
-
-
-        gameScreen.classList.add(
-            "hidden"
-        );
-
-        showPage(
-            "menu"
-        );
-
-    }
-);
-
-
-/* =====================================================
-   START GAME
-===================================================== */
-
-startGameButton.addEventListener(
-    "click",
-    startGame
-);
-
-
-function startGame(){
-
-    let bet =
-        Number(
-            betInput.value
-        );
-
-
-    if(
-        !Number.isFinite(bet) ||
-        bet <= 0
-    ){
-
-        betError.textContent =
-            "Введите ставку больше нуля.";
-
-        return;
-    }
-
-
-    bet =
-        Math.round(
-            bet * 100
-        ) / 100;
-
-
-    if(
-        bet > data.balance
-    ){
-
-        betError.textContent =
-            "Недостаточно средств.";
-
-        return;
-    }
-
-
-    /*
-       ВАЖНО:
-
-       Ставка НЕ сбрасывается
-       после окончания игры.
-
-       Значение остаётся
-       в betInput.
-    */
-
-    currentBet =
-        bet;
-
-
-    data.balance -=
-        currentBet;
-
-
-    data.balance =
-        Math.round(
-            data.balance * 100
-        ) / 100;
-
-
-    data.games++;
-
-
-    bounceCount =
-        0;
-
-    multiplier =
-        1;
-
-    gameRunning =
-        true;
-
-    ballEscaped =
-        false;
-
-    gameFinished =
-        false;
-
-
-    ball.x =
-        circle.x;
-
-
-    ball.y =
-        circle.y -
-        circle.radius * .35;
-
-
-    chooseStartDirection();
-
-
-    gameMenu.classList.add(
-        "hidden"
-    );
-
-
-    result.classList.remove(
-        "show"
-    );
-
-
-    betError.textContent =
-        "";
-
-
-    saveData();
-
-    updateAllBalances();
-
-    updateGameUI();
-
-}
-
-
-/* =====================================================
-   GAME UI
-===================================================== */
-
-function updateGameUI(){
-
-    gameBalance.textContent =
-        data.balance.toFixed(2);
-
-
-    gameMenuBalance.textContent =
-        data.balance.toFixed(2);
-
-
-    gameBounces.textContent =
-        bounceCount;
-
-
-    gameMultiplier.textContent =
-        multiplier.toFixed(2) +
-        "x";
-
-}
-
-
-/* =====================================================
-   BOUNCE
-===================================================== */
-
-function registerBounce(){
+/*
+    Это главная часть.
+
+    После КАЖДОГО столкновения:
+
+    1. Случайно меняется сила прыжка.
+    2. Случайно меняется горизонтальное
+       направление.
+    3. Создаётся небольшой случайный
+       угол.
+    4. Проверяется минимальная скорость.
+    5. Поэтому шарик не повторяет
+       одну и ту же точку.
+*/
+
+function registerBounce(nx, ny) {
 
     bounceCount++;
-
 
     multiplier =
         1 +
         bounceCount *
-        difficulties[difficulty]
-            .step;
-
+        difficulties[difficulty].step;
 
     multiplier =
         Math.round(
@@ -2826,26 +1894,277 @@ function registerBounce(){
         ) / 100;
 
 
-    updateGameUI();
+    /*
+        Сила прыжка.
+        Каждый раз немного разная.
+    */
 
+    const jumpPower =
+        randomRange(
+            4.2,
+            5.9
+        );
+
+
+    /*
+        Случайная горизонтальная
+        составляющая.
+
+        Она зависит от точки
+        столкновения.
+    */
+
+    const randomSide =
+        randomRange(
+            -2.8,
+            2.8
+        );
+
+
+    /*
+        Если удар пришёлся
+        по нижней части круга,
+        шар обычно прыгает вверх.
+    */
+
+    if (ny > .12) {
+
+        ball.vy =
+            -jumpPower;
+
+        ball.vx +=
+            randomSide;
+    }
+
+    /*
+        Верхняя часть.
+    */
+
+    else if (ny < -.12) {
+
+        ball.vy =
+            randomRange(
+                2.8,
+                4.7
+            );
+
+        ball.vx +=
+            randomSide;
+    }
+
+    /*
+        Бок.
+    */
+
+    else {
+
+        /*
+            Не задаём одну фиксированную
+            точку.
+
+            Каждый раз новая скорость.
+        */
+
+        ball.vy =
+            Math.random() < .5
+                ? -randomRange(3.6, 5.7)
+                : randomRange(3.4, 5.4);
+
+        ball.vx +=
+            randomSide;
+    }
+
+
+    /*
+        Дополнительное изменение
+        в зависимости от нормали.
+
+        Это заставляет шарик
+        прыгать в разные участки.
+    */
+
+    ball.vx +=
+        -nx *
+        randomRange(
+            .15,
+            .75
+        );
+
+
+    /*
+        Не даём скорости X стать
+        слишком маленькой.
+    */
+
+    if (
+        Math.abs(ball.vx) <
+        .65
+    ) {
+
+        ball.vx =
+            Math.random() < .5
+                ? -.65
+                : .65;
+    }
+
+
+    limitSpeed();
+
+    updateGameUI();
 }
 
 
-/*
-   Ключевой момент:
+/* =====================================================
+   СТАРТ ИГРЫ
+===================================================== */
 
-   каждый отскок получает
-   НОВУЮ случайную силу.
+function startRound() {
 
-   Поэтому прыжки никогда
-   не идут абсолютно одинаково.
-*/
+    let bet =
+        Number(gameBet.value);
 
-function bounceFromWall(nx,ny){
+    if (
+        !Number.isFinite(bet) ||
+        bet <= 0
+    ) {
+
+        gameBetError.textContent =
+            "Введите ставку больше 0.";
+
+        return;
+    }
+
+    bet =
+        Math.round(
+            bet * 100
+        ) / 100;
+
+    if (bet > balance) {
+
+        gameBetError.textContent =
+            "Недостаточно средств.";
+
+        return;
+    }
+
+
+    /*
+        Ставка сохраняется
+        в поле и после результата.
+    */
+
+    currentBet =
+        bet;
+
+
+    balance -=
+        currentBet;
+
+    balance =
+        Math.round(
+            balance * 100
+        ) / 100;
+
+
+    gameBetError.textContent =
+        "";
+
+    gameRunning = true;
+
+    escaped = false;
+
+    gameFinished = false;
+
+    bounceCount = 0;
+
+    multiplier = 1;
+
+
+    ball.x =
+        circle.x;
+
+    ball.y =
+        circle.y -
+        circle.radius * .35;
+
+
+    chooseStartVelocity();
+
+    gameMenu.classList.add(
+        "hidden"
+    );
+
+    gameResult.classList.add(
+        "hidden"
+    );
+
+    updateGameUI();
+}
+
+
+/* =====================================================
+   ВЫЛЕТ ИЗ ОТВЕРСТИЯ
+===================================================== */
+
+function escapeThroughHole(nx, ny) {
+
+    /*
+        Сохраняем текущую скорость.
+
+        ВАЖНО:
+        после вылета шарик НЕ меняет
+        направление принудительно.
+
+        Он продолжает лететь туда,
+        куда летел до выхода.
+    */
+
+    const oldVx =
+        ball.vx;
+
+    const oldVy =
+        ball.vy;
+
+
+    ball.x =
+        circle.x +
+        nx *
+        (
+            circle.radius +
+            ball.radius +
+            5
+        );
+
+    ball.y =
+        circle.y +
+        ny *
+        (
+            circle.radius +
+            ball.radius +
+            5
+        );
+
+
+    ball.vx =
+        oldVx;
+
+    ball.vy =
+        oldVy;
+
+
+    escaped = true;
+}
+
+
+/* =====================================================
+   СТОЛКНОВЕНИЕ СО СТЕНОЙ
+===================================================== */
+
+function bounceFromWall(nx, ny) {
 
     const safeRadius =
         circle.radius -
-        circle.wall / 2 -
+        circle.wallWidth / 2 -
         ball.radius -
         1.5;
 
@@ -2855,240 +2174,91 @@ function bounceFromWall(nx,ny){
         nx *
         safeRadius;
 
-
     ball.y =
         circle.y +
         ny *
         safeRadius;
 
 
-    const normalVelocity =
+    /*
+        Отражение скорости.
+    */
+
+    const dot =
         ball.vx * nx +
         ball.vy * ny;
 
-
-    if(
-        normalVelocity > 0
-    ){
+    if (dot > 0) {
 
         ball.vx -=
-            2 *
-            normalVelocity *
-            nx;
-
+            2 * dot * nx;
 
         ball.vy -=
-            2 *
-            normalVelocity *
-            ny;
-
+            2 * dot * ny;
     }
 
 
     /*
-       РАЗНЫЙ ПРЫЖОК
-       ПОСЛЕ КАЖДОГО УДАРА.
+        После отражения запускаем
+        нашу систему разнообразных
+        прыжков.
     */
 
-    const jump =
-        random(
-            4.6,
-            6.2
-        );
-
-
-    if(ny > .15){
-
-        /*
-           Нижняя стенка:
-           прыжок вверх.
-        */
-
-        ball.vy =
-            -jump;
-
-    }else if(ny < -.15){
-
-        /*
-           Верхняя стенка:
-           движение вниз.
-        */
-
-        ball.vy =
-            random(
-                2.7,
-                4.5
-            );
-
-    }else{
-
-        /*
-           Боковая стенка.
-        */
-
-        if(
-            ball.vy < 0
-        ){
-
-            ball.vy =
-                -random(
-                    3.8,
-                    5.7
-                );
-
-        }else{
-
-            ball.vy =
-                random(
-                    3.5,
-                    5.5
-                );
-
-        }
-
-    }
-
-
-    /*
-       Каждый отскок немного
-       меняет горизонтальную
-       скорость.
-
-       Это делает траекторию
-       непредсказуемой.
-    */
-
-    ball.vx +=
-        random(
-            -.75,
-            .75
-        );
-
-
-    if(
-        Math.abs(ball.vx) < .65
-    ){
-
-        ball.vx =
-            ball.vx < 0
-                ? -.65
-                : .65;
-
-    }
-
-
-    limitSpeed();
-
-
-    registerBounce();
-
+    registerBounce(
+        nx,
+        ny
+    );
 }
 
 
 /* =====================================================
-   ESCAPE THROUGH HOLE
+   ЗАВЕРШЕНИЕ
 ===================================================== */
 
-function escapeThroughHole(nx,ny){
+function finishGame(win) {
 
-    /*
-       ВАЖНО:
-
-       Здесь мы НЕ меняем vx/vy.
-
-       Шарик продолжает двигаться
-       ровно в том направлении,
-       в котором он летел
-       в момент вылета.
-
-       После выхода работает
-       обычная гравитация.
-    */
-
-    ball.x =
-        circle.x +
-        nx *
-        (
-            circle.radius +
-            ball.radius +
-            5
-        );
-
-
-    ball.y =
-        circle.y +
-        ny *
-        (
-            circle.radius +
-            ball.radius +
-            5
-        );
-
-
-    ballEscaped =
-        true;
-
-}
-
-
-/* =====================================================
-   FINISH
-===================================================== */
-
-function finishGame(win){
-
-    if(gameFinished)
+    if (gameFinished)
         return;
 
+    gameFinished = true;
 
-    gameFinished =
-        true;
+    gameRunning = false;
 
-    gameRunning =
-        false;
+    gamesPlayed++;
 
 
-    if(win){
+    if (win) {
+
+        wins++;
 
         const payout =
             currentBet *
             multiplier;
 
-
-        data.balance +=
+        balance +=
             payout;
 
-
-        data.balance =
+        balance =
             Math.round(
-                data.balance * 100
+                balance * 100
             ) / 100;
-
-
-        data.wins++;
-
 
         const profit =
             payout -
             currentBet;
 
-
         resultTitle.textContent =
             "WIN";
 
-
         resultTitle.className =
             "result-title win";
-
 
         resultMoney.textContent =
             "+" +
             profit.toFixed(2);
 
-
         resultMoney.className =
             "result-money win";
-
 
         resultInfo.innerHTML =
             "Ставка: " +
@@ -3100,27 +2270,22 @@ function finishGame(win){
             "Выплата: " +
             payout.toFixed(2);
 
-    }else{
+    } else {
 
-        data.losses++;
-
+        losses++;
 
         resultTitle.textContent =
             "LOSE";
 
-
         resultTitle.className =
             "result-title lose";
-
 
         resultMoney.textContent =
             "-" +
             currentBet.toFixed(2);
 
-
         resultMoney.className =
             "result-money lose";
-
 
         resultInfo.innerHTML =
             "Ставка: " +
@@ -3130,40 +2295,27 @@ function finishGame(win){
             multiplier.toFixed(2) +
             "x<br>" +
             "Ставка проиграна.";
-
     }
 
 
-    saveData();
-
-    updateAllBalances();
-
-    updateProfile();
-
     updateGameUI();
 
+    updateProfileStats();
 
-    result.classList.add(
-        "show"
+    gameResult.classList.remove(
+        "hidden"
     );
-
 }
 
 
 /* =====================================================
-   PHYSICS UPDATE
+   ФИЗИКА
 ===================================================== */
 
-function updatePhysics(){
-
-    /*
-       Отверстие вращается
-       независимо от игры.
-    */
+function updatePhysics() {
 
     holeAngle +=
-        .018;
-
+        HOLE_SPEED;
 
     holeAngle =
         normalizeAngle(
@@ -3171,142 +2323,123 @@ function updatePhysics(){
         );
 
 
-    if(!gameRunning)
+    if (!gameRunning)
         return;
 
 
     /*
-       ==============================================
-       ШАР УЖЕ ВЫЛЕТЕЛ
-       ==============================================
+        После выхода из круга
+        шар летит с той же скоростью
+        и в том же направлении.
     */
 
-    if(ballEscaped){
-
-        /*
-           Обычная гравитация.
-
-           vx НЕ изменяется искусственно.
-
-           Поэтому шар продолжает
-           лететь туда, куда летел
-           при выходе.
-        */
+    if (escaped) {
 
         ball.vy +=
             GRAVITY;
 
-
         ball.x +=
             ball.vx;
-
 
         ball.y +=
             ball.vy;
 
+        limitSpeed();
+
 
         /*
-           Только боковые границы
-           экрана отражают шар.
-
-           Это не меняет его
-           направление сразу после
-           выхода из круга.
+            Боковые стены.
         */
 
-        if(
+        if (
             ball.x -
             ball.radius <
             SIDE_WALL
-        ){
+        ) {
 
             ball.x =
                 SIDE_WALL +
                 ball.radius;
 
-
             ball.vx =
                 Math.abs(
                     ball.vx
                 );
-
         }
 
 
-        if(
+        if (
             ball.x +
             ball.radius >
             width -
             SIDE_WALL
-        ){
+        ) {
 
             ball.x =
                 width -
                 SIDE_WALL -
                 ball.radius;
 
-
             ball.vx =
                 -Math.abs(
                     ball.vx
                 );
-
         }
 
+
+        /*
+            Нижняя зона.
+        */
 
         const zoneTop =
             height -
             ZONE_HEIGHT;
 
-
-        if(
+        if (
             ball.y +
             ball.radius >=
             zoneTop
-        ){
+        ) {
 
-            const winWidth =
+            const greenWidth =
                 width *
-                difficulties[difficulty]
-                    .green /
+                difficulties[difficulty].green /
                 100;
 
 
-            if(
+            if (
                 ball.x <=
-                winWidth
-            ){
+                greenWidth
+            ) {
 
                 finishGame(true);
 
-            }else{
+            } else {
 
                 finishGame(false);
-
             }
-
 
             return;
         }
-
 
         return;
     }
 
 
     /*
-       ==============================================
-       ГРАВИТАЦИЯ ВНУТРИ КРУГА
-       ==============================================
+        Гравитация.
     */
 
     ball.vy +=
         GRAVITY;
 
 
+    /*
+        Движение.
+    */
+
     ball.x +=
         ball.vx;
-
 
     ball.y +=
         ball.vy;
@@ -3315,15 +2448,17 @@ function updatePhysics(){
     limitSpeed();
 
 
+    /*
+        Расстояние до центра.
+    */
+
     const dx =
         ball.x -
         circle.x;
 
-
     const dy =
         ball.y -
         circle.y;
-
 
     const distance =
         Math.sqrt(
@@ -3334,26 +2469,21 @@ function updatePhysics(){
 
     const collisionRadius =
         circle.radius -
-        circle.wall / 2 -
+        circle.wallWidth / 2 -
         ball.radius;
 
 
-    if(
+    if (
         distance >=
         collisionRadius
-    ){
+    ) {
 
-        if(
-            distance < .0001
-        ){
-
+        if (distance < .0001)
             return;
-        }
 
 
         const nx =
             dx / distance;
-
 
         const ny =
             dy / distance;
@@ -3367,48 +2497,43 @@ function updatePhysics(){
 
 
         /*
-           Если попал в отверстие
-           и движется наружу —
-           вылетаем.
+            Если это отверстие
+            и шар движется наружу —
+            выпускаем его.
         */
 
-        if(
+        if (
             isHole(angle)
-        ){
+        ) {
 
             const outwardVelocity =
                 ball.vx * nx +
                 ball.vy * ny;
 
 
-            if(
+            if (
                 outwardVelocity >= 0
-            ){
+            ) {
 
                 escapeThroughHole(
                     nx,
                     ny
                 );
 
-
                 return;
             }
-
         }
 
 
         /*
-           В остальных случаях
-           стена твёрдая.
+            Иначе стена твёрдая.
         */
 
         bounceFromWall(
             nx,
             ny
         );
-
     }
-
 }
 
 
@@ -3416,7 +2541,7 @@ function updatePhysics(){
    DRAW
 ===================================================== */
 
-function draw(){
+function draw() {
 
     ctx.clearRect(
         0,
@@ -3427,12 +2552,11 @@ function draw(){
 
 
     /*
-       Боковые стены.
+        Боковые стены.
     */
 
     ctx.fillStyle =
         "#252a2f";
-
 
     ctx.fillRect(
         0,
@@ -3441,10 +2565,8 @@ function draw(){
         height
     );
 
-
     ctx.fillRect(
-        width -
-        SIDE_WALL,
+        width - SIDE_WALL,
         0,
         SIDE_WALL,
         height
@@ -3452,23 +2574,19 @@ function draw(){
 
 
     /*
-       КРУГ.
+        Круг.
     */
 
     const radius =
         circle.radius;
 
-
     const holeRadians =
-        difficulties[difficulty]
-            .hole *
+        difficulties[difficulty].hole *
         Math.PI / 180;
-
 
     const holeStart =
         holeAngle -
         holeRadians / 2;
-
 
     const holeEnd =
         holeAngle +
@@ -3477,77 +2595,61 @@ function draw(){
 
     ctx.save();
 
-
     ctx.beginPath();
-
 
     ctx.arc(
         circle.x,
         circle.y,
         radius,
         holeEnd,
-        holeStart +
-        Math.PI * 2
+        holeStart + Math.PI * 2
     );
-
 
     ctx.strokeStyle =
         "#1478e8";
 
-
     ctx.lineWidth =
-        circle.wall;
-
+        circle.wallWidth;
 
     ctx.lineCap =
         "round";
 
-
     ctx.shadowBlur =
         20;
-
 
     ctx.shadowColor =
         "rgba(20,120,235,.8)";
 
-
     ctx.stroke();
-
 
     ctx.restore();
 
 
     /*
-       Края отверстия.
+        Края отверстия.
     */
 
     ctx.save();
 
-
     ctx.strokeStyle =
         "#1478e8";
 
-
     ctx.lineWidth =
         5;
-
 
     ctx.lineCap =
         "round";
 
 
-    function holeEdge(angle){
+    function holeEdge(angle) {
 
         const inner =
             radius - 6;
 
-
         const outer =
             radius + 3;
 
-
         ctx.beginPath();
-
 
         ctx.moveTo(
             circle.x +
@@ -3559,7 +2661,6 @@ function draw(){
             inner
         );
 
-
         ctx.lineTo(
             circle.x +
             Math.cos(angle) *
@@ -3570,29 +2671,23 @@ function draw(){
             outer
         );
 
-
         ctx.stroke();
-
     }
 
 
     holeEdge(holeStart);
-
     holeEdge(holeEnd);
-
 
     ctx.restore();
 
 
     /*
-       Шар.
+        Шар.
     */
 
     ctx.save();
 
-
     ctx.beginPath();
-
 
     ctx.arc(
         ball.x,
@@ -3602,31 +2697,25 @@ function draw(){
         Math.PI * 2
     );
 
-
     ctx.fillStyle =
         "#fff";
-
 
     ctx.shadowBlur =
         16;
 
-
     ctx.shadowColor =
-        "rgba(255,255,255,.9)";
-
+        "rgba(255,255,255,.95)";
 
     ctx.fill();
-
 
     ctx.restore();
 
 
     /*
-       Блик.
+        Блик.
     */
 
     ctx.beginPath();
-
 
     ctx.arc(
         ball.x - 4,
@@ -3636,78 +2725,18 @@ function draw(){
         Math.PI * 2
     );
 
-
     ctx.fillStyle =
-        "rgba(255,255,255,.9)";
-
+        "#fff";
 
     ctx.fill();
-
 }
-
-
-/* =====================================================
-   RESULT CLOSE
-===================================================== */
-
-resultCloseButton.addEventListener(
-    "click",
-    () => {
-
-        result.classList.remove(
-            "show"
-        );
-
-
-        gameMenu.classList.remove(
-            "hidden"
-        );
-
-
-        /*
-           Ставка НЕ очищается.
-
-           Поэтому игрок может
-           снова нажать ИГРАТЬ
-           на ту же сумму.
-        */
-
-        betError.textContent =
-            "";
-
-
-        ballEscaped =
-            false;
-
-        gameFinished =
-            false;
-
-
-        ball.x =
-            circle.x;
-
-
-        ball.y =
-            circle.y -
-            circle.radius * .35;
-
-
-        ball.vx = 0;
-
-        ball.vy = 0;
-
-
-        updateGameUI();
-
-    }
-);
 
 
 /* =====================================================
    GAME LOOP
 ===================================================== */
 
-function gameLoop(){
+function gameLoop() {
 
     updatePhysics();
 
@@ -3716,28 +2745,453 @@ function gameLoop(){
     requestAnimationFrame(
         gameLoop
     );
-
 }
 
 
 /* =====================================================
-   INIT
+   ОТКРЫТИЕ ИГРЫ
 ===================================================== */
 
-processReferral();
+openGameButton.addEventListener(
+    "click",
+    () => {
 
-resize();
+        gameScreen.classList.remove(
+            "hidden"
+        );
+
+        gameMenu.classList.remove(
+            "hidden"
+        );
+
+        gameResult.classList.add(
+            "hidden"
+        );
+
+        updateBalanceUI();
+        updateZones();
+    }
+);
+
+
+/* =====================================================
+   ВЫХОД ИЗ ИГРЫ
+===================================================== */
+
+exitGameButton.addEventListener(
+    "click",
+    () => {
+
+        if (gameRunning)
+            return;
+
+        gameScreen.classList.add(
+            "hidden"
+        );
+
+        gameMenu.classList.remove(
+            "hidden"
+        );
+
+        gameResult.classList.add(
+            "hidden"
+        );
+    }
+);
+
+
+/* =====================================================
+   СТАРТ РАУНДА
+===================================================== */
+
+startGameButton.addEventListener(
+    "click",
+    startRound
+);
+
+
+/* =====================================================
+   РЕЗУЛЬТАТ
+===================================================== */
+
+resultClose.addEventListener(
+    "click",
+    () => {
+
+        /*
+            Ставку НЕ сбрасываем.
+
+            Она остаётся в поле,
+            поэтому можно сразу снова
+            играть на ту же сумму.
+        */
+
+        gameResult.classList.add(
+            "hidden"
+        );
+
+        gameMenu.classList.remove(
+            "hidden"
+        );
+
+        updateBalanceUI();
+    }
+);
+
+
+/* =====================================================
+   СЛОЖНОСТЬ
+===================================================== */
+
+document
+    .querySelectorAll(
+        "[data-difficulty]"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    /*
+                        Во время раунда
+                        менять сложность нельзя.
+                    */
+
+                    if (gameRunning)
+                        return;
+
+
+                    difficulty =
+                        button.dataset.difficulty;
+
+
+                    document
+                        .querySelectorAll(
+                            "[data-difficulty]"
+                        )
+                        .forEach(
+                            item => {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+                            }
+                        );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    updateZones();
+                }
+            );
+        }
+    );
+
+
+/* =====================================================
+   НАВИГАЦИЯ
+===================================================== */
+
+document
+    .querySelectorAll(".nav-button")
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const page =
+                        button.dataset.page;
+
+
+                    document
+                        .querySelectorAll(".page")
+                        .forEach(
+                            p => {
+
+                                p.classList.add(
+                                    "hidden"
+                                );
+                            }
+                        );
+
+
+                    document
+                        .getElementById(page)
+                        .classList.remove(
+                            "hidden"
+                        );
+
+
+                    document
+                        .querySelectorAll(".nav-button")
+                        .forEach(
+                            b => {
+
+                                b.classList.remove(
+                                    "active"
+                                );
+                            }
+                        );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+                }
+            );
+        }
+    );
+
+
+/* =====================================================
+   ЕЖЕДНЕВНАЯ НАГРАДА
+===================================================== */
+
+dailyButton.addEventListener(
+    "click",
+    () => {
+
+        if (!dailyAvailable)
+            return;
+
+
+        balance += 50;
+
+        balance =
+            Math.round(
+                balance * 100
+            ) / 100;
+
+
+        dailyAvailable = false;
+
+        dailyNextTime =
+            Date.now() +
+            24 * 60 * 60 * 1000;
+
+
+        dailyButton.disabled =
+            true;
+
+        dailyButton.textContent =
+            "НАГРАДА ПОЛУЧЕНА";
+
+        dailyTimer.classList.remove(
+            "hidden"
+        );
+
+        updateBalanceUI();
+    }
+);
+
+
+/* =====================================================
+   ТАЙМЕР DAILY
+===================================================== */
+
+function updateDailyTimer() {
+
+    if (dailyAvailable)
+        return;
+
+
+    const remaining =
+        dailyNextTime -
+        Date.now();
+
+
+    if (remaining <= 0) {
+
+        dailyAvailable = true;
+
+        dailyButton.disabled =
+            false;
+
+        dailyButton.textContent =
+            "ЗАБРАТЬ 50";
+
+        dailyTimer.classList.add(
+            "hidden"
+        );
+
+        return;
+    }
+
+
+    const totalSeconds =
+        Math.floor(
+            remaining / 1000
+        );
+
+
+    const hours =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+    const minutes =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    dailyTimer.textContent =
+        String(hours).padStart(2,"0") +
+        ":" +
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+}
+
+
+setInterval(
+    updateDailyTimer,
+    1000
+);
+
+
+/* =====================================================
+   ПРОМОКОД
+===================================================== */
+
+promoButton.addEventListener(
+    "click",
+    () => {
+
+        const code =
+            promoInput.value
+                .trim()
+                .toLowerCase();
+
+
+        if (code !== "200") {
+
+            promoMessage.style.color =
+                "#ef4752";
+
+            promoMessage.textContent =
+                "Неверный промокод.";
+
+            return;
+        }
+
+
+        if (promoUsed) {
+
+            promoMessage.style.color =
+                "#ef4752";
+
+            promoMessage.textContent =
+                "Этот промокод уже использован.";
+
+            return;
+        }
+
+
+        /*
+            ПРОМО 200
+            Даёт 200000 валюты.
+        */
+
+        balance += 200000;
+
+        balance =
+            Math.round(
+                balance * 100
+            ) / 100;
+
+
+        promoUsed = true;
+
+        promoInput.value =
+            "";
+
+        promoButton.disabled =
+            true;
+
+        promoMessage.style.color =
+            "#42df78";
+
+        promoMessage.textContent =
+            "+200000 валюты получено!";
+
+        updateBalanceUI();
+    }
+);
+
+
+/* =====================================================
+   СТАТИСТИКА
+===================================================== */
+
+function updateProfileStats() {
+
+    document.getElementById(
+        "gamesPlayed"
+    ).textContent =
+        gamesPlayed;
+
+    document.getElementById(
+        "wins"
+    ).textContent =
+        wins;
+
+    document.getElementById(
+        "losses"
+    ).textContent =
+        losses;
+}
+
+
+/* =====================================================
+   НАЧАЛЬНАЯ ИНИЦИАЛИЗАЦИЯ
+===================================================== */
+
+resizeCanvas();
 
 updateZones();
 
-updateAllBalances();
+updateBalanceUI();
 
-updateProfile();
+updateProfileStats();
 
-updateDaily();
+ball.x =
+    circle.x;
+
+ball.y =
+    circle.y -
+    circle.radius * .35;
+
+
+/*
+    Реферальный ID-заглушка.
+
+    Позже здесь можно будет
+    автоматически получать ID
+    из Telegram WebApp.
+*/
+
+document.getElementById(
+    "refLink"
+).textContent =
+    "drop.example/100001";
+
+
+/*
+    Запускаем игру.
+*/
 
 gameLoop();
-
 </script>
 
 </body>
