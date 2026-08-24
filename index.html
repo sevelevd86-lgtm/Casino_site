@@ -197,28 +197,28 @@
         .rating-item .name{color:#aaa;font-size:12px;flex:1;margin:0 6px}
         .rating-item .score{color:#f0b90b;font-weight:500;font-size:11px}
         
-        /* ===== РЕЖИМ ШАРИК (ESCAPE) С ПРЯМОУГОЛЬНИКОМ ===== */
+        /* ===== РЕЖИМ ШАРИК (СИНИЙ КРУГ) ===== */
         .ball-escape-container{display:flex;flex-direction:column;align-items:center;gap:8px;padding:4px 0;max-width:400px;margin:0 auto;width:100%}
         .ball-escape-header{display:flex;justify-content:space-between;width:100%;max-width:340px;padding:4px 12px;background:rgba(13,13,20,0.6);border-radius:30px;border:1px solid rgba(255,255,255,0.02)}
         .ball-escape-header .multiplier{color:#f0b90b;font-size:11px;font-weight:500}
         .ball-escape-header .hash{color:#555;font-size:9px;font-family:monospace}
 
-        /* Прямоугольная карта */
+        /* Карта */
         .ball-escape-map{position:relative;width:320px;height:340px;background:rgba(13,13,20,0.4);border-radius:20px;border:1px solid rgba(255,255,255,0.02);overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,0.3)}
         
-        /* Круг внутри карты */
-        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:#0d0d14;border:2px solid rgba(240,185,11,0.04);box-shadow:inset 0 0 60px rgba(0,0,0,0.5)}
+        /* СИНИЙ КРУГ */
+        .ball-escape-circle-wrapper{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:200px;height:200px;border-radius:50%;background:rgba(30,60,114,0.3);border:3px solid rgba(52,102,184,0.6);box-shadow:0 0 40px rgba(52,102,184,0.1), inset 0 0 60px rgba(52,102,184,0.05)}
         .ball-escape-rotation-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;transition:transform 0.05s linear;will-change:transform}
-        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, #16161f, #08080c)}
-        .ball-escape-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:28px;height:10px;background:#0a0a0f;border-bottom:2px solid rgba(240,185,11,0.02);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;box-shadow:inset 0 -4px 12px rgba(0,0,0,0.8)}
-        .ball-escape-hole::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:20px;height:6px;background:rgba(240,185,11,0.02);border-radius:50%}
+        .ball-escape-circle{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 50%, rgba(52,102,184,0.1), rgba(20,40,80,0.2))}
+        .ball-escape-hole{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:28px;height:10px;background:#0a0a0f;border-bottom:2px solid rgba(52,102,184,0.2);z-index:2;border-radius:0 0 50% 50% / 0 0 100% 100%;box-shadow:inset 0 -4px 12px rgba(0,0,0,0.8)}
+        .ball-escape-hole::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:20px;height:6px;background:rgba(52,102,184,0.05);border-radius:50%}
 
         /* Шарик */
         .ball-escape-ball{position:absolute;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #fff, #f0b90b);box-shadow:0 0 25px rgba(240,185,11,0.15), inset 0 -2px 6px rgba(0,0,0,0.3);z-index:5;transition:none;will-change:transform;top:50%;left:50%;transform:translate(-50%,-50%)}
         .ball-escape-hit{color:#f0b90b;font-size:9px;position:absolute;z-index:3;pointer-events:none;animation:floatUp .8s ease forwards;font-weight:600}
         @keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-30px)}}
 
-        /* Зоны внизу карты */
+        /* Зоны */
         .ball-escape-zones{position:absolute;bottom:0;left:0;right:0;height:36px;display:flex;border-radius:0 0 20px 20px;overflow:hidden;border-top:1px solid rgba(255,255,255,0.02)}
         .ball-escape-zones .zone{flex:1;display:flex;justify-content:center;align-items:center;font-size:18px;font-weight:700;transition:all .3s;position:relative}
         .ball-escape-zones .zone.green{background:rgba(46,204,113,0.04);color:#2ecc71;border-right:1px solid rgba(255,255,255,0.01)}
@@ -473,7 +473,7 @@
         function spinUpgrade(){if(!selectedSkin){showToast('❌ Выберите скин','error');return;}if(isSpinning)return;isSpinning=true;const canvas=document.getElementById('wheelCanvas');if(!canvas)return;const ctx=canvas.getContext('2d');const w=200,h=200,cx=100,cy=100,r=90;const win=getWinChance();const isWin=Math.random()*100<win;const arrow=document.getElementById('wheelArrow');const totalRot=4*Math.PI+(isWin?0:Math.PI);const duration=2000+Math.random()*800;const start=Date.now();const startAng=wheelAngle;const resultEl=document.getElementById('upgrade-result');if(resultEl){resultEl.className='upgrade-result';resultEl.textContent='';}
         function anim(){const elapsed=Date.now()-start;const progress=Math.min(elapsed/duration,1);const ease=1-Math.pow(1-progress,3);const current=startAng+totalRot*ease;arrow.style.transform=`translateX(-50%) rotate(${current}rad)`;ctx.clearRect(0,0,w,h);const winNow=getWinChance();const loseNow=100-winNow;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+current,-Math.PI/2+(winNow/100)*2*Math.PI+current);ctx.closePath();ctx.fillStyle='#2ecc71';ctx.fill();ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,-Math.PI/2+(winNow/100)*2*Math.PI+current,-Math.PI/2+2*Math.PI+current);ctx.closePath();ctx.fillStyle='#e74c3c';ctx.fill();ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.strokeStyle='rgba(240,185,11,0.04)';ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';const mid=-Math.PI/2+current+(winNow/100)*Math.PI;ctx.fillText(`${winNow}%`,cx+r*0.6*Math.cos(mid),cy+r*0.6*Math.sin(mid));const lAng=-Math.PI/2+current+(winNow/100)*2*Math.PI+((100-winNow)/100)*Math.PI;ctx.fillText(`${loseNow}%`,cx+r*0.6*Math.cos(lAng),cy+r*0.6*Math.sin(lAng));if(progress<1){requestAnimationFrame(anim);}else{wheelAngle=current;isSpinning=false;if(isWin){const upgraded={...selectedSkin,value:Math.round(selectedSkin.value*multiplier)};inventory=inventory.filter(i=>i.id!==selectedSkin.id);inventory.push(upgraded);achievements.upgradesDone++;addHistory(`Апгрейд "${selectedSkin.name}" +${multiplier}x`,upgraded.value-selectedSkin.value);if(resultEl){resultEl.className='upgrade-result success';resultEl.textContent=`🎉 Успех! +${multiplier}x (${upgraded.value}⭐)`;}showToast(`🎉 Апгрейд успешен! +${multiplier}x`,'success');}else{const oldValue=selectedSkin.value;inventory=inventory.filter(i=>i.id!==selectedSkin.id);addHistory(`Апгрейд "${selectedSkin.name}" сгорел`,-oldValue);if(resultEl){resultEl.className='upgrade-result fail';resultEl.textContent=`💥 Скин сгорел (-${oldValue}⭐)`;}showToast('💥 Скин сгорел','error');}selectedSkin=null;document.getElementById('selected-skin-info').innerHTML='Выбран: <span>Нет</span>';saveData();renderInventory();renderUpgrade(document.getElementById('game-content'));}}anim();}
 
-        // ===== РЕЖИМ ШАРИК (ESCAPE) С ПРЯМОУГОЛЬНИКОМ =====
+        // ===== РЕЖИМ ШАРИК (СИНИЙ КРУГ) =====
         let ballInterval = null;
         let ballRotationInterval = null;
         let ballMultiplier = 1.0;
