@@ -2,10 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Крутящийся круг</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Шарик в круге</title>
     <style>
         * {
             margin: 0;
@@ -17,21 +15,18 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-
             display: flex;
             justify-content: center;
             align-items: center;
-
             background: #181818;
         }
 
-        .circle {
+        .circle-wrapper {
+            position: relative;
             width: 500px;
             height: 500px;
             border-radius: 50%;
-
             border: 10px solid transparent;
-
             background:
                 linear-gradient(#181818, #181818) padding-box,
                 conic-gradient(
@@ -40,26 +35,35 @@
                     #1473e6 35deg 330deg,
                     transparent 330deg 360deg
                 ) border-box;
-
             box-shadow:
                 0 0 8px rgba(20, 115, 230, 0.8),
                 0 0 20px rgba(20, 115, 230, 0.4);
-
             animation: rotate 2s linear infinite;
         }
 
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
+        /* ===== ШАРИК ВНУТРИ ===== */
+        .ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #fff, #f0b90b);
+            box-shadow: 0 0 20px rgba(240, 185, 11, 0.3);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            pointer-events: none;
+            z-index: 2;
+        }
 
-            to {
-                transform: rotate(360deg);
-            }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 600px) {
-            .circle {
+            .circle-wrapper {
                 width: 80vw;
                 height: 80vw;
                 border-width: 8px;
@@ -67,10 +71,86 @@
         }
     </style>
 </head>
-
 <body>
 
-    <div class="circle"></div>
+    <div class="circle-wrapper" id="circleWrapper">
+        <div class="ball" id="ball"></div>
+    </div>
+
+    <script>
+        const wrapper = document.getElementById('circleWrapper');
+        const ball = document.getElementById('ball');
+
+        // Размеры круга (в пикселях)
+        const size = 500; // соответствует width/height в CSS
+        const radius = size / 2;
+        const ballRadius = 10; // половина ширины шарика
+
+        // Начальная позиция шарика (центр)
+        let x = radius;
+        let y = radius - 30; // чуть выше центра, чтобы начать падение
+
+        // Скорость
+        let dx = (Math.random() - 0.5) * 3.0;
+        let dy = 0;
+
+        const GRAVITY = 0.15;
+        const BOUNCE = 0.82; // упругость
+        const MAX_BOUNCE_HEIGHT = radius * 0.5; // 50% от радиуса — середина
+
+        function updateBall() {
+            // Гравитация
+            dy += GRAVITY;
+
+            // Движение
+            x += dx;
+            y += dy;
+
+            // Расстояние от центра
+            const dist = Math.sqrt((x - radius) ** 2 + (y - radius) ** 2);
+            const maxDist = radius - ballRadius - 4; // запас, чтобы не вылететь
+
+            // Если шарик касается стенки круга
+            if (dist > maxDist) {
+                // Нормализуем вектор от центра к шарику
+                const nx = (x - radius) / dist;
+                const ny = (y - radius) / dist;
+
+                // Корректируем позицию (вталкиваем внутрь)
+                x = radius + nx * maxDist;
+                y = radius + ny * maxDist;
+
+                // Вычисляем нормальную составляющую скорости
+                const vn = dx * nx + dy * ny;
+                if (vn > 0) {
+                    // Отражаем скорость
+                    dx -= 2 * vn * nx * BOUNCE;
+                    dy -= 2 * vn * ny * BOUNCE;
+
+                    // Ограничиваем вертикальную скорость, чтобы прыжок был не выше середины
+                    const speed = Math.sqrt(dx * dx + dy * dy);
+                    if (speed > 0) {
+                        // Проецируем скорость на вертикаль
+                        const vy_abs = Math.abs(dy);
+                        const maxVy = Math.sqrt(2 * GRAVITY * MAX_BOUNCE_HEIGHT);
+                        if (vy_abs > maxVy) {
+                            const scale = maxVy / vy_abs;
+                            dy *= scale;
+                        }
+                    }
+                }
+            }
+
+            // Применяем позицию
+            ball.style.left = x - ballRadius + 'px';
+            ball.style.top = y - ballRadius + 'px';
+
+            requestAnimationFrame(updateBall);
+        }
+
+        // Запускаем анимацию
+        updateBall();
+    </script>
 
 </body>
 </html>
