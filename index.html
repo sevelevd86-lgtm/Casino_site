@@ -1,165 +1,2369 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Шарик катится по кругу</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            width: 100vw; height: 100vh; overflow: hidden;
-            display: flex; justify-content: center; align-items: center;
-            background: #181818;
-        }
-        .circle-wrapper {
-            position: relative;
-            width: 500px; height: 500px;
-            border-radius: 50%;
-            border: 4px solid #1473e6;
-            background: #181818;
-            box-shadow: 0 0 20px rgba(20, 115, 230, 0.3);
-            animation: rotate 2s linear infinite;
-        }
-        /* ===== ДЫРКА (вращается вместе с кругом) ===== */
-        .hole {
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 28px;
-            height: 8px;
-            background: #181818;
-            border-radius: 0 0 50% 50% / 0 0 100% 100%;
-            border-bottom: 2px solid #1473e6;
-            z-index: 3;
-        }
-        .ball {
-            position: absolute;
-            width: 20px; height: 20px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #fff, #f0b90b);
-            box-shadow: 0 0 20px rgba(240, 185, 11, 0.3);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            will-change: transform;
-            pointer-events: none;
-            z-index: 2;
-            animation: none;
-        }
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @media (max-width: 600px) {
-            .circle-wrapper { width: 80vw; height: 80vw; border-width: 3px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Escape</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #111315;
+    font-family: Arial, sans-serif;
+    user-select: none;
+}
+
+canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+}
+
+
+/* =====================================================
+   ВЕРХ
+===================================================== */
+
+.top-ui {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 55px;
+    z-index: 10;
+    text-align: center;
+}
+
+.stat {
+    min-width: 70px;
+}
+
+.stat-label {
+    color: #737a81;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    margin-top: 4px;
+    color: white;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+#multiplier {
+    color: #42df78;
+}
+
+
+/* =====================================================
+   НИЖНИЕ ЗОНЫ
+===================================================== */
+
+.bottom-zones {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    z-index: 5;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(10,12,14,0.98),
+            rgba(10,12,14,0.15)
+        );
+}
+
+.green-zone,
+.red-zone {
+    position: relative;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 21px;
+    font-weight: 900;
+
+    transition: width .25s ease;
+    overflow: hidden;
+}
+
+.green-zone {
+    background:
+        linear-gradient(
+            to top,
+            #2bdd72 0%,
+            #26c968 35%,
+            rgba(39,201,104,0.35) 70%,
+            rgba(39,201,104,0) 100%
+        );
+
+    box-shadow:
+        inset 0 -10px 30px rgba(35,255,120,0.35),
+        0 -4px 25px rgba(35,220,110,0.18);
+}
+
+.red-zone {
+    background:
+        linear-gradient(
+            to top,
+            #e84550 0%,
+            #d93c47 35%,
+            rgba(217,60,71,0.35) 70%,
+            rgba(217,60,71,0) 100%
+        );
+
+    box-shadow:
+        inset 0 -10px 30px rgba(255,55,65,0.35),
+        0 -4px 25px rgba(255,55,65,0.18);
+}
+
+.green-zone::before,
+.red-zone::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 2px;
+}
+
+.green-zone::before {
+    background: rgba(87,255,155,0.75);
+
+    box-shadow:
+        0 0 12px rgba(50,255,130,0.8),
+        0 0 28px rgba(50,255,130,0.45);
+}
+
+.red-zone::before {
+    background: rgba(255,105,112,0.75);
+
+    box-shadow:
+        0 0 12px rgba(255,65,75,0.8),
+        0 0 28px rgba(255,65,75,0.45);
+}
+
+.green-zone::after,
+.red-zone::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -35px;
+
+    width: 100%;
+    height: 70px;
+
+    filter: blur(25px);
+
+    pointer-events: none;
+}
+
+.green-zone::after {
+    background: rgba(38,220,110,0.38);
+}
+
+.red-zone::after {
+    background: rgba(240,55,65,0.38);
+}
+
+
+/* =====================================================
+   МЕНЮ СТАРТА
+===================================================== */
+
+.start-menu {
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 330px;
+
+    padding: 28px;
+
+    background: rgba(20,23,26,.97);
+
+    border: 1px solid #343a40;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    z-index: 100;
+}
+
+.start-title {
+    color: white;
+
+    font-size: 32px;
+
+    font-weight: 900;
+
+    margin-bottom: 22px;
+}
+
+.bet-label {
+    color: #858b91;
+
+    font-size: 13px;
+
+    margin-bottom: 7px;
+
+    text-align: left;
+}
+
+.bet-input {
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 14px;
+
+    border: 1px solid #3b4249;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #15181b;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    text-align: center;
+}
+
+.bet-input:focus {
+    border-color: #1678e8;
+}
+
+.bet-error {
+    min-height: 18px;
+
+    margin-top: 7px;
+
+    color: #ef4752;
+
+    font-size: 12px;
+}
+
+.play-button {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #1678e8;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.play-button:hover {
+    background: #2687f5;
+}
+
+.play-button:active {
+    transform: scale(.97);
+}
+
+
+/* =====================================================
+   СЛОЖНОСТЬ
+===================================================== */
+
+.difficulty {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 107px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 7px;
+
+    z-index: 20;
+}
+
+.difficulty button {
+
+    border: none;
+
+    outline: none;
+
+    padding: 9px 14px;
+
+    border-radius: 9px;
+
+    background: #282d32;
+
+    color: #cfd3d7;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.difficulty button.active {
+
+    background: #1678e8;
+
+    color: white;
+}
+
+
+/* =====================================================
+   РЕЗУЛЬТАТ
+===================================================== */
+
+.result {
+
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    width: 310px;
+
+    padding: 30px;
+
+    transform:
+        translate(-50%, -50%)
+        scale(.85);
+
+    background: rgba(20,23,26,.98);
+
+    border: 1px solid #343a40;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    z-index: 100;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: .25s;
+}
+
+.result.show {
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+.result-title {
+
+    font-size: 44px;
+
+    font-weight: 900;
+}
+
+.result-title.win {
+    color: #3ee57b;
+}
+
+.result-title.lose {
+    color: #ef4752;
+}
+
+.result-info {
+
+    margin-top: 12px;
+
+    color: #858b91;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+.result-money {
+
+    margin-top: 8px;
+
+    color: white;
+
+    font-size: 25px;
+
+    font-weight: 900;
+}
+
+.result button {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #1678e8;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:600px) {
+
+    .top-ui {
+        gap: 35px;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .bottom-zones {
+        height: 78px;
+    }
+
+    .green-zone,
+    .red-zone {
+        font-size: 17px;
+    }
+
+    .difficulty {
+        bottom: 94px;
+    }
+
+    .start-menu {
+        width: calc(100vw - 40px);
+        max-width: 330px;
+    }
+}
+
+</style>
 </head>
+
 <body>
-    <div class="circle-wrapper" id="circleWrapper">
-        <div class="ball" id="ball"></div>
-        <div class="hole" id="hole"></div>
+
+
+<canvas id="gameCanvas"></canvas>
+
+
+<!-- =====================================================
+     ВЕРХ
+===================================================== -->
+
+<div class="top-ui">
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Отскоки
+        </div>
+
+        <div
+            class="stat-value"
+            id="bounceValue">
+
+            0
+
+        </div>
+
     </div>
 
-    <script>
-        const wrapper = document.getElementById('circleWrapper');
-        const ball = document.getElementById('ball');
-        const hole = document.getElementById('hole');
 
-        const size = 500;
-        const radius = size / 2;
-        const ballRadius = 10;
+    <div class="stat">
 
-        // Позиция шарика (внутри круга)
-        let x = radius;
-        let y = radius - 40;
+        <div class="stat-label">
+            Множитель
+        </div>
 
-        // Скорость
-        let dx = (Math.random() - 0.5) * 1.0;
-        let dy = 0;
+        <div
+            class="stat-value"
+            id="multiplier">
 
-        const GRAVITY = 0.2;
-        const BOUNCE = 0.85;
-        const FRICTION = 0.995; // чтобы шарик не разгонялся бесконечно
+            1.00x
 
-        // === ПОЛУЧАЕМ ТЕКУЩИЙ УГОЛ ДЫРКИ (относительно круга) ===
-        function getHoleAngle() {
-            // Дырка всегда внизу в локальных координатах круга
-            // Но так как круг вращается, её угол в мировой системе = -90° + вращение
-            const wrapperStyle = window.getComputedStyle(wrapper);
-            const transform = wrapperStyle.transform;
-            if (transform === 'none') return -Math.PI / 2;
-            const matrix = transform.match(/matrix\(([^)]+)\)/);
-            if (!matrix) return -Math.PI / 2;
-            const values = matrix[1].split(', ').map(Number);
-            const angle = Math.atan2(values[1], values[0]);
-            return angle;
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ЗОНЫ
+===================================================== -->
+
+<div class="bottom-zones">
+
+    <div
+        class="green-zone"
+        id="greenZone">
+
+        WIN
+
+    </div>
+
+    <div
+        class="red-zone"
+        id="redZone">
+
+        LOSE
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     МЕНЮ
+===================================================== -->
+
+<div
+    class="start-menu"
+    id="startMenu">
+
+    <div class="start-title">
+        ESCAPE
+    </div>
+
+
+    <div class="bet-label">
+        Ваша ставка
+    </div>
+
+
+    <input
+        id="betInput"
+        class="bet-input"
+        type="number"
+        min="1"
+        step="1"
+        value="100"
+        placeholder="Введите ставку"
+    >
+
+
+    <div
+        id="betError"
+        class="bet-error">
+    </div>
+
+
+    <button
+        id="playButton"
+        class="play-button">
+
+        ИГРАТЬ
+
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     СЛОЖНОСТЬ
+===================================================== -->
+
+<div class="difficulty">
+
+    <button
+        class="difficulty-button active"
+        data-mode="easy">
+
+        Легко
+
+    </button>
+
+
+    <button
+        class="difficulty-button"
+        data-mode="medium">
+
+        Средне
+
+    </button>
+
+
+    <button
+        class="difficulty-button"
+        data-mode="hard">
+
+        Сложно
+
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     РЕЗУЛЬТАТ
+===================================================== -->
+
+<div
+    class="result"
+    id="resultWindow">
+
+    <div
+        id="resultTitle"
+        class="result-title">
+
+        WIN
+
+    </div>
+
+
+    <div
+        id="resultInfo"
+        class="result-info">
+
+    </div>
+
+
+    <div
+        id="resultMoney"
+        class="result-money">
+
+    </div>
+
+
+    <button id="closeResult">
+        ЗАКРЫТЬ
+    </button>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   CANVAS
+===================================================== */
+
+const canvas =
+    document.getElementById("gameCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+let width = 0;
+let height = 0;
+
+
+/* =====================================================
+   UI
+===================================================== */
+
+const bounceValue =
+    document.getElementById("bounceValue");
+
+const multiplierValue =
+    document.getElementById("multiplier");
+
+const startMenu =
+    document.getElementById("startMenu");
+
+const playButton =
+    document.getElementById("playButton");
+
+const betInput =
+    document.getElementById("betInput");
+
+const betError =
+    document.getElementById("betError");
+
+const resultWindow =
+    document.getElementById("resultWindow");
+
+const resultTitle =
+    document.getElementById("resultTitle");
+
+const resultInfo =
+    document.getElementById("resultInfo");
+
+const resultMoney =
+    document.getElementById("resultMoney");
+
+const closeResult =
+    document.getElementById("closeResult");
+
+const greenZone =
+    document.getElementById("greenZone");
+
+const redZone =
+    document.getElementById("redZone");
+
+
+/* =====================================================
+   КРУГ
+===================================================== */
+
+const circle = {
+
+    x: 0,
+
+    y: 0,
+
+    radius: 205,
+
+    wallWidth: 10
+
+};
+
+
+/* =====================================================
+   ШАР
+===================================================== */
+
+const ball = {
+
+    x: 0,
+
+    y: 0,
+
+    vx: 0,
+
+    vy: 0,
+
+    radius: 13
+
+};
+
+
+/* =====================================================
+   ФИЗИКА
+===================================================== */
+
+const GRAVITY = 0.20;
+
+
+/*
+    Базовая сила прыжка.
+*/
+
+const JUMP_SPEED = 5.5;
+
+
+/*
+    Начальная скорость.
+*/
+
+const BALL_SPEED = 2.2;
+
+
+/*
+    Начальное смещение.
+
+    Шарик никогда не стартует
+    строго вертикально.
+*/
+
+const SIDE_SPEED = 1.6;
+
+
+/*
+    Разброс скорости после
+    каждого отскока.
+*/
+
+const RANDOM_JUMP_MIN = 4.7;
+const RANDOM_JUMP_MAX = 6.1;
+
+
+/*
+    Разброс горизонтальной
+    скорости.
+*/
+
+const RANDOM_HORIZONTAL_MIN = 0.7;
+const RANDOM_HORIZONTAL_MAX = 2.8;
+
+
+/*
+    Ограничения скорости.
+*/
+
+const MAX_SPEED = 6.5;
+
+const MAX_HORIZONTAL_SPEED = 3.4;
+
+
+/*
+    Вращение дырки.
+*/
+
+const HOLE_SPEED = 0.018;
+
+
+/*
+    Защита от застревания.
+*/
+
+const COLLISION_EPSILON = 1.5;
+
+
+/*
+    Боковые стены.
+*/
+
+const SIDE_WALL = 7;
+
+
+/*
+    Высота нижней зоны.
+*/
+
+const ZONE_HEIGHT = 90;
+
+
+/* =====================================================
+   СЛОЖНОСТЬ
+===================================================== */
+
+const difficulties = {
+
+    easy: {
+
+        greenPercent: 70,
+
+        redPercent: 30,
+
+        holeSize: 50,
+
+        multiplierStep: 0.05
+
+    },
+
+
+    medium: {
+
+        greenPercent: 50,
+
+        redPercent: 50,
+
+        holeSize: 50,
+
+        multiplierStep: 0.15
+
+    },
+
+
+    hard: {
+
+        greenPercent: 25,
+
+        redPercent: 75,
+
+        /*
+            На 30% больше,
+            чем стандартная дырка.
+        */
+
+        holeSize: 50 * 1.30,
+
+        multiplierStep: 0.25
+
+    }
+
+};
+
+
+let difficulty = "easy";
+
+
+/* =====================================================
+   СОСТОЯНИЕ
+===================================================== */
+
+let gameRunning = false;
+
+let ballEscaped = false;
+
+let gameFinished = false;
+
+let holeAngle = 0;
+
+let bounceCount = 0;
+
+let multiplier = 1;
+
+let currentBet = 0;
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+function resizeCanvas() {
+
+    width =
+        window.innerWidth;
+
+    height =
+        window.innerHeight;
+
+
+    const dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+
+    canvas.width =
+        width * dpr;
+
+    canvas.height =
+        height * dpr;
+
+
+    canvas.style.width =
+        width + "px";
+
+    canvas.style.height =
+        height + "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+
+    circle.radius =
+        Math.min(
+            205,
+            width * 0.33,
+            height * 0.30
+        );
+
+
+    circle.x =
+        width / 2;
+
+
+    circle.y =
+        height * 0.39;
+
+
+    if (!gameRunning) {
+
+        ball.x =
+            circle.x;
+
+        ball.y =
+            circle.y -
+            circle.radius * 0.35;
+    }
+}
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+/* =====================================================
+   ЗОНЫ
+===================================================== */
+
+function updateZones() {
+
+    const settings =
+        difficulties[difficulty];
+
+
+    greenZone.style.width =
+        settings.greenPercent + "%";
+
+
+    redZone.style.width =
+        settings.redPercent + "%";
+}
+
+
+/* =====================================================
+   УГЛЫ
+===================================================== */
+
+function normalizeAngle(angle) {
+
+    angle %= Math.PI * 2;
+
+    if (angle < 0) {
+
+        angle +=
+            Math.PI * 2;
+    }
+
+    return angle;
+}
+
+
+function angleDifference(a, b) {
+
+    let difference =
+        Math.abs(
+            normalizeAngle(a) -
+            normalizeAngle(b)
+        );
+
+
+    if (
+        difference >
+        Math.PI
+    ) {
+
+        difference =
+            Math.PI * 2 -
+            difference;
+    }
+
+
+    return difference;
+}
+
+
+/* =====================================================
+   ДЫРКА
+===================================================== */
+
+function isHole(angle) {
+
+    const holeDegrees =
+        difficulties[difficulty]
+            .holeSize;
+
+
+    const holeRadians =
+        holeDegrees *
+        Math.PI /
+        180;
+
+
+    return (
+        angleDifference(
+            angle,
+            holeAngle
+        )
+        <=
+        holeRadians / 2
+    );
+}
+
+
+/* =====================================================
+   ОГРАНИЧЕНИЕ СКОРОСТИ
+===================================================== */
+
+function limitSpeed() {
+
+    ball.vx =
+        Math.max(
+            -MAX_HORIZONTAL_SPEED,
+            Math.min(
+                MAX_HORIZONTAL_SPEED,
+                ball.vx
+            )
+        );
+
+
+    const speed =
+        Math.sqrt(
+            ball.vx * ball.vx +
+            ball.vy * ball.vy
+        );
+
+
+    if (
+        speed >
+        MAX_SPEED
+    ) {
+
+        const scale =
+            MAX_SPEED /
+            speed;
+
+
+        ball.vx *=
+            scale;
+
+        ball.vy *=
+            scale;
+    }
+}
+
+
+/* =====================================================
+   UI
+===================================================== */
+
+function updateUI() {
+
+    bounceValue.textContent =
+        bounceCount;
+
+
+    multiplierValue.textContent =
+        multiplier.toFixed(2) +
+        "x";
+}
+
+
+/* =====================================================
+   НОВОЕ НАПРАВЛЕНИЕ
+===================================================== */
+
+function randomJumpDirection() {
+
+    /*
+        Каждый отскок получает
+        новую горизонтальную
+        скорость.
+
+        Никаких фиксированных
+        координат.
+    */
+
+    const direction =
+        Math.random() < 0.5
+            ? -1
+            : 1;
+
+
+    const horizontal =
+        RANDOM_HORIZONTAL_MIN +
+        Math.random() *
+        (
+            RANDOM_HORIZONTAL_MAX -
+            RANDOM_HORIZONTAL_MIN
+        );
+
+
+    ball.vx =
+        direction *
+        horizontal;
+
+
+    /*
+        Каждый прыжок имеет
+        немного разную силу.
+    */
+
+    const jump =
+        RANDOM_JUMP_MIN +
+        Math.random() *
+        (
+            RANDOM_JUMP_MAX -
+            RANDOM_JUMP_MIN
+        );
+
+
+    /*
+        Если мяч должен прыгать
+        вверх — отрицательный Y.
+    */
+
+    ball.vy =
+        -jump;
+}
+
+
+/* =====================================================
+   НАЧАЛЬНОЕ НАПРАВЛЕНИЕ
+===================================================== */
+
+function chooseStartDirection() {
+
+    /*
+        Только вправо или влево.
+
+        50 / 50.
+
+        Никогда строго вниз.
+    */
+
+    const direction =
+        Math.random() < 0.5
+            ? -1
+            : 1;
+
+
+    ball.vx =
+        direction *
+        SIDE_SPEED;
+
+
+    ball.vy =
+        BALL_SPEED;
+}
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+function startGame() {
+
+    const value =
+        parseFloat(
+            betInput.value
+        );
+
+
+    /*
+        Проверка ставки.
+    */
+
+    if (
+        !Number.isFinite(value) ||
+        value <= 0
+    ) {
+
+        betError.textContent =
+            "Введите корректную ставку";
+
+        betInput.focus();
+
+        return;
+    }
+
+
+    betError.textContent =
+        "";
+
+
+    currentBet =
+        value;
+
+
+    gameRunning = true;
+
+    ballEscaped = false;
+
+    gameFinished = false;
+
+
+    bounceCount = 0;
+
+    multiplier = 1;
+
+
+    ball.x =
+        circle.x;
+
+
+    ball.y =
+        circle.y -
+        circle.radius * 0.35;
+
+
+    chooseStartDirection();
+
+
+    updateZones();
+
+    updateUI();
+
+
+    startMenu.style.display =
+        "none";
+
+
+    resultWindow.classList.remove(
+        "show"
+    );
+}
+
+
+/* =====================================================
+   ОТСКОК
+===================================================== */
+
+function registerBounce() {
+
+    bounceCount++;
+
+
+    multiplier =
+        1 +
+        bounceCount *
+        difficulties[difficulty]
+            .multiplierStep;
+
+
+    updateUI();
+
+
+    /*
+        Новый прыжок
+        после каждого отскока.
+    */
+
+    randomJumpDirection();
+}
+
+
+/* =====================================================
+   ВЫХОД ЧЕРЕЗ ДЫРКУ
+===================================================== */
+
+function escapeThroughHole(nx, ny) {
+
+    ball.x =
+        circle.x +
+        nx *
+        (
+            circle.radius +
+            ball.radius +
+            5
+        );
+
+
+    ball.y =
+        circle.y +
+        ny *
+        (
+            circle.radius +
+            ball.radius +
+            5
+        );
+
+
+    /*
+        Сохраняем направление
+        наружу, но добавляем
+        случайную скорость.
+    */
+
+    const outward =
+        3.4 +
+        Math.random() *
+        1.3;
+
+
+    const side =
+        (Math.random() - 0.5) *
+        2.0;
+
+
+    ball.vx =
+        nx * outward +
+        side;
+
+
+    ball.vy =
+        ny * outward;
+
+
+    /*
+        Если движение через
+        отверстие было вниз,
+        добавляем естественную
+        скорость падения.
+    */
+
+    if (ball.vy < 1) {
+
+        ball.vy += 1.5;
+    }
+
+
+    ballEscaped = true;
+}
+
+
+/* =====================================================
+   ОТСКОК ОТ КРУГА
+===================================================== */
+
+function bounceFromWall(nx, ny) {
+
+    const safeRadius =
+        circle.radius -
+        circle.wallWidth / 2 -
+        ball.radius -
+        COLLISION_EPSILON;
+
+
+    ball.x =
+        circle.x +
+        nx *
+        safeRadius;
+
+
+    ball.y =
+        circle.y +
+        ny *
+        safeRadius;
+
+
+    /*
+        Отражаем движение
+        от стены.
+    */
+
+    const velocityNormal =
+        ball.vx * nx +
+        ball.vy * ny;
+
+
+    if (
+        velocityNormal > 0
+    ) {
+
+        ball.vx -=
+            2 *
+            velocityNormal *
+            nx;
+
+
+        ball.vy -=
+            2 *
+            velocityNormal *
+            ny;
+    }
+
+
+    /*
+        После каждого отскока
+        новая скорость.
+
+        Но направление стены
+        учитывается.
+    */
+
+    randomJumpDirection();
+
+
+    /*
+        Если стена находится
+        сверху/снизу, слегка
+        корректируем направление.
+    */
+
+    if (Math.abs(ny) > 0.4) {
+
+        if (ny < 0) {
+
+            ball.vy =
+                Math.abs(ball.vy) * -1;
+
         }
 
-        function updateBall() {
-            // Гравитация всегда вниз (в мировых координатах)
-            dy += GRAVITY;
+        else {
 
-            // Движение
-            x += dx;
-            y += dy;
+            ball.vy =
+                -Math.abs(ball.vy);
+        }
+    }
 
-            // Расстояние от центра
-            const dist = Math.sqrt((x - radius) ** 2 + (y - radius) ** 2);
-            const maxDist = radius - ballRadius - 2;
 
-            // === СТОЛКНОВЕНИЕ СО СТЕНКОЙ ===
-            if (dist > maxDist) {
-                const nx = (x - radius) / dist;
-                const ny = (y - radius) / dist;
+    limitSpeed();
 
-                // Вталкиваем внутрь
-                x = radius + nx * maxDist;
-                y = radius + ny * maxDist;
 
-                // Отражение скорости
-                const vn = dx * nx + dy * ny;
-                if (vn > 0) {
-                    dx -= 2 * vn * nx * BOUNCE;
-                    dy -= 2 * vn * ny * BOUNCE;
+    registerBounce();
+}
 
-                    // Трение, чтобы не разгонялся
-                    dx *= FRICTION;
-                    dy *= FRICTION;
+
+/* =====================================================
+   РЕЗУЛЬТАТ
+===================================================== */
+
+function finishGame(isWin) {
+
+    if (gameFinished)
+        return;
+
+
+    gameFinished = true;
+
+    gameRunning = false;
+
+
+    if (isWin) {
+
+        /*
+            Выигрыш = ставка ×
+            множитель.
+
+            Показываем именно
+            прибыль.
+        */
+
+        const winAmount =
+            currentBet *
+            multiplier;
+
+
+        resultTitle.textContent =
+            "WIN";
+
+
+        resultTitle.className =
+            "result-title win";
+
+
+        resultMoney.textContent =
+            "+" +
+            winAmount.toFixed(2);
+
+
+        resultInfo.textContent =
+            "Ставка: " +
+            currentBet.toFixed(2) +
+            " • Множитель: " +
+            multiplier.toFixed(2) +
+            "x";
+
+    }
+
+    else {
+
+        resultTitle.textContent =
+            "LOSE";
+
+
+        resultTitle.className =
+            "result-title lose";
+
+
+        resultMoney.textContent =
+            "-" +
+            currentBet.toFixed(2);
+
+
+        resultInfo.textContent =
+            "Ставка: " +
+            currentBet.toFixed(2) +
+            " • Множитель: " +
+            multiplier.toFixed(2) +
+            "x";
+    }
+
+
+    resultWindow.classList.add(
+        "show"
+    );
+}
+
+
+/* =====================================================
+   ФИЗИКА
+===================================================== */
+
+function updatePhysics() {
+
+    /*
+        Дырка вращается постоянно.
+    */
+
+    holeAngle +=
+        HOLE_SPEED;
+
+
+    holeAngle =
+        normalizeAngle(
+            holeAngle
+        );
+
+
+    if (!gameRunning)
+        return;
+
+
+    /* =================================================
+       ШАР СНАРУЖИ
+    ================================================= */
+
+    if (ballEscaped) {
+
+        ball.vy +=
+            GRAVITY;
+
+
+        ball.x +=
+            ball.vx;
+
+
+        ball.y +=
+            ball.vy;
+
+
+        /*
+            Боковые стены.
+        */
+
+        if (
+            ball.x -
+            ball.radius <
+            SIDE_WALL
+        ) {
+
+            ball.x =
+                SIDE_WALL +
+                ball.radius;
+
+
+            ball.vx =
+                Math.abs(
+                    ball.vx
+                );
+        }
+
+
+        if (
+            ball.x +
+            ball.radius >
+            width -
+            SIDE_WALL
+        ) {
+
+            ball.x =
+                width -
+                SIDE_WALL -
+                ball.radius;
+
+
+            ball.vx =
+                -Math.abs(
+                    ball.vx
+                );
+        }
+
+
+        limitSpeed();
+
+
+        /*
+            Нижняя зона.
+        */
+
+        const zonesTop =
+            height -
+            ZONE_HEIGHT;
+
+
+        if (
+            ball.y +
+            ball.radius >=
+            zonesTop
+        ) {
+
+            /*
+                Зелёная зона всегда
+                находится слева.
+
+                Красная — справа.
+            */
+
+            const greenWidth =
+                width *
+                difficulties[difficulty]
+                    .greenPercent /
+                100;
+
+
+            if (
+                ball.x <=
+                greenWidth
+            ) {
+
+                finishGame(true);
+
+            }
+
+            else {
+
+                finishGame(false);
+            }
+
+
+            return;
+        }
+
+
+        return;
+    }
+
+
+    /* =================================================
+       ГРАВИТАЦИЯ
+    ================================================= */
+
+    ball.vy +=
+        GRAVITY;
+
+
+    /* =================================================
+       ДВИЖЕНИЕ
+    ================================================= */
+
+    ball.x +=
+        ball.vx;
+
+
+    ball.y +=
+        ball.vy;
+
+
+    limitSpeed();
+
+
+    /* =================================================
+       РАССТОЯНИЕ ОТ ЦЕНТРА
+    ================================================= */
+
+    const dx =
+        ball.x -
+        circle.x;
+
+
+    const dy =
+        ball.y -
+        circle.y;
+
+
+    const distance =
+        Math.sqrt(
+            dx * dx +
+            dy * dy
+        );
+
+
+    const collisionRadius =
+        circle.radius -
+        circle.wallWidth / 2 -
+        ball.radius;
+
+
+    /* =================================================
+       СТЕНА КРУГА
+    ================================================= */
+
+    if (
+        distance >=
+        collisionRadius
+    ) {
+
+        if (
+            distance <
+            0.0001
+        ) {
+
+            return;
+        }
+
+
+        const nx =
+            dx / distance;
+
+
+        const ny =
+            dy / distance;
+
+
+        const ballAngle =
+            Math.atan2(
+                dy,
+                dx
+            );
+
+
+        /*
+            Проверяем отверстие
+            только если шарик
+            реально движется наружу.
+        */
+
+        if (
+            isHole(ballAngle)
+        ) {
+
+            const outwardVelocity =
+                ball.vx * nx +
+                ball.vy * ny;
+
+
+            if (
+                outwardVelocity > 0
+            ) {
+
+                escapeThroughHole(
+                    nx,
+                    ny
+                );
+
+                return;
+            }
+        }
+
+
+        /*
+            В остальных местах
+            стена полностью твёрдая.
+        */
+
+        bounceFromWall(
+            nx,
+            ny
+        );
+    }
+}
+
+
+/* =====================================================
+   РИСОВАНИЕ
+===================================================== */
+
+function draw() {
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /* =================================================
+       БОКОВЫЕ СТЕНЫ
+    ================================================= */
+
+    ctx.fillStyle =
+        "#252a2f";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        SIDE_WALL,
+        height
+    );
+
+
+    ctx.fillRect(
+        width -
+        SIDE_WALL,
+        0,
+        SIDE_WALL,
+        height
+    );
+
+
+    /* =================================================
+       КРУГ
+    ================================================= */
+
+    const radius =
+        circle.radius;
+
+
+    const holeRadians =
+        difficulties[difficulty]
+            .holeSize *
+        Math.PI /
+        180;
+
+
+    const holeStart =
+        holeAngle -
+        holeRadians / 2;
+
+
+    const holeEnd =
+        holeAngle +
+        holeRadians / 2;
+
+
+    /*
+        Синяя стена.
+    */
+
+    ctx.save();
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        circle.x,
+        circle.y,
+        radius,
+        holeEnd,
+        holeStart +
+        Math.PI * 2
+    );
+
+
+    ctx.strokeStyle =
+        "#1478e8";
+
+
+    ctx.lineWidth =
+        circle.wallWidth;
+
+
+    ctx.lineCap =
+        "round";
+
+
+    ctx.shadowBlur =
+        20;
+
+
+    ctx.shadowColor =
+        "rgba(20,120,235,.8)";
+
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+
+    /* =================================================
+       КРАЯ ДЫРКИ
+    ================================================= */
+
+    ctx.save();
+
+
+    ctx.strokeStyle =
+        "#1478e8";
+
+
+    ctx.lineWidth =
+        5;
+
+
+    ctx.lineCap =
+        "round";
+
+
+    function drawHoleEnd(angle) {
+
+        const inner =
+            radius - 6;
+
+
+        const outer =
+            radius + 3;
+
+
+        const x1 =
+            circle.x +
+            Math.cos(angle) *
+            inner;
+
+
+        const y1 =
+            circle.y +
+            Math.sin(angle) *
+            inner;
+
+
+        const x2 =
+            circle.x +
+            Math.cos(angle) *
+            outer;
+
+
+        const y2 =
+            circle.y +
+            Math.sin(angle) *
+            outer;
+
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            x1,
+            y1
+        );
+
+
+        ctx.lineTo(
+            x2,
+            y2
+        );
+
+
+        ctx.stroke();
+    }
+
+
+    drawHoleEnd(
+        holeStart
+    );
+
+
+    drawHoleEnd(
+        holeEnd
+    );
+
+
+    ctx.restore();
+
+
+    /* =================================================
+       СВЕЧЕНИЕ ОТВЕРСТИЯ
+    ================================================= */
+
+    ctx.save();
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        circle.x,
+        circle.y,
+        radius + 3,
+        holeStart,
+        holeEnd
+    );
+
+
+    ctx.strokeStyle =
+        "rgba(255,255,255,.15)";
+
+
+    ctx.lineWidth =
+        4;
+
+
+    ctx.shadowBlur =
+        12;
+
+
+    ctx.shadowColor =
+        "rgba(255,255,255,.25)";
+
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+
+    /* =================================================
+       ШАР
+    ================================================= */
+
+    ctx.save();
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        ball.x,
+        ball.y,
+        ball.radius,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    ctx.shadowBlur =
+        16;
+
+
+    ctx.shadowColor =
+        "rgba(255,255,255,.95)";
+
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+
+    /*
+        Блик.
+    */
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        ball.x - 4,
+        ball.y - 4,
+        3,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "rgba(255,255,255,.9)";
+
+
+    ctx.fill();
+}
+
+
+/* =====================================================
+   GAME LOOP
+===================================================== */
+
+function gameLoop() {
+
+    updatePhysics();
+
+    draw();
+
+    requestAnimationFrame(
+        gameLoop
+    );
+}
+
+
+/* =====================================================
+   ИГРАТЬ
+===================================================== */
+
+playButton.addEventListener(
+    "click",
+    startGame
+);
+
+
+/*
+    Enter в поле ставки
+    тоже запускает игру.
+*/
+
+betInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            startGame();
+        }
+    }
+);
+
+
+/* =====================================================
+   ЗАКРЫТЬ РЕЗУЛЬТАТ
+===================================================== */
+
+closeResult.addEventListener(
+    "click",
+    () => {
+
+        resultWindow.classList.remove(
+            "show"
+        );
+
+
+        /*
+            Возвращаем пользователя
+            именно в стартовое меню.
+        */
+
+        startMenu.style.display =
+            "block";
+
+
+        gameRunning = false;
+
+        ballEscaped = false;
+
+        gameFinished = false;
+
+
+        bounceCount = 0;
+
+        multiplier = 1;
+
+
+        ball.x =
+            circle.x;
+
+
+        ball.y =
+            circle.y -
+            circle.radius * 0.35;
+
+
+        updateUI();
+    }
+);
+
+
+/* =====================================================
+   СЛОЖНОСТЬ
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".difficulty-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    difficulty =
+                        button.dataset.mode;
+
+
+                    document
+                        .querySelectorAll(
+                            ".difficulty-button"
+                        )
+                        .forEach(
+                            other => {
+
+                                other.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    updateZones();
+
+
+                    /*
+                        Если игрок сменил
+                        сложность до начала
+                        раунда — просто
+                        обновляем меню.
+
+                        Если во время игры —
+                        перезапускаем раунд.
+                    */
+
+                    if (
+                        gameRunning
+                    ) {
+
+                        startGame();
+                    }
+
                 }
-            }
+            );
 
-            // === ПРОВЕРКА: НАХОДИТСЯ ЛИ ДЫРКА ПОД ШАРИКОМ? ===
-            // Угол шарика относительно центра круга
-            const ballAngle = Math.atan2(y - radius, x - radius);
-            // Угол дырки в мировой системе
-            const holeAngle = getHoleAngle();
-
-            // Разница углов (нормализуем)
-            let diff = ballAngle - holeAngle;
-            while (diff > Math.PI) diff -= 2 * Math.PI;
-            while (diff < -Math.PI) diff += 2 * Math.PI;
-
-            // Если шарик близко к дырке (по углу) и находится в нижней части
-            const isNearHole = Math.abs(diff) < 0.15;
-            const isAtBottom = y > radius + 10;
-
-            if (isNearHole && isAtBottom) {
-                // Шарик падает в дырку!
-                dy += 0.5; // ускоряем падение
-                // Можно добавить визуальный эффект или остановить игру
-                console.log('Шарик упал в дырку!');
-            }
-
-            // Применяем позицию
-            ball.style.left = (x - ballRadius) + 'px';
-            ball.style.top = (y - ballRadius) + 'px';
-
-            requestAnimationFrame(updateBall);
         }
+    );
 
-        updateBall();
-    </script>
+
+/* =====================================================
+   ЗАПУСК
+===================================================== */
+
+resizeCanvas();
+
+updateZones();
+
+updateUI();
+
+
+ball.x =
+    circle.x;
+
+ball.y =
+    circle.y -
+    circle.radius * 0.35;
+
+
+/*
+    Круг и дырка вращаются
+    ещё до начала игры.
+*/
+
+gameLoop();
+
+</script>
 
 </body>
 </html>
