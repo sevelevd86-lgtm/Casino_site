@@ -41,7 +41,6 @@
             animation: rotate 2s linear infinite;
         }
 
-        /* ===== ШАРИК — НЕЗАВИСИМЫЙ ===== */
         .ball {
             position: absolute;
             width: 20px;
@@ -55,7 +54,6 @@
             will-change: transform;
             pointer-events: none;
             z-index: 2;
-            /* Шарик НЕ вращается вместе с кругом */
             animation: none;
         }
 
@@ -83,25 +81,22 @@
         const wrapper = document.getElementById('circleWrapper');
         const ball = document.getElementById('ball');
 
-        // Размеры круга
         const size = 500;
         const radius = size / 2;
         const ballRadius = 10;
 
-        // Начальная позиция шарика (центр)
         let x = radius;
         let y = radius - 40;
 
-        // Скорость
         let dx = (Math.random() - 0.5) * 2.0;
         let dy = 0;
 
         const GRAVITY = 0.2;
         const BOUNCE = 0.80;
-        const MAX_BOUNCE_HEIGHT = radius * 0.5; // середина круга
+        const MAX_BOUNCE_HEIGHT = radius * 0.5;
 
         function updateBall() {
-            // Гравитация всегда вниз
+            // Гравитация
             dy += GRAVITY;
 
             // Движение
@@ -112,24 +107,26 @@
             const dist = Math.sqrt((x - radius) ** 2 + (y - radius) ** 2);
             const maxDist = radius - ballRadius - 2;
 
-            // Если шарик касается стенки круга
+            // === ЖЁСТКОЕ СТОЛКНОВЕНИЕ СО СТЕНКОЙ ===
             if (dist > maxDist) {
                 // Вектор нормали от центра к шарику
                 const nx = (x - radius) / dist;
                 const ny = (y - radius) / dist;
 
-                // Вталкиваем внутрь
+                // Жёстко вталкиваем шарик внутрь (чтобы не пробивал)
                 x = radius + nx * maxDist;
                 y = radius + ny * maxDist;
 
                 // Нормальная составляющая скорости
                 const vn = dx * nx + dy * ny;
+
+                // Если шарик движется наружу — отражаем
                 if (vn > 0) {
-                    // Отражаем скорость
+                    // Полное отражение с учётом упругости
                     dx -= 2 * vn * nx * BOUNCE;
                     dy -= 2 * vn * ny * BOUNCE;
 
-                    // Ограничиваем вертикальную скорость, чтобы прыжок был не выше середины
+                    // Небольшое демпфирование, чтобы не улетел
                     const speed = Math.sqrt(dx * dx + dy * dy);
                     if (speed > 0) {
                         const vy_abs = Math.abs(dy);
@@ -142,14 +139,25 @@
                 }
             }
 
-            // Применяем позицию (абсолютную, без вращения)
+            // Дополнительная проверка: если шарик всё же оказался снаружи (защита)
+            const dist2 = Math.sqrt((x - radius) ** 2 + (y - radius) ** 2);
+            if (dist2 > maxDist + 5) {
+                // Принудительно возвращаем в центр
+                const angle = Math.atan2(y - radius, x - radius);
+                x = radius + Math.cos(angle) * maxDist;
+                y = radius + Math.sin(angle) * maxDist;
+                // Гасим скорость
+                dx *= 0.5;
+                dy *= 0.5;
+            }
+
+            // Применяем позицию
             ball.style.left = x - ballRadius + 'px';
             ball.style.top = y - ballRadius + 'px';
 
             requestAnimationFrame(updateBall);
         }
 
-        // Запускаем физику
         updateBall();
     </script>
 
