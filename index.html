@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Я 200</title>
+<title>White Bear</title>
 
 <style>
 
@@ -38,9 +38,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    ЗВЁЗДЫ
-========================= */
+========================================= */
 
 .stars {
     position: absolute;
@@ -94,9 +94,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    БУКВЫ
-========================= */
+========================================= */
 
 .letters {
     position: absolute;
@@ -118,7 +118,7 @@ body {
         Helvetica,
         sans-serif;
 
-    font-size: clamp(42px, 8vw, 90px);
+    font-size: clamp(38px, 7vw, 82px);
 
     font-weight: 700;
 
@@ -173,9 +173,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    СТИРАЛЬНАЯ МАШИНА
-========================= */
+========================================= */
 
 .washing-machine {
 
@@ -214,9 +214,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    ПАНЕЛЬ
-========================= */
+========================================= */
 
 .top-panel {
 
@@ -297,9 +297,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    ОКНО
-========================= */
+========================================= */
 
 .window {
 
@@ -395,9 +395,9 @@ body {
 }
 
 
-/* =========================
+/* =========================================
    МОБИЛЬНАЯ ВЕРСИЯ
-========================= */
+========================================= */
 
 @media (max-width: 600px) {
 
@@ -429,9 +429,9 @@ body {
 }
 
 
-/* =========================
-   РАСПОЛОЖЕНИЕ ЗВЁЗД
-========================= */
+/* =========================================
+   ЗВЁЗДЫ
+========================================= */
 
 .star:nth-child(1)  { left: 3%;  top: 8%; }
 .star:nth-child(2)  { left: 7%;  top: 23%; }
@@ -523,10 +523,12 @@ body {
 
     </div>
 
+
     <div
         class="letters"
         id="letters">
     </div>
+
 
     <div
         class="washing-machine"
@@ -557,9 +559,9 @@ body {
 
 <script>
 
-/* =========================
+/* =========================================
    ЭЛЕМЕНТЫ
-========================= */
+========================================= */
 
 const machine =
     document.getElementById("washingMachine");
@@ -568,19 +570,19 @@ const lettersContainer =
     document.getElementById("letters");
 
 
-/* =========================
-   НОВАЯ НАДПИСЬ
-========================= */
+/* =========================================
+   ДВА СЛОВА
+========================================= */
 
 const words = [
-    "Я",
-    "200"
+    "White",
+    "Bear"
 ];
 
 
-/* =========================
+/* =========================================
    НАСТРОЙКИ
-========================= */
+========================================= */
 
 const START_DELAY = 3000;
 
@@ -593,9 +595,9 @@ const DURATION = 9500;
 const LETTER_FLY_TIME = 850;
 
 
-/* =========================
+/* =========================================
    ВСЕ БУКВЫ
-========================= */
+========================================= */
 
 const letters = [];
 
@@ -613,9 +615,9 @@ words.forEach((word, wordIndex) => {
 });
 
 
-/* =========================
-   ТРАЕКТОРИЯ
-========================= */
+/* =========================================
+   ТРАЕКТОРИЯ МАШИНКИ
+========================================= */
 
 function getMachinePosition(progress) {
 
@@ -625,13 +627,16 @@ function getMachinePosition(progress) {
     const height =
         window.innerHeight;
 
+
     const startX = -100;
 
     const endX =
         width + 100;
 
+
     const centerY =
         height * 0.53;
+
 
     const arcHeight =
         Math.min(
@@ -639,10 +644,12 @@ function getMachinePosition(progress) {
             260
         );
 
+
     const x =
         startX +
         (endX - startX) *
         progress;
+
 
     const y =
         centerY -
@@ -651,10 +658,12 @@ function getMachinePosition(progress) {
         ) *
         arcHeight;
 
+
     const angle =
         -Math.cos(
             progress * Math.PI
         ) * 12;
+
 
     return {
         x,
@@ -665,9 +674,9 @@ function getMachinePosition(progress) {
 }
 
 
-/* =========================
+/* =========================================
    СОЗДАНИЕ БУКВЫ
-========================= */
+========================================= */
 
 function createLetter(
     character,
@@ -679,11 +688,14 @@ function createLetter(
     const letter =
         document.createElement("span");
 
+
     letter.className =
         "letter glow";
 
+
     letter.textContent =
         character;
+
 
     const startX =
         machinePosition.x + 35;
@@ -691,20 +703,25 @@ function createLetter(
     const startY =
         machinePosition.y + 32;
 
+
     const width =
         window.innerWidth;
 
     const height =
         window.innerHeight;
 
+
     const centerX =
         width * 0.55;
+
 
     const centerY =
         height * 0.43;
 
+
     /*
-       Расстояние между буквами.
+       Расстояние между буквами
+       немного уменьшено.
     */
 
     const letterSpacing =
@@ -713,8 +730,10 @@ function createLetter(
             88
         );
 
+
     const word =
         words[wordIndex];
+
 
     let sameWordIndex = 0;
 
@@ -734,14 +753,18 @@ function createLetter(
 
     }
 
+
     const wordWidth =
         (word.length - 1) *
         letterSpacing;
 
+
     const wordGap =
         letterSpacing * 1.8;
 
+
     let wordCenterX;
+
 
     if (wordIndex === 0) {
 
@@ -759,21 +782,26 @@ function createLetter(
 
     }
 
+
     const finalX =
         wordCenterX -
         wordWidth / 2 +
         sameWordIndex *
         letterSpacing;
 
+
     const finalY =
         centerY;
+
 
     const randomOffset =
         (Math.random() - 0.5) * 12;
 
+
     const targetY =
         finalY +
         randomOffset;
+
 
     letter.style.left =
         startX + "px";
@@ -790,12 +818,15 @@ function createLetter(
     letter.style.transform =
         "translate(-50%, -50%) scale(0.3)";
 
+
     lettersContainer.appendChild(
         letter
     );
 
+
     const animationStart =
         performance.now();
+
 
     function animateLetter(now) {
 
@@ -803,15 +834,18 @@ function createLetter(
             now -
             animationStart;
 
+
         let progress =
             elapsed /
             LETTER_FLY_TIME;
+
 
         if (progress > 1) {
 
             progress = 1;
 
         }
+
 
         const eased =
             1 -
@@ -820,15 +854,18 @@ function createLetter(
                 3
             );
 
+
         const currentX =
             startX +
             (finalX - startX) *
             eased;
 
+
         const currentY =
             startY +
             (targetY - startY) *
             eased;
+
 
         letter.style.left =
             currentX + "px";
@@ -836,11 +873,13 @@ function createLetter(
         letter.style.top =
             currentY + "px";
 
+
         letter.style.opacity =
             Math.min(
                 1,
                 progress * 4
             );
+
 
         const scale =
             0.3 +
@@ -850,8 +889,10 @@ function createLetter(
                 progress * 1.5
             );
 
+
         letter.style.transform =
             `translate(-50%, -50%) scale(${scale})`;
+
 
         const blur =
             Math.max(
@@ -860,8 +901,10 @@ function createLetter(
                 progress * 10
             );
 
+
         letter.style.filter =
             `blur(${blur}px)`;
+
 
         if (progress < 1) {
 
@@ -890,6 +933,7 @@ function createLetter(
 
     }
 
+
     requestAnimationFrame(
         animateLetter
     );
@@ -897,9 +941,9 @@ function createLetter(
 }
 
 
-/* =========================
-   ПОЛЁТ
-========================= */
+/* =========================================
+   ЗАПУСК ПОЛЁТА
+========================================= */
 
 let startTime = null;
 
@@ -907,6 +951,13 @@ let nextLetterTime =
     START_DELAY;
 
 let letterIndex = 0;
+
+
+/*
+   ВАЖНО:
+   После завершения полёта
+   больше ничего не запускаем.
+*/
 
 let finished = false;
 
@@ -917,19 +968,23 @@ function animate(time) {
         return;
     }
 
+
     if (startTime === null) {
 
         startTime = time;
 
     }
 
+
     const elapsed =
         time -
         startTime;
 
+
     let progress =
         elapsed /
         DURATION;
+
 
     if (progress > 1) {
 
@@ -937,24 +992,28 @@ function animate(time) {
 
     }
 
+
     const position =
         getMachinePosition(
             progress
         );
 
+
     machine.style.left =
         position.x + "px";
 
+
     machine.style.top =
         position.y + "px";
+
 
     machine.style.transform =
         `rotate(${position.angle}deg)`;
 
 
-    /* =========================
+    /* =====================================
        ВЫПУСК БУКВ
-    ========================= */
+    ===================================== */
 
     if (
         elapsed >= nextLetterTime &&
@@ -964,8 +1023,9 @@ function animate(time) {
         const item =
             letters[letterIndex];
 
+
         if (
-            letterIndex === 0
+            letterIndex === 4
         ) {
 
             nextLetterTime +=
@@ -978,6 +1038,7 @@ function animate(time) {
 
         }
 
+
         createLetter(
             item.char,
             letterIndex,
@@ -985,19 +1046,26 @@ function animate(time) {
             position
         );
 
+
         letterIndex++;
 
     }
 
 
-    /* =========================
+    /* =====================================
        КОНЕЦ ПОЛЁТА
-    ========================= */
+    ===================================== */
 
     if (progress >= 1) {
 
+        /*
+           Машинка остаётся
+           в конечной точке.
+        */
+
         const finalPosition =
             getMachinePosition(1);
+
 
         machine.style.left =
             finalPosition.x + "px";
@@ -1007,6 +1075,11 @@ function animate(time) {
 
         machine.style.transform =
             `rotate(${finalPosition.angle}deg)`;
+
+
+        /*
+           Полёт полностью прекращается.
+        */
 
         finished = true;
 
@@ -1021,9 +1094,9 @@ function animate(time) {
 }
 
 
-/* =========================
+/* =========================================
    СТАРТ
-========================= */
+========================================= */
 
 requestAnimationFrame(
     animate
