@@ -24,7 +24,7 @@ from aiohttp import web
 # КОНФИГУРАЦИЯ
 # =====================================================
 
-BOT_TOKEN = "ТВОЙ_ТОКЕН_БОТА"
+BOT_TOKEN = "8918284594:AAG-h12sJhc7a0qaV5LgS-ea29FNeZVtJvY"
 WEBAPP_URL = "https://твой-сайт.com/index.html"
 
 # =====================================================
