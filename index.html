@@ -1,1866 +1,226 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PEPE CASE</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
-}
-
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-
-    background:
-        radial-gradient(
-            circle at 50% 25%,
-            #102d1d 0%,
-            #09150f 35%,
-            #06080a 80%
-        );
-
-    color: #fff;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    overflow-x: hidden;
-}
-
-body {
-    min-height: 100vh;
-}
-
-button {
-    font: inherit;
-}
-
-.app {
-    width: 100%;
-    max-width: 700px;
-    min-height: 100vh;
-
-    margin: 0 auto;
-
-    padding:
-        20px
-        15px
-        40px;
-}
-
-
-/* =========================
-   BACKGROUND
-========================= */
-
-.bg-glow {
-    position: fixed;
-
-    width: 450px;
-    height: 450px;
-
-    border-radius: 50%;
-
-    pointer-events: none;
-
-    filter:
-        blur(110px);
-
-    opacity: .16;
-
-    z-index: -1;
-}
-
-.bg-glow.one {
-    left: -180px;
-    top: 5%;
-
-    background:
-        #28ef72;
-}
-
-.bg-glow.two {
-    right: -180px;
-    bottom: 5%;
-
-    background:
-        #0aa34b;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom:
-        25px;
-}
-
-.logo {
-    font-size: 25px;
-
-    font-weight: 1000;
-
-    letter-spacing:
-        2px;
-}
-
-.logo span {
-    color:
-        #37ed7b;
-}
-
-.balance-box {
-    min-width:
-        145px;
-
-    padding:
-        10px 14px;
-
-    border-radius:
-        13px;
-
-    border:
-        1px solid #1e4c31;
-
-    background:
-        linear-gradient(
-            145deg,
-            #101b14,
-            #0b0d0c
-        );
-
-    text-align:
-        right;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.35),
-        inset 0 1px 0 rgba(255,255,255,.04);
-}
-
-.balance-label {
-    color:
-        #68736d;
-
-    font-size:
-        9px;
-
-    font-weight:
-        900;
-
-    text-transform:
-        uppercase;
-
-    letter-spacing:
-        1px;
-}
-
-.balance {
-    margin-top:
-        3px;
-
-    font-size:
-        20px;
-
-    font-weight:
-        1000;
-}
-
-.balance::after {
-    content:
-        " 💰";
-}
-
-
-/* =========================
-   CASE PANEL
-========================= */
-
-.case-panel {
-
-    position:
-        relative;
-
-    overflow:
-        hidden;
-
-    padding:
-        25px 20px 30px;
-
-    border-radius:
-        25px;
-
-    border:
-        1px solid #1d4d31;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(12,31,20,.98),
-            rgba(7,11,9,.99)
-        );
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.04);
-}
-
-.case-panel::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    width:
-        330px;
-
-    height:
-        330px;
-
-    left:
-        50%;
-
-    top:
-        40%;
-
-    transform:
-        translate(-50%, -50%);
-
-    border-radius:
-        50%;
-
-    background:
-        #22df69;
-
-    filter:
-        blur(100px);
-
-    opacity:
-        .13;
-
-    pointer-events:
-        none;
-}
-
-
-/* =========================
-   TITLES
-========================= */
-
-.case-title {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    text-align:
-        center;
-
-    font-size:
-        13px;
-
-    font-weight:
-        1000;
-
-    color:
-        #78847d;
-
-    letter-spacing:
-        2px;
-
-    text-transform:
-        uppercase;
-}
-
-.case-name {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    margin-top:
-        4px;
-
-    text-align:
-        center;
-
-    font-size:
-        29px;
-
-    font-weight:
-        1000;
-
-    color:
-        #fff;
-
-    text-shadow:
-        0 0 20px rgba(55,237,123,.35);
-}
-
-
-/* =========================
-   CASE IMAGE
-========================= */
-
-.case-image-wrapper {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    width:
-        min(360px, 82vw);
-
-    height:
-        360px;
-
-    margin:
-        20px auto 10px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    cursor:
-        pointer;
-}
-
-
-/* green glow */
-
-.case-image-glow {
-
-    position:
-        absolute;
-
-    width:
-        72%;
-
-    height:
-        72%;
-
-    border-radius:
-        50%;
-
-    background:
-        #27df6d;
-
-    filter:
-        blur(55px);
-
-    opacity:
-        .22;
-
-    pointer-events:
-        none;
-}
-
-
-/* actual case */
-
-.case-image {
-
-    position:
-        relative;
-
-    width:
-        100%;
-
-    height:
-        100%;
-
-    object-fit:
-        contain;
-
-    display:
-        block;
-
-    filter:
-        drop-shadow(
-            0 25px 30px
-            rgba(0,0,0,.55)
-        )
-        drop-shadow(
-            0 0 30px
-            rgba(40,230,105,.35)
-        );
-
-    user-select:
-        none;
-
-    -webkit-user-drag:
-        none;
-
-    transition:
-        transform .2s ease,
-        filter .2s ease;
-}
-
-
-/* hover */
-
-.case-image-wrapper:hover
-.case-image {
-
-    transform:
-        translateY(-5px)
-        scale(1.025);
-
-    filter:
-        drop-shadow(
-            0 30px 35px
-            rgba(0,0,0,.6)
-        )
-        drop-shadow(
-            0 0 40px
-            rgba(40,230,105,.5)
-        );
-}
-
-
-/* press */
-
-.case-image-wrapper:active
-.case-image {
-
-    transform:
-        scale(.96);
-}
-
-
-/* =========================
-   CLICK TEXT
-========================= */
-
-.open-hint {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    text-align:
-        center;
-
-    margin-top:
-        5px;
-
-    color:
-        #45ed86;
-
-    font-size:
-        13px;
-
-    font-weight:
-        900;
-
-    letter-spacing:
-        .5px;
-
-    animation:
-        hintPulse 2s ease-in-out infinite;
-}
-
-@keyframes hintPulse {
-
-    0%,
-    100% {
-        opacity:
-            .55;
-    }
-
-    50% {
-        opacity:
-            1;
-    }
-
-}
-
-
-/* =========================
-   INFO
-========================= */
-
-.case-info {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    text-align:
-        center;
-
-    margin-top:
-        14px;
-}
-
-.price {
-
-    display:
-        inline-block;
-
-    padding:
-        8px 13px;
-
-    border-radius:
-        10px;
-
-    background:
-        rgba(38,213,103,.09);
-
-    border:
-        1px solid #205e38;
-
-    color:
-        #45ed86;
-
-    font-size:
-        14px;
-
-    font-weight:
-        1000;
-}
-
-.description {
-
-    margin-top:
-        10px;
-
-    color:
-        #69736e;
-
-    font-size:
-        12px;
-
-    font-weight:
-        700;
-}
-
-
-/* =========================
-   MODAL
-========================= */
-
-.modal {
-
-    position:
-        fixed;
-
-    inset:
-        0;
-
-    z-index:
-        500;
-
-    display:
-        none;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    padding:
-        15px;
-
-    background:
-        rgba(0,0,0,.78);
-
-    backdrop-filter:
-        blur(8px);
-}
-
-.modal.show {
-    display:
-        flex;
-}
-
-.modal-box {
-
-    width:
-        100%;
-
-    max-width:
-        470px;
-
-    padding:
-        23px;
-
-    border-radius:
-        23px;
-
-    border:
-        1px solid #205b38;
-
-    background:
-        linear-gradient(
-            145deg,
-            #102016,
-            #090d0b
-        );
-
-    box-shadow:
-        0 30px 100px
-        rgba(0,0,0,.75);
-
-    text-align:
-        center;
-
-    animation:
-        modalIn .25s ease;
-}
-
-@keyframes modalIn {
-
-    from {
-        transform:
-            scale(.85);
-
-        opacity:
-            0;
-    }
-
-    to {
-        transform:
-            scale(1);
-
-        opacity:
-            1;
-    }
-
-}
-
-.modal-title {
-
-    font-size:
-        22px;
-
-    font-weight:
-        1000;
-
-    margin-bottom:
-        18px;
-}
-
-
-/* =========================
-   ROULETTE
-========================= */
-
-.roulette {
-
-    position:
-        relative;
-
-    width:
-        100%;
-
-    height:
-        90px;
-
-    overflow:
-        hidden;
-
-    border-radius:
-        13px;
-
-    border:
-        1px solid #234631;
-
-    background:
-        #060907;
-}
-
-.roulette::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    z-index:
-        10;
-
-    left:
-        50%;
-
-    top:
-        0;
-
-    bottom:
-        0;
-
-    width:
-        2px;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        #45ef88;
-
-    box-shadow:
-        0 0 10px #45ef88;
-}
-
-.roulette-line {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        10px;
-
-    height:
-        100%;
-
-    padding:
-        10px;
-
-    transition:
-        transform
-        3.5s
-        cubic-bezier(.08,.75,.1,1);
-}
-
-.roulette-item {
-
-    flex:
-        0 0 70px;
-
-    height:
-        70px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border-radius:
-        12px;
-
-    border:
-        1px solid #254331;
-
-    background:
-        #101711;
-
-    font-size:
-        30px;
-}
-
-
-/* =========================
-   RESULT
-========================= */
-
-.result {
-
-    min-height:
-        40px;
-
-    margin-top:
-        15px;
-
-    color:
-        #42ee86;
-
-    font-size:
-        17px;
-
-    font-weight:
-        1000;
-}
-
-.close-button {
-
-    width:
-        100%;
-
-    height:
-        48px;
-
-    margin-top:
-        10px;
-
-    border-radius:
-        12px;
-
-    border:
-        1px solid #24432f;
-
-    background:
-        #111712;
-
-    color:
-        #fff;
-
-    font-weight:
-        1000;
-
-    cursor:
-        pointer;
-}
-
-.close-button:hover {
-
-    border-color:
-        #39dc76;
-}
-
-
-/* =========================
-   TOAST
-========================= */
-
-.toast {
-
-    position:
-        fixed;
-
-    z-index:
-        700;
-
-    left:
-        50%;
-
-    bottom:
-        25px;
-
-    min-width:
-        220px;
-
-    max-width:
-        calc(100vw - 30px);
-
-    padding:
-        14px 18px;
-
-    border-radius:
-        13px;
-
-    border:
-        1px solid #25613b;
-
-    background:
-        #111712;
-
-    color:
-        #4aef8a;
-
-    text-align:
-        center;
-
-    font-weight:
-        1000;
-
-    transform:
-        translate(-50%, 100px);
-
-    opacity:
-        0;
-
-    transition:
-        .3s;
-}
-
-.toast.show {
-
-    transform:
-        translate(-50%, 0);
-
-    opacity:
-        1;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-    .app {
-
-        padding:
-            14px
-            12px
-            30px;
-    }
-
-    .logo {
-
-        font-size:
-            21px;
-    }
-
-    .balance-box {
-
-        min-width:
-            125px;
-
-        padding:
-            8px 11px;
-    }
-
-    .balance {
-
-        font-size:
-            17px;
-    }
-
-    .case-panel {
-
-        padding:
-            21px 14px;
-
-        border-radius:
-            20px;
-    }
-
-    .case-name {
-
-        font-size:
-            25px;
-    }
-
-    .case-image-wrapper {
-
-        width:
-            min(320px, 85vw);
-
-        height:
-            320px;
-    }
-
-    .open-hint {
-
-        font-size:
-            12px;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вращающаяся 3D Ракета</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+            overflow: hidden;
+        }
+
+        /* Сцена с ракетой */
+        .scene {
+            position: relative;
+            width: 300px;
+            height: 150px;
+            transform-style: preserve-3d;
+            /* Основная анимация: полное вращение на 360 градусов по оси Y, 
+               с небольшим наклоном по X (чтобы видеть верх и низ) */
+            animation: spin360 12s linear infinite;
+        }
+
+        /* Вращение по часовой стрелке */
+        @keyframes spin360 {
+            0% { transform: rotateX(15deg) rotateY(0deg); }
+            100% { transform: rotateX(15deg) rotateY(360deg); }
+        }
+
+        /* ВСЕ ОБЪЕМНЫЕ ЧАСТИ */
+        .part {
+            position: absolute;
+            transform-style: preserve-3d;
+            left: 50%;
+            top: 50%;
+        }
+
+        /* БЕЛЫЙ КОРПУС (Цилиндр из 6 граней) */
+        .cylinder {
+            width: 140px;
+            height: 90px;
+            transform: translate(-50%, -50%) translateX(-10px);
+        }
+        
+        .face {
+            position: absolute;
+            width: 140px;
+            height: 90px;
+            background: linear-gradient(to bottom, #ffffff, #d9d9d9);
+            border-radius: 10px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        /* 6 граней цилиндра для создания объема */
+        .face1 { transform: translateZ(20px); }
+        .face2 { transform: translateZ(-20px); }
+        .face3 { transform: rotateY(90deg) translateZ(20px); width: 40px; background: #cfcfcf; }
+        .face4 { transform: rotateY(90deg) translateZ(-20px); width: 40px; background: #cfcfcf; }
+        .face5 { transform: rotateX(90deg) translateZ(20px); height: 40px; background: #eee; }
+        .face6 { transform: rotateX(90deg) translateZ(-20px); height: 40px; background: #999; }
+
+        /* КРАСНЫЙ НОС (Конус) */
+        .cone-group {
+            transform: translate(-50%, -50%) translateX(70px) rotateY(90deg);
+            width: 90px;
+            height: 90px;
+        }
+
+        .cone {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 30% 30%, #ff4d4d, #b30000);
+            border-radius: 50% 50% 0 0;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            transform: translateX(-20px);
+        }
+        
+        /* Кольцо между корпусом и носом */
+        .ring {
+            position: absolute;
+            width: 10px;
+            height: 100px;
+            background: #808080;
+            border-radius: 5px;
+            transform: translate(-50%, -50%) translateX(55px) rotateY(90deg);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* ИЛЛЮМИНАТОР (Выпуклая линза) */
+        .window-group {
+            transform: translate(-50%, -50%) translateX(15px);
+            transform-style: preserve-3d;
+        }
+        
+        .window-outer {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #ff3333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) translateZ(21px);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        
+        .window-inner {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            background: radial-gradient(circle at 35% 35%, #00ccff, #003366);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) translateZ(23px);
+            box-shadow: 
+                inset 0 0 10px rgba(255,255,255,0.3),
+                0 0 20px rgba(0, 150, 255, 0.8);
+        }
+
+        /* ЗАДНИЕ СТАБИЛИЗАТОРЫ */
+        .fin-left {
+            transform: translate(-50%, -50%) translate(-60px, -40px) rotate(35deg);
+        }
+
+        .fin-right {
+            transform: translate(-50%, -50%) translate(-60px, 40px) rotate(-35deg);
+        }
+
+        .fin {
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff4d4d, #990000);
+            border-radius: 5px 0 0 5px;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3);
+        }
+
+        /* ЗАДНИЙ ВЫХЛОП (Сопло) */
+        .exhaust-group {
+            transform: translate(-50%, -50%) translateX(-75px) rotateY(90deg);
+        }
+
+        .nozzle-body {
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(to right, #333, #666, #333);
+            border-radius: 0 0 5px 5px;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+        }
+
+        /* Труба (красный стержень) */
+        .rod {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #ff3333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) translate(-70px, 0);
+            box-shadow: 0 0 5px rgba(255, 50, 50, 0.8);
+        }
+
+        /* ВИЗУАЛЬНОЕ СВЕЧЕНИЕ ОТ ИЛЛЮМИНАТОРА */
+        .glow {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) translateX(15px) translateZ(24px);
+            pointer-events: none;
+        }
+    </style>
 </head>
-
-
 <body>
 
-
-<div class="bg-glow one"></div>
-<div class="bg-glow two"></div>
-
-
-<div class="app">
-
-
-    <!-- HEADER -->
-
-    <header class="header">
-
-        <div class="logo">
-            <span>PEPE</span> CASE
+    <div class="scene">
+        <!-- Корпус -->
+        <div class="part cylinder">
+            <div class="face face1"></div>
+            <div class="face face2"></div>
+            <div class="face face3"></div>
+            <div class="face face4"></div>
+            <div class="face face5"></div>
+            <div class="face face6"></div>
         </div>
 
-
-        <div class="balance-box">
-
-            <div class="balance-label">
-                Ваш баланс
-            </div>
-
-            <div
-                class="balance"
-                id="balance"
-            >
-                1000
-            </div>
-
+        <!-- Нос -->
+        <div class="part cone-group">
+            <div class="cone"></div>
         </div>
 
-    </header>
+        <!-- Кольцо -->
+        <div class="part ring"></div>
 
-
-
-    <!-- CASE -->
-
-    <section class="case-panel">
-
-
-        <div class="case-title">
-            SPECIAL CASE
+        <!-- Иллюминатор -->
+        <div class="part window-group">
+            <div class="window-outer"></div>
+            <div class="window-inner"></div>
         </div>
 
-
-        <div class="case-name">
-            PEPE
+        <!-- Стабилизаторы -->
+        <div class="part fin-left">
+            <div class="fin"></div>
+        </div>
+        <div class="part fin-right">
+            <div class="fin"></div>
         </div>
 
-
-
-        <!-- CLICKABLE CASE -->
-
-        <div
-            class="case-image-wrapper"
-            id="caseImage"
-            onclick="openCase()"
-        >
-
-            <div class="case-image-glow"></div>
-
-
-            <img
-                class="case-image"
-                src="https://i.ibb.co/svLMYdFn/IMG-0794.png"
-                alt="PEPE CASE"
-                draggable="false"
-            >
-
+        <!-- Сопло -->
+        <div class="part exhaust-group">
+            <div class="nozzle-body"></div>
         </div>
 
+        <!-- Труба -->
+        <div class="part rod"></div>
 
-
-        <div class="open-hint">
-            НАЖМИТЕ НА КЕЙС, ЧТОБЫ ОТКРЫТЬ
-        </div>
-
-
-
-        <div class="case-info">
-
-            <div class="price">
-                25 💰
-            </div>
-
-
-            <div class="description">
-                Открой кейс и получи одну из наград
-            </div>
-
-        </div>
-
-
-    </section>
-
-</div>
-
-
-
-<!-- =========================
-     MODAL
-========================= -->
-
-<div
-    class="modal"
-    id="modal"
->
-
-
-    <div class="modal-box">
-
-
-        <div class="modal-title">
-            PEPE CASE
-        </div>
-
-
-
-        <!-- ROULETTE -->
-
-        <div class="roulette">
-
-            <div
-                class="roulette-line"
-                id="rouletteLine"
-            ></div>
-
-        </div>
-
-
-
-        <div
-            class="result"
-            id="result"
-        >
-            Открываем...
-        </div>
-
-
-
-        <button
-            class="close-button"
-            id="closeButton"
-            onclick="closeModal()"
-        >
-            ЗАКРЫТЬ
-        </button>
-
-
+        <!-- Свечение -->
+        <div class="part glow"></div>
     </div>
-
-</div>
-
-
-
-<!-- TOAST -->
-
-<div
-    class="toast"
-    id="toast"
-></div>
-
-
-
-<script>
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-let balance = 1000;
-
-const CASE_PRICE = 25;
-
-let opening = false;
-
-
-/* =========================================================
-   REWARDS
-========================================================= */
-
-const rewards = [
-
-    {
-        name: "10 💰",
-        value: 10,
-        icon: "💰",
-        chance: 25
-    },
-
-    {
-        name: "25 💰",
-        value: 25,
-        icon: "🎁",
-        chance: 25
-    },
-
-    {
-        name: "50 💰",
-        value: 50,
-        icon: "🌹",
-        chance: 20
-    },
-
-    {
-        name: "100 💰",
-        value: 100,
-        icon: "💎",
-        chance: 15
-    },
-
-    {
-        name: "150 💰",
-        value: 150,
-        icon: "🐸",
-        chance: 10
-    },
-
-    {
-        name: "250 💰",
-        value: 250,
-        icon: "👑",
-        chance: 5
-    }
-
-];
-
-
-/* =========================================================
-   DOM
-========================================================= */
-
-const balanceElement =
-    document.getElementById(
-        "balance"
-    );
-
-const modal =
-    document.getElementById(
-        "modal"
-    );
-
-const rouletteLine =
-    document.getElementById(
-        "rouletteLine"
-    );
-
-const result =
-    document.getElementById(
-        "result"
-    );
-
-const closeButton =
-    document.getElementById(
-        "closeButton"
-    );
-
-const toast =
-    document.getElementById(
-        "toast"
-    );
-
-
-/* =========================================================
-   AUDIO
-========================================================= */
-
-let audioContext = null;
-
-
-function getAudioContext() {
-
-    if (!audioContext) {
-
-        audioContext =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
-
-    }
-
-
-    if (
-        audioContext.state ===
-        "suspended"
-    ) {
-
-        audioContext.resume();
-
-    }
-
-
-    return audioContext;
-
-}
-
-
-function tickSound() {
-
-    try {
-
-        const audio =
-            getAudioContext();
-
-
-        const oscillator =
-            audio.createOscillator();
-
-
-        const gain =
-            audio.createGain();
-
-
-        oscillator.type =
-            "square";
-
-
-        oscillator.frequency.setValueAtTime(
-            650,
-            audio.currentTime
-        );
-
-
-        oscillator.frequency.exponentialRampToValueAtTime(
-            180,
-            audio.currentTime + .06
-        );
-
-
-        gain.gain.setValueAtTime(
-            .055,
-            audio.currentTime
-        );
-
-
-        gain.gain.exponentialRampToValueAtTime(
-            .001,
-            audio.currentTime + .08
-        );
-
-
-        oscillator.connect(gain);
-
-        gain.connect(
-            audio.destination
-        );
-
-
-        oscillator.start();
-
-
-        oscillator.stop(
-            audio.currentTime + .09
-        );
-
-    } catch (e) {}
-
-}
-
-
-function winSound() {
-
-    try {
-
-        const audio =
-            getAudioContext();
-
-
-        const notes = [
-            523,
-            659,
-            784,
-            1047
-        ];
-
-
-        notes.forEach(
-            (
-                frequency,
-                index
-            ) => {
-
-                const oscillator =
-                    audio.createOscillator();
-
-
-                const gain =
-                    audio.createGain();
-
-
-                const start =
-                    audio.currentTime +
-                    index * .09;
-
-
-                oscillator.type =
-                    "sine";
-
-
-                oscillator.frequency.setValueAtTime(
-                    frequency,
-                    start
-                );
-
-
-                gain.gain.setValueAtTime(
-                    .001,
-                    start
-                );
-
-
-                gain.gain.exponentialRampToValueAtTime(
-                    .12,
-                    start + .02
-                );
-
-
-                gain.gain.exponentialRampToValueAtTime(
-                    .001,
-                    start + .25
-                );
-
-
-                oscillator.connect(gain);
-
-                gain.connect(
-                    audio.destination
-                );
-
-
-                oscillator.start(start);
-
-
-                oscillator.stop(
-                    start + .27
-                );
-
-            }
-        );
-
-    } catch (e) {}
-
-}
-
-
-/* =========================================================
-   BALANCE
-========================================================= */
-
-function updateBalance() {
-
-    balance =
-        Math.round(
-            balance * 100
-        ) / 100;
-
-
-    balanceElement.textContent =
-        balance.toLocaleString(
-            "ru-RU",
-            {
-                maximumFractionDigits: 2
-            }
-        );
-
-}
-
-
-/* =========================================================
-   RANDOM REWARD
-========================================================= */
-
-function getReward() {
-
-    const random =
-        Math.random() * 100;
-
-
-    let current = 0;
-
-
-    for (
-        const reward of rewards
-    ) {
-
-        current +=
-            reward.chance;
-
-
-        if (
-            random <= current
-        ) {
-
-            return reward;
-
-        }
-
-    }
-
-
-    return rewards[
-        rewards.length - 1
-    ];
-
-}
-
-
-/* =========================================================
-   CREATE ROULETTE ITEM
-========================================================= */
-
-function createRouletteItem(
-    reward
-) {
-
-    const element =
-        document.createElement(
-            "div"
-        );
-
-
-    element.className =
-        "roulette-item";
-
-
-    element.textContent =
-        reward.icon;
-
-
-    return element;
-
-}
-
-
-/* =========================================================
-   OPEN CASE
-========================================================= */
-
-function openCase() {
-
-    if (opening)
-        return;
-
-
-    if (
-        balance < CASE_PRICE
-    ) {
-
-        showToast(
-            "Недостаточно средств 💰"
-        );
-
-        return;
-
-    }
-
-
-    balance -=
-        CASE_PRICE;
-
-
-    updateBalance();
-
-
-    opening = true;
-
-
-    closeButton.disabled =
-        true;
-
-
-    modal.classList.add(
-        "show"
-    );
-
-
-    result.textContent =
-        "Открываем...";
-
-
-    rouletteLine.innerHTML =
-        "";
-
-
-    /* =========================
-       CREATE ITEMS
-    ========================= */
-
-    const items = [];
-
-
-    for (
-        let i = 0;
-        i < 40;
-        i++
-    ) {
-
-        items.push(
-            getReward()
-        );
-
-    }
-
-
-    /* =========================
-       WINNER
-    ========================= */
-
-    const winner =
-        getReward();
-
-
-    items[32] =
-        winner;
-
-
-    /* =========================
-       DRAW
-    ========================= */
-
-    items.forEach(
-        reward => {
-
-            rouletteLine.appendChild(
-                createRouletteItem(
-                    reward
-                )
-            );
-
-        }
-    );
-
-
-    /* =========================
-       RESET ROULETTE
-    ========================= */
-
-    rouletteLine.style.transition =
-        "none";
-
-
-    rouletteLine.style.transform =
-        "translateX(0px)";
-
-
-    requestAnimationFrame(
-        () => {
-
-            requestAnimationFrame(
-                () => {
-
-                    const itemWidth =
-                        80;
-
-
-                    const containerWidth =
-                        document.querySelector(
-                            ".roulette"
-                        ).clientWidth;
-
-
-                    const center =
-                        containerWidth / 2;
-
-
-                    const winnerCenter =
-                        32 *
-                        itemWidth +
-                        10 +
-                        35;
-
-
-                    const finalX =
-                        center -
-                        winnerCenter;
-
-
-                    rouletteLine.style.transition =
-                        "transform 3.5s cubic-bezier(.08,.75,.1,1)";
-
-
-                    rouletteLine.style.transform =
-                        `translateX(${finalX}px)`;
-
-
-                    /* =========================
-                       TICKS
-                    ========================= */
-
-                    let ticks = 0;
-
-
-                    const interval =
-                        setInterval(
-                            () => {
-
-                                tickSound();
-
-
-                                ticks++;
-
-
-                                if (
-                                    ticks >= 27
-                                ) {
-
-                                    clearInterval(
-                                        interval
-                                    );
-
-                                }
-
-                            },
-                            125
-                        );
-
-
-                    /* =========================
-                       FINISH
-                    ========================= */
-
-                    setTimeout(
-                        () => {
-
-                            finishCase(
-                                winner
-                            );
-
-                        },
-                        3700
-                    );
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   FINISH
-========================================================= */
-
-function finishCase(
-    reward
-) {
-
-    balance +=
-        reward.value;
-
-
-    updateBalance();
-
-
-    result.innerHTML =
-        `
-        🎉 Вы получили
-        <strong>
-            ${reward.icon}
-            ${reward.name}
-        </strong>
-        `;
-
-
-    winSound();
-
-
-    showToast(
-        `🎉 ${reward.icon} ${reward.name}`
-    );
-
-
-    opening = false;
-
-
-    closeButton.disabled =
-        false;
-
-}
-
-
-/* =========================================================
-   CLOSE
-========================================================= */
-
-function closeModal() {
-
-    if (opening)
-        return;
-
-
-    modal.classList.remove(
-        "show"
-    );
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimer = null;
-
-
-function showToast(
-    text
-) {
-
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toast.textContent =
-        text;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    toastTimer =
-        setTimeout(
-            () => {
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            2500
-        );
-
-}
-
-
-/* =========================================================
-   BACKGROUND CLOSE
-========================================================= */
-
-modal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target === modal &&
-            !opening
-        ) {
-
-            closeModal();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-updateBalance();
-
-</script>
 
 </body>
 </html>
