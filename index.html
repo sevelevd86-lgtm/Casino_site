@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flying Washing Machine</title>
+<title>Я 200</title>
 
 <style>
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html,
@@ -23,24 +23,30 @@ body {
 }
 
 .scene {
+    position: relative;
     width: 100vw;
     height: 100vh;
-    position: relative;
     overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #111 0%,
+            #050505 45%,
+            #000 100%
+        );
 }
 
 
-/* =========================================
+/* =========================
    ЗВЁЗДЫ
-========================================= */
+========================= */
 
 .stars {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
     pointer-events: none;
+    z-index: 1;
 }
 
 .star {
@@ -50,35 +56,32 @@ body {
     height: 2px;
 
     background: white;
-
     border-radius: 50%;
 
-    opacity: 0.7;
+    opacity: 0.6;
 
     animation:
         starMove linear infinite,
-        starTwinkle ease-in-out infinite alternate;
+        starBlink ease-in-out infinite alternate;
 }
-
-
-/* Движение звёзд */
 
 @keyframes starMove {
 
     0% {
-        transform: translateY(-20px);
+        transform: translateY(-15px);
+    }
+
+    50% {
+        transform: translateY(15px);
     }
 
     100% {
-        transform: translateY(20px);
+        transform: translateY(-15px);
     }
 
 }
 
-
-/* Лёгкое мерцание */
-
-@keyframes starTwinkle {
+@keyframes starBlink {
 
     0% {
         opacity: 0.25;
@@ -91,56 +94,136 @@ body {
 }
 
 
-/* =========================================
+/* =========================
+   БУКВЫ
+========================= */
+
+.letters {
+    position: absolute;
+    inset: 0;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+.letter {
+
+    position: absolute;
+
+    color: #fff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: clamp(42px, 8vw, 90px);
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    opacity: 0;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.35);
+
+    filter: blur(8px);
+
+    text-shadow:
+        0 0 5px #fff,
+        0 0 12px #fff,
+        0 0 25px rgba(255,255,255,0.95),
+        0 0 50px rgba(255,255,255,0.7),
+        0 0 90px rgba(255,255,255,0.35);
+}
+
+.letter.glow {
+
+    animation:
+        neonPulse
+        2.5s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+@keyframes neonPulse {
+
+    0% {
+        text-shadow:
+            0 0 4px #fff,
+            0 0 10px #fff,
+            0 0 20px rgba(255,255,255,.8),
+            0 0 40px rgba(255,255,255,.35);
+    }
+
+    100% {
+        text-shadow:
+            0 0 7px #fff,
+            0 0 18px #fff,
+            0 0 35px rgba(255,255,255,1),
+            0 0 75px rgba(255,255,255,.65);
+    }
+
+}
+
+
+/* =========================
    СТИРАЛЬНАЯ МАШИНА
-========================================= */
+========================= */
 
 .washing-machine {
 
     position: absolute;
 
-    width: 83px;
-    height: 70px;
+    width: 75px;
+    height: 64px;
 
     left: -100px;
-    top: 35vh;
+    top: 40vh;
 
     background:
         linear-gradient(
             135deg,
-            #ffffff 0%,
+            #fff 0%,
             #f7f7f7 30%,
-            #e5e5e5 70%,
-            #bdbdbd 100%
+            #e5e5e5 65%,
+            #aaa 100%
         );
 
     border: 1px solid #888;
 
-    border-radius: 5px;
+    border-radius: 6px;
 
     box-shadow:
-        inset 4px 4px 8px rgba(255,255,255,0.9),
-        inset -4px -4px 9px rgba(0,0,0,0.2),
-        0 10px 20px rgba(0,0,0,0.7);
-
-    animation: flyMachine 8s linear infinite;
-
-    will-change: left, top, transform;
+        inset 4px 4px 8px rgba(255,255,255,.9),
+        inset -5px -5px 10px rgba(0,0,0,.3),
+        0 12px 30px rgba(0,0,0,.8);
 
     z-index: 10;
+
+    will-change:
+        left,
+        top,
+        transform;
 }
 
 
-/* =========================================
+/* =========================
    ПАНЕЛЬ
-========================================= */
+========================= */
 
 .top-panel {
 
     position: absolute;
 
-    width: 20px;
-    height: 60px;
+    width: 19px;
+    height: 54px;
 
     right: 4px;
     top: 4px;
@@ -148,9 +231,9 @@ body {
     background:
         linear-gradient(
             to right,
-            #ffffff,
-            #eeeeee 50%,
-            #cecece
+            #fff,
+            #eee 50%,
+            #c8c8c8
         );
 
     border: 1px solid #aaa;
@@ -158,20 +241,15 @@ body {
     border-radius: 3px;
 }
 
-
-/* =========================================
-   ЭКРАН
-========================================= */
-
 .display {
 
     position: absolute;
 
-    width: 9px;
-    height: 21px;
+    width: 8px;
+    height: 19px;
 
     left: 5px;
-    top: 6px;
+    top: 5px;
 
     background: #111;
 
@@ -179,29 +257,6 @@ body {
 
     border-radius: 2px;
 }
-
-.display::after {
-
-    content: '1:20';
-
-    position: absolute;
-
-    left: 1px;
-    top: 3px;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 4px;
-
-    color: #aaffbd;
-
-    writing-mode: vertical-rl;
-}
-
-
-/* =========================================
-   МАЛЕНЬКАЯ КНОПКА
-========================================= */
 
 .button-small {
 
@@ -211,27 +266,22 @@ body {
     height: 5px;
 
     left: 7px;
-    top: 32px;
+    top: 30px;
 
     border-radius: 50%;
 
     background: #999;
 }
 
-
-/* =========================================
-   ОСНОВНАЯ КНОПКА
-========================================= */
-
 .button {
 
     position: absolute;
 
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
 
     left: 4px;
-    top: 42px;
+    top: 39px;
 
     border-radius: 50%;
 
@@ -246,42 +296,27 @@ body {
     border: 1px solid #666;
 }
 
-.button::after {
 
-    content: '';
-
-    position: absolute;
-
-    width: 2px;
-    height: 4px;
-
-    left: 4px;
-    top: 1px;
-
-    background: #444;
-}
-
-
-/* =========================================
+/* =========================
    ОКНО
-========================================= */
+========================= */
 
 .window {
 
     position: absolute;
 
-    width: 48px;
-    height: 48px;
+    width: 45px;
+    height: 45px;
 
     left: 6px;
-    top: 11px;
+    top: 10px;
 
     border-radius: 50%;
 
     background:
         linear-gradient(
             145deg,
-            #eeeeee,
+            #eee,
             #aaa,
             #777
         );
@@ -289,22 +324,17 @@ body {
     border: 2px solid #888;
 
     box-shadow:
-        0 3px 6px rgba(0,0,0,.5),
+        0 3px 7px rgba(0,0,0,.5),
         inset 1px 1px 2px rgba(255,255,255,.8),
         inset -2px -2px 4px rgba(0,0,0,.4);
 }
-
-
-/* =========================================
-   СТЕКЛО
-========================================= */
 
 .window-glass {
 
     position: absolute;
 
-    width: 40px;
-    height: 40px;
+    width: 37px;
+    height: 37px;
 
     left: 2px;
     top: 2px;
@@ -324,23 +354,22 @@ body {
 
     box-shadow:
         inset 0 0 12px #000;
-
-    overflow: hidden;
 }
 
 .window-glass::before {
 
-    content: '';
+    content: "";
 
     position: absolute;
 
-    width: 25px;
-    height: 9px;
+    width: 24px;
+    height: 8px;
 
     left: 4px;
     top: 4px;
 
-    background: rgba(255,255,255,0.16);
+    background:
+        rgba(255,255,255,.16);
 
     border-radius: 50%;
 
@@ -348,11 +377,6 @@ body {
 
     filter: blur(1px);
 }
-
-
-/* =========================================
-   НИЖНЯЯ ПОЛОСКА
-========================================= */
 
 .bottom-line {
 
@@ -371,319 +395,82 @@ body {
 }
 
 
-/* =========================================
-   ПОЛЁТ ПО СИММЕТРИЧНОЙ ДУГЕ
-========================================= */
+/* =========================
+   МОБИЛЬНАЯ ВЕРСИЯ
+========================= */
 
-@keyframes flyMachine {
+@media (max-width: 600px) {
 
-    0% {
-        left: -100px;
-        top: 35vh;
-        transform: rotate(-12deg);
+    .washing-machine {
+        width: 64px;
+        height: 55px;
     }
 
-    2% {
-        left: -80px;
-        top: 33.9vh;
-        transform: rotate(-11.7deg);
+    .top-panel {
+        width: 16px;
+        height: 46px;
     }
 
-    4% {
-        left: -60px;
-        top: 32.8vh;
-        transform: rotate(-11.4deg);
+    .window {
+        width: 39px;
+        height: 39px;
+        left: 5px;
+        top: 8px;
     }
 
-    6% {
-        left: -40px;
-        top: 31.7vh;
-        transform: rotate(-11.1deg);
+    .window-glass {
+        width: 32px;
+        height: 32px;
     }
 
-    8% {
-        left: -20px;
-        top: 30.6vh;
-        transform: rotate(-10.8deg);
+    .letter {
+        font-size: 42px;
     }
-
-    10% {
-        left: 0px;
-        top: 29.5vh;
-        transform: rotate(-10.5deg);
-    }
-
-    12% {
-        left: 20px;
-        top: 28.4vh;
-        transform: rotate(-10.2deg);
-    }
-
-    14% {
-        left: 40px;
-        top: 27.3vh;
-        transform: rotate(-9.9deg);
-    }
-
-    16% {
-        left: 60px;
-        top: 26.2vh;
-        transform: rotate(-9.6deg);
-    }
-
-    18% {
-        left: 80px;
-        top: 25.1vh;
-        transform: rotate(-9.3deg);
-    }
-
-    20% {
-        left: 100px;
-        top: 24vh;
-        transform: rotate(-9deg);
-    }
-
-    22% {
-        left: 120px;
-        top: 22.9vh;
-        transform: rotate(-8.7deg);
-    }
-
-    24% {
-        left: 140px;
-        top: 21.9vh;
-        transform: rotate(-8.4deg);
-    }
-
-    26% {
-        left: 160px;
-        top: 20.9vh;
-        transform: rotate(-8.1deg);
-    }
-
-    28% {
-        left: 180px;
-        top: 20vh;
-        transform: rotate(-7.8deg);
-    }
-
-    30% {
-        left: 200px;
-        top: 19.1vh;
-        transform: rotate(-7.5deg);
-    }
-
-    32% {
-        left: 220px;
-        top: 18.3vh;
-        transform: rotate(-7.2deg);
-    }
-
-    34% {
-        left: 240px;
-        top: 17.5vh;
-        transform: rotate(-6.9deg);
-    }
-
-    36% {
-        left: 260px;
-        top: 16.8vh;
-        transform: rotate(-6.6deg);
-    }
-
-    38% {
-        left: 280px;
-        top: 16.1vh;
-        transform: rotate(-6.3deg);
-    }
-
-    40% {
-        left: 300px;
-        top: 15.5vh;
-        transform: rotate(-6deg);
-    }
-
-    42% {
-        left: 320px;
-        top: 15vh;
-        transform: rotate(-5.5deg);
-    }
-
-    44% {
-        left: 340px;
-        top: 14.5vh;
-        transform: rotate(-5deg);
-    }
-
-    46% {
-        left: 360px;
-        top: 14.1vh;
-        transform: rotate(-4deg);
-    }
-
-    48% {
-        left: 380px;
-        top: 13.8vh;
-        transform: rotate(-3deg);
-    }
-
-    50% {
-        left: 400px;
-        top: 13.7vh;
-        transform: rotate(0deg);
-    }
-
-    52% {
-        left: 420px;
-        top: 13.8vh;
-        transform: rotate(3deg);
-    }
-
-    54% {
-        left: 440px;
-        top: 14.1vh;
-        transform: rotate(4deg);
-    }
-
-    56% {
-        left: 460px;
-        top: 14.5vh;
-        transform: rotate(5deg);
-    }
-
-    58% {
-        left: 480px;
-        top: 15vh;
-        transform: rotate(5.5deg);
-    }
-
-    60% {
-        left: 500px;
-        top: 15.5vh;
-        transform: rotate(6deg);
-    }
-
-    62% {
-        left: 520px;
-        top: 16.1vh;
-        transform: rotate(6.3deg);
-    }
-
-    64% {
-        left: 540px;
-        top: 16.8vh;
-        transform: rotate(6.6deg);
-    }
-
-    66% {
-        left: 560px;
-        top: 17.5vh;
-        transform: rotate(6.9deg);
-    }
-
-    68% {
-        left: 580px;
-        top: 18.3vh;
-        transform: rotate(7.2deg);
-    }
-
-    70% {
-        left: 600px;
-        top: 19.1vh;
-        transform: rotate(7.5deg);
-    }
-
-    72% {
-        left: 620px;
-        top: 20vh;
-        transform: rotate(7.8deg);
-    }
-
-    74% {
-        left: 640px;
-        top: 20.9vh;
-        transform: rotate(8.1deg);
-    }
-
-    76% {
-        left: 660px;
-        top: 21.9vh;
-        transform: rotate(8.4deg);
-    }
-
-    78% {
-        left: 680px;
-        top: 22.9vh;
-        transform: rotate(8.7deg);
-    }
-
-    80% {
-        left: 700px;
-        top: 24vh;
-        transform: rotate(9deg);
-    }
-
-    82% {
-        left: 720px;
-        top: 25.1vh;
-        transform: rotate(9.3deg);
-    }
-
-    84% {
-        left: 740px;
-        top: 26.2vh;
-        transform: rotate(9.6deg);
-    }
-
-    86% {
-        left: 760px;
-        top: 27.3vh;
-        transform: rotate(9.9deg);
-    }
-
-    88% {
-        left: 780px;
-        top: 28.4vh;
-        transform: rotate(10.2deg);
-    }
-
-    90% {
-        left: 800px;
-        top: 29.5vh;
-        transform: rotate(10.5deg);
-    }
-
-    92% {
-        left: 820px;
-        top: 30.6vh;
-        transform: rotate(10.8deg);
-    }
-
-    94% {
-        left: 840px;
-        top: 31.7vh;
-        transform: rotate(11.1deg);
-    }
-
-    96% {
-        left: 860px;
-        top: 32.8vh;
-        transform: rotate(11.4deg);
-    }
-
-    98% {
-        left: 880px;
-        top: 33.9vh;
-        transform: rotate(11.7deg);
-    }
-
-    100% {
-        left: 900px;
-        top: 35vh;
-        transform: rotate(12deg);
-    }
-
 }
+
+
+/* =========================
+   РАСПОЛОЖЕНИЕ ЗВЁЗД
+========================= */
+
+.star:nth-child(1)  { left: 3%;  top: 8%; }
+.star:nth-child(2)  { left: 7%;  top: 23%; }
+.star:nth-child(3)  { left: 11%; top: 71%; }
+.star:nth-child(4)  { left: 15%; top: 42%; }
+.star:nth-child(5)  { left: 19%; top: 12%; }
+.star:nth-child(6)  { left: 23%; top: 83%; }
+.star:nth-child(7)  { left: 27%; top: 35%; }
+.star:nth-child(8)  { left: 31%; top: 65%; }
+.star:nth-child(9)  { left: 35%; top: 5%; }
+.star:nth-child(10) { left: 39%; top: 52%; }
+
+.star:nth-child(11) { left: 43%; top: 18%; }
+.star:nth-child(12) { left: 47%; top: 76%; }
+.star:nth-child(13) { left: 51%; top: 7%; }
+.star:nth-child(14) { left: 55%; top: 44%; }
+.star:nth-child(15) { left: 59%; top: 91%; }
+.star:nth-child(16) { left: 63%; top: 27%; }
+.star:nth-child(17) { left: 67%; top: 61%; }
+.star:nth-child(18) { left: 71%; top: 14%; }
+.star:nth-child(19) { left: 75%; top: 82%; }
+.star:nth-child(20) { left: 79%; top: 37%; }
+
+.star:nth-child(21) { left: 83%; top: 6%; }
+.star:nth-child(22) { left: 87%; top: 53%; }
+.star:nth-child(23) { left: 91%; top: 24%; }
+.star:nth-child(24) { left: 95%; top: 72%; }
+.star:nth-child(25) { left: 5%;  top: 92%; }
+.star:nth-child(26) { left: 13%; top: 56%; }
+.star:nth-child(27) { left: 21%; top: 48%; }
+.star:nth-child(28) { left: 29%; top: 95%; }
+.star:nth-child(29) { left: 37%; top: 29%; }
+.star:nth-child(30) { left: 45%; top: 68%; }
+.star:nth-child(31) { left: 53%; top: 33%; }
+.star:nth-child(32) { left: 61%; top: 88%; }
+.star:nth-child(33) { left: 69%; top: 46%; }
+.star:nth-child(34) { left: 77%; top: 67%; }
+.star:nth-child(35) { left: 85%; top: 93%; }
+.star:nth-child(36) { left: 93%; top: 41%; }
 
 </style>
 </head>
@@ -692,56 +479,58 @@ body {
 
 <div class="scene">
 
-    <!-- ЗВЁЗДЫ -->
-
     <div class="stars">
 
-        <div class="star" style="left:3%; top:8%; animation-duration:4s,2.1s;"></div>
-        <div class="star" style="left:7%; top:23%; animation-duration:6s,1.7s;"></div>
-        <div class="star" style="left:11%; top:71%; animation-duration:5s,2.5s;"></div>
-        <div class="star" style="left:15%; top:42%; animation-duration:7s,1.9s;"></div>
-        <div class="star" style="left:19%; top:12%; animation-duration:5.5s,2.3s;"></div>
-        <div class="star" style="left:23%; top:83%; animation-duration:4.5s,1.6s;"></div>
-        <div class="star" style="left:27%; top:35%; animation-duration:6.5s,2.2s;"></div>
-        <div class="star" style="left:31%; top:65%; animation-duration:5.2s,1.8s;"></div>
-        <div class="star" style="left:35%; top:5%; animation-duration:7.2s,2.6s;"></div>
-        <div class="star" style="left:39%; top:52%; animation-duration:4.8s,1.5s;"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
 
-        <div class="star" style="left:43%; top:18%; animation-duration:6.2s,2s;"></div>
-        <div class="star" style="left:47%; top:76%; animation-duration:5.7s,2.4s;"></div>
-        <div class="star" style="left:51%; top:7%; animation-duration:4.2s,1.9s;"></div>
-        <div class="star" style="left:55%; top:44%; animation-duration:6.8s,2.7s;"></div>
-        <div class="star" style="left:59%; top:91%; animation-duration:5.4s,1.7s;"></div>
-        <div class="star" style="left:63%; top:27%; animation-duration:7.5s,2.1s;"></div>
-        <div class="star" style="left:67%; top:61%; animation-duration:4.6s,2.5s;"></div>
-        <div class="star" style="left:71%; top:14%; animation-duration:6.1s,1.6s;"></div>
-        <div class="star" style="left:75%; top:82%; animation-duration:5.1s,2.2s;"></div>
-        <div class="star" style="left:79%; top:37%; animation-duration:7s,2.8s;"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
 
-        <div class="star" style="left:83%; top:6%; animation-duration:4.7s,1.8s;"></div>
-        <div class="star" style="left:87%; top:53%; animation-duration:6.4s,2.3s;"></div>
-        <div class="star" style="left:91%; top:24%; animation-duration:5.8s,1.5s;"></div>
-        <div class="star" style="left:95%; top:72%; animation-duration:7.3s,2.6s;"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
 
-        <div class="star" style="left:5%; top:92%; animation-duration:5.3s,2s;"></div>
-        <div class="star" style="left:13%; top:56%; animation-duration:6.7s,2.4s;"></div>
-        <div class="star" style="left:21%; top:48%; animation-duration:4.4s,1.7s;"></div>
-        <div class="star" style="left:29%; top:95%; animation-duration:7.1s,2.5s;"></div>
-        <div class="star" style="left:37%; top:29%; animation-duration:5.6s,1.9s;"></div>
-        <div class="star" style="left:45%; top:68%; animation-duration:6.3s,2.7s;"></div>
-        <div class="star" style="left:53%; top:33%; animation-duration:4.9s,1.6s;"></div>
-        <div class="star" style="left:61%; top:88%; animation-duration:7.4s,2.2s;"></div>
-        <div class="star" style="left:69%; top:46%; animation-duration:5.5s,2.8s;"></div>
-        <div class="star" style="left:77%; top:67%; animation-duration:6.6s,1.8s;"></div>
-        <div class="star" style="left:85%; top:93%; animation-duration:4.3s,2.4s;"></div>
-        <div class="star" style="left:93%; top:41%; animation-duration:7.2s,1.7s;"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
 
     </div>
 
+    <div
+        class="letters"
+        id="letters">
+    </div>
 
-    <!-- СТИРАЛЬНАЯ МАШИНА -->
-
-    <div class="washing-machine">
+    <div
+        class="washing-machine"
+        id="washingMachine">
 
         <div class="top-panel">
 
@@ -764,6 +553,483 @@ body {
     </div>
 
 </div>
+
+
+<script>
+
+/* =========================
+   ЭЛЕМЕНТЫ
+========================= */
+
+const machine =
+    document.getElementById("washingMachine");
+
+const lettersContainer =
+    document.getElementById("letters");
+
+
+/* =========================
+   НОВАЯ НАДПИСЬ
+========================= */
+
+const words = [
+    "Я",
+    "200"
+];
+
+
+/* =========================
+   НАСТРОЙКИ
+========================= */
+
+const START_DELAY = 3000;
+
+const LETTER_DELAY = 430;
+
+const WORD_DELAY = 900;
+
+const DURATION = 9500;
+
+const LETTER_FLY_TIME = 850;
+
+
+/* =========================
+   ВСЕ БУКВЫ
+========================= */
+
+const letters = [];
+
+words.forEach((word, wordIndex) => {
+
+    [...word].forEach((char) => {
+
+        letters.push({
+            char: char,
+            word: wordIndex
+        });
+
+    });
+
+});
+
+
+/* =========================
+   ТРАЕКТОРИЯ
+========================= */
+
+function getMachinePosition(progress) {
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+    const startX = -100;
+
+    const endX =
+        width + 100;
+
+    const centerY =
+        height * 0.53;
+
+    const arcHeight =
+        Math.min(
+            height * 0.30,
+            260
+        );
+
+    const x =
+        startX +
+        (endX - startX) *
+        progress;
+
+    const y =
+        centerY -
+        Math.sin(
+            progress * Math.PI
+        ) *
+        arcHeight;
+
+    const angle =
+        -Math.cos(
+            progress * Math.PI
+        ) * 12;
+
+    return {
+        x,
+        y,
+        angle
+    };
+
+}
+
+
+/* =========================
+   СОЗДАНИЕ БУКВЫ
+========================= */
+
+function createLetter(
+    character,
+    index,
+    wordIndex,
+    machinePosition
+) {
+
+    const letter =
+        document.createElement("span");
+
+    letter.className =
+        "letter glow";
+
+    letter.textContent =
+        character;
+
+    const startX =
+        machinePosition.x + 35;
+
+    const startY =
+        machinePosition.y + 32;
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+    const centerX =
+        width * 0.55;
+
+    const centerY =
+        height * 0.43;
+
+    /*
+       Расстояние между буквами.
+    */
+
+    const letterSpacing =
+        Math.min(
+            width * 0.088,
+            88
+        );
+
+    const word =
+        words[wordIndex];
+
+    let sameWordIndex = 0;
+
+    for (
+        let i = 0;
+        i < index;
+        i++
+    ) {
+
+        if (
+            letters[i].word === wordIndex
+        ) {
+
+            sameWordIndex++;
+
+        }
+
+    }
+
+    const wordWidth =
+        (word.length - 1) *
+        letterSpacing;
+
+    const wordGap =
+        letterSpacing * 1.8;
+
+    let wordCenterX;
+
+    if (wordIndex === 0) {
+
+        wordCenterX =
+            centerX -
+            wordGap / 2 -
+            wordWidth / 2;
+
+    } else {
+
+        wordCenterX =
+            centerX +
+            wordGap / 2 +
+            wordWidth / 2;
+
+    }
+
+    const finalX =
+        wordCenterX -
+        wordWidth / 2 +
+        sameWordIndex *
+        letterSpacing;
+
+    const finalY =
+        centerY;
+
+    const randomOffset =
+        (Math.random() - 0.5) * 12;
+
+    const targetY =
+        finalY +
+        randomOffset;
+
+    letter.style.left =
+        startX + "px";
+
+    letter.style.top =
+        startY + "px";
+
+    letter.style.opacity =
+        "0";
+
+    letter.style.filter =
+        "blur(8px)";
+
+    letter.style.transform =
+        "translate(-50%, -50%) scale(0.3)";
+
+    lettersContainer.appendChild(
+        letter
+    );
+
+    const animationStart =
+        performance.now();
+
+    function animateLetter(now) {
+
+        const elapsed =
+            now -
+            animationStart;
+
+        let progress =
+            elapsed /
+            LETTER_FLY_TIME;
+
+        if (progress > 1) {
+
+            progress = 1;
+
+        }
+
+        const eased =
+            1 -
+            Math.pow(
+                1 - progress,
+                3
+            );
+
+        const currentX =
+            startX +
+            (finalX - startX) *
+            eased;
+
+        const currentY =
+            startY +
+            (targetY - startY) *
+            eased;
+
+        letter.style.left =
+            currentX + "px";
+
+        letter.style.top =
+            currentY + "px";
+
+        letter.style.opacity =
+            Math.min(
+                1,
+                progress * 4
+            );
+
+        const scale =
+            0.3 +
+            0.7 *
+            Math.min(
+                1,
+                progress * 1.5
+            );
+
+        letter.style.transform =
+            `translate(-50%, -50%) scale(${scale})`;
+
+        const blur =
+            Math.max(
+                0,
+                8 -
+                progress * 10
+            );
+
+        letter.style.filter =
+            `blur(${blur}px)`;
+
+        if (progress < 1) {
+
+            requestAnimationFrame(
+                animateLetter
+            );
+
+        } else {
+
+            letter.style.left =
+                finalX + "px";
+
+            letter.style.top =
+                targetY + "px";
+
+            letter.style.opacity =
+                "1";
+
+            letter.style.filter =
+                "blur(0)";
+
+            letter.style.transform =
+                "translate(-50%, -50%) scale(1)";
+
+        }
+
+    }
+
+    requestAnimationFrame(
+        animateLetter
+    );
+
+}
+
+
+/* =========================
+   ПОЛЁТ
+========================= */
+
+let startTime = null;
+
+let nextLetterTime =
+    START_DELAY;
+
+let letterIndex = 0;
+
+let finished = false;
+
+
+function animate(time) {
+
+    if (finished) {
+        return;
+    }
+
+    if (startTime === null) {
+
+        startTime = time;
+
+    }
+
+    const elapsed =
+        time -
+        startTime;
+
+    let progress =
+        elapsed /
+        DURATION;
+
+    if (progress > 1) {
+
+        progress = 1;
+
+    }
+
+    const position =
+        getMachinePosition(
+            progress
+        );
+
+    machine.style.left =
+        position.x + "px";
+
+    machine.style.top =
+        position.y + "px";
+
+    machine.style.transform =
+        `rotate(${position.angle}deg)`;
+
+
+    /* =========================
+       ВЫПУСК БУКВ
+    ========================= */
+
+    if (
+        elapsed >= nextLetterTime &&
+        letterIndex < letters.length
+    ) {
+
+        const item =
+            letters[letterIndex];
+
+        if (
+            letterIndex === 0
+        ) {
+
+            nextLetterTime +=
+                WORD_DELAY;
+
+        } else {
+
+            nextLetterTime +=
+                LETTER_DELAY;
+
+        }
+
+        createLetter(
+            item.char,
+            letterIndex,
+            item.word,
+            position
+        );
+
+        letterIndex++;
+
+    }
+
+
+    /* =========================
+       КОНЕЦ ПОЛЁТА
+    ========================= */
+
+    if (progress >= 1) {
+
+        const finalPosition =
+            getMachinePosition(1);
+
+        machine.style.left =
+            finalPosition.x + "px";
+
+        machine.style.top =
+            finalPosition.y + "px";
+
+        machine.style.transform =
+            `rotate(${finalPosition.angle}deg)`;
+
+        finished = true;
+
+        return;
+    }
+
+
+    requestAnimationFrame(
+        animate
+    );
+
+}
+
+
+/* =========================
+   СТАРТ
+========================= */
+
+requestAnimationFrame(
+    animate
+);
+
+</script>
 
 </body>
 </html>
