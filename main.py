@@ -3,6 +3,7 @@ import logging
 import sys
 import sqlite3
 import secrets
+import json
 from datetime import datetime
 
 from aiogram import Bot, Dispatcher, types
@@ -17,15 +18,13 @@ from aiogram.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton
 )
-from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
-from aiohttp import web
 
 # =====================================================
 # КОНФИГУРАЦИЯ
 # =====================================================
 
-BOT_TOKEN = "8918284594:AAG-h12sJhc7a0qaV5LgS-ea29FNeZVtJvY"
-WEBAPP_URL = "https://sevelevd86-lgtm.github.io/Casino_site/"
+BOT_TOKEN = "ТВОЙ_ТОКЕН_БОТА"
+WEBAPP_URL = "https://твой-сайт.com/index.html"
 
 # =====================================================
 # БАЗА ДАННЫХ
@@ -34,11 +33,9 @@ WEBAPP_URL = "https://sevelevd86-lgtm.github.io/Casino_site/"
 DB_NAME = "users.db"
 
 def init_db():
-    """Создаёт таблицы пользователей и рефералов"""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     
-    # Таблица пользователей
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER PRIMARY KEY,
@@ -51,7 +48,6 @@ def init_db():
         )
     """)
     
-    # Таблица реферальных начислений (для истории)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS referrals (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,7 +65,6 @@ def init_db():
     logging.info("✅ База данных инициализирована")
 
 def get_user(user_id: int):
-    """Получает данные пользователя"""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
@@ -78,11 +73,9 @@ def get_user(user_id: int):
     return result
 
 def create_user(user_id: int, username: str = None, first_name: str = None, invited_by: int = None):
-    """Создаёт нового пользователя с уникальным реферальным кодом"""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     
-    # Генерируем уникальный реферальный код
     ref_code = secrets.token_hex(8)
     while True:
         cursor.execute("SELECT ref_code FROM users WHERE ref_code = ?", (ref_code,))
@@ -100,7 +93,6 @@ def create_user(user_id: int, username: str = None, first_name: str = None, invi
     return ref_code
 
 def get_user_by_ref_code(ref_code: str):
-    """Находит пользователя по реферальному коду"""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT user_id FROM users WHERE ref_code = ?", (ref_code,))
@@ -109,7 +101,6 @@ def get_user_by_ref_code(ref_code: str):
     return result[0] if result else None
 
 def get_balance(user_id: int) -> float:
-    """Получает баланс пользователя"""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT balance FROM users WHERE user_id = ?", (user_id,))
@@ -118,7 +109,6 @@ def get_balance(user_id: int) -> float:
     return result[0] if result else 1000.0
 
 def update_balance(user_id: int, amount: float):
-    """Обновляет баланс пользователя"""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("UPDATE users SET balance = ? WHERE user_id = ?", (amount, user_id))
@@ -128,27 +118,22 @@ def update_balance(user_id: int, amount: float):
     conn.close()
 
 def add_referral(referrer_id: int, referred_id: int, reward: float = 10.0):
-    """Добавляет реферальную запись и начисляет награду"""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     
-    # Проверяем, не было ли уже такого реферала
     cursor.execute("SELECT id FROM referrals WHERE referrer_id = ? AND referred_id = ?", (referrer_id, referred_id))
     if cursor.fetchone():
         conn.close()
         return False
     
-    # Добавляем запись
     cursor.execute("""
         INSERT INTO referrals (referrer_id, referred_id, reward)
         VALUES (?, ?, ?)
     """, (referrer_id, referred_id, reward))
     
-    # Начисляем награду рефереру
     referrer_balance = get_balance(referrer_id)
     update_balance(referrer_id, referrer_balance + reward)
     
-    # Начисляем бонус новому пользователю
     referred_balance = get_balance(referred_id)
     update_balance(referred_id, referred_balance + reward)
     
@@ -157,7 +142,6 @@ def add_referral(referrer_id: int, referred_id: int, reward: float = 10.0):
     return True
 
 def get_referrals_count(user_id: int) -> int:
-    """Считает количество приглашённых пользователей"""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM referrals WHERE referrer_id = ?", (user_id,))
@@ -165,15 +149,14 @@ def get_referrals_count(user_id: int) -> int:
     conn.close()
     return result[0] if result else 0
 
-def get_referral_link(user_id: int) -> str:
-    """Генерирует реферальную ссылку для пользователя"""
+def get_referral_link(user_id: int, bot_username: str) -> str:
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT ref_code FROM users WHERE user_id = ?", (user_id,))
     result = cursor.fetchone()
     conn.close()
     if result:
-        return f"https://t.me/{(await bot.me()).username}?start=ref_{result[0]}"
+        return f"https://t.me/{bot_username}?start=ref_{result[0]}"
     return None
 
 # =====================================================
@@ -200,34 +183,26 @@ dp = Dispatcher()
 
 @dp.message(Command("start"))
 async def start_command(message: Message) -> None:
-    """Обработчик команды /start с поддержкой рефералов"""
     user_id = message.from_user.id
     username = message.from_user.username
     first_name = message.from_user.first_name
     
-    # Проверяем, есть ли реферальный код в аргументах
     args = message.text.split()
     invited_by = None
-    is_new_user = False
     
-    # Создаём пользователя, если его нет
     user = get_user(user_id)
     if not user:
-        # Проверяем реферальный код
         if len(args) > 1 and args[1].startswith("ref_"):
-            ref_code = args[1][4:]  # убираем "ref_"
+            ref_code = args[1][4:]
             referrer_id = get_user_by_ref_code(ref_code)
             if referrer_id and referrer_id != user_id:
                 invited_by = referrer_id
         
         create_user(user_id, username, first_name, invited_by)
-        is_new_user = True
         
-        # Если есть реферер — начисляем бонусы
         if invited_by:
             success = add_referral(invited_by, user_id, 10.0)
             if success:
-                # Уведомляем реферера
                 try:
                     await bot.send_message(
                         invited_by,
@@ -239,7 +214,6 @@ async def start_command(message: Message) -> None:
                 except Exception as e:
                     logger.error(f"Не удалось уведомить реферера: {e}")
                 
-                # Уведомляем нового пользователя
                 await message.answer(
                     f"🎉 <b>Добро пожаловать!</b>\n\n"
                     f"Вы перешли по реферальной ссылке!\n"
@@ -256,10 +230,10 @@ async def start_command(message: Message) -> None:
                 )
                 return
     
-    # Обычное приветствие
     balance = get_balance(user_id)
     ref_count = get_referrals_count(user_id)
-    ref_code = get_referral_link(user_id)
+    bot_username = (await bot.me()).username
+    ref_link = get_referral_link(user_id, bot_username)
     
     await message.answer(
         f"🎮 <b>Добро пожаловать в DROP, {first_name}!</b>\n\n"
@@ -271,17 +245,13 @@ async def start_command(message: Message) -> None:
         f"• 📦 Кейсы\n"
         f"• 🎡 UPGRADE\n\n"
         f"📎 <b>Ваша реферальная ссылка:</b>\n"
-        f"<code>{ref_code}</code>\n\n"
+        f"<code>{ref_link}</code>\n\n"
         f"💡 Приглашайте друзей и получайте по 10 звёзд за каждого!",
         reply_markup=InlineKeyboardMarkup(
             inline_keyboard=[
                 [InlineKeyboardButton(
                     text="🎮 Открыть игры",
                     web_app=WebAppInfo(url=WEBAPP_URL)
-                )],
-                [InlineKeyboardButton(
-                    text="📎 Скопировать ссылку",
-                    callback_data=f"copy_ref_{ref_code}"
                 )]
             ]
         )
@@ -289,7 +259,6 @@ async def start_command(message: Message) -> None:
 
 @dp.message(Command("game"))
 async def game_command(message: Message) -> None:
-    """Обработчик команды /game — сразу открывает игру"""
     user_id = message.from_user.id
     balance = get_balance(user_id)
     
@@ -308,7 +277,6 @@ async def game_command(message: Message) -> None:
 
 @dp.message(Command("balance"))
 async def balance_command(message: Message) -> None:
-    """Обработчик команды /balance — показывает баланс"""
     user_id = message.from_user.id
     balance = get_balance(user_id)
     ref_count = get_referrals_count(user_id)
@@ -320,12 +288,12 @@ async def balance_command(message: Message) -> None:
 
 @dp.message(Command("profile"))
 async def profile_command(message: Message) -> None:
-    """Обработчик команды /profile — показывает профиль"""
     user_id = message.from_user.id
     first_name = message.from_user.first_name
     balance = get_balance(user_id)
     ref_count = get_referrals_count(user_id)
-    ref_code = get_referral_link(user_id)
+    bot_username = (await bot.me()).username
+    ref_link = get_referral_link(user_id, bot_username)
     
     await message.answer(
         f"👤 <b>Профиль</b>\n\n"
@@ -334,12 +302,11 @@ async def profile_command(message: Message) -> None:
         f"💰 Баланс: {balance:.2f} звёзд\n"
         f"👥 Приглашено: {ref_count}\n\n"
         f"📎 <b>Реферальная ссылка:</b>\n"
-        f"<code>{ref_code}</code>"
+        f"<code>{ref_link}</code>"
     )
 
 @dp.message(Command("help"))
 async def help_command(message: Message) -> None:
-    """Обработчик команды /help — справка"""
     await message.answer(
         "📖 <b>Помощь</b>\n\n"
         "/start — Главное меню\n"
@@ -351,26 +318,49 @@ async def help_command(message: Message) -> None:
     )
 
 # =====================================================
-# CALLBACK HANDLERS
+# ОБРАБОТЧИК ДАННЫХ ИЗ WEBAPP (ИГРЫ)
 # =====================================================
 
-@dp.callback_query(lambda c: c.data and c.data.startswith("copy_ref_"))
-async def copy_ref_callback(callback: types.CallbackQuery):
-    """Обработчик кнопки копирования реферальной ссылки"""
-    ref_code = callback.data.replace("copy_ref_", "")
-    await callback.answer(
-        f"Ссылка скопирована! Поделитесь с друзьями.",
-        show_alert=False
-    )
-    # В реальном боте можно использовать tg:// для копирования
-    # Но лучше просто показать ссылку в сообщении
+@dp.message(lambda msg: msg.web_app_data is not None)
+async def web_app_data_handler(message: Message) -> None:
+    try:
+        data = json.loads(message.web_app_data.data)
+        user_id = message.from_user.id
+        action = data.get("action")
+        
+        if action == "getBalance":
+            balance = get_balance(user_id)
+            await message.answer(
+                f"💰 {balance:.2f}",
+                reply_markup=InlineKeyboardMarkup(
+                    inline_keyboard=[[
+                        InlineKeyboardButton(
+                            text="🎮 Играть",
+                            web_app=WebAppInfo(url=WEBAPP_URL)
+                        )
+                    ]]
+                )
+            )
+        
+        elif action == "updateBalance":
+            new_balance = data.get("balance")
+            if new_balance is not None:
+                update_balance(user_id, float(new_balance))
+                await message.answer(f"✅ Баланс обновлён: {new_balance:.2f}")
+        
+        elif action == "getReferralLink":
+            bot_username = (await bot.me()).username
+            ref_link = get_referral_link(user_id, bot_username)
+            await message.answer(ref_link)
+            
+    except json.JSONDecodeError:
+        await message.answer("❌ Ошибка обработки данных")
 
 # =====================================================
 # УСТАНОВКА КОМАНД И КНОПКИ МЕНЮ
 # =====================================================
 
 async def set_commands_and_menu():
-    """Устанавливает команды бота и кнопку меню с WebApp"""
     commands = [
         BotCommand(command="start", description="Главное меню"),
         BotCommand(command="game", description="Открыть игры"),
@@ -392,16 +382,9 @@ async def set_commands_and_menu():
 # =====================================================
 
 async def main() -> None:
-    """Главная функция запуска бота"""
     logger.info("🚀 Запуск бота...")
-    
-    # Инициализируем базу данных
     init_db()
-    
-    # Устанавливаем команды и кнопку меню
     await set_commands_and_menu()
-    
-    # Запускаем polling
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 if __name__ == "__main__":
