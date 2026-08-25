@@ -1,198 +1,665 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Летающая стиральная машина</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            background: #000000; /* Черный лист */
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Контейнер для полета по дуге */
-        .flight-path {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            /* Та же дуга, что и у ракеты */
-            animation: flyArc 4s ease-in-out infinite alternate;
-        }
+<title>Flying Washing Machine</title>
 
-        /* Ключевые кадры дуги */
-        @keyframes flyArc {
-            0% {
-                transform: translate(150px, 250px) rotate(-35deg);
-            }
-            50% {
-                transform: translate(-50px, -100px) rotate(45deg);
-            }
-            100% {
-                transform: translate(-150px, -250px) rotate(135deg);
-            }
-        }
+<style>
 
-        /* Сама стиральная машина */
-        .washer {
-            position: absolute;
-            top: -60px;
-            left: -60px;
-            width: 120px;
-            height: 120px;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        /* Корпус (белый квадрат) */
-        .body {
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(145deg, #ffffff, #d4d4d4);
-            border-radius: 15px;
-            left: 15px;
-            top: 15px;
-            box-shadow: 
-                inset -10px -10px 20px rgba(0,0,0,0.1),
-                0 10px 30px rgba(0,0,0,0.8);
-        }
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+}
 
-        /* Сверху: панель управления */
-        .panel {
-            position: absolute;
-            width: 70px;
-            height: 20px;
-            background: #e0e0e0;
-            border-radius: 5px;
-            left: 25px;
-            top: 20px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 2;
-        }
+.scene {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
 
-        /* Кнопки на панели */
-        .knob {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: #333;
-            border-radius: 50%;
-            left: 30px;
-            top: 24px;
-            box-shadow: 0 2px 3px rgba(0,0,0,0.4);
-        }
 
-        .button {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #e53935;
-            border-radius: 50%;
-            left: 48px;
-            top: 26px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
-        }
+/* =========================================
+   СТИРАЛЬНАЯ МАШИНА
+========================================= */
 
-        .button2 {
-            left: 60px;
-            background: #40c4ff;
-        }
+.washing-machine {
 
-        /* Дверца (окно) */
-        .door {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background: radial-gradient(circle at 40% 40%, #4facfe, #003366);
-            border: 6px solid #b0b0b0;
-            border-radius: 50%;
-            left: 35px;
-            top: 45px;
-            box-shadow: 
-                inset 0 0 15px rgba(0,0,0,0.5),
-                0 5px 15px rgba(0,0,0,0.4);
-            z-index: 3;
-            overflow: hidden;
-        }
+    position: absolute;
 
-        /* Блик на стекле */
-        .door::after {
-            content: '';
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            top: 5px;
-            left: 8px;
-            filter: blur(2px);
-        }
+    width: 83px;
+    height: 70px;
 
-        /* Ручка дверцы */
-        .door-handle {
-            position: absolute;
-            width: 8px;
-            height: 20px;
-            background: #888;
-            border-radius: 5px;
-            right: -2px;
-            top: 15px;
-            transform: rotate(10deg);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-        }
+    left: -100px;
+    top: 35vh;
 
-        /* Сзади (сопло стиралки) */
-        .engine {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #444;
-            border-radius: 5px;
-            left: 5px;
-            top: 50px;
-            box-shadow: inset 0 0 10px #000;
-            z-index: 1;
-        }
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f7f7f7 30%,
+            #e5e5e5 70%,
+            #bdbdbd 100%
+        );
 
-        /* Труба для слива воды (вместо огня) */
-        .drain-pipe {
-            position: absolute;
-            width: 15px;
-            height: 10px;
-            background: #666;
-            border-radius: 0 5px 5px 0;
-            left: -10px;
-            top: 55px;
-            z-index: 1;
-        }
-    </style>
+    border: 1px solid #888;
+
+    border-radius: 5px;
+
+    box-shadow:
+        inset 4px 4px 8px rgba(255,255,255,0.9),
+        inset -4px -4px 9px rgba(0,0,0,0.2),
+        0 10px 20px rgba(0,0,0,0.7);
+
+    animation: flyMachine 8s linear infinite;
+
+    will-change: left, top, transform;
+}
+
+
+/* =========================================
+   ПАНЕЛЬ УПРАВЛЕНИЯ
+========================================= */
+
+.top-panel {
+
+    position: absolute;
+
+    width: 20px;
+    height: 60px;
+
+    right: 4px;
+    top: 4px;
+
+    background:
+        linear-gradient(
+            to right,
+            #ffffff,
+            #eeeeee 50%,
+            #cecece
+        );
+
+    border: 1px solid #aaa;
+
+    border-radius: 3px;
+}
+
+
+/* =========================================
+   ЭКРАН
+========================================= */
+
+.display {
+
+    position: absolute;
+
+    width: 9px;
+    height: 21px;
+
+    left: 5px;
+    top: 6px;
+
+    background: #111;
+
+    border: 1px solid #555;
+
+    border-radius: 2px;
+}
+
+.display::after {
+
+    content: '1:20';
+
+    position: absolute;
+
+    left: 1px;
+    top: 3px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 4px;
+
+    color: #aaffbd;
+
+    writing-mode: vertical-rl;
+}
+
+
+/* =========================================
+   МАЛЕНЬКАЯ КНОПКА
+========================================= */
+
+.button-small {
+
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    left: 7px;
+    top: 32px;
+
+    border-radius: 50%;
+
+    background: #999;
+}
+
+
+/* =========================================
+   ОСНОВНАЯ КНОПКА
+========================================= */
+
+.button {
+
+    position: absolute;
+
+    width: 12px;
+    height: 12px;
+
+    left: 4px;
+    top: 42px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #fff,
+            #ccc 45%,
+            #777
+        );
+
+    border: 1px solid #666;
+}
+
+.button::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 2px;
+    height: 4px;
+
+    left: 4px;
+    top: 1px;
+
+    background: #444;
+}
+
+
+/* =========================================
+   ОКНО СТИРАЛЬНОЙ МАШИНЫ
+========================================= */
+
+.window {
+
+    position: absolute;
+
+    width: 48px;
+    height: 48px;
+
+    left: 6px;
+    top: 11px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #eeeeee,
+            #aaa,
+            #777
+        );
+
+    border: 2px solid #888;
+
+    box-shadow:
+        0 3px 6px rgba(0,0,0,.5),
+        inset 1px 1px 2px rgba(255,255,255,.8),
+        inset -2px -2px 4px rgba(0,0,0,.4);
+}
+
+
+/* =========================================
+   СТЕКЛО
+========================================= */
+
+.window-glass {
+
+    position: absolute;
+
+    width: 40px;
+    height: 40px;
+
+    left: 2px;
+    top: 2px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #666,
+            #333 30%,
+            #111 65%,
+            #000
+        );
+
+    border: 1px solid #555;
+
+    box-shadow:
+        inset 0 0 12px #000;
+
+    overflow: hidden;
+}
+
+
+/* Блик */
+
+.window-glass::before {
+
+    content: '';
+
+    position: absolute;
+
+    width: 25px;
+    height: 9px;
+
+    left: 4px;
+    top: 4px;
+
+    background: rgba(255,255,255,0.16);
+
+    border-radius: 50%;
+
+    transform: rotate(-25deg);
+
+    filter: blur(1px);
+}
+
+
+/* =========================================
+   НИЖНЯЯ ПОЛОСКА
+========================================= */
+
+.bottom-line {
+
+    position: absolute;
+
+    left: 5px;
+    right: 5px;
+
+    bottom: 3px;
+
+    height: 2px;
+
+    background: #aaa;
+
+    border-radius: 3px;
+}
+
+
+/* =========================================
+   ПОЛЁТ ПО СИММЕТРИЧНОЙ ДУГЕ
+========================================= */
+
+@keyframes flyMachine {
+
+    /* СТАРТ — СЛЕВА */
+
+    0% {
+        left: -100px;
+        top: 35vh;
+        transform: rotate(-12deg);
+    }
+
+    2% {
+        left: -80px;
+        top: 33.9vh;
+        transform: rotate(-11.7deg);
+    }
+
+    4% {
+        left: -60px;
+        top: 32.8vh;
+        transform: rotate(-11.4deg);
+    }
+
+    6% {
+        left: -40px;
+        top: 31.7vh;
+        transform: rotate(-11.1deg);
+    }
+
+    8% {
+        left: -20px;
+        top: 30.6vh;
+        transform: rotate(-10.8deg);
+    }
+
+    10% {
+        left: 0px;
+        top: 29.5vh;
+        transform: rotate(-10.5deg);
+    }
+
+    12% {
+        left: 20px;
+        top: 28.4vh;
+        transform: rotate(-10.2deg);
+    }
+
+    14% {
+        left: 40px;
+        top: 27.3vh;
+        transform: rotate(-9.9deg);
+    }
+
+    16% {
+        left: 60px;
+        top: 26.2vh;
+        transform: rotate(-9.6deg);
+    }
+
+    18% {
+        left: 80px;
+        top: 25.1vh;
+        transform: rotate(-9.3deg);
+    }
+
+    20% {
+        left: 100px;
+        top: 24vh;
+        transform: rotate(-9deg);
+    }
+
+    22% {
+        left: 120px;
+        top: 22.9vh;
+        transform: rotate(-8.7deg);
+    }
+
+    24% {
+        left: 140px;
+        top: 21.9vh;
+        transform: rotate(-8.4deg);
+    }
+
+    26% {
+        left: 160px;
+        top: 20.9vh;
+        transform: rotate(-8.1deg);
+    }
+
+    28% {
+        left: 180px;
+        top: 20vh;
+        transform: rotate(-7.8deg);
+    }
+
+    30% {
+        left: 200px;
+        top: 19.1vh;
+        transform: rotate(-7.5deg);
+    }
+
+    32% {
+        left: 220px;
+        top: 18.3vh;
+        transform: rotate(-7.2deg);
+    }
+
+    34% {
+        left: 240px;
+        top: 17.5vh;
+        transform: rotate(-6.9deg);
+    }
+
+    36% {
+        left: 260px;
+        top: 16.8vh;
+        transform: rotate(-6.6deg);
+    }
+
+    38% {
+        left: 280px;
+        top: 16.1vh;
+        transform: rotate(-6.3deg);
+    }
+
+    40% {
+        left: 300px;
+        top: 15.5vh;
+        transform: rotate(-6deg);
+    }
+
+    42% {
+        left: 320px;
+        top: 15vh;
+        transform: rotate(-5.5deg);
+    }
+
+    44% {
+        left: 340px;
+        top: 14.5vh;
+        transform: rotate(-5deg);
+    }
+
+    46% {
+        left: 360px;
+        top: 14.1vh;
+        transform: rotate(-4deg);
+    }
+
+    48% {
+        left: 380px;
+        top: 13.8vh;
+        transform: rotate(-3deg);
+    }
+
+    /* ВЕРШИНА ДУГИ */
+
+    50% {
+        left: 400px;
+        top: 13.7vh;
+        transform: rotate(0deg);
+    }
+
+    52% {
+        left: 420px;
+        top: 13.8vh;
+        transform: rotate(3deg);
+    }
+
+    54% {
+        left: 440px;
+        top: 14.1vh;
+        transform: rotate(4deg);
+    }
+
+    56% {
+        left: 460px;
+        top: 14.5vh;
+        transform: rotate(5deg);
+    }
+
+    58% {
+        left: 480px;
+        top: 15vh;
+        transform: rotate(5.5deg);
+    }
+
+    60% {
+        left: 500px;
+        top: 15.5vh;
+        transform: rotate(6deg);
+    }
+
+    62% {
+        left: 520px;
+        top: 16.1vh;
+        transform: rotate(6.3deg);
+    }
+
+    64% {
+        left: 540px;
+        top: 16.8vh;
+        transform: rotate(6.6deg);
+    }
+
+    66% {
+        left: 560px;
+        top: 17.5vh;
+        transform: rotate(6.9deg);
+    }
+
+    68% {
+        left: 580px;
+        top: 18.3vh;
+        transform: rotate(7.2deg);
+    }
+
+    70% {
+        left: 600px;
+        top: 19.1vh;
+        transform: rotate(7.5deg);
+    }
+
+    72% {
+        left: 620px;
+        top: 20vh;
+        transform: rotate(7.8deg);
+    }
+
+    74% {
+        left: 640px;
+        top: 20.9vh;
+        transform: rotate(8.1deg);
+    }
+
+    76% {
+        left: 660px;
+        top: 21.9vh;
+        transform: rotate(8.4deg);
+    }
+
+    78% {
+        left: 680px;
+        top: 22.9vh;
+        transform: rotate(8.7deg);
+    }
+
+    80% {
+        left: 700px;
+        top: 24vh;
+        transform: rotate(9deg);
+    }
+
+    82% {
+        left: 720px;
+        top: 25.1vh;
+        transform: rotate(9.3deg);
+    }
+
+    84% {
+        left: 740px;
+        top: 26.2vh;
+        transform: rotate(9.6deg);
+    }
+
+    86% {
+        left: 760px;
+        top: 27.3vh;
+        transform: rotate(9.9deg);
+    }
+
+    88% {
+        left: 780px;
+        top: 28.4vh;
+        transform: rotate(10.2deg);
+    }
+
+    90% {
+        left: 800px;
+        top: 29.5vh;
+        transform: rotate(10.5deg);
+    }
+
+    92% {
+        left: 820px;
+        top: 30.6vh;
+        transform: rotate(10.8deg);
+    }
+
+    94% {
+        left: 840px;
+        top: 31.7vh;
+        transform: rotate(11.1deg);
+    }
+
+    96% {
+        left: 860px;
+        top: 32.8vh;
+        transform: rotate(11.4deg);
+    }
+
+    98% {
+        left: 880px;
+        top: 33.9vh;
+        transform: rotate(11.7deg);
+    }
+
+    /* ФИНИШ — ТОЧНО ТА ЖЕ ВЫСОТА, ЧТО И В НАЧАЛЕ */
+
+    100% {
+        left: 900px;
+        top: 35vh;
+        transform: rotate(12deg);
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="flight-path">
-        <div class="washer">
-            <!-- Задняя часть -->
-            <div class="engine"></div>
-            <div class="drain-pipe"></div>
+<div class="scene">
 
-            <!-- Корпус -->
-            <div class="body">
-                <div class="panel">
-                    <div class="knob"></div>
-                    <div class="button"></div>
-                    <div class="button button2"></div>
-                </div>
-                
-                <!-- Дверца -->
-                <div class="door">
-                    <div class="door-handle"></div>
-                </div>
-            </div>
+    <div class="washing-machine">
+
+        <div class="top-panel">
+
+            <div class="display"></div>
+
+            <div class="button-small"></div>
+
+            <div class="button"></div>
+
         </div>
+
+        <div class="window">
+
+            <div class="window-glass"></div>
+
+        </div>
+
+        <div class="bottom-line"></div>
+
     </div>
+
+</div>
 
 </body>
 </html>
