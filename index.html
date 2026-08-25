@@ -87,9 +87,12 @@ button {
     justify-content: center;
     align-items: center;
     padding-bottom: 80px;
+    gap: 25px;
 }
 
-/* Только одна кнопка на главном экране */
+/* =========================
+   MAIN CASE BUTTONS
+========================= */
 
 .main-case-button {
     width: min(330px, 85vw);
@@ -132,6 +135,47 @@ button {
 
 .main-case-button:active {
     transform: scale(0.96);
+}
+
+/* FREE CASE */
+
+.free-case-button {
+    border-color: #27d878;
+    background:
+        linear-gradient(135deg, #159957, #07552f 55%, #03291b);
+
+    box-shadow:
+        0 25px 70px rgba(39, 216, 120, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.25);
+}
+
+.free-case-button::before {
+    background: linear-gradient(180deg, #49ed91, #139452);
+    border-color: #74ffac;
+    box-shadow: 0 5px 20px rgba(39, 216, 120, 0.45);
+}
+
+.free-case-button.disabled {
+    opacity: 0.45;
+    filter: grayscale(0.5);
+    cursor: default;
+}
+
+.free-case-button.disabled:active {
+    transform: none;
+}
+
+.free-timer {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    bottom: 13px;
+    text-align: center;
+    color: #b8ffd1;
+    font-size: 13px;
+    font-weight: 900;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
 }
 
 @keyframes floatCase {
@@ -265,6 +309,11 @@ button {
     transition: 0.2s ease;
 }
 
+.open-button.free-open {
+    background: linear-gradient(135deg, #18a95a, #27d878);
+    box-shadow: 0 8px 30px rgba(39,216,120,0.25);
+}
+
 .open-button:active {
     transform: scale(0.98);
 }
@@ -340,6 +389,10 @@ button {
 
 .uncommon {
     border-color: #2f9cff;
+}
+
+.free-rarity {
+    border-color: #27d878;
 }
 
 /* =========================
@@ -421,7 +474,9 @@ button {
     font-weight: 1000;
 }
 
-/* КНОПКИ В РЕЗУЛЬТАТЕ */
+/* =========================
+   RESULT BUTTONS
+========================= */
 
 .result-buttons {
     display: flex;
@@ -516,9 +571,22 @@ button {
         </div>
     </div>
 
-    <!-- ГЛАВНЫЙ ЭКРАН: ТОЛЬКО ОДНА КНОПКА -->
+    <!-- ГЛАВНЫЙ ЭКРАН -->
 
     <section id="mainScreen" class="screen main-screen">
+
+        <!-- FREE ВЫШЕ CASE 50 -->
+
+        <button
+            class="main-case-button free-case-button"
+            id="freeCaseBox"
+        >
+            <span>CASE FREE</span>
+            <div
+                class="free-timer"
+                id="freeTimer"
+            ></div>
+        </button>
 
         <button
             class="main-case-button"
@@ -536,7 +604,7 @@ button {
 
         <div class="case-title-row">
 
-            <div class="case-title">
+            <div class="case-title" id="caseTitle">
                 CASE 50 💰
             </div>
 
@@ -663,9 +731,11 @@ let isOpening = false;
 
 let currentWinner = null;
 
+let currentCaseType = "paid";
+
 
 /* =========================
-   ПРЕДМЕТЫ
+   ПРЕДМЕТЫ CASE 50
 ========================= */
 
 const items = [
@@ -778,7 +848,112 @@ const items = [
 
 
 /* =========================
-   НОРМАЛИЗАЦИЯ ШАНСОВ
+   ПРЕДМЕТЫ CASE FREE
+========================= */
+
+const freeItems = [
+
+    {
+        emoji: "3 ⭐",
+        name: "3 Stars",
+        value: 3,
+        chance: 23,
+        rarity: ""
+    },
+
+    {
+        emoji: "5 ⭐",
+        name: "5 Stars",
+        value: 5,
+        chance: 22,
+        rarity: ""
+    },
+
+    {
+        emoji: "7 ⭐",
+        name: "7 Stars",
+        value: 7,
+        chance: 27,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 6,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "Heart",
+        value: 15,
+        chance: 6,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "Gift",
+        value: 25,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "Rose",
+        value: 25,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎂",
+        name: "Cake",
+        value: 50,
+        chance: 1,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🚀",
+        name: "Rocket",
+        value: 50,
+        chance: 1,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.00001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🍭",
+        name: "Lol Pop",
+        value: 450,
+        chance: 0.00001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🐕",
+        name: "Snoop Dogg",
+        value: 550,
+        chance: 0.00001,
+        rarity: "legendary"
+    }
+
+];
+
+
+/* =========================
+   НОРМАЛИЗАЦИЯ CASE 50
 ========================= */
 
 function normalizeChances() {
@@ -833,9 +1008,24 @@ const caseBox =
         "caseBox"
     );
 
+const freeCaseBox =
+    document.getElementById(
+        "freeCaseBox"
+    );
+
+const freeTimer =
+    document.getElementById(
+        "freeTimer"
+    );
+
 const backButton =
     document.getElementById(
         "backButton"
+    );
+
+const caseTitle =
+    document.getElementById(
+        "caseTitle"
     );
 
 const rouletteTrack =
@@ -911,6 +1101,125 @@ function updateBalance() {
 
 
 /* =========================
+   FREE CASE COOLDOWN
+========================= */
+
+const FREE_COOLDOWN =
+    24 * 60 * 60 * 1000;
+
+const FREE_COOLDOWN_KEY =
+    "case_free_last_open";
+
+
+function getFreeLastOpen() {
+
+    const value =
+        localStorage.getItem(
+            FREE_COOLDOWN_KEY
+        );
+
+    if (!value) {
+        return 0;
+    }
+
+    return Number(value);
+}
+
+
+function canOpenFreeCase() {
+
+    const lastOpen =
+        getFreeLastOpen();
+
+    return (
+        Date.now() -
+        lastOpen >=
+        FREE_COOLDOWN
+    );
+}
+
+
+function setFreeCooldown() {
+
+    localStorage.setItem(
+        FREE_COOLDOWN_KEY,
+        String(Date.now())
+    );
+
+    updateFreeButton();
+}
+
+
+function updateFreeButton() {
+
+    const lastOpen =
+        getFreeLastOpen();
+
+    const remaining =
+        FREE_COOLDOWN -
+        (
+            Date.now() -
+            lastOpen
+        );
+
+    if (
+        remaining <= 0
+    ) {
+
+        freeCaseBox.classList
+            .remove("disabled");
+
+        freeTimer.textContent =
+            "ГОТОВ К ОТКРЫТИЮ";
+
+        return;
+    }
+
+    freeCaseBox.classList
+        .add("disabled");
+
+    freeTimer.textContent =
+        formatTime(
+            remaining
+        );
+}
+
+
+function formatTime(
+    milliseconds
+) {
+
+    let totalSeconds =
+        Math.ceil(
+            milliseconds / 1000
+        );
+
+    const hours =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+    totalSeconds %= 3600;
+
+    const minutes =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
+
+    return (
+        String(hours).padStart(2, "0") +
+        ":" +
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0")
+    );
+}
+
+
+/* =========================
    SCREENS
 ========================= */
 
@@ -921,10 +1230,17 @@ function showMain() {
 
     mainScreen.classList
         .add("active");
+
+    currentCaseType =
+        "paid";
+
+    updateFreeButton();
 }
 
 
-function showCase() {
+function showCase(
+    type = "paid"
+) {
 
     mainScreen.classList
         .remove("active");
@@ -932,7 +1248,49 @@ function showCase() {
     caseScreen.classList
         .add("active");
 
-    resetRoulette();
+    currentCaseType =
+        type;
+
+    if (
+        type === "free"
+    ) {
+
+        caseTitle.textContent =
+            "CASE FREE";
+
+        openButton.textContent =
+            "ОТКРЫТЬ FREE 🎁";
+
+        openButton.classList
+            .add("free-open");
+
+        renderItems(
+            freeItems
+        );
+
+        resetRoulette(
+            freeItems
+        );
+
+    } else {
+
+        caseTitle.textContent =
+            "CASE 50 💰";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 50 💰";
+
+        openButton.classList
+            .remove("free-open");
+
+        renderItems(
+            items
+        );
+
+        resetRoulette(
+            items
+        );
+    }
 }
 
 
@@ -940,12 +1298,14 @@ function showCase() {
    GRID
 ========================= */
 
-function renderItems() {
+function renderItems(
+    sourceItems
+) {
 
     itemsGrid.innerHTML = "";
 
     const sortedItems =
-        [...items].sort(
+        [...sourceItems].sort(
             (a, b) =>
                 b.value -
                 a.value
@@ -990,7 +1350,9 @@ function renderItems() {
    RANDOM ITEM
 ========================= */
 
-function getRandomItem() {
+function getRandomItem(
+    sourceItems
+) {
 
     const random =
         Math.random() * 100;
@@ -998,7 +1360,7 @@ function getRandomItem() {
     let accumulated = 0;
 
     for (
-        const item of items
+        const item of sourceItems
     ) {
 
         accumulated +=
@@ -1013,8 +1375,19 @@ function getRandomItem() {
         }
     }
 
-    return items[
-        items.length - 1
+    /*
+        Сохраняем ту же технику
+        выбора победителя.
+
+        Для FREE, поскольку указанные
+        шансы занимают не все 100%,
+        оставшаяся вероятность
+        распределяется через fallback
+        на последний предмет.
+    */
+
+    return sourceItems[
+        sourceItems.length - 1
     ];
 }
 
@@ -1055,7 +1428,9 @@ function createRouletteCard(
    RESET ROULETTE
 ========================= */
 
-function resetRoulette() {
+function resetRoulette(
+    sourceItems = items
+) {
 
     rouletteTrack.style.transition =
         "none";
@@ -1072,10 +1447,10 @@ function resetRoulette() {
     ) {
 
         const randomItem =
-            items[
+            sourceItems[
                 Math.floor(
                     Math.random() *
-                    items.length
+                    sourceItems.length
                 )
             ];
 
@@ -1100,6 +1475,174 @@ function openCase() {
 
         return;
     }
+
+
+    /* =========================
+       FREE CASE
+    ========================= */
+
+    if (
+        currentCaseType ===
+        "free"
+    ) {
+
+        if (
+            !canOpenFreeCase()
+        ) {
+
+            showMessage(
+                "FREE кейс можно открыть только раз в сутки ⏰"
+            );
+
+            return;
+        }
+
+        isOpening = true;
+
+        openButton.disabled =
+            true;
+
+        setFreeCooldown();
+
+        playClickSound();
+
+
+        const winner =
+            getRandomItem(
+                freeItems
+            );
+
+        currentWinner =
+            winner;
+
+
+        rouletteTrack.style.transition =
+            "none";
+
+        rouletteTrack.style.transform =
+            "translateX(0px)";
+
+        rouletteTrack.innerHTML = "";
+
+
+        const totalCards = 45;
+
+        const winnerIndex = 36;
+
+
+        for (
+            let i = 0;
+            i < totalCards;
+            i++
+        ) {
+
+            let item;
+
+            if (
+                i ===
+                winnerIndex
+            ) {
+
+                item =
+                    winner;
+
+            } else {
+
+                item =
+                    freeItems[
+                        Math.floor(
+                            Math.random() *
+                            freeItems.length
+                        )
+                    ];
+            }
+
+
+            rouletteTrack.appendChild(
+                createRouletteCard(
+                    item
+                )
+            );
+        }
+
+
+        const cardWidth =
+            135;
+
+        const windowWidth =
+            rouletteTrack
+                .parentElement
+                .offsetWidth;
+
+        const centerOffset =
+            windowWidth / 2 -
+            62.5;
+
+        const stopPosition =
+            -(
+                winnerIndex *
+                cardWidth -
+                centerOffset
+            );
+
+
+        const finalPosition =
+            stopPosition +
+            (
+                Math.random() *
+                30 -
+                15
+            );
+
+
+        requestAnimationFrame(
+            () => {
+
+                requestAnimationFrame(
+                    () => {
+
+                        rouletteTrack.style.transition =
+                            "transform 6.5s cubic-bezier(.08,.72,.05,1)";
+
+                        rouletteTrack.style.transform =
+                            `translateX(${finalPosition}px)`;
+
+                    }
+                );
+            }
+        );
+
+
+        playRollSound(
+            6500
+        );
+
+
+        setTimeout(
+            () => {
+
+                showResult(
+                    winner
+                );
+
+                isOpening =
+                    false;
+
+                openButton.disabled =
+                    false;
+
+            },
+            6800
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       CASE 50
+       НЕ МЕНЯЕМ ЕГО МЕХАНИКУ
+    ========================= */
 
     if (
         balance <
@@ -1126,17 +1669,10 @@ function openCase() {
     playClickSound();
 
 
-    /*
-        Победитель выбирается
-        один раз.
-
-        Именно этот предмет
-        находится под желтой
-        линией после остановки.
-    */
-
     const winner =
-        getRandomItem();
+        getRandomItem(
+            items
+        );
 
     currentWinner =
         winner;
@@ -1247,18 +1783,6 @@ function openCase() {
     setTimeout(
         () => {
 
-            /*
-                ВАЖНО:
-
-                Здесь баланс НЕ пополняется.
-
-                Предмет сначала попадает
-                в отдельное окно результата.
-
-                Деньги добавятся только
-                после нажатия ПРОДАТЬ.
-            */
-
             showResult(
                 winner
             );
@@ -1317,12 +1841,6 @@ sellResult.addEventListener(
             return;
         }
 
-        /*
-            Добавляем стоимость
-            именно того предмета,
-            который выпал.
-        */
-
         balance +=
             currentWinner.value;
 
@@ -1331,12 +1849,11 @@ sellResult.addEventListener(
         resultModal.classList
             .remove("show");
 
-        /*
-            Возвращаем игрока
-            именно в открытый кейс.
-        */
-
-        resetRoulette();
+        resetRoulette(
+            currentCaseType === "free"
+                ? freeItems
+                : items
+        );
 
         currentWinner =
             null;
@@ -1353,18 +1870,14 @@ backResult.addEventListener(
     "click",
     () => {
 
-        /*
-            Предмет не продается,
-            баланс не изменяется.
-
-            Просто возвращаемся
-            в тот же кейс.
-        */
-
         resultModal.classList
             .remove("show");
 
-        resetRoulette();
+        resetRoulette(
+            currentCaseType === "free"
+                ? freeItems
+                : items
+        );
 
         currentWinner =
             null;
@@ -1379,7 +1892,36 @@ backResult.addEventListener(
 
 caseBox.addEventListener(
     "click",
-    showCase
+    () => {
+
+        showCase(
+            "paid"
+        );
+
+    }
+);
+
+
+freeCaseBox.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !canOpenFreeCase()
+        ) {
+
+            showMessage(
+                "FREE кейс можно открыть только раз в сутки ⏰"
+            );
+
+            return;
+        }
+
+        showCase(
+            "free"
+        );
+
+    }
 );
 
 
@@ -1750,16 +2292,34 @@ function playWinSound() {
 
 
 /* =========================
+   FREE TIMER UPDATE
+========================= */
+
+setInterval(
+    updateFreeButton,
+    1000
+);
+
+
+/* =========================
    INITIAL
 ========================= */
 
-renderItems();
+renderItems(
+    items
+);
 
-resetRoulette();
+resetRoulette(
+    items
+);
 
 updateBalance();
 
-mainScreen.classList.add("active");
+updateFreeButton();
+
+mainScreen.classList.add(
+    "active"
+);
 
 </script>
 
