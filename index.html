@@ -3,11 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐻‍❄️ DROP + SCRATCH + CASES + UPGRADE</title>
+<title>🐻‍❄️ DROP</title>
+
+<!-- Подключаем Telegram WebApp SDK -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
 /* =====================================================
-   ОБЩИЕ СБРОСЫ
+   ОБЩИЕ СБРОСЫ - ЗИМНИЙ ДИЗАЙН
 ===================================================== */
 * {
     box-sizing: border-box;
@@ -21,8 +24,8 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #111315;
-    color: #fff;
+    background: #0a1628;
+    color: #e8f0fe;
     font-family: Arial, sans-serif;
     user-select: none;
 }
@@ -41,7 +44,7 @@ button { cursor: pointer; }
     width: 100%;
     height: 100%;
     position: relative;
-    background: #111315;
+    background: linear-gradient(145deg, #0a1628, #142a4a, #0d1f38);
 }
 
 /* HEADER */
@@ -55,23 +58,28 @@ button { cursor: pointer; }
     align-items: center;
     justify-content: space-between;
     padding: 0 22px;
-    border-bottom: 1px solid #282d31;
-    background: rgba(17,19,21,.96);
+    border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+    background: rgba(10, 22, 40, 0.95);
+    backdrop-filter: blur(10px);
     z-index: 20;
 }
 .logo {
     font-size: 22px;
     font-weight: 900;
     letter-spacing: -.5px;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(100, 180, 255, 0.3);
 }
+.logo span { color: #6ab0ff; }
 .header-balance {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #ffd84d;
+    color: #a8d4ff;
     font-size: 19px;
     font-weight: 900;
 }
+.header-balance span { color: #ffd84d; }
 
 /* CONTENT */
 .content {
@@ -83,6 +91,17 @@ button { cursor: pointer; }
     overflow-y: auto;
     padding: 25px 18px 30px;
 }
+.content::-webkit-scrollbar {
+    width: 4px;
+}
+.content::-webkit-scrollbar-track {
+    background: #0a1628;
+}
+.content::-webkit-scrollbar-thumb {
+    background: #4a8ecf;
+    border-radius: 4px;
+}
+
 .page {
     width: 100%;
     max-width: 620px;
@@ -92,9 +111,12 @@ button { cursor: pointer; }
     font-size: 30px;
     font-weight: 900;
     margin-bottom: 8px;
+    background: linear-gradient(135deg, #fff, #6ab0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .page-subtitle {
-    color: #858b91;
+    color: #8ab4d8;
     font-size: 16px;
     line-height: 1.5;
     margin-bottom: 24px;
@@ -102,19 +124,22 @@ button { cursor: pointer; }
 
 /* CARDS */
 .card {
-    background: #191c20;
-    border: 1px solid #292e33;
+    background: linear-gradient(145deg, rgba(20, 50, 90, 0.6), rgba(10, 22, 40, 0.8));
+    border: 1px solid rgba(100, 180, 255, 0.15);
     border-radius: 16px;
     padding: 20px;
     margin-bottom: 14px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 32px rgba(0, 20, 50, 0.3);
 }
 .card-title {
     font-size: 20px;
     font-weight: 900;
     margin-bottom: 7px;
+    color: #c8e4ff;
 }
 .card-text {
-    color: #858b91;
+    color: #8ab4d8;
     font-size: 15px;
     line-height: 1.5;
 }
@@ -122,6 +147,12 @@ button { cursor: pointer; }
 /* GAME CARD */
 .game-card {
     padding: 24px;
+    background: linear-gradient(145deg, rgba(30, 70, 120, 0.4), rgba(10, 30, 60, 0.6));
+    border: 1px solid rgba(100, 180, 255, 0.2);
+}
+.game-card:hover {
+    border-color: rgba(100, 180, 255, 0.5);
+    box-shadow: 0 8px 40px rgba(50, 150, 255, 0.15);
 }
 .game-icon {
     width: 62px;
@@ -130,9 +161,10 @@ button { cursor: pointer; }
     align-items: center;
     justify-content: center;
     border-radius: 16px;
-    background: #24292e;
+    background: linear-gradient(135deg, #1a3a6a, #0d2240);
     font-size: 31px;
     margin-bottom: 17px;
+    border: 1px solid rgba(100, 180, 255, 0.2);
 }
 .game-button {
     width: 100%;
@@ -140,10 +172,16 @@ button { cursor: pointer; }
     padding: 15px;
     border: none;
     border-radius: 11px;
-    background: #1678e8;
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
     color: #fff;
     font-size: 16px;
     font-weight: 900;
+    box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+    transition: 0.2s;
+}
+.game-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(42, 122, 216, 0.5);
 }
 .game-button:active { transform: scale(.98); }
 
@@ -153,20 +191,21 @@ button { cursor: pointer; }
     padding: 14px;
     border: none;
     border-radius: 11px;
-    background: #282d32;
-    color: #fff;
+    background: linear-gradient(135deg, #1a3a6a, #0d2240);
+    color: #c8e4ff;
     font-size: 16px;
     font-weight: 800;
     margin-bottom: 16px;
+    border: 1px solid rgba(100, 180, 255, 0.2);
 }
 .sell-all:disabled { opacity: .45; cursor: default; }
 .empty-inventory {
     text-align: center;
     padding: 45px 15px;
-    color: #737a81;
+    color: #5a8aaa;
 }
 .empty-icon { font-size: 45px; margin-bottom: 13px; }
-.empty-title { color: #c9cdd1; font-size: 19px; font-weight: 800; margin-bottom: 7px; }
+.empty-title { color: #8ab4d8; font-size: 19px; font-weight: 800; margin-bottom: 7px; }
 .empty-text { font-size: 15px; }
 
 .inventory-item {
@@ -174,8 +213,8 @@ button { cursor: pointer; }
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
-    background: #1a1d21;
-    border: 1px solid #292e33;
+    background: rgba(20, 50, 90, 0.4);
+    border: 1px solid rgba(100, 180, 255, 0.15);
     border-radius: 12px;
     margin-bottom: 8px;
 }
@@ -185,10 +224,10 @@ button { cursor: pointer; }
     gap: 12px;
 }
 .inventory-item-emoji { font-size: 28px; }
-.inventory-item-name { font-weight: 800; font-size: 15px; }
+.inventory-item-name { font-weight: 800; font-size: 15px; color: #c8e4ff; }
 .inventory-item-value { color: #ffd84d; font-size: 14px; font-weight: 800; }
 .inventory-sell-btn {
-    background: #27d878;
+    background: linear-gradient(135deg, #1a5ab8, #0d3a7a);
     border: none;
     border-radius: 8px;
     padding: 6px 14px;
@@ -197,7 +236,7 @@ button { cursor: pointer; }
     font-size: 13px;
     cursor: pointer;
 }
-.inventory-sell-btn:hover { filter: brightness(1.1); }
+.inventory-sell-btn:hover { filter: brightness(1.2); }
 
 /* PROFILE */
 .profile-row {
@@ -205,12 +244,12 @@ button { cursor: pointer; }
     align-items: center;
     justify-content: space-between;
     padding: 15px 0;
-    border-bottom: 1px solid #292e33;
+    border-bottom: 1px solid rgba(100, 180, 255, 0.1);
 }
 .profile-row:last-child { border-bottom: none; }
-.profile-label { color: #858b91; font-size: 15px; }
-.profile-value { font-size: 16px; font-weight: 800; }
-.ref-value { color: #54a8ff; word-break: break-all; }
+.profile-label { color: #8ab4d8; font-size: 15px; }
+.profile-value { font-size: 16px; font-weight: 800; color: #e8f0fe; }
+.ref-value { color: #6ab0ff; word-break: break-all; }
 
 /* DAILY */
 .daily-button {
@@ -218,20 +257,21 @@ button { cursor: pointer; }
     padding: 15px;
     border: none;
     border-radius: 11px;
-    background: #1678e8;
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
     color: white;
     font-size: 16px;
     font-weight: 900;
     margin-top: 15px;
+    box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
 }
 .daily-button:disabled {
-    background: #282d32;
-    color: #777d83;
+    background: rgba(30, 60, 100, 0.5);
+    color: #5a8aaa;
 }
 .timer {
     text-align: center;
     margin-top: 13px;
-    color: #ffd84d;
+    color: #6ab0ff;
     font-size: 18px;
     font-weight: 900;
 }
@@ -240,25 +280,26 @@ button { cursor: pointer; }
 .promo-input {
     width: 100%;
     padding: 14px;
-    border: 1px solid #383e44;
+    border: 1px solid rgba(100, 180, 255, 0.2);
     border-radius: 10px;
-    background: #111315;
-    color: #fff;
+    background: rgba(10, 22, 40, 0.8);
+    color: #e8f0fe;
     outline: none;
     font-size: 16px;
     text-align: center;
 }
-.promo-input:focus { border-color: #1678e8; }
+.promo-input:focus { border-color: #2a7ad8; box-shadow: 0 0 20px rgba(42, 122, 216, 0.15); }
 .promo-button {
     width: 100%;
     margin-top: 11px;
     padding: 14px;
     border: none;
     border-radius: 10px;
-    background: #282d32;
-    color: white;
+    background: linear-gradient(135deg, #1a3a6a, #0d2240);
+    color: #c8e4ff;
     font-size: 15px;
     font-weight: 900;
+    border: 1px solid rgba(100, 180, 255, 0.2);
 }
 .promo-message {
     min-height: 20px;
@@ -276,8 +317,9 @@ button { cursor: pointer; }
     width: 100%;
     height: 82px;
     display: flex;
-    background: #171a1d;
-    border-top: 1px solid #292e33;
+    background: rgba(10, 22, 40, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(100, 180, 255, 0.15);
     z-index: 30;
 }
 .nav-button {
@@ -289,21 +331,21 @@ button { cursor: pointer; }
     gap: 5px;
     border: none;
     background: transparent;
-    color: #737a81;
+    color: #5a8aaa;
     font-size: 13px;
     font-weight: 800;
 }
 .nav-icon { font-size: 23px; }
-.nav-button.active { color: #fff; }
+.nav-button.active { color: #6ab0ff; }
 .nav-button.active .nav-icon { transform: translateY(-1px); }
 
 /* =====================================================
-   ИГРА ШАРИК
+   ИГРА ШАРИК - ЗИМНИЙ ДИЗАЙН
 ===================================================== */
 #gameScreen {
     position: fixed;
     inset: 0;
-    background: #111315;
+    background: linear-gradient(145deg, #0a1628, #142a4a);
     z-index: 100;
 }
 #gameCanvas {
@@ -326,18 +368,18 @@ button { cursor: pointer; }
     text-align: center;
 }
 .game-stat-label {
-    color: #737a81;
+    color: #5a8aaa;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: .8px;
 }
 .game-stat-value {
     margin-top: 4px;
-    color: #fff;
+    color: #e8f0fe;
     font-size: 20px;
     font-weight: 900;
 }
-#gameMultiplier { color: #42df78; }
+#gameMultiplier { color: #6ab0ff; }
 #gameBalance { color: #ffd84d; }
 
 .bottom-zones {
@@ -361,10 +403,10 @@ button { cursor: pointer; }
     overflow: hidden;
 }
 .green-zone {
-    background: linear-gradient(to top, #2bdd72, #26c968 35%, rgba(39,201,104,.2));
+    background: linear-gradient(to top, #1a8a5a, #0d6a4a 35%, rgba(26, 138, 90, 0.2));
 }
 .red-zone {
-    background: linear-gradient(to top, #e84550, #d93c47 35%, rgba(217,60,71,.2));
+    background: linear-gradient(to top, #c04060, #a03050 35%, rgba(192, 64, 96, 0.2));
 }
 
 .game-menu {
@@ -375,16 +417,19 @@ button { cursor: pointer; }
     width: calc(100% - 40px);
     max-width: 350px;
     padding: 25px;
-    background: rgba(25,28,32,.98);
-    border: 1px solid #343a40;
+    background: rgba(10, 30, 60, 0.95);
+    border: 1px solid rgba(100, 180, 255, 0.2);
     border-radius: 18px;
     z-index: 120;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 .game-menu-title {
     text-align: center;
     font-size: 28px;
     font-weight: 900;
     margin-bottom: 18px;
+    color: #e8f0fe;
 }
 .game-menu-balance {
     text-align: center;
@@ -396,15 +441,16 @@ button { cursor: pointer; }
 .bet-input {
     width: 100%;
     padding: 14px;
-    background: #111315;
-    color: white;
-    border: 1px solid #3a4148;
+    background: rgba(10, 22, 40, 0.8);
+    color: #e8f0fe;
+    border: 1px solid rgba(100, 180, 255, 0.2);
     border-radius: 10px;
     outline: none;
     text-align: center;
     font-size: 17px;
     font-weight: 800;
 }
+.bet-input:focus { border-color: #2a7ad8; }
 .bet-error {
     min-height: 18px;
     color: #ef4752;
@@ -422,22 +468,27 @@ button { cursor: pointer; }
     border: none;
     border-radius: 9px;
     padding: 10px 5px;
-    background: #282d32;
-    color: #cfd3d7;
+    background: rgba(20, 50, 90, 0.5);
+    color: #8ab4d8;
     font-size: 13px;
     font-weight: 800;
 }
-.difficulty button.active { background: #1678e8; color: #fff; }
+.difficulty button.active {
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+}
 .start-game {
     width: 100%;
     margin-top: 15px;
     padding: 14px;
     border: none;
     border-radius: 10px;
-    background: #1678e8;
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
     color: #fff;
     font-size: 15px;
     font-weight: 900;
+    box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
 }
 .exit-game {
     width: 100%;
@@ -446,7 +497,7 @@ button { cursor: pointer; }
     border: none;
     border-radius: 10px;
     background: transparent;
-    color: #858b91;
+    color: #5a8aaa;
     font-size: 14px;
     font-weight: 800;
 }
@@ -459,17 +510,18 @@ button { cursor: pointer; }
     width: calc(100% - 40px);
     max-width: 330px;
     padding: 28px;
-    background: #191c20;
-    border: 1px solid #343a40;
+    background: rgba(10, 30, 60, 0.95);
+    border: 1px solid rgba(100, 180, 255, 0.2);
     border-radius: 18px;
     text-align: center;
     z-index: 130;
+    backdrop-filter: blur(10px);
 }
 .result-title { font-size: 44px; font-weight: 900; }
-.result-title.win { color: #42df78; }
+.result-title.win { color: #6ab0ff; }
 .result-title.lose { color: #ef4752; }
 .result-info {
-    color: #858b91;
+    color: #8ab4d8;
     font-size: 14px;
     line-height: 1.7;
     margin-top: 8px;
@@ -479,7 +531,7 @@ button { cursor: pointer; }
     font-size: 23px;
     font-weight: 900;
 }
-.result-money.win { color: #42df78; }
+.result-money.win { color: #ffd84d; }
 .result-money.lose { color: #ef4752; }
 .result-close {
     width: 100%;
@@ -487,19 +539,19 @@ button { cursor: pointer; }
     padding: 13px;
     border: none;
     border-radius: 10px;
-    background: #1678e8;
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
     color: white;
     font-size: 14px;
     font-weight: 900;
 }
 
 /* =====================================================
-   ИГРА БИЛЕТЫ (SCRATCH)
+   ИГРА БИЛЕТЫ - ЗИМНИЙ ДИЗАЙН
 ===================================================== */
 #ticketGameContainer {
     position: fixed;
     inset: 0;
-    background: #101214;
+    background: linear-gradient(145deg, #0a1628, #142a4a);
     z-index: 90;
     overflow-y: auto;
     padding: 18px 15px 30px;
@@ -521,14 +573,16 @@ button { cursor: pointer; }
     font-size: 22px;
     font-weight: 900;
     letter-spacing: .5px;
+    color: #e8f0fe;
 }
 #ticketGameContainer .balance-ticket {
-    background: #1a1d21;
-    border: 1px solid #292e34;
+    background: rgba(20, 50, 90, 0.5);
+    border: 1px solid rgba(100, 180, 255, 0.15);
     border-radius: 12px;
     padding: 10px 14px;
     font-size: 16px;
     font-weight: 800;
+    color: #a8d4ff;
 }
 #ticketGameContainer .balance-ticket span { color: #ffd84d; }
 #ticketGameContainer .screen { display: none; }
@@ -538,10 +592,13 @@ button { cursor: pointer; }
     font-size: 30px;
     font-weight: 900;
     margin-top: 10px;
+    background: linear-gradient(135deg, #fff, #6ab0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 #ticketGameContainer .subtitle {
     text-align: center;
-    color: #858b92;
+    color: #8ab4d8;
     font-size: 14px;
     margin-top: 7px;
     line-height: 1.5;
@@ -554,44 +611,44 @@ button { cursor: pointer; }
 }
 #ticketGameContainer .ticket {
     width: 100%;
-    border: 1px solid #2b3036;
-    background: #181b1f;
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    background: rgba(20, 50, 90, 0.3);
     border-radius: 17px;
     padding: 19px;
     cursor: pointer;
     transition: .2s ease;
     position: relative;
 }
-#ticketGameContainer .ticket:hover { border-color: #454c54; transform: translateY(-1px); }
+#ticketGameContainer .ticket:hover { border-color: rgba(100, 180, 255, 0.4); transform: translateY(-1px); }
 #ticketGameContainer .ticket:active { transform: scale(.985); }
 #ticketGameContainer .ticket.selected {
-    border: 2px solid #ffd84d;
-    box-shadow: 0 0 0 1px rgba(255,216,77,.15), 0 0 22px rgba(255,216,77,.14);
+    border: 2px solid #6ab0ff;
+    box-shadow: 0 0 30px rgba(42, 122, 216, 0.2);
 }
 #ticketGameContainer .ticket-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-#ticketGameContainer .ticket-name { font-size: 19px; font-weight: 900; }
+#ticketGameContainer .ticket-name { font-size: 19px; font-weight: 900; color: #e8f0fe; }
 #ticketGameContainer .ticket-price { color: #ffd84d; font-size: 16px; font-weight: 900; }
-#ticketGameContainer .free { color: #48df80; }
+#ticketGameContainer .free { color: #6ab0ff; }
 #ticketGameContainer .ticket-description {
-    color: #858b92;
+    color: #8ab4d8;
     margin-top: 8px;
     font-size: 13px;
     line-height: 1.5;
 }
 #ticketGameContainer .chance-panel {
     margin-top: 20px;
-    background: #181b1f;
-    border: 1px solid #292e34;
+    background: rgba(20, 50, 90, 0.3);
+    border: 1px solid rgba(100, 180, 255, 0.15);
     border-radius: 17px;
     padding: 18px;
 }
-#ticketGameContainer .chance-title { font-size: 18px; font-weight: 900; margin-bottom: 6px; }
+#ticketGameContainer .chance-title { font-size: 18px; font-weight: 900; margin-bottom: 6px; color: #e8f0fe; }
 #ticketGameContainer .chance-subtitle {
-    color: #777f87;
+    color: #8ab4d8;
     font-size: 12px;
     margin-bottom: 14px;
 }
@@ -601,12 +658,12 @@ button { cursor: pointer; }
     padding: 15px;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, #1678e8, #2493ff);
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
     color: white;
     font-size: 15px;
     font-weight: 900;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(22,120,232,.25);
+    box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
     transition: .2s ease;
 }
 #ticketGameContainer .start-ticket-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
@@ -616,7 +673,7 @@ button { cursor: pointer; }
     align-items: center;
     justify-content: space-between;
     padding: 11px 0;
-    border-bottom: 1px solid #24282d;
+    border-bottom: 1px solid rgba(100, 180, 255, 0.08);
 }
 #ticketGameContainer .chance-row:last-child { border-bottom: none; }
 #ticketGameContainer .chance-symbol { font-size: 21px; }
@@ -624,12 +681,12 @@ button { cursor: pointer; }
     flex: 1;
     margin-left: 10px;
     font-size: 14px;
-    color: #d5d9dd;
+    color: #c8e4ff;
 }
 #ticketGameContainer .chance-percent {
     font-size: 14px;
     font-weight: 900;
-    color: #4fe483;
+    color: #6ab0ff;
     width: 55px;
     text-align: right;
 }
@@ -646,8 +703,8 @@ button { cursor: pointer; }
     padding: 13px;
     border: none;
     border-radius: 11px;
-    background: #24282d;
-    color: #d9dde0;
+    background: rgba(20, 50, 90, 0.5);
+    color: #8ab4d8;
     font-weight: 800;
     cursor: pointer;
 }
@@ -657,11 +714,11 @@ button { cursor: pointer; }
     align-items: center;
     margin-bottom: 18px;
 }
-#ticketGameContainer .game-name-ticket { font-size: 20px; font-weight: 900; }
+#ticketGameContainer .game-name-ticket { font-size: 20px; font-weight: 900; color: #e8f0fe; }
 #ticketGameContainer .game-cost-ticket { color: #ffd84d; font-size: 14px; font-weight: 800; }
 #ticketGameContainer .free-opens-ticket {
     text-align: center;
-    color: #48df80;
+    color: #6ab0ff;
     font-size: 13px;
     font-weight: 800;
     margin-bottom: 12px;
@@ -669,20 +726,20 @@ button { cursor: pointer; }
 #ticketGameContainer .card-ticket {
     width: 100%;
     aspect-ratio: 1 / 1;
-    background: #191c20;
-    border: 1px solid #30353b;
+    background: rgba(10, 30, 60, 0.8);
+    border: 1px solid rgba(100, 180, 255, 0.15);
     border-radius: 20px;
     padding: 12px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 9px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 #ticketGameContainer .cell-ticket {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    background: #24282d;
+    background: rgba(20, 50, 90, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -690,20 +747,20 @@ button { cursor: pointer; }
 }
 #ticketGameContainer .symbol-ticket {
     font-size: clamp(30px, 11vw, 54px);
-    filter: drop-shadow(0 5px 10px rgba(0,0,0,.3));
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
 }
 #ticketGameContainer .scratch-ticket {
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(135deg, #777d83 0px, #777d83 3px, #686e74 3px, #686e74 6px);
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,.08), inset 0 -10px 20px rgba(0,0,0,.25);
+    background: repeating-linear-gradient(135deg, #4a6a9a 0px, #4a6a9a 3px, #3a5a8a 3px, #3a5a8a 6px);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05), inset 0 -10px 20px rgba(0, 0, 0, 0.25);
     transition: opacity .35s ease, transform .35s ease;
 }
 #ticketGameContainer .scratch-ticket::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(-25deg, transparent 0px, transparent 9px, rgba(255,255,255,.15) 10px, transparent 12px);
+    background: repeating-linear-gradient(-25deg, transparent 0px, transparent 9px, rgba(255, 255, 255, 0.08) 10px, transparent 12px);
 }
 #ticketGameContainer .cell-ticket.opened .scratch-ticket {
     opacity: 0;
@@ -725,16 +782,16 @@ button { cursor: pointer; }
     border: none;
     border-radius: 11px;
     padding: 13px;
-    background: #24282d;
-    color: white;
+    background: rgba(20, 50, 90, 0.5);
+    color: #c8e4ff;
     font-weight: 800;
     cursor: pointer;
 }
-#ticketGameContainer .game-button-ticket:hover { background: #2d3238; }
+#ticketGameContainer .game-button-ticket:hover { background: rgba(30, 70, 120, 0.6); }
 #ticketGameContainer .modal-ticket {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.72);
+    background: rgba(0, 0, 0, 0.7);
     display: none;
     align-items: center;
     justify-content: center;
@@ -745,12 +802,13 @@ button { cursor: pointer; }
 #ticketGameContainer .modal-box-ticket {
     width: 100%;
     max-width: 350px;
-    background: #191c20;
-    border: 1px solid #30353b;
+    background: rgba(10, 30, 60, 0.95);
+    border: 1px solid rgba(100, 180, 255, 0.2);
     border-radius: 20px;
     padding: 28px 22px;
     text-align: center;
     animation: modalIn .25s ease;
+    backdrop-filter: blur(10px);
 }
 @keyframes modalIn {
     from { opacity: 0; transform: scale(.9); }
@@ -762,10 +820,10 @@ button { cursor: pointer; }
     font-size: 30px;
     font-weight: 900;
 }
-#ticketGameContainer .result-title-ticket.win { color: #48df80; }
+#ticketGameContainer .result-title-ticket.win { color: #6ab0ff; }
 #ticketGameContainer .result-title-ticket.lose { color: #ef5350; }
 #ticketGameContainer .result-text-ticket {
-    color: #8b9299;
+    color: #8ab4d8;
     margin-top: 9px;
     line-height: 1.5;
     font-size: 14px;
@@ -782,7 +840,7 @@ button { cursor: pointer; }
     padding: 13px;
     border: none;
     border-radius: 11px;
-    background: #1678e8;
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
     color: white;
     font-size: 14px;
     font-weight: 900;
@@ -793,7 +851,7 @@ button { cursor: pointer; }
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #ffd84d;
+    background: #6ab0ff;
     pointer-events: none;
     z-index: 150;
     animation: spark 800ms ease-out forwards;
@@ -807,25 +865,24 @@ button { cursor: pointer; }
     top: 18px;
     right: 18px;
     z-index: 95;
-    background: #24282d;
-    border: none;
+    background: rgba(20, 50, 90, 0.8);
+    border: 1px solid rgba(100, 180, 255, 0.2);
     border-radius: 50%;
     width: 44px;
     height: 44px;
     font-size: 22px;
-    color: #fff;
+    color: #e8f0fe;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,.6);
 }
-#closeTicketsBtn:hover { background: #383e44; }
+#closeTicketsBtn:hover { background: rgba(30, 70, 120, 0.8); }
 
 /* =====================================================
-   ИГРА КЕЙСЫ (CASES)
+   ИГРА КЕЙСЫ - ЗИМНИЙ ДИЗАЙН
 ===================================================== */
 #casesGameContainer {
     position: fixed;
     inset: 0;
-    background: #090b10;
+    background: linear-gradient(145deg, #0a1628, #142a4a);
     z-index: 90;
     overflow-y: auto;
     padding: 18px 14px 35px;
@@ -839,11 +896,11 @@ button { cursor: pointer; }
 #casesGameContainer .balance-case {
     padding: 11px 17px;
     border-radius: 14px;
-    background: #121722;
-    border: 1px solid #273144;
+    background: rgba(20, 50, 90, 0.5);
+    border: 1px solid rgba(100, 180, 255, 0.15);
     font-size: 20px;
     font-weight: 900;
-    box-shadow: 0 0 25px rgba(0, 153, 255, 0.08);
+    color: #a8d4ff;
 }
 #casesGameContainer .balance-case span { color: #ffd84d; }
 #casesGameContainer .screen-case { display: none; min-height: calc(100vh - 73px); }
@@ -859,13 +916,13 @@ button { cursor: pointer; }
     height: 190px;
     border-radius: 25px;
     cursor: pointer;
-    border: 2px solid #349cff;
-    background: linear-gradient(135deg, #176ed0, #0b326e 55%, #071a3d);
+    border: 2px solid #2a7ad8;
+    background: linear-gradient(135deg, #1a3a7a, #0a224a 55%, #051a2a);
     color: white;
     font-size: 36px;
     font-weight: 1000;
     letter-spacing: 1px;
-    box-shadow: 0 25px 70px rgba(0, 90, 255, 0.35), inset 0 2px 0 rgba(255,255,255,0.25);
+    box-shadow: 0 20px 60px rgba(42, 122, 216, 0.15);
     position: relative;
     animation: floatCase 2.5s ease-in-out infinite;
     transition: 0.2s ease;
@@ -878,21 +935,21 @@ button { cursor: pointer; }
     top: 35px;
     height: 38px;
     border-radius: 10px;
-    background: linear-gradient(180deg, #4db4ff, #1267c7);
-    border: 2px solid #71c4ff;
-    box-shadow: 0 5px 20px rgba(0, 140, 255, 0.5);
+    background: linear-gradient(180deg, #4a8ecf, #2a6aaa);
+    border: 2px solid #6ab0ff;
+    box-shadow: 0 5px 20px rgba(42, 122, 216, 0.3);
 }
-#casesGameContainer .main-case-button span { position: relative; z-index: 2; text-shadow: 0 4px 15px rgba(0,0,0,0.7); }
+#casesGameContainer .main-case-button span { position: relative; z-index: 2; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7); }
 #casesGameContainer .main-case-button:active { transform: scale(0.96); }
 #casesGameContainer .free-case-button {
-    border-color: #27d878;
-    background: linear-gradient(135deg, #159957, #07552f 55%, #03291b);
-    box-shadow: 0 25px 70px rgba(39, 216, 120, 0.25), inset 0 2px 0 rgba(255,255,255,0.25);
+    border-color: #6ab0ff;
+    background: linear-gradient(135deg, #1a5a8a, #0a2a5a 55%, #051a3a);
+    box-shadow: 0 20px 60px rgba(42, 122, 216, 0.1);
 }
 #casesGameContainer .free-case-button::before {
-    background: linear-gradient(180deg, #49ed91, #139452);
-    border-color: #74ffac;
-    box-shadow: 0 5px 20px rgba(39, 216, 120, 0.45);
+    background: linear-gradient(180deg, #6ab0ff, #3a7acf);
+    border-color: #8ac8ff;
+    box-shadow: 0 5px 20px rgba(42, 122, 216, 0.25);
 }
 #casesGameContainer .free-case-button.disabled { opacity: 0.45; filter: grayscale(0.5); cursor: default; }
 #casesGameContainer .free-case-button.disabled:active { transform: none; }
@@ -903,30 +960,26 @@ button { cursor: pointer; }
     right: 0;
     bottom: 13px;
     text-align: center;
-    color: #b8ffd1;
+    color: #8ac8ff;
     font-size: 13px;
     font-weight: 900;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 #casesGameContainer .pls-pepe-button {
-    border-color: #42e66f;
-    background: linear-gradient(135deg, #27a84b, #12632d 55%, #073016);
-    box-shadow: 0 25px 70px rgba(66, 230, 111, 0.28), inset 0 2px 0 rgba(255,255,255,0.25);
+    border-color: #6ab0ff;
+    background: linear-gradient(135deg, #1a5a6a, #0a2a4a 55%, #051a2a);
 }
 #casesGameContainer .pls-pepe-button::before {
-    background: linear-gradient(180deg, #67f58b, #249c45);
-    border-color: #8affaa;
-    box-shadow: 0 5px 20px rgba(66, 230, 111, 0.45);
+    background: linear-gradient(180deg, #6ac8ff, #3a8acf);
+    border-color: #8ad8ff;
 }
 #casesGameContainer .case-250-button {
-    border-color: #b56cff;
-    background: linear-gradient(135deg, #7138c9, #32145f 55%, #18092f);
-    box-shadow: 0 25px 70px rgba(150, 70, 255, 0.28), inset 0 2px 0 rgba(255,255,255,0.25);
+    border-color: #8a7aff;
+    background: linear-gradient(135deg, #3a2a8a, #1a1a5a 55%, #0a0a3a);
 }
 #casesGameContainer .case-250-button::before {
-    background: linear-gradient(180deg, #c084ff, #7138c9);
-    border-color: #d2a5ff;
-    box-shadow: 0 5px 20px rgba(170, 90, 255, 0.45);
+    background: linear-gradient(180deg, #aa8aff, #6a4acf);
+    border-color: #ccaaff;
 }
 @keyframes floatCase {
     0%, 100% { transform: translateY(0); }
@@ -939,11 +992,11 @@ button { cursor: pointer; }
     justify-content: space-between;
     margin: 8px 2px 20px;
 }
-#casesGameContainer .case-title { font-size: 24px; font-weight: 1000; }
+#casesGameContainer .case-title { font-size: 24px; font-weight: 1000; color: #e8f0fe; }
 #casesGameContainer .back-case {
     border: none;
-    background: #161b25;
-    color: white;
+    background: rgba(20, 50, 90, 0.5);
+    color: #8ab4d8;
     padding: 10px 14px;
     border-radius: 11px;
     cursor: pointer;
@@ -960,18 +1013,18 @@ button { cursor: pointer; }
     height: 0;
     border-left: 16px solid transparent;
     border-right: 16px solid transparent;
-    border-top: 25px solid #ffd84d;
-    filter: drop-shadow(0 0 8px rgba(255,216,77,0.7));
+    border-top: 25px solid #6ab0ff;
+    filter: drop-shadow(0 0 8px rgba(42, 122, 216, 0.5));
 }
 #casesGameContainer .roulette-window {
     width: 100%;
     height: 160px;
     overflow: hidden;
     border-radius: 17px;
-    border: 1px solid #283244;
-    background: #0d1119;
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    background: rgba(10, 22, 40, 0.8);
     position: relative;
-    box-shadow: inset 0 0 40px rgba(0,0,0,0.7), 0 15px 45px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
 }
 #casesGameContainer .roulette-track {
     height: 100%;
@@ -986,8 +1039,8 @@ button { cursor: pointer; }
     min-width: 125px;
     height: 125px;
     border-radius: 14px;
-    background: linear-gradient(145deg, #1c2431, #10151e);
-    border: 1px solid #2d3a4d;
+    background: linear-gradient(145deg, rgba(20, 50, 90, 0.5), rgba(10, 30, 60, 0.5));
+    border: 1px solid rgba(100, 180, 255, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1001,7 +1054,7 @@ button { cursor: pointer; }
     text-align: center;
     font-size: 11px;
     font-weight: 800;
-    color: #d9dfe8;
+    color: #c8e4ff;
 }
 #casesGameContainer .open-button {
     width: 100%;
@@ -1010,16 +1063,16 @@ button { cursor: pointer; }
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    background: linear-gradient(135deg, #147ee8, #1aa0ff);
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
     color: white;
     font-size: 18px;
     font-weight: 1000;
-    box-shadow: 0 8px 30px rgba(20,126,232,0.3);
+    box-shadow: 0 8px 30px rgba(42, 122, 216, 0.2);
     transition: 0.2s ease;
 }
 #casesGameContainer .open-button.free-open {
-    background: linear-gradient(135deg, #18a95a, #27d878);
-    box-shadow: 0 8px 30px rgba(39,216,120,0.25);
+    background: linear-gradient(135deg, #1a6aaa, #0a4a8a);
+    box-shadow: 0 8px 30px rgba(42, 122, 216, 0.15);
 }
 #casesGameContainer .open-button:active { transform: scale(0.98); }
 #casesGameContainer .open-button:disabled { cursor: default; opacity: 0.55; }
@@ -1028,6 +1081,7 @@ button { cursor: pointer; }
     text-align: center;
     font-size: 19px;
     font-weight: 900;
+    color: #e8f0fe;
 }
 #casesGameContainer .items-grid {
     display: grid;
@@ -1038,8 +1092,8 @@ button { cursor: pointer; }
     min-height: 125px;
     padding: 10px 6px;
     border-radius: 14px;
-    background: linear-gradient(145deg, #141922, #0e1219);
-    border: 1px solid #242d3b;
+    background: rgba(20, 50, 90, 0.3);
+    border: 1px solid rgba(100, 180, 255, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1053,7 +1107,7 @@ button { cursor: pointer; }
     margin-top: 9px;
     font-size: 11px;
     font-weight: 800;
-    color: #e5e9ef;
+    color: #c8e4ff;
     line-height: 1.25;
 }
 #casesGameContainer .item-price {
@@ -1062,14 +1116,14 @@ button { cursor: pointer; }
     font-size: 13px;
     font-weight: 1000;
 }
-#casesGameContainer .legendary { border-color: #f0c94c; box-shadow: inset 0 0 20px rgba(255,216,77,0.07); }
-#casesGameContainer .rare { border-color: #7b57e8; }
-#casesGameContainer .uncommon { border-color: #2f9cff; }
-#casesGameContainer .free-rarity { border-color: #27d878; }
+#casesGameContainer .legendary { border-color: #ffd84d; box-shadow: inset 0 0 20px rgba(255, 216, 77, 0.05); }
+#casesGameContainer .rare { border-color: #6ab0ff; }
+#casesGameContainer .uncommon { border-color: #4a8aaa; }
+#casesGameContainer .free-rarity { border-color: #6ab0ff; }
 #casesGameContainer .modal-case {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.76);
+    background: rgba(0, 0, 0, 0.7);
     display: none;
     align-items: center;
     justify-content: center;
@@ -1083,10 +1137,11 @@ button { cursor: pointer; }
     padding: 28px 20px 23px;
     text-align: center;
     border-radius: 23px;
-    background: linear-gradient(145deg, #171d28, #0d1118);
-    border: 1px solid #344154;
+    background: rgba(10, 30, 60, 0.95);
+    border: 1px solid rgba(100, 180, 255, 0.2);
     animation: modalInCase 0.3s ease;
-    box-shadow: 0 25px 90px rgba(0,0,0,0.6);
+    box-shadow: 0 25px 90px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
 }
 @keyframes modalInCase {
     from { opacity: 0; transform: scale(0.82); }
@@ -1099,7 +1154,7 @@ button { cursor: pointer; }
 }
 #casesGameContainer .result-label-case {
     margin-top: 16px;
-    color: #8993a3;
+    color: #8ab4d8;
     font-size: 13px;
     font-weight: 800;
     letter-spacing: 1px;
@@ -1108,11 +1163,12 @@ button { cursor: pointer; }
     margin-top: 8px;
     font-size: 25px;
     font-weight: 1000;
+    color: #e8f0fe;
 }
 #casesGameContainer .result-value-case {
     margin-top: 12px;
     font-size: 24px;
-    color: #48df80;
+    color: #6ab0ff;
     font-weight: 1000;
 }
 #casesGameContainer .result-buttons {
@@ -1132,10 +1188,10 @@ button { cursor: pointer; }
 }
 #casesGameContainer .result-button:active { transform: scale(0.97); }
 #casesGameContainer .sell-button {
-    background: linear-gradient(135deg, #18a95a, #27d878);
-    box-shadow: 0 8px 25px rgba(39,216,120,0.2);
+    background: linear-gradient(135deg, #1a6aaa, #0a4a8a);
+    box-shadow: 0 8px 25px rgba(42, 122, 216, 0.15);
 }
-#casesGameContainer .back-result-button { background: #252d3a; }
+#casesGameContainer .back-result-button { background: rgba(20, 50, 90, 0.5); color: #8ab4d8; }
 #casesGameContainer .message-case {
     position: fixed;
     left: 50%;
@@ -1143,7 +1199,7 @@ button { cursor: pointer; }
     transform: translateX(-50%) translateY(100px);
     padding: 13px 18px;
     border-radius: 13px;
-    background: #e74c4c;
+    background: #c04060;
     color: white;
     font-weight: 800;
     transition: 0.3s ease;
@@ -1156,25 +1212,24 @@ button { cursor: pointer; }
     top: 18px;
     right: 18px;
     z-index: 95;
-    background: #24282d;
-    border: none;
+    background: rgba(20, 50, 90, 0.8);
+    border: 1px solid rgba(100, 180, 255, 0.2);
     border-radius: 50%;
     width: 44px;
     height: 44px;
     font-size: 22px;
-    color: #fff;
+    color: #e8f0fe;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,.6);
 }
-#closeCasesBtn:hover { background: #383e44; }
+#closeCasesBtn:hover { background: rgba(30, 70, 120, 0.8); }
 
 /* =====================================================
-   ИГРА UPGRADE
+   ИГРА UPGRADE - ЗИМНИЙ ДИЗАЙН
 ===================================================== */
 #upgradeGameContainer {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at 50% 35%, #32101a 0%, #16090e 35%, #07080d 75%);
+    background: linear-gradient(145deg, #0a1628, #142a4a);
     z-index: 90;
     overflow-y: auto;
     padding: 18px 15px 25px;
@@ -1191,11 +1246,11 @@ button { cursor: pointer; }
     border-radius: 50%;
     pointer-events: none;
     filter: blur(100px);
-    opacity: .18;
+    opacity: .12;
     z-index: -1;
 }
-#upgradeGameContainer .bg-glow.one { left: -180px; top: 10%; background: #ff164f; }
-#upgradeGameContainer .bg-glow.two { right: -180px; bottom: 5%; background: #7b163d; }
+#upgradeGameContainer .bg-glow.one { left: -180px; top: 10%; background: #2a7ad8; }
+#upgradeGameContainer .bg-glow.two { right: -180px; bottom: 5%; background: #1a5aaa; }
 #upgradeGameContainer .header-upgrade {
     display: flex;
     align-items: center;
@@ -1207,21 +1262,21 @@ button { cursor: pointer; }
     font-weight: 1000;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #fff;
-    text-shadow: 0 0 15px rgba(255,39,83,.45);
+    color: #e8f0fe;
+    text-shadow: 0 0 15px rgba(42, 122, 216, 0.3);
 }
-#upgradeGameContainer .logo-upgrade span { color: #ff315d; }
+#upgradeGameContainer .logo-upgrade span { color: #6ab0ff; }
 #upgradeGameContainer .balance-box-upgrade {
     min-width: 130px;
     padding: 10px 15px;
     border-radius: 14px;
-    border: 1px solid #542633;
-    background: linear-gradient(145deg, #1c1117, #0e0b10);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 10px 35px rgba(0,0,0,.35);
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    background: rgba(20, 50, 90, 0.4);
     text-align: right;
+    backdrop-filter: blur(5px);
 }
 #upgradeGameContainer .balance-label-upgrade {
-    color: #777b86;
+    color: #5a8aaa;
     font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
@@ -1231,11 +1286,11 @@ button { cursor: pointer; }
     margin-top: 2px;
     font-size: 19px;
     font-weight: 1000;
-    color: #fff;
+    color: #e8f0fe;
 }
 #upgradeGameContainer .balance-upgrade::after {
-    content: " 💰";
-    color: #ffcc42;
+    content: " ⭐";
+    color: #ffd84d;
 }
 #upgradeGameContainer .main-upgrade {
     display: grid;
@@ -1244,11 +1299,12 @@ button { cursor: pointer; }
 }
 #upgradeGameContainer .game-panel {
     position: relative;
-    border: 1px solid #3b1b25;
+    border: 1px solid rgba(100, 180, 255, 0.15);
     border-radius: 20px;
     padding: 18px 15px 20px;
-    background: linear-gradient(145deg, rgba(34,14,21,.96), rgba(11,9,13,.98));
-    box-shadow: 0 25px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.04);
+    background: rgba(10, 30, 60, 0.4);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 #upgradeGameContainer .wheel-area {
     display: flex;
@@ -1259,7 +1315,7 @@ button { cursor: pointer; }
     font-size: 12px;
     font-weight: 900;
     letter-spacing: 2px;
-    color: #747983;
+    color: #5a8aaa;
     margin-bottom: 12px;
     text-transform: uppercase;
 }
@@ -1293,8 +1349,8 @@ button { cursor: pointer; }
     transform: translateX(-50%);
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-top: 30px solid #fff;
-    filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 13px #ff315d);
+    border-top: 30px solid #e8f0fe;
+    filter: drop-shadow(0 0 10px rgba(42, 122, 216, 0.5));
 }
 #upgradeGameContainer .pointer-upgrade::after {
     content: "";
@@ -1304,16 +1360,16 @@ button { cursor: pointer; }
     width: 8px;
     height: 6px;
     border-radius: 50%;
-    background: #ff315d;
+    background: #6ab0ff;
 }
 #upgradeGameContainer .center-info {
     position: absolute;
     width: 40%;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #361720, #160c11 65%, #0a080c);
-    border: 2px solid #57232f;
-    box-shadow: inset 0 0 35px rgba(0,0,0,.9), 0 0 30px rgba(255,35,75,.12);
+    background: radial-gradient(circle at 35% 30%, #1a3a6a, #0a1a3a 65%, #051020);
+    border: 2px solid rgba(100, 180, 255, 0.2);
+    box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(42, 122, 216, 0.05);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1325,15 +1381,15 @@ button { cursor: pointer; }
     font-size: clamp(28px, 6vw, 48px);
     line-height: 1;
     font-weight: 1000;
-    color: #fff;
-    text-shadow: 0 0 18px rgba(255,255,255,.15);
+    color: #e8f0fe;
+    text-shadow: 0 0 18px rgba(42, 122, 216, 0.15);
 }
 #upgradeGameContainer .chance-text {
     margin-top: 5px;
     font-size: 9px;
     font-weight: 900;
     letter-spacing: 2px;
-    color: #777982;
+    color: #5a8aaa;
 }
 #upgradeGameContainer .status-upgrade {
     min-height: 24px;
@@ -1341,17 +1397,17 @@ button { cursor: pointer; }
     text-align: center;
     font-size: 12px;
     font-weight: 900;
-    color: #737781;
+    color: #5a8aaa;
     transition: .2s;
 }
-#upgradeGameContainer .status-upgrade.win { color: #36ef91; text-shadow: 0 0 15px rgba(54,239,145,.45); }
-#upgradeGameContainer .status-upgrade.lose { color: #ff4169; text-shadow: 0 0 15px rgba(255,65,105,.45); }
+#upgradeGameContainer .status-upgrade.win { color: #6ab0ff; text-shadow: 0 0 15px rgba(42, 122, 216, 0.3); }
+#upgradeGameContainer .status-upgrade.lose { color: #ef4752; text-shadow: 0 0 15px rgba(239, 71, 82, 0.3); }
 #upgradeGameContainer .controls {
     margin-top: 16px;
 }
 #upgradeGameContainer .control-label {
     margin-bottom: 7px;
-    color: #777b84;
+    color: #5a8aaa;
     font-size: 10px;
     font-weight: 900;
     letter-spacing: 1px;
@@ -1373,23 +1429,23 @@ button { cursor: pointer; }
     padding: 0 40px 0 12px;
     outline: none;
     border-radius: 11px;
-    border: 1px solid #4a222d;
-    background: #0d0b10;
-    color: #fff;
+    border: 1px solid rgba(100, 180, 255, 0.2);
+    background: rgba(10, 22, 40, 0.8);
+    color: #e8f0fe;
     font-size: 16px;
     font-weight: 1000;
     transition: .2s;
 }
 #upgradeGameContainer .bet-input-upgrade:focus {
-    border-color: #ff315d;
-    box-shadow: 0 0 20px rgba(255,49,93,.12);
+    border-color: #2a7ad8;
+    box-shadow: 0 0 20px rgba(42, 122, 216, 0.1);
 }
 #upgradeGameContainer .currency-upgrade {
     position: absolute;
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #ffcc42;
+    color: #ffd84d;
     font-size: 16px;
 }
 #upgradeGameContainer .multiplier-buttons {
@@ -1400,24 +1456,23 @@ button { cursor: pointer; }
     width: 50px;
     height: 44px;
     border-radius: 10px;
-    border: 1px solid #45202b;
-    background: linear-gradient(145deg, #201018, #100b10);
-    color: #aeb0b7;
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    background: rgba(20, 50, 90, 0.3);
+    color: #8ab4d8;
     font-size: 13px;
     font-weight: 1000;
     cursor: pointer;
     transition: .2s;
 }
 #upgradeGameContainer .multiplier-upgrade:hover {
-    border-color: #ff315d;
-    color: #fff;
-    box-shadow: 0 0 18px rgba(255,49,93,.18);
+    border-color: #2a7ad8;
+    color: #e8f0fe;
 }
 #upgradeGameContainer .multiplier-upgrade.active {
     color: #fff;
-    border-color: #ff315d;
-    background: linear-gradient(145deg, #9c1e3d, #4e1022);
-    box-shadow: 0 0 22px rgba(255,35,75,.25), inset 0 1px 0 rgba(255,255,255,.15);
+    border-color: #2a7ad8;
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+    box-shadow: 0 4px 20px rgba(42, 122, 216, 0.2);
 }
 #upgradeGameContainer .multiplier-upgrade:disabled { opacity: .5; cursor: default; }
 #upgradeGameContainer .spin-button-upgrade {
@@ -1431,18 +1486,17 @@ button { cursor: pointer; }
     font-size: 16px;
     font-weight: 1000;
     letter-spacing: 1px;
-    background: linear-gradient(135deg, #ff315d, #b9163f);
-    box-shadow: 0 12px 35px rgba(255,35,75,.24), inset 0 1px 0 rgba(255,255,255,.2);
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+    box-shadow: 0 8px 30px rgba(42, 122, 216, 0.2);
     transition: .2s;
 }
 #upgradeGameContainer .spin-button-upgrade:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 42px rgba(255,35,75,.35), 0 0 20px rgba(255,35,75,.15);
+    box-shadow: 0 12px 40px rgba(42, 122, 216, 0.3);
 }
 #upgradeGameContainer .spin-button-upgrade:active { transform: scale(.98); }
 #upgradeGameContainer .spin-button-upgrade:disabled { opacity: .45; cursor: default; transform: none; }
 
-/* Выбор предмета */
 #upgradeGameContainer .item-select-area {
     display: flex;
     gap: 8px;
@@ -1452,10 +1506,10 @@ button { cursor: pointer; }
 }
 #upgradeGameContainer .select-item-btn {
     padding: 8px 14px;
-    border: 1px solid #4a222d;
+    border: 1px solid rgba(100, 180, 255, 0.15);
     border-radius: 10px;
-    background: #0d0b10;
-    color: #aeb0b7;
+    background: rgba(10, 22, 40, 0.8);
+    color: #8ab4d8;
     font-weight: 800;
     font-size: 13px;
     cursor: pointer;
@@ -1463,30 +1517,28 @@ button { cursor: pointer; }
     flex: 1;
     min-width: 80px;
 }
-#upgradeGameContainer .select-item-btn:hover { border-color: #ff315d; color: #fff; }
+#upgradeGameContainer .select-item-btn:hover { border-color: #2a7ad8; color: #e8f0fe; }
 #upgradeGameContainer .select-item-btn.active {
-    border-color: #27d878;
-    color: #27d878;
-    background: #0d1a12;
+    border-color: #6ab0ff;
+    color: #6ab0ff;
+    background: rgba(42, 122, 216, 0.1);
 }
 #upgradeGameContainer .selected-item-display {
     font-size: 14px;
     font-weight: 800;
-    color: #ffcc42;
+    color: #ffd84d;
     padding: 6px 12px;
-    background: #0d0b10;
+    background: rgba(10, 22, 40, 0.8);
     border-radius: 8px;
-    border: 1px solid #3b1b25;
+    border: 1px solid rgba(100, 180, 255, 0.1);
     flex: 1;
     min-width: 100px;
     text-align: center;
 }
-
-/* Список предметов для выбора */
 #upgradeGameContainer .item-select-dropdown {
     margin-top: 8px;
-    background: #0d0b10;
-    border: 1px solid #3b1b25;
+    background: rgba(10, 22, 40, 0.95);
+    border: 1px solid rgba(100, 180, 255, 0.15);
     border-radius: 10px;
     max-height: 160px;
     overflow-y: auto;
@@ -1498,14 +1550,14 @@ button { cursor: pointer; }
     align-items: center;
     justify-content: space-between;
     padding: 8px 12px;
-    border-bottom: 1px solid #24151a;
+    border-bottom: 1px solid rgba(100, 180, 255, 0.05);
     cursor: pointer;
     transition: .2s;
 }
-#upgradeGameContainer .item-select-option:hover { background: #1a1118; }
+#upgradeGameContainer .item-select-option:hover { background: rgba(42, 122, 216, 0.1); }
 #upgradeGameContainer .item-select-option:last-child { border-bottom: none; }
 #upgradeGameContainer .item-select-option .opt-emoji { font-size: 22px; }
-#upgradeGameContainer .item-select-option .opt-name { font-size: 13px; font-weight: 700; color: #d5d9dd; }
+#upgradeGameContainer .item-select-option .opt-name { font-size: 13px; font-weight: 700; color: #c8e4ff; }
 #upgradeGameContainer .item-select-option .opt-value { font-size: 12px; font-weight: 800; color: #ffd84d; }
 
 #upgradeGameContainer .history-upgrade {
@@ -1516,7 +1568,7 @@ button { cursor: pointer; }
     font-size: 11px;
     font-weight: 1000;
     letter-spacing: 1.5px;
-    color: #777b84;
+    color: #5a8aaa;
     text-transform: uppercase;
 }
 #upgradeGameContainer .history-list {
@@ -1528,19 +1580,19 @@ button { cursor: pointer; }
     min-height: 38px;
     padding: 6px 10px;
     border-radius: 10px;
-    border: 1px solid #24151a;
-    background: #0d0b0f;
+    border: 1px solid rgba(100, 180, 255, 0.05);
+    background: rgba(10, 22, 40, 0.5);
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 11px;
     font-weight: 900;
 }
-#upgradeGameContainer .history-left { color: #8e9199; }
-#upgradeGameContainer .history-left strong { color: #fff; }
+#upgradeGameContainer .history-left { color: #5a8aaa; }
+#upgradeGameContainer .history-left strong { color: #e8f0fe; }
 #upgradeGameContainer .history-result { font-size: 13px; }
-#upgradeGameContainer .history-result.win { color: #36ef91; }
-#upgradeGameContainer .history-result.lose { color: #ff4169; }
+#upgradeGameContainer .history-result.win { color: #6ab0ff; }
+#upgradeGameContainer .history-result.lose { color: #ef4752; }
 #upgradeGameContainer .flash-upgrade {
     position: fixed;
     inset: 0;
@@ -1551,12 +1603,12 @@ button { cursor: pointer; }
 #upgradeGameContainer .flash-upgrade.win { animation: winFlash .55s ease; }
 #upgradeGameContainer .flash-upgrade.lose { animation: loseFlash .55s ease; }
 @keyframes winFlash {
-    0% { opacity: 0; background: rgba(34,255,139,.35); }
+    0% { opacity: 0; background: rgba(42, 122, 216, 0.35); }
     35% { opacity: 1; }
     100% { opacity: 0; }
 }
 @keyframes loseFlash {
-    0% { opacity: 0; background: rgba(255,30,68,.35); }
+    0% { opacity: 0; background: rgba(239, 71, 82, 0.35); }
     35% { opacity: 1; }
     100% { opacity: 0; }
 }
@@ -1569,34 +1621,33 @@ button { cursor: pointer; }
     max-width: calc(100vw - 35px);
     padding: 12px 18px;
     border-radius: 12px;
-    background: #171017;
-    border: 1px solid #542530;
+    background: rgba(10, 30, 60, 0.95);
+    border: 1px solid rgba(100, 180, 255, 0.15);
     text-align: center;
     font-weight: 1000;
     z-index: 200;
     opacity: 0;
     transition: .3s ease;
-    box-shadow: 0 15px 50px rgba(0,0,0,.5);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
 }
 #upgradeGameContainer .toast-upgrade.show { transform: translate(-50%, 0); opacity: 1; }
-#upgradeGameContainer .toast-upgrade.win { border-color: #28bd70; color: #4aff9d; }
-#upgradeGameContainer .toast-upgrade.lose { border-color: #c1264b; color: #ff5277; }
+#upgradeGameContainer .toast-upgrade.win { border-color: #6ab0ff; color: #6ab0ff; }
+#upgradeGameContainer .toast-upgrade.lose { border-color: #ef4752; color: #ef4752; }
 #closeUpgradeBtn {
     position: fixed;
     top: 14px;
     right: 14px;
     z-index: 95;
-    background: rgba(36,40,45,.85);
-    border: 1px solid #542633;
+    background: rgba(20, 50, 90, 0.8);
+    border: 1px solid rgba(100, 180, 255, 0.2);
     border-radius: 50%;
     width: 40px;
     height: 40px;
     font-size: 20px;
-    color: #fff;
+    color: #e8f0fe;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,.6);
 }
-#closeUpgradeBtn:hover { background: #383e44; }
+#closeUpgradeBtn:hover { background: rgba(30, 70, 120, 0.8); }
 
 @media (max-width: 650px) {
     #upgradeGameContainer .app-inner-upgrade { padding: 0; }
@@ -1634,7 +1685,7 @@ button { cursor: pointer; }
     <!-- HEADER -->
     <header class="header">
         <div class="logo">🐻‍❄️ DROP</div>
-        <div class="header-balance">💰 <span id="headerBalance">1000.00</span></div>
+        <div class="header-balance">⭐ <span id="headerBalance">0.00</span></div>
     </header>
 
     <!-- CONTENT -->
@@ -1689,18 +1740,19 @@ button { cursor: pointer; }
             <div class="card">
                 <div class="profile-row"><div class="profile-label">Имя</div><div class="profile-value" id="profileName">Игрок</div></div>
                 <div class="profile-row"><div class="profile-label">ID игрока</div><div class="profile-value" id="profileId">100001</div></div>
-                <div class="profile-row"><div class="profile-label">Баланс</div><div class="profile-value" id="profileBalance">1000.00</div></div>
+                <div class="profile-row"><div class="profile-label">Баланс</div><div class="profile-value" id="profileBalance">0.00 ⭐</div></div>
             </div>
             <div class="card">
                 <div class="card-title">Реферальная система</div>
-                <div class="card-text">Приглашайте друзей и получайте по <b>50</b> валюты за каждого приглашённого.</div>
+                <div class="card-text">Приглашайте друзей и получайте по <b>10</b> звёзд за каждого приглашённого.</div>
                 <div class="profile-row" style="margin-top:10px;"><div class="profile-label">Приглашено</div><div class="profile-value" id="refCount">0</div></div>
-                <div class="profile-row"><div class="profile-label">Реферальная ссылка</div><div class="profile-value ref-value" id="refLink">drop.example/100001</div></div>
+                <div class="profile-row"><div class="profile-label">Реферальная ссылка</div><div class="profile-value ref-value" id="refLink">https://t.me/White_Bear_ROBOT?start=ref_</div></div>
+                <button onclick="copyRefLink()" class="game-button" style="margin-top:8px; padding:10px; font-size:14px;">📋 Скопировать ссылку</button>
             </div>
             <div class="card">
                 <div class="card-title">Ежедневная награда</div>
-                <div class="card-text">Забирайте <b>50</b> валюты каждые 24 часа.</div>
-                <button class="daily-button" id="dailyButton">ЗАБРАТЬ 50</button>
+                <div class="card-text">Забирайте <b>50</b> звёзд каждые 24 часа.</div>
+                <button class="daily-button" id="dailyButton">ЗАБРАТЬ 50 ⭐</button>
                 <div class="timer hidden" id="dailyTimer">24:00:00</div>
             </div>
             <div class="card">
@@ -1722,7 +1774,7 @@ button { cursor: pointer; }
 
     <!-- NAVIGATION -->
     <nav class="bottom-nav">
-        <button class="nav-button" data-page="inventoryPage"><span class="nav-icon">🎒</span><span>Инвентарь</span></button>
+        <button class="nav-button" data-page="inventoryPage"><span class="nav-icon">⨷</span><span>Инвентарь</span></button>
         <button class="nav-button active" data-page="menuPage"><span class="nav-icon">⌂</span><span>Меню</span></button>
         <button class="nav-button" data-page="profilePage"><span class="nav-icon">👤</span><span>Профиль</span></button>
     </nav>
@@ -1733,7 +1785,7 @@ button { cursor: pointer; }
     <div id="gameScreen" class="hidden">
         <canvas id="gameCanvas"></canvas>
         <div class="game-top">
-            <div class="game-stat"><div class="game-stat-label">Баланс</div><div class="game-stat-value" id="gameBalance">1000.00</div></div>
+            <div class="game-stat"><div class="game-stat-label">Баланс</div><div class="game-stat-value" id="gameBalance">0.00</div></div>
             <div class="game-stat"><div class="game-stat-label">Отскоки</div><div class="game-stat-value" id="gameBounces">0</div></div>
             <div class="game-stat"><div class="game-stat-label">Множитель</div><div class="game-stat-value" id="gameMultiplier">1.00x</div></div>
         </div>
@@ -1743,7 +1795,7 @@ button { cursor: pointer; }
         </div>
         <div id="gameMenu" class="game-menu">
             <div class="game-menu-title">ESCAPE</div>
-            <div class="game-menu-balance" id="gameMenuBalance">1000.00</div>
+            <div class="game-menu-balance" id="gameMenuBalance">0.00</div>
             <input id="gameBet" class="bet-input" type="number" min="25" step="1" value="100">
             <div id="gameBetError" class="bet-error"></div>
             <div class="difficulty">
@@ -1770,7 +1822,7 @@ button { cursor: pointer; }
         <div class="app-inner">
             <div class="header-ticket">
                 <div class="logo-ticket">🎟️ SCRATCH</div>
-                <div class="balance-ticket">💰 <span id="balanceTicket">1000.00</span></div>
+                <div class="balance-ticket">⭐ <span id="balanceTicket">0.00</span></div>
             </div>
             <section id="selectScreen" class="screen active">
                 <div class="title">SCRATCH &amp; WIN!</div>
@@ -1779,16 +1831,16 @@ button { cursor: pointer; }
                     <div class="ticket" id="paidTicket">
                         <div class="ticket-header">
                             <div class="ticket-name">💎 MEGA SCRATCH</div>
-                            <div class="ticket-price">100 💰</div>
+                            <div class="ticket-price">100 ⭐</div>
                         </div>
-                        <div class="ticket-description">2 бесплатных открытия. Следующие открытия — 50 💰. До 2000 💰 за комбинацию.</div>
+                        <div class="ticket-description">2 бесплатных открытия. Следующие открытия — 50 ⭐. До 2000 ⭐ за комбинацию.</div>
                     </div>
                     <div class="ticket" id="freeTicket">
                         <div class="ticket-header">
                             <div class="ticket-name">🎫 FREE SCRATCH</div>
                             <div class="ticket-price free">БЕСПЛАТНО</div>
                         </div>
-                        <div class="ticket-description">Каждое открытие стоит 5 💰. Максимальный обычный приз — 100 💰.</div>
+                        <div class="ticket-description">Каждое открытие стоит 5 ⭐. Максимальный обычный приз — 100 ⭐.</div>
                     </div>
                 </div>
                 <div id="chancePanel" class="chance-panel" style="display:none;">
@@ -1802,7 +1854,7 @@ button { cursor: pointer; }
             <section id="gameScreenTicket" class="screen">
                 <div class="game-header-ticket">
                     <div class="game-name-ticket" id="gameNameTicket">MEGA SCRATCH</div>
-                    <div class="game-cost-ticket" id="gameCostTicket">50 💰</div>
+                    <div class="game-cost-ticket" id="gameCostTicket">50 ⭐</div>
                 </div>
                 <div class="free-opens-ticket" id="freeOpensTicket"></div>
                 <div class="card-ticket" id="cardTicket"></div>
@@ -1815,7 +1867,7 @@ button { cursor: pointer; }
                     <div class="result-icon-ticket" id="resultIconTicket">🎉</div>
                     <div class="result-title-ticket" id="resultTitleTicket">ПОБЕДА!</div>
                     <div class="result-text-ticket" id="resultTextTicket"></div>
-                    <div class="result-money-ticket" id="resultMoneyTicket">+500 💰</div>
+                    <div class="result-money-ticket" id="resultMoneyTicket">+500 ⭐</div>
                     <button class="modal-button-ticket" id="newTicketTicket">НОВЫЙ БИЛЕТ</button>
                 </div>
             </div>
@@ -1828,7 +1880,7 @@ button { cursor: pointer; }
     <div id="casesGameContainer" class="hidden">
         <button id="closeCasesBtn">✕</button>
         <div class="topbar">
-            <div class="balance-case">💰 <span id="balanceCase">1000</span></div>
+            <div class="balance-case">⭐ <span id="balanceCase">0</span></div>
         </div>
         <section id="mainScreenCase" class="screen-case main-screen active">
             <button class="main-case-button free-case-button" id="freeCaseBox">
@@ -1839,15 +1891,15 @@ button { cursor: pointer; }
                 <span>PLS PEPE 🐸</span>
             </button>
             <button class="main-case-button" id="caseBox">
-                <span>CASE 50 💰</span>
+                <span>CASE 50 ⭐</span>
             </button>
             <button class="main-case-button case-250-button" id="case250Box">
-                <span>CASE 250 💰</span>
+                <span>CASE 250 ⭐</span>
             </button>
         </section>
         <section id="caseScreenCase" class="screen-case case-screen">
             <div class="case-title-row">
-                <div class="case-title" id="caseTitle">CASE 50 💰</div>
+                <div class="case-title" id="caseTitle">CASE 50 ⭐</div>
                 <button class="back-case" id="backButtonCase">← Назад</button>
             </div>
             <div class="roulette-section">
@@ -1856,7 +1908,7 @@ button { cursor: pointer; }
                     <div class="roulette-track" id="rouletteTrack"></div>
                 </div>
             </div>
-            <button class="open-button" id="openButton">КУПИТЬ ЗА 50 💰</button>
+            <button class="open-button" id="openButton">КУПИТЬ ЗА 50 ⭐</button>
             <div class="items-title">ПРЕДМЕТЫ В КЕЙСЕ</div>
             <div class="items-grid" id="itemsGrid"></div>
         </section>
@@ -1865,7 +1917,7 @@ button { cursor: pointer; }
                 <div class="result-emoji-case" id="resultEmoji">💎</div>
                 <div class="result-label-case">ВАМ ВЫПАЛО</div>
                 <div class="result-name-case" id="resultName">Diamond</div>
-                <div class="result-value-case" id="resultValue">+100 💰</div>
+                <div class="result-value-case" id="resultValue">+100 ⭐</div>
                 <div class="result-buttons">
                     <button class="result-button sell-button" id="sellResult">ПРОДАТЬ</button>
                     <button class="result-button back-result-button" id="backResult">В ИНВЕНТАРЬ</button>
@@ -1887,7 +1939,7 @@ button { cursor: pointer; }
                 <div class="logo-upgrade">UPGRADE</div>
                 <div class="balance-box-upgrade">
                     <div class="balance-label-upgrade">Ваш баланс</div>
-                    <div class="balance-upgrade" id="balanceUpgrade">1000</div>
+                    <div class="balance-upgrade" id="balanceUpgrade">0</div>
                 </div>
             </header>
             <main class="main-upgrade">
@@ -1911,7 +1963,7 @@ button { cursor: pointer; }
                         <div class="bet-row">
                             <div class="bet-input-wrap">
                                 <input class="bet-input-upgrade" id="betInputUpgrade" type="number" min="1" step="1" value="100">
-                                <span class="currency-upgrade">💰</span>
+                                <span class="currency-upgrade">⭐</span>
                             </div>
                             <div class="multiplier-buttons">
                                 <button class="multiplier-upgrade active" data-multiplier="2">x2</button>
@@ -1919,14 +1971,11 @@ button { cursor: pointer; }
                                 <button class="multiplier-upgrade" data-multiplier="10">x10</button>
                             </div>
                         </div>
-
-                        <!-- ВЫБОР ПРЕДМЕТА ИЗ ИНВЕНТАРЯ -->
                         <div class="item-select-area">
                             <button class="select-item-btn" id="selectItemBtn">🎒 Выбрать предмет</button>
                             <div class="selected-item-display" id="selectedItemDisplay">Баланс</div>
                         </div>
                         <div class="item-select-dropdown" id="itemDropdown"></div>
-
                         <button class="spin-button-upgrade" id="spinButtonUpgrade">SPIN</button>
                     </div>
                     <div class="history-upgrade">
@@ -1945,16 +1994,84 @@ button { cursor: pointer; }
 </div>
 
 <script>
-/* =====================================================
-   ОБЩИЙ БАЛАНС И ИНВЕНТАРЬ
-===================================================== */
-let balance = 1000;
+// =====================================================
+// ПОЛУЧЕНИЕ ДАННЫХ ИЗ TELEGRAM
+// =====================================================
+
+const tg = window.Telegram?.WebApp;
+let tgUser = null;
+let tgUserId = null;
+let tgUserName = 'Игрок';
+let balance = 0;
 let inventoryItems = [];
+let dailyLastClaim = 0;
+let dailyTimerInterval = null;
+
+// =====================================================
+// ФУНКЦИЯ ОТПРАВКИ ДАННЫХ В БОТА
+// =====================================================
+
+function sendToBot(action, data = {}) {
+    if (!tg) return;
+    data.action = action;
+    data.user_id = tgUserId;
+    tg.sendData(JSON.stringify(data));
+}
+
+// =====================================================
+// ЗАГРУЗКА СОХРАНЁННЫХ ДАННЫХ
+// =====================================================
+
+function loadSavedData() {
+    if (tgUserId) {
+        const savedBalance = localStorage.getItem(`balance_${tgUserId}`);
+        if (savedBalance !== null) {
+            balance = parseFloat(savedBalance);
+        }
+        
+        const savedDaily = localStorage.getItem(`daily_${tgUserId}`);
+        if (savedDaily) {
+            dailyLastClaim = parseInt(savedDaily);
+        }
+        
+        const savedInventory = localStorage.getItem(`inventory_${tgUserId}`);
+        if (savedInventory) {
+            try {
+                inventoryItems = JSON.parse(savedInventory);
+            } catch (e) {
+                inventoryItems = [];
+            }
+        }
+    }
+}
+
+function saveBalance() {
+    if (tgUserId) {
+        localStorage.setItem(`balance_${tgUserId}`, balance.toString());
+        sendToBot('updateBalance', { balance: balance });
+    }
+}
+
+function saveDailyTime() {
+    if (tgUserId) {
+        localStorage.setItem(`daily_${tgUserId}`, Date.now().toString());
+    }
+}
+
+function saveInventory() {
+    if (tgUserId) {
+        localStorage.setItem(`inventory_${tgUserId}`, JSON.stringify(inventoryItems));
+    }
+}
+
+// =====================================================
+// ОБНОВЛЕНИЕ БАЛАНСА НА ВСЕХ ЭКРАНАХ
+// =====================================================
 
 function updateBalanceUI() {
     const val = balance.toFixed(2);
     document.getElementById('headerBalance').textContent = val;
-    document.getElementById('profileBalance').textContent = val;
+    document.getElementById('profileBalance').textContent = val + ' ⭐';
     document.getElementById('gameBalance').textContent = val;
     document.getElementById('gameMenuBalance').textContent = val;
     const el = document.getElementById('balanceTicket');
@@ -1963,11 +2080,95 @@ function updateBalanceUI() {
     if (elCase) elCase.textContent = balance.toFixed(2);
     const elUp = document.getElementById('balanceUpgrade');
     if (elUp) elUp.textContent = balance.toFixed(2);
+    
+    saveBalance();
+}
+
+// =====================================================
+// ЕЖЕДНЕВНАЯ НАГРАДА
+// =====================================================
+
+function canClaimDaily() {
+    const now = Date.now();
+    const cooldown = 24 * 60 * 60 * 1000;
+    return (now - dailyLastClaim) >= cooldown;
+}
+
+function getDailyRemaining() {
+    const now = Date.now();
+    const cooldown = 24 * 60 * 60 * 1000;
+    const elapsed = now - dailyLastClaim;
+    const remaining = cooldown - elapsed;
+    return Math.max(0, remaining);
+}
+
+function updateDailyTimer() {
+    const remaining = getDailyRemaining();
+    const hours = Math.floor(remaining / (60 * 60 * 1000));
+    const minutes = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
+    const seconds = Math.floor((remaining % (60 * 1000)) / 1000);
+    
+    const timerEl = document.getElementById('dailyTimer');
+    const buttonEl = document.getElementById('dailyButton');
+    
+    if (remaining <= 0) {
+        timerEl.classList.add('hidden');
+        buttonEl.disabled = false;
+        buttonEl.textContent = 'ЗАБРАТЬ 50 ⭐';
+        if (dailyTimerInterval) {
+            clearInterval(dailyTimerInterval);
+            dailyTimerInterval = null;
+        }
+        return;
+    }
+    
+    timerEl.classList.remove('hidden');
+    timerEl.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    buttonEl.disabled = true;
+    buttonEl.textContent = '⏳ ДОСТУПНО ЧЕРЕЗ';
+}
+
+function claimDaily() {
+    if (!canClaimDaily()) {
+        alert('⏳ Ежедневная награда уже получена!');
+        return;
+    }
+    
+    balance += 50;
+    balance = Math.round(balance * 100) / 100;
+    dailyLastClaim = Date.now();
+    saveDailyTime();
+    saveBalance();
+    updateBalanceUI();
+    
+    if (dailyTimerInterval) {
+        clearInterval(dailyTimerInterval);
+    }
+    updateDailyTimer();
+    dailyTimerInterval = setInterval(updateDailyTimer, 1000);
+    
+    alert('🎁 Ежедневная награда получена! +50 ⭐');
+}
+
+function copyRefLink() {
+    const link = document.getElementById('refLink').textContent;
+    navigator.clipboard.writeText(link).then(() => {
+        alert('📋 Реферальная ссылка скопирована!');
+    }).catch(() => {
+        const input = document.createElement('input');
+        input.value = link;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        alert('📋 Реферальная ссылка скопирована!');
+    });
 }
 
 // =====================================================
 // ИНВЕНТАРЬ
 // =====================================================
+
 function renderInventory() {
     const container = document.getElementById('inventoryContainer');
     container.innerHTML = '';
@@ -1991,7 +2192,7 @@ function renderInventory() {
                 <div class="inventory-item-emoji">${item.emoji}</div>
                 <div>
                     <div class="inventory-item-name">${item.name}</div>
-                    <div class="inventory-item-value">+${item.value} 💰</div>
+                    <div class="inventory-item-value">+${item.value} ⭐</div>
                 </div>
             </div>
             <button class="inventory-sell-btn" data-index="${index}">ПРОДАТЬ</button>
@@ -2008,6 +2209,7 @@ function renderInventory() {
 
 function addItemToInventory(item) {
     inventoryItems.push({ ...item });
+    saveInventory();
     renderInventory();
 }
 
@@ -2016,6 +2218,7 @@ function sellInventoryItem(index) {
     balance += item.value;
     balance = Math.round(balance * 100) / 100;
     inventoryItems.splice(index, 1);
+    saveInventory();
     updateBalanceUI();
     renderInventory();
 }
@@ -2027,12 +2230,105 @@ document.getElementById('sellAllButton').addEventListener('click', () => {
     balance += total;
     balance = Math.round(balance * 100) / 100;
     inventoryItems = [];
+    saveInventory();
     updateBalanceUI();
     renderInventory();
 });
 
 // =====================================================
-// ИГРА ШАРИК (с минимальной ставкой 25)
+// ПОЛУЧЕНИЕ ДАННЫХ ОТ TELEGRAM
+// =====================================================
+
+if (tg) {
+    tg.expand();
+    tg.ready();
+    
+    const user = tg.initDataUnsafe?.user;
+    if (user) {
+        tgUser = user;
+        tgUserId = user.id;
+        tgUserName = user.first_name || 'Игрок';
+        
+        document.getElementById('profileName').textContent = tgUserName;
+        document.getElementById('profileId').textContent = tgUserId;
+        
+        const refLink = `https://t.me/White_Bear_ROBOT?start=ref_${tgUserId}`;
+        document.getElementById('refLink').textContent = refLink;
+        
+        loadSavedData();
+        updateBalanceUI();
+        renderInventory();
+        
+        sendToBot('getBalance');
+        sendToBot('getDailyStatus');
+    }
+}
+
+// =====================================================
+// НАЗНАЧЕНИЕ ОБРАБОТЧИКОВ
+// =====================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dailyBtn = document.getElementById('dailyButton');
+    if (dailyBtn) {
+        dailyBtn.addEventListener('click', claimDaily);
+    }
+    
+    updateDailyTimer();
+    dailyTimerInterval = setInterval(updateDailyTimer, 1000);
+});
+
+// =====================================================
+// ПРОМОКОДЫ
+// =====================================================
+
+let promoUsed200 = false;
+let promoUsedMet200 = false;
+
+document.getElementById('promoButton').addEventListener('click', () => {
+    const code = document.getElementById('promoInput').value.trim().toLowerCase();
+    const messageEl = document.getElementById('promoMessage');
+    
+    if (code === '200') {
+        if (promoUsed200) {
+            messageEl.textContent = '❌ Промокод 200 уже использован!';
+            messageEl.style.color = '#ef4752';
+            return;
+        }
+        balance += 200000;
+        balance = Math.round(balance * 100) / 100;
+        promoUsed200 = true;
+        updateBalanceUI();
+        messageEl.textContent = '✅ Промокод активирован! +200000 ⭐';
+        messageEl.style.color = '#54df87';
+        document.getElementById('promoInput').value = '';
+        document.getElementById('promoButton').disabled = true;
+        return;
+    }
+    
+    if (code === 'met200') {
+        if (promoUsedMet200) {
+            messageEl.textContent = '❌ Промокод met200 уже использован!';
+            messageEl.style.color = '#ef4752';
+            return;
+        }
+        balance += 10000;
+        balance = Math.round(balance * 100) / 100;
+        promoUsedMet200 = true;
+        updateBalanceUI();
+        messageEl.textContent = '✅ Промокод met200 активирован! +10000 ⭐';
+        messageEl.style.color = '#54df87';
+        document.getElementById('promoInput').value = '';
+        document.getElementById('promoButton').disabled = true;
+        return;
+    }
+    
+    messageEl.textContent = '❌ Неверный промокод!';
+    messageEl.style.color = '#ef4752';
+});
+
+// =====================================================
+// ИГРА ШАРИК (ПОЛНЫЙ КОД - ИСПРАВЛЕН)
 // =====================================================
 
 let currentBet = 0;
@@ -2045,7 +2341,6 @@ let multiplier = 1;
 let gamesPlayed = 0;
 let wins = 0;
 let losses = 0;
-let promoUsed = false;
 let dailyAvailable = true;
 let dailyNextTime = 0;
 
@@ -2055,7 +2350,6 @@ const difficulties = {
     hard: { green: 25, red: 75, hole: 50 * 1.22, step: 0.25 }
 };
 
-// DOM элементы шарика
 const headerBalance = document.getElementById('headerBalance');
 const profileBalance = document.getElementById('profileBalance');
 const menuPage = document.getElementById('menuPage');
@@ -2081,9 +2375,6 @@ const greenZone = document.getElementById('greenZone');
 const redZone = document.getElementById('redZone');
 const dailyButton = document.getElementById('dailyButton');
 const dailyTimer = document.getElementById('dailyTimer');
-const promoInput = document.getElementById('promoInput');
-const promoButton = document.getElementById('promoButton');
-const promoMessage = document.getElementById('promoMessage');
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -2164,7 +2455,7 @@ function registerBounce(nx, ny) {
 function startRound() {
     let bet = Number(gameBet.value);
     if (!Number.isFinite(bet) || bet <= 0) { gameBetError.textContent = 'Введите ставку больше 0.'; return; }
-    if (bet < 25) { gameBetError.textContent = 'Минимальная ставка 25 💰'; return; }
+    if (bet < 25) { gameBetError.textContent = 'Минимальная ставка 25 ⭐'; return; }
     bet = Math.round(bet * 100) / 100;
     if (bet > balance) { gameBetError.textContent = 'Недостаточно средств.'; return; }
     currentBet = bet;
@@ -2199,9 +2490,13 @@ function bounceFromWall(nx, ny) {
     if (dot > 0) { ball.vx -= 2 * dot * nx; ball.vy -= 2 * dot * ny; }
     registerBounce(nx, ny);
 }
+
+// ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ finishGame ==========
 function finishGame(win) {
     if (gameFinished) return;
-    gameFinished = true; gameRunning = false; gamesPlayed++;
+    gameFinished = true; 
+    gameRunning = false; 
+    gamesPlayed++;
     if (win) {
         wins++;
         const payout = currentBet * multiplier;
@@ -2210,21 +2505,22 @@ function finishGame(win) {
         const profit = payout - currentBet;
         resultTitle.textContent = 'WIN';
         resultTitle.className = 'result-title win';
-        resultMoney.textContent = '+' + profit.toFixed(2);
+        resultMoney.textContent = '+' + profit.toFixed(2) + ' ⭐';
         resultMoney.className = 'result-money win';
-        resultInfo.innerHTML = 'Ставка: ' + currentBet.toFixed(2) + '<br>Множитель: ' + multiplier.toFixed(2) + 'x<br>Выплата: ' + payout.toFixed(2);
+        resultInfo.innerHTML = 'Ставка: ' + currentBet.toFixed(2) + ' ⭐<br>Множитель: ' + multiplier.toFixed(2) + 'x<br>Выплата: ' + payout.toFixed(2) + ' ⭐';
     } else {
         losses++;
         resultTitle.textContent = 'LOSE';
         resultTitle.className = 'result-title lose';
-        resultMoney.textContent = '-' + currentBet.toFixed(2);
+        resultMoney.textContent = '-' + currentBet.toFixed(2) + ' ⭐';
         resultMoney.className = 'result-money lose';
-        resultInfo.innerHTML = 'Ставка: ' + currentBet.toFixed(2) + '<br>Множитель: ' + multiplier.toFixed(2) + 'x<br>Ставка проиграна.';
+        resultInfo.innerHTML = 'Ставка: ' + currentBet.toFixed(2) + ' ⭐<br>Множитель: ' + multiplier.toFixed(2) + 'x<br>Ставка проиграна.';
     }
     updateGameUI();
     updateProfileStats();
     gameResult.classList.remove('hidden');
 }
+
 function updatePhysics() {
     holeAngle += HOLE_SPEED;
     holeAngle = normalizeAngle(holeAngle);
@@ -2310,95 +2606,117 @@ function draw() {
 }
 function gameLoop() { updatePhysics(); draw(); requestAnimationFrame(gameLoop); }
 
-openGameButton.addEventListener('click', ()=>{
-    gameScreen.classList.remove('hidden');
-    gameMenu.classList.remove('hidden');
-    gameResult.classList.add('hidden');
+// =====================================================
+// ОТКРЫТИЕ ИГР
+// =====================================================
+
+// Шарик
+document.getElementById('openGameButton').addEventListener('click', function() {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    document.getElementById('gameScreen').classList.remove('hidden');
     updateBalanceUI();
     updateZones();
+    resizeCanvas();
+    gameMenu.classList.remove('hidden'); // Показываем меню при открытии
 });
-exitGameButton.addEventListener('click', ()=>{
+
+// =====================================================
+// ОБРАБОТЧИКИ ДЛЯ ИГРЫ ШАРИК (ИСПРАВЛЕНЫ)
+// =====================================================
+
+// Кнопка "ИГРАТЬ" - запуск раунда
+document.getElementById('startGame').addEventListener('click', function() {
+    startRound();
+});
+
+// Кнопка "НАЗАД" - выход из игры
+document.getElementById('exitGame').addEventListener('click', function() {
     if (gameRunning) return;
-    gameScreen.classList.add('hidden');
-    gameMenu.classList.remove('hidden');
-    gameResult.classList.add('hidden');
+    document.getElementById('gameScreen').classList.add('hidden');
+    document.getElementById('menuPage').classList.remove('hidden');
 });
-startGameButton.addEventListener('click', startRound);
-resultClose.addEventListener('click', ()=>{
+
+// ========== ИСПРАВЛЕННАЯ КНОПКА "ЗАКРЫТЬ" ==========
+document.getElementById('resultClose').addEventListener('click', function() {
     gameResult.classList.add('hidden');
-    gameMenu.classList.remove('hidden');
-    updateBalanceUI();
+    gameMenu.classList.remove('hidden'); // ПОКАЗЫВАЕМ МЕНЮ СТАВКИ
+    // Сбрасываем состояние для новой игры
+    gameRunning = false;
+    gameFinished = false;
+    escaped = false;
+    bounceCount = 0;
+    multiplier = 1;
+    ball.x = circle.x;
+    ball.y = circle.y - circle.radius * .35;
+    ball.vx = 0;
+    ball.vy = 0;
+    updateGameUI();
 });
-document.querySelectorAll('[data-difficulty]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-        if (gameRunning) return;
-        difficulty = btn.dataset.difficulty;
-        document.querySelectorAll('[data-difficulty]').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
+
+// Выбор сложности
+document.querySelectorAll('.difficulty button').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.difficulty button').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        difficulty = this.dataset.difficulty;
         updateZones();
     });
 });
 
-document.querySelectorAll('.nav-button').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-        const page = btn.dataset.page;
-        document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-        document.getElementById(page).classList.remove('hidden');
-        document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        if (page === 'inventoryPage') renderInventory();
-    });
+// =====================================================
+// ИГРА БИЛЕТЫ (открытие/закрытие)
+// =====================================================
+
+document.getElementById('openTicketsButton').addEventListener('click', function() {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    document.getElementById('ticketGameContainer').classList.remove('hidden');
+    updateBalanceTicket();
 });
 
-dailyButton.addEventListener('click', ()=>{
-    if (!dailyAvailable) return;
-    balance += 50;
-    balance = Math.round(balance * 100) / 100;
-    dailyAvailable = false;
-    dailyNextTime = Date.now() + 24*60*60*1000;
-    dailyButton.disabled = true;
-    dailyButton.textContent = 'НАГРАДА ПОЛУЧЕНА';
-    dailyTimer.classList.remove('hidden');
-    updateBalanceUI();
+document.getElementById('closeTicketsBtn').addEventListener('click', function() {
+    document.getElementById('ticketGameContainer').classList.add('hidden');
+    document.getElementById('menuPage').classList.remove('hidden');
+    document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-page="menuPage"]').classList.add('active');
 });
-function updateDailyTimer() {
-    if (dailyAvailable) return;
-    const rem = dailyNextTime - Date.now();
-    if (rem <= 0) {
-        dailyAvailable = true;
-        dailyButton.disabled = false;
-        dailyButton.textContent = 'ЗАБРАТЬ 50';
-        dailyTimer.classList.add('hidden');
-        return;
-    }
-    const sec = Math.floor(rem/1000);
-    const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
-    dailyTimer.textContent = String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-}
-setInterval(updateDailyTimer, 1000);
-
-promoButton.addEventListener('click', ()=>{
-    const code = promoInput.value.trim().toLowerCase();
-    if (code !== '200') { promoMessage.style.color='#ef4752'; promoMessage.textContent='Неверный промокод.'; return; }
-    if (promoUsed) { promoMessage.style.color='#ef4752'; promoMessage.textContent='Этот промокод уже использован.'; return; }
-    balance += 200000;
-    balance = Math.round(balance * 100) / 100;
-    promoUsed = true;
-    promoInput.value = '';
-    promoButton.disabled = true;
-    promoMessage.style.color = '#42df78';
-    promoMessage.textContent = '+200000 валюты получено!';
-    updateBalanceUI();
-});
-
-function updateProfileStats() {
-    document.getElementById('gamesPlayed').textContent = gamesPlayed;
-    document.getElementById('wins').textContent = wins;
-    document.getElementById('losses').textContent = losses;
-}
 
 // =====================================================
-// ИГРА БИЛЕТЫ (весь код без изменений)
+// ИГРА КЕЙСЫ (открытие/закрытие)
+// =====================================================
+
+document.getElementById('openCasesButton').addEventListener('click', function() {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    document.getElementById('casesGameContainer').classList.remove('hidden');
+    updateBalanceCase();
+});
+
+document.getElementById('closeCasesBtn').addEventListener('click', function() {
+    document.getElementById('casesGameContainer').classList.add('hidden');
+    document.getElementById('menuPage').classList.remove('hidden');
+    document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-page="menuPage"]').classList.add('active');
+});
+
+// =====================================================
+// ИГРА UPGRADE (открытие/закрытие)
+// =====================================================
+
+document.getElementById('openUpgradeButton').addEventListener('click', function() {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    document.getElementById('upgradeGameContainer').classList.remove('hidden');
+    updateBalanceUpgrade();
+    setTimeout(resizeCanvasUp, 100);
+});
+
+document.getElementById('closeUpgradeBtn').addEventListener('click', function() {
+    document.getElementById('upgradeGameContainer').classList.add('hidden');
+    document.getElementById('menuPage').classList.remove('hidden');
+    document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-page="menuPage"]').classList.add('active');
+});
+
+// =====================================================
+// ПОЛНАЯ МЕХАНИКА ИГРЫ БИЛЕТЫ
 // =====================================================
 
 const paidSymbols = [
@@ -2517,7 +2835,7 @@ function showChances(ticket) {
         row.innerHTML = `<div class="chance-symbol">${item.symbol}</div>
                          <div class="chance-name">${item.name}</div>
                          <div class="chance-percent">${item.chance}%</div>
-                         <div class="chance-prize">+${item.prize} 💰</div>`;
+                         <div class="chance-prize">+${item.prize} ⭐</div>`;
         chanceList.appendChild(row);
     }
     chancePanel.style.display = 'block';
@@ -2571,8 +2889,8 @@ function updateGameInfoTicket() {
         freeOpensTicket.textContent = `🎁 Бесплатных открытий: ${freeOpens}`;
         gameCostTicket.textContent = 'Первые 2 бесплатно';
     } else {
-        freeOpensTicket.textContent = `Открытие ячейки: ${currentTicket.openPrice} 💰`;
-        gameCostTicket.textContent = `${currentTicket.openPrice} 💰`;
+        freeOpensTicket.textContent = `Открытие ячейки: ${currentTicket.openPrice} ⭐`;
+        gameCostTicket.textContent = `${currentTicket.openPrice} ⭐`;
     }
 }
 function createBoardTicket() {
@@ -2630,14 +2948,14 @@ function finishGameTicket(won, item) {
         resultTitleTicket.textContent = 'ПОБЕДА!';
         resultTitleTicket.className = 'result-title-ticket win';
         resultTextTicket.innerHTML = `Вы нашли 3 одинаковых символа <b>${item.symbol}</b>.<br>Комбинация найдена в любых местах билета.`;
-        resultMoneyTicket.textContent = `+${prize} 💰`;
+        resultMoneyTicket.textContent = `+${prize} ⭐`;
         setTimeout(()=>{ resultModalTicket.classList.add('show'); }, delay);
     } else {
         resultIconTicket.textContent = '😔';
         resultTitleTicket.textContent = 'ПОПРОБУЙ СНОВА';
         resultTitleTicket.className = 'result-title-ticket lose';
         resultTextTicket.textContent = 'Все 9 ячеек открыты, но трёх одинаковых символов найти не удалось.';
-        resultMoneyTicket.textContent = '0 💰';
+        resultMoneyTicket.textContent = '0 ⭐';
         setTimeout(()=>{ resultModalTicket.classList.add('show'); }, delay);
     }
 }
@@ -2674,21 +2992,8 @@ document.getElementById('backToTicketsTicket').addEventListener('click', ()=>{
     chancePanel.style.display = 'none';
 });
 
-document.getElementById('openTicketsButton').addEventListener('click', ()=>{
-    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-    document.getElementById('ticketGameContainer').classList.remove('hidden');
-    updateBalanceTicket();
-});
-
-document.getElementById('closeTicketsBtn').addEventListener('click', ()=>{
-    document.getElementById('ticketGameContainer').classList.add('hidden');
-    document.getElementById('menuPage').classList.remove('hidden');
-    document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
-    document.querySelector('[data-page="menuPage"]').classList.add('active');
-});
-
 // =====================================================
-// ИГРА КЕЙСЫ (CASES) — без изменений
+// ПОЛНАЯ МЕХАНИКА ИГРЫ КЕЙСЫ
 // =====================================================
 
 const CASE_PRICE = 50;
@@ -2853,19 +3158,19 @@ function showCaseCase(type = "paid") {
         resetRouletteCase(freeItemsCase);
     } else if (type === "pls-pepe") {
         caseTitle.textContent = "PLS PEPE 🐸";
-        openButton.textContent = "КУПИТЬ ЗА 10 💰";
+        openButton.textContent = "КУПИТЬ ЗА 10 ⭐";
         openButton.classList.remove("free-open");
         renderItemsCase(plsPepeItemsCase);
         resetRouletteCase(plsPepeItemsCase);
     } else if (type === "250") {
-        caseTitle.textContent = "CASE 250 💰";
-        openButton.textContent = "КУПИТЬ ЗА 250 💰";
+        caseTitle.textContent = "CASE 250 ⭐";
+        openButton.textContent = "КУПИТЬ ЗА 250 ⭐";
         openButton.classList.remove("free-open");
         renderItemsCase(case250ItemsCase);
         resetRouletteCase(case250ItemsCase);
     } else {
-        caseTitle.textContent = "CASE 50 💰";
-        openButton.textContent = "КУПИТЬ ЗА 50 💰";
+        caseTitle.textContent = "CASE 50 ⭐";
+        openButton.textContent = "КУПИТЬ ЗА 50 ⭐";
         openButton.classList.remove("free-open");
         renderItemsCase(itemsCase);
         resetRouletteCase(itemsCase);
@@ -2878,7 +3183,7 @@ function renderItemsCase(sourceItems) {
     sortedItems.forEach(item => {
         const card = document.createElement("div");
         card.className = `item-card ${item.rarity}`;
-        card.innerHTML = `<div class="item-emoji">${item.emoji}</div><div class="item-name">${item.name}</div><div class="item-price">+${item.value} 💰</div>`;
+        card.innerHTML = `<div class="item-emoji">${item.emoji}</div><div class="item-name">${item.name}</div><div class="item-price">+${item.value} ⭐</div>`;
         itemsGrid.appendChild(card);
     });
 }
@@ -2958,7 +3263,7 @@ function openCaseCase() {
     }
     if (currentCaseType === "pls-pepe") {
         if (balance < PLS_PEPE_PRICE) {
-            showMessageCase("Недостаточно валюты 💰");
+            showMessageCase("Недостаточно валюты ⭐");
             return;
         }
         isOpeningCase = true;
@@ -2974,7 +3279,7 @@ function openCaseCase() {
     }
     if (currentCaseType === "250") {
         if (balance < CASE_250_PRICE) {
-            showMessageCase("Недостаточно валюты 💰");
+            showMessageCase("Недостаточно валюты ⭐");
             return;
         }
         isOpeningCase = true;
@@ -2989,7 +3294,7 @@ function openCaseCase() {
         return;
     }
     if (balance < CASE_PRICE) {
-        showMessageCase("Недостаточно валюты 💰");
+        showMessageCase("Недостаточно валюты ⭐");
         return;
     }
     isOpeningCase = true;
@@ -3007,7 +3312,7 @@ function showResultCase(item) {
     currentWinnerCase = item;
     resultEmoji.textContent = item.emoji;
     resultName.textContent = item.name;
-    resultValue.textContent = `+${item.value} 💰`;
+    resultValue.textContent = `+${item.value} ⭐`;
     resultModalCase.classList.add("show");
     playWinSoundCase();
 }
@@ -3123,26 +3428,13 @@ function playWinSoundCase() {
 
 setInterval(updateFreeButton, 1000);
 
-document.getElementById('openCasesButton').addEventListener('click', ()=>{
-    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-    document.getElementById('casesGameContainer').classList.remove('hidden');
-    updateBalanceCase();
-});
-
-document.getElementById('closeCasesBtn').addEventListener('click', ()=>{
-    document.getElementById('casesGameContainer').classList.add('hidden');
-    document.getElementById('menuPage').classList.remove('hidden');
-    document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
-    document.querySelector('[data-page="menuPage"]').classList.add('active');
-});
-
 renderItemsCase(itemsCase);
 resetRouletteCase(itemsCase);
 updateFreeButton();
 mainScreenCase.classList.add('active');
 
 // =====================================================
-// ИГРА UPGRADE (с выбором предмета из инвентаря)
+// ПОЛНАЯ МЕХАНИКА ИГРЫ UPGRADE
 // =====================================================
 
 let betUpgrade = 100;
@@ -3151,7 +3443,7 @@ let winChanceUpgrade = 50;
 let isSpinningUpgrade = false;
 let pointerRotationUpgrade = 0;
 let historyUpgrade = [];
-let selectedInventoryItem = null; // { emoji, name, value } или null
+let selectedInventoryItem = null;
 
 const canvasUp = document.getElementById('wheel');
 const ctxUp = canvasUp.getContext('2d');
@@ -3173,7 +3465,6 @@ function updateBalanceUpgrade() {
     balanceUpgrade.textContent = balance.toFixed(2);
 }
 
-// ===== ВЫБОР ПРЕДМЕТА =====
 function renderItemDropdown() {
     itemDropdown.innerHTML = '';
     if (inventoryItems.length === 0) {
@@ -3191,7 +3482,7 @@ function renderItemDropdown() {
         opt.innerHTML = `
             <span class="opt-emoji">${item.emoji}</span>
             <span class="opt-name">${item.name}</span>
-            <span class="opt-value">+${item.value} 💰</span>
+            <span class="opt-value">+${item.value} ⭐</span>
         `;
         opt.addEventListener('click', () => {
             selectItemFromInventory(index);
@@ -3206,7 +3497,7 @@ function selectItemFromInventory(index) {
     inventoryItems.splice(index, 1);
     renderInventory();
     renderItemDropdown();
-    selectedItemDisplay.textContent = `${item.emoji} ${item.name} (${item.value}💰)`;
+    selectedItemDisplay.textContent = `${item.emoji} ${item.name} (${item.value}⭐)`;
     selectItemBtn.classList.add('active');
     itemDropdown.classList.remove('open');
     showToastUp(`Выбран предмет: ${item.emoji} ${item.name}`, true);
@@ -3214,7 +3505,6 @@ function selectItemFromInventory(index) {
 
 function clearSelectedItem() {
     if (selectedInventoryItem) {
-        // возвращаем предмет в инвентарь
         inventoryItems.push({ ...selectedInventoryItem });
         renderInventory();
         renderItemDropdown();
@@ -3229,7 +3519,6 @@ selectItemBtn.addEventListener('click', () => {
     itemDropdown.classList.toggle('open');
 });
 
-// ===== CANVAS =====
 function resizeCanvasUp() {
     const rect = canvasUp.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
@@ -3361,21 +3650,17 @@ function spinUpgrade() {
             showToastUp("Введите корректную ставку", false);
             return;
         }
-        if (betValue < 25 && !useItem) {
-            showToastUp("Минимальная ставка 25 💰", false);
+        if (betValue < 25) {
+            showToastUp("Минимальная ставка 25 ⭐", false);
             return;
         }
         if (betValue > balance) {
-            showToastUp("Недостаточно средств 💰", false);
+            showToastUp("Недостаточно средств ⭐", false);
             return;
         }
     }
 
-    // Списываем ставку
-    if (useItem) {
-        // предмет уже удалён из инвентаря при выборе
-        // ничего не списываем с баланса
-    } else {
+    if (!useItem) {
         balance -= betValue;
         balance = Math.round(balance * 100) / 100;
     }
@@ -3423,8 +3708,8 @@ function finishSpinUpgrade(won, usedItem, betValue) {
         balance += winAmount;
         balance = Math.round(balance * 100) / 100;
         statusUp.className = "status-upgrade win";
-        statusUp.textContent = `ПОБЕДА +${winAmount.toFixed(2)} 💰`;
-        showToastUp(`🎉 Выигрыш +${winAmount.toFixed(2)} 💰`, true);
+        statusUp.textContent = `ПОБЕДА +${winAmount.toFixed(2)} ⭐`;
+        showToastUp(`🎉 Выигрыш +${winAmount.toFixed(2)} ⭐`, true);
         flashUp.className = "flash-upgrade win";
         void flashUp.offsetWidth;
         flashUp.classList.add("win");
@@ -3432,8 +3717,8 @@ function finishSpinUpgrade(won, usedItem, betValue) {
         addHistoryUpgrade(true, betValue, multiplierUpgrade, winAmount);
     } else {
         statusUp.className = "status-upgrade lose";
-        statusUp.textContent = `ПОРАЖЕНИЕ -${betValue.toFixed(2)} 💰`;
-        showToastUp(`💥 Проигрыш -${betValue.toFixed(2)} 💰`, false);
+        statusUp.textContent = `ПОРАЖЕНИЕ -${betValue.toFixed(2)} ⭐`;
+        showToastUp(`💥 Проигрыш -${betValue.toFixed(2)} ⭐`, false);
         flashUp.className = "flash-upgrade lose";
         void flashUp.offsetWidth;
         flashUp.classList.add("lose");
@@ -3441,13 +3726,9 @@ function finishSpinUpgrade(won, usedItem, betValue) {
         addHistoryUpgrade(false, betValue, multiplierUpgrade, betValue);
     }
 
-    // Если использовали предмет и проиграли — предмет потерян (уже удалён)
-    // Если использовали предмет и выиграли — предмет удалён, деньги на балансе
-
     updateBalanceUI();
     updateBalanceUpgrade();
 
-    // Сброс выбранного предмета
     if (usedItem) {
         selectedInventoryItem = null;
         selectedItemDisplay.textContent = 'Баланс';
@@ -3556,8 +3837,8 @@ function renderHistoryUpgrade() {
     }
     historyListUp.innerHTML = historyUpgrade.map(item => `
         <div class="history-item">
-            <div class="history-left">Ставка <strong>${item.bet.toFixed(2)} 💰</strong> &nbsp;×${item.multiplier}</div>
-            <div class="history-result ${item.won ? 'win' : 'lose'}">${item.won ? '+' : '-'}${item.amount.toFixed(2)} 💰</div>
+            <div class="history-left">Ставка <strong>${item.bet.toFixed(2)} ⭐</strong> &nbsp;×${item.multiplier}</div>
+            <div class="history-result ${item.won ? 'win' : 'lose'}">${item.won ? '+' : '-'}${item.amount.toFixed(2)} ⭐</div>
         </div>
     `).join('');
 }
@@ -3569,27 +3850,54 @@ function showToastUp(text, won) {
     toastUp._timer = setTimeout(() => toastUp.classList.remove('show'), 2500);
 }
 
-// открытие и закрытие UPGRADE
-document.getElementById('openUpgradeButton').addEventListener('click', ()=>{
-    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-    document.getElementById('upgradeGameContainer').classList.remove('hidden');
-    updateBalanceUpgrade();
-    setTimeout(resizeCanvasUp, 100);
-});
-
-document.getElementById('closeUpgradeBtn').addEventListener('click', ()=>{
-    document.getElementById('upgradeGameContainer').classList.add('hidden');
-    document.getElementById('menuPage').classList.remove('hidden');
-    document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
-    document.querySelector('[data-page="menuPage"]').classList.add('active');
-});
-
-// инициализация UPGRADE
 updateBalanceUpgrade();
 setTimeout(resizeCanvasUp, 50);
 renderHistoryUpgrade();
 pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
 renderItemDropdown();
+
+// =====================================================
+// НАВИГАЦИЯ ПО ВКЛАДКАМ (ИНВЕНТАРЬ, МЕНЮ, ПРОФИЛЬ)
+// =====================================================
+
+const navButtons = document.querySelectorAll('.nav-button');
+const pages = {
+    menuPage: document.getElementById('menuPage'),
+    inventoryPage: document.getElementById('inventoryPage'),
+    profilePage: document.getElementById('profilePage')
+};
+
+navButtons.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        if (this.classList.contains('active')) return;
+        Object.values(pages).forEach(page => page.classList.add('hidden'));
+        const pageId = this.dataset.page;
+        if (pages[pageId]) {
+            pages[pageId].classList.remove('hidden');
+        }
+        navButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        if (pageId === 'inventoryPage') {
+            renderInventory();
+        }
+        if (pageId === 'profilePage') {
+            updateProfileStats();
+        }
+    });
+});
+
+// Функция обновления статистики
+function updateProfileStats() {
+    const gamesPlayedEl = document.getElementById('gamesPlayed');
+    const winsEl = document.getElementById('wins');
+    const lossesEl = document.getElementById('losses');
+    if (gamesPlayedEl) gamesPlayedEl.textContent = gamesPlayed || 0;
+    if (winsEl) winsEl.textContent = wins || 0;
+    if (lossesEl) lossesEl.textContent = losses || 0;
+}
+
+// Обновляем статистику при первом открытии
+updateProfileStats();
 
 // =====================================================
 // ИНИЦИАЛИЗАЦИЯ
@@ -3606,6 +3914,20 @@ ball.y = circle.y - circle.radius * .35;
 gameLoop();
 renderInventory();
 
+// =====================================================
+// СИНХРОНИЗАЦИЯ С БОТОМ
+// =====================================================
+
+const originalUpdateBalanceUI = window.updateBalanceUI || function() {};
+window.updateBalanceUI = function() {
+    originalUpdateBalanceUI();
+    saveBalance();
+};
+
+if (tgUserId) {
+    sendToBot('getBalance');
+    sendToBot('getDailyStatus');
+}
 </script>
 
 </body>
