@@ -137,7 +137,9 @@ button {
     transform: scale(0.96);
 }
 
-/* FREE CASE */
+/* =========================
+   FREE CASE
+========================= */
 
 .free-case-button {
     border-color: #27d878;
@@ -178,7 +180,29 @@ button {
     text-shadow: 0 2px 8px rgba(0,0,0,0.8);
 }
 
-/* CASE 250 */
+/* =========================
+   PLS PEPE
+========================= */
+
+.pls-pepe-button {
+    border-color: #42e66f;
+    background:
+        linear-gradient(135deg, #27a84b, #12632d 55%, #073016);
+
+    box-shadow:
+        0 25px 70px rgba(66, 230, 111, 0.28),
+        inset 0 2px 0 rgba(255,255,255,0.25);
+}
+
+.pls-pepe-button::before {
+    background: linear-gradient(180deg, #67f58b, #249c45);
+    border-color: #8affaa;
+    box-shadow: 0 5px 20px rgba(66, 230, 111, 0.45);
+}
+
+/* =========================
+   CASE 250
+========================= */
 
 .case-250-button {
     border-color: #b56cff;
@@ -607,6 +631,15 @@ button {
             ></div>
         </button>
 
+        <!-- PLS PEPE -->
+
+        <button
+            class="main-case-button pls-pepe-button"
+            id="plsPepeBox"
+        >
+            <span>PLS PEPE 🐸</span>
+        </button>
+
         <!-- CASE 50 -->
 
         <button
@@ -756,6 +789,8 @@ button {
 const CASE_PRICE = 50;
 
 const CASE_250_PRICE = 250;
+
+const PLS_PEPE_PRICE = 10;
 
 let balance = 1000;
 
@@ -1138,6 +1173,111 @@ const case250Items = [
 
 
 /* =========================
+   ПРЕДМЕТЫ PLS PEPE
+========================= */
+
+const plsPepeItems = [
+
+    {
+        emoji: "💰",
+        name: "0.5 на баланс",
+        value: 0.5,
+        chance: 24.009997,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "1 на баланс",
+        value: 1,
+        chance: 25,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "3 на баланс",
+        value: 3,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "5 на баланс",
+        value: 5,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "7 на баланс",
+        value: 7,
+        chance: 10,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "10 на баланс",
+        value: 10,
+        chance: 3.33,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "15 зв",
+        value: 15,
+        chance: 3.33,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 3.33,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "25",
+        value: 25,
+        chance: 0.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "25",
+        value: 25,
+        chance: 0.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💖",
+        name: "Heart Locked",
+        value: 500000,
+        chance: 0.000002,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🐸",
+        name: "Plush Pepe",
+        value: 800000,
+        chance: 0.000001,
+        rarity: "legendary"
+    }
+
+];
+
+
+/* =========================
    НОРМАЛИЗАЦИЯ CASE 50
 ========================= */
 
@@ -1196,6 +1336,11 @@ const caseBox =
 const case250Box =
     document.getElementById(
         "case250Box"
+    );
+
+const plsPepeBox =
+    document.getElementById(
+        "plsPepeBox"
     );
 
 const freeCaseBox =
@@ -1463,6 +1608,27 @@ function showCase(
         );
 
     } else if (
+        type === "pls-pepe"
+    ) {
+
+        caseTitle.textContent =
+            "PLS PEPE 🐸";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 10 💰";
+
+        openButton.classList
+            .remove("free-open");
+
+        renderItems(
+            plsPepeItems
+        );
+
+        resetRoulette(
+            plsPepeItems
+        );
+
+    } else if (
         type === "250"
     ) {
 
@@ -1664,6 +1830,132 @@ function resetRoulette(
 
 
 /* =========================
+   ЗАПУСК РУЛЕТКИ
+========================= */
+
+function startRoulette(
+    sourceItems,
+    winner
+) {
+
+    rouletteTrack.style.transition =
+        "none";
+
+    rouletteTrack.style.transform =
+        "translateX(0px)";
+
+    rouletteTrack.innerHTML = "";
+
+
+    const totalCards = 45;
+
+    const winnerIndex = 36;
+
+
+    for (
+        let i = 0;
+        i < totalCards;
+        i++
+    ) {
+
+        let item;
+
+        if (
+            i === winnerIndex
+        ) {
+
+            item =
+                winner;
+
+        } else {
+
+            item =
+                sourceItems[
+                    Math.floor(
+                        Math.random() *
+                        sourceItems.length
+                    )
+                ];
+        }
+
+        rouletteTrack.appendChild(
+            createRouletteCard(
+                item
+            )
+        );
+    }
+
+
+    const cardWidth =
+        135;
+
+    const windowWidth =
+        rouletteTrack
+            .parentElement
+            .offsetWidth;
+
+    const centerOffset =
+        windowWidth / 2 -
+        62.5;
+
+    const stopPosition =
+        -(
+            winnerIndex *
+            cardWidth -
+            centerOffset
+        );
+
+    const finalPosition =
+        stopPosition +
+        (
+            Math.random() * 30 -
+            15
+        );
+
+
+    requestAnimationFrame(
+        () => {
+
+            requestAnimationFrame(
+                () => {
+
+                    rouletteTrack.style.transition =
+                        "transform 6.5s cubic-bezier(.08,.72,.05,1)";
+
+                    rouletteTrack.style.transform =
+                        `translateX(${finalPosition}px)`;
+
+                }
+            );
+        }
+    );
+
+
+    playRollSound(
+        6500
+    );
+
+
+    setTimeout(
+        () => {
+
+            showResult(
+                winner
+            );
+
+            isOpening =
+                false;
+
+            openButton.disabled =
+                false;
+
+        },
+        6800
+    );
+}
+
+
+/* =========================
    OPEN CASE
 ========================= */
 
@@ -1715,124 +2007,60 @@ function openCase() {
         currentWinner =
             winner;
 
+        startRoulette(
+            freeItems,
+            winner
+        );
 
-        rouletteTrack.style.transition =
-            "none";
-
-        rouletteTrack.style.transform =
-            "translateX(0px)";
-
-        rouletteTrack.innerHTML = "";
-
-
-        const totalCards = 45;
-
-        const winnerIndex = 36;
+        return;
+    }
 
 
-        for (
-            let i = 0;
-            i < totalCards;
-            i++
+    /* =========================
+       PLS PEPE
+    ========================= */
+
+    if (
+        currentCaseType ===
+        "pls-pepe"
+    ) {
+
+        if (
+            balance <
+            PLS_PEPE_PRICE
         ) {
 
-            let item;
-
-            if (
-                i ===
-                winnerIndex
-            ) {
-
-                item =
-                    winner;
-
-            } else {
-
-                item =
-                    freeItems[
-                        Math.floor(
-                            Math.random() *
-                            freeItems.length
-                        )
-                    ];
-            }
-
-
-            rouletteTrack.appendChild(
-                createRouletteCard(
-                    item
-                )
+            showMessage(
+                "Недостаточно валюты 💰"
             );
+
+            return;
         }
 
+        isOpening = true;
 
-        const cardWidth =
-            135;
+        openButton.disabled =
+            true;
 
-        const windowWidth =
-            rouletteTrack
-                .parentElement
-                .offsetWidth;
+        balance -=
+            PLS_PEPE_PRICE;
 
-        const centerOffset =
-            windowWidth / 2 -
-            62.5;
+        updateBalance();
 
-        const stopPosition =
-            -(
-                winnerIndex *
-                cardWidth -
-                centerOffset
+        playClickSound();
+
+
+        const winner =
+            getRandomItem(
+                plsPepeItems
             );
 
+        currentWinner =
+            winner;
 
-        const finalPosition =
-            stopPosition +
-            (
-                Math.random() *
-                30 -
-                15
-            );
-
-
-        requestAnimationFrame(
-            () => {
-
-                requestAnimationFrame(
-                    () => {
-
-                        rouletteTrack.style.transition =
-                            "transform 6.5s cubic-bezier(.08,.72,.05,1)";
-
-                        rouletteTrack.style.transform =
-                            `translateX(${finalPosition}px)`;
-
-                    }
-                );
-            }
-        );
-
-
-        playRollSound(
-            6500
-        );
-
-
-        setTimeout(
-            () => {
-
-                showResult(
-                    winner
-                );
-
-                isOpening =
-                    false;
-
-                openButton.disabled =
-                    false;
-
-            },
-            6800
+        startRoulette(
+            plsPepeItems,
+            winner
         );
 
         return;
@@ -1881,124 +2109,9 @@ function openCase() {
         currentWinner =
             winner;
 
-
-        rouletteTrack.style.transition =
-            "none";
-
-        rouletteTrack.style.transform =
-            "translateX(0px)";
-
-        rouletteTrack.innerHTML = "";
-
-
-        const totalCards = 45;
-
-        const winnerIndex = 36;
-
-
-        for (
-            let i = 0;
-            i < totalCards;
-            i++
-        ) {
-
-            let item;
-
-            if (
-                i ===
-                winnerIndex
-            ) {
-
-                item =
-                    winner;
-
-            } else {
-
-                item =
-                    case250Items[
-                        Math.floor(
-                            Math.random() *
-                            case250Items.length
-                        )
-                    ];
-            }
-
-
-            rouletteTrack.appendChild(
-                createRouletteCard(
-                    item
-                )
-            );
-        }
-
-
-        const cardWidth =
-            135;
-
-        const windowWidth =
-            rouletteTrack
-                .parentElement
-                .offsetWidth;
-
-        const centerOffset =
-            windowWidth / 2 -
-            62.5;
-
-        const stopPosition =
-            -(
-                winnerIndex *
-                cardWidth -
-                centerOffset
-            );
-
-
-        const finalPosition =
-            stopPosition +
-            (
-                Math.random() *
-                30 -
-                15
-            );
-
-
-        requestAnimationFrame(
-            () => {
-
-                requestAnimationFrame(
-                    () => {
-
-                        rouletteTrack.style.transition =
-                            "transform 6.5s cubic-bezier(.08,.72,.05,1)";
-
-                        rouletteTrack.style.transform =
-                            `translateX(${finalPosition}px)`;
-
-                    }
-                );
-            }
-        );
-
-
-        playRollSound(
-            6500
-        );
-
-
-        setTimeout(
-            () => {
-
-                showResult(
-                    winner
-                );
-
-                isOpening =
-                    false;
-
-                openButton.disabled =
-                    false;
-
-            },
-            6800
+        startRoulette(
+            case250Items,
+            winner
         );
 
         return;
@@ -2042,124 +2155,9 @@ function openCase() {
     currentWinner =
         winner;
 
-
-    rouletteTrack.style.transition =
-        "none";
-
-    rouletteTrack.style.transform =
-        "translateX(0px)";
-
-    rouletteTrack.innerHTML = "";
-
-
-    const totalCards = 45;
-
-    const winnerIndex = 36;
-
-
-    for (
-        let i = 0;
-        i < totalCards;
-        i++
-    ) {
-
-        let item;
-
-        if (
-            i ===
-            winnerIndex
-        ) {
-
-            item =
-                winner;
-
-        } else {
-
-            item =
-                items[
-                    Math.floor(
-                        Math.random() *
-                        items.length
-                    )
-                ];
-        }
-
-
-        rouletteTrack.appendChild(
-            createRouletteCard(
-                item
-            )
-        );
-    }
-
-
-    const cardWidth =
-        135;
-
-    const windowWidth =
-        rouletteTrack
-            .parentElement
-            .offsetWidth;
-
-    const centerOffset =
-        windowWidth / 2 -
-        62.5;
-
-    const stopPosition =
-        -(
-            winnerIndex *
-            cardWidth -
-            centerOffset
-        );
-
-
-    const finalPosition =
-        stopPosition +
-        (
-            Math.random() *
-            30 -
-            15
-        );
-
-
-    requestAnimationFrame(
-        () => {
-
-            requestAnimationFrame(
-                () => {
-
-                    rouletteTrack.style.transition =
-                        "transform 6.5s cubic-bezier(.08,.72,.05,1)";
-
-                    rouletteTrack.style.transform =
-                        `translateX(${finalPosition}px)`;
-
-                }
-            );
-        }
-    );
-
-
-    playRollSound(
-        6500
-    );
-
-
-    setTimeout(
-        () => {
-
-            showResult(
-                winner
-            );
-
-            isOpening =
-                false;
-
-            openButton.disabled =
-                false;
-
-        },
-        6800
+    startRoulette(
+        items,
+        winner
     );
 }
 
@@ -2192,6 +2190,40 @@ function showResult(
 
 
 /* =========================
+   ТЕКУЩИЕ ПРЕДМЕТЫ
+========================= */
+
+function getCurrentItems() {
+
+    if (
+        currentCaseType ===
+        "free"
+    ) {
+
+        return freeItems;
+    }
+
+    if (
+        currentCaseType ===
+        "pls-pepe"
+    ) {
+
+        return plsPepeItems;
+    }
+
+    if (
+        currentCaseType ===
+        "250"
+    ) {
+
+        return case250Items;
+    }
+
+    return items;
+}
+
+
+/* =========================
    ПРОДАТЬ ПРЕДМЕТ
 ========================= */
 
@@ -2215,11 +2247,7 @@ sellResult.addEventListener(
             .remove("show");
 
         resetRoulette(
-            currentCaseType === "free"
-                ? freeItems
-                : currentCaseType === "250"
-                    ? case250Items
-                    : items
+            getCurrentItems()
         );
 
         currentWinner =
@@ -2241,11 +2269,7 @@ backResult.addEventListener(
             .remove("show");
 
         resetRoulette(
-            currentCaseType === "free"
-                ? freeItems
-                : currentCaseType === "250"
-                    ? case250Items
-                    : items
+            getCurrentItems()
         );
 
         currentWinner =
@@ -2277,6 +2301,18 @@ case250Box.addEventListener(
 
         showCase(
             "250"
+        );
+
+    }
+);
+
+
+plsPepeBox.addEventListener(
+    "click",
+    () => {
+
+        showCase(
+            "pls-pepe"
         );
 
     }
