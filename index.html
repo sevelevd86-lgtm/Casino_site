@@ -19,6 +19,7 @@ html,
 body {
     width: 100%;
     min-height: 100%;
+
     background:
         radial-gradient(
             circle at 50% 25%,
@@ -26,8 +27,14 @@ body {
             #09150f 35%,
             #06080a 80%
         );
+
     color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     overflow-x: hidden;
 }
 
@@ -43,8 +50,13 @@ button {
     width: 100%;
     max-width: 700px;
     min-height: 100vh;
+
     margin: 0 auto;
-    padding: 20px 15px 40px;
+
+    padding:
+        20px
+        15px
+        40px;
 }
 
 
@@ -54,25 +66,36 @@ button {
 
 .bg-glow {
     position: fixed;
+
     width: 450px;
     height: 450px;
+
     border-radius: 50%;
+
     pointer-events: none;
-    filter: blur(110px);
+
+    filter:
+        blur(110px);
+
     opacity: .16;
+
     z-index: -1;
 }
 
 .bg-glow.one {
     left: -180px;
     top: 5%;
-    background: #28ef72;
+
+    background:
+        #28ef72;
 }
 
 .bg-glow.two {
     right: -180px;
     bottom: 5%;
-    background: #0aa34b;
+
+    background:
+        #0aa34b;
 }
 
 
@@ -82,179 +105,405 @@ button {
 
 .header {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
-    margin-bottom: 25px;
+
+    margin-bottom:
+        25px;
 }
 
 .logo {
     font-size: 25px;
+
     font-weight: 1000;
-    letter-spacing: 2px;
+
+    letter-spacing:
+        2px;
 }
 
 .logo span {
-    color: #37ed7b;
+    color:
+        #37ed7b;
 }
 
 .balance-box {
-    min-width: 145px;
-    padding: 10px 14px;
-    border-radius: 13px;
-    border: 1px solid #1e4c31;
+    min-width:
+        145px;
+
+    padding:
+        10px 14px;
+
+    border-radius:
+        13px;
+
+    border:
+        1px solid #1e4c31;
+
     background:
         linear-gradient(
             145deg,
             #101b14,
             #0b0d0c
         );
-    text-align: right;
+
+    text-align:
+        right;
+
     box-shadow:
         0 10px 30px rgba(0,0,0,.35),
         inset 0 1px 0 rgba(255,255,255,.04);
 }
 
 .balance-label {
-    color: #68736d;
-    font-size: 9px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color:
+        #68736d;
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        1px;
 }
 
 .balance {
-    margin-top: 3px;
-    font-size: 20px;
-    font-weight: 1000;
+    margin-top:
+        3px;
+
+    font-size:
+        20px;
+
+    font-weight:
+        1000;
 }
 
 .balance::after {
-    content: " 💰";
+    content:
+        " 💰";
 }
 
 
 /* =========================
-   CASE
+   CASE PANEL
 ========================= */
 
 .case-panel {
-    position: relative;
-    overflow: hidden;
-    padding: 25px 20px 22px;
-    border-radius: 25px;
-    border: 1px solid #1d4d31;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    padding:
+        25px 20px 30px;
+
+    border-radius:
+        25px;
+
+    border:
+        1px solid #1d4d31;
+
     background:
         linear-gradient(
             145deg,
             rgba(12,31,20,.98),
             rgba(7,11,9,.99)
         );
+
     box-shadow:
         0 25px 80px rgba(0,0,0,.55),
         inset 0 1px 0 rgba(255,255,255,.04);
 }
 
 .case-panel::before {
-    content: "";
-    position: absolute;
-    width: 330px;
-    height: 330px;
-    left: 50%;
-    top: 30%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: #22df69;
-    filter: blur(100px);
-    opacity: .13;
-    pointer-events: none;
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        330px;
+
+    height:
+        330px;
+
+    left:
+        50%;
+
+    top:
+        40%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius:
+        50%;
+
+    background:
+        #22df69;
+
+    filter:
+        blur(100px);
+
+    opacity:
+        .13;
+
+    pointer-events:
+        none;
 }
 
+
+/* =========================
+   TITLES
+========================= */
+
 .case-title {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 1000;
-    color: #78847d;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    text-align:
+        center;
+
+    font-size:
+        13px;
+
+    font-weight:
+        1000;
+
+    color:
+        #78847d;
+
+    letter-spacing:
+        2px;
+
+    text-transform:
+        uppercase;
 }
 
 .case-name {
-    position: relative;
-    z-index: 2;
-    margin-top: 4px;
-    text-align: center;
-    font-size: 29px;
-    font-weight: 1000;
-    color: #fff;
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    margin-top:
+        4px;
+
+    text-align:
+        center;
+
+    font-size:
+        29px;
+
+    font-weight:
+        1000;
+
+    color:
+        #fff;
+
     text-shadow:
         0 0 20px rgba(55,237,123,.35);
 }
 
 
 /* =========================
-   PEPE IMAGE
+   CASE IMAGE
 ========================= */
 
-.pepe-wrapper {
-    position: relative;
-    z-index: 2;
-    width: min(330px, 75vw);
-    aspect-ratio: 1 / 1;
-    margin: 20px auto 12px;
+.case-image-wrapper {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        min(360px, 82vw);
+
+    height:
+        360px;
+
+    margin:
+        20px auto 10px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    cursor:
+        pointer;
 }
 
-.pepe-glow {
-    position: absolute;
-    width: 72%;
-    height: 72%;
-    border-radius: 50%;
-    background: #27df6d;
-    filter: blur(50px);
-    opacity: .18;
-}
 
-.pepe {
-    position: relative;
+/* green glow */
 
-    width: 240px;
-    height: 240px;
+.case-image-glow {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position:
+        absolute;
 
-    animation:
-        pepeFloat 3s ease-in-out infinite;
-}
+    width:
+        72%;
 
-.pepe img {
-    width: 100%;
-    height: 100%;
+    height:
+        72%;
 
-    object-fit: contain;
+    border-radius:
+        50%;
 
-    display: block;
+    background:
+        #27df6d;
 
     filter:
-        drop-shadow(0 20px 25px rgba(0,0,0,.5))
-        drop-shadow(0 0 25px rgba(40,230,105,.3));
+        blur(55px);
+
+    opacity:
+        .22;
+
+    pointer-events:
+        none;
 }
 
-@keyframes pepeFloat {
+
+/* actual case */
+
+.case-image {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        contain;
+
+    display:
+        block;
+
+    filter:
+        drop-shadow(
+            0 25px 30px
+            rgba(0,0,0,.55)
+        )
+        drop-shadow(
+            0 0 30px
+            rgba(40,230,105,.35)
+        );
+
+    user-select:
+        none;
+
+    -webkit-user-drag:
+        none;
+
+    transition:
+        transform .2s ease,
+        filter .2s ease;
+}
+
+
+/* hover */
+
+.case-image-wrapper:hover
+.case-image {
+
+    transform:
+        translateY(-5px)
+        scale(1.025);
+
+    filter:
+        drop-shadow(
+            0 30px 35px
+            rgba(0,0,0,.6)
+        )
+        drop-shadow(
+            0 0 40px
+            rgba(40,230,105,.5)
+        );
+}
+
+
+/* press */
+
+.case-image-wrapper:active
+.case-image {
+
+    transform:
+        scale(.96);
+}
+
+
+/* =========================
+   CLICK TEXT
+========================= */
+
+.open-hint {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    text-align:
+        center;
+
+    margin-top:
+        5px;
+
+    color:
+        #45ed86;
+
+    font-size:
+        13px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .5px;
+
+    animation:
+        hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
 
     0%,
     100% {
-        transform: translateY(0);
+        opacity:
+            .55;
     }
 
     50% {
-        transform: translateY(-8px);
+        opacity:
+            1;
     }
 
 }
@@ -265,17 +514,30 @@ button {
 ========================= */
 
 .case-info {
-    position: relative;
-    z-index: 2;
-    text-align: center;
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    text-align:
+        center;
+
+    margin-top:
+        14px;
 }
 
 .price {
-    display: inline-block;
 
-    padding: 8px 13px;
+    display:
+        inline-block;
 
-    border-radius: 10px;
+    padding:
+        8px 13px;
+
+    border-radius:
+        10px;
 
     background:
         rgba(38,213,103,.09);
@@ -294,7 +556,9 @@ button {
 }
 
 .description {
-    margin-top: 10px;
+
+    margin-top:
+        10px;
 
     color:
         #69736e;
@@ -308,77 +572,31 @@ button {
 
 
 /* =========================
-   OPEN BUTTON
-========================= */
-
-.open-button {
-    position: relative;
-    z-index: 2;
-
-    width: 100%;
-    height: 56px;
-
-    margin-top: 20px;
-
-    border: none;
-    border-radius: 14px;
-
-    color: #fff;
-
-    font-size: 16px;
-    font-weight: 1000;
-
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    background:
-        linear-gradient(
-            135deg,
-            #27d96a,
-            #0b8b42
-        );
-
-    box-shadow:
-        0 12px 35px rgba(21,210,96,.2),
-        inset 0 1px 0 rgba(255,255,255,.2);
-
-    transition: .2s;
-}
-
-.open-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 16px 40px rgba(21,210,96,.3);
-}
-
-.open-button:active {
-    transform: scale(.98);
-}
-
-.open-button:disabled {
-    opacity: .5;
-    cursor: default;
-}
-
-
-/* =========================
    MODAL
 ========================= */
 
 .modal {
-    position: fixed;
-    inset: 0;
 
-    z-index: 500;
+    position:
+        fixed;
 
-    display: none;
+    inset:
+        0;
 
-    align-items: center;
-    justify-content: center;
+    z-index:
+        500;
 
-    padding: 15px;
+    display:
+        none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        15px;
 
     background:
         rgba(0,0,0,.78);
@@ -388,16 +606,23 @@ button {
 }
 
 .modal.show {
-    display: flex;
+    display:
+        flex;
 }
 
 .modal-box {
-    width: 100%;
-    max-width: 470px;
 
-    padding: 23px;
+    width:
+        100%;
 
-    border-radius: 23px;
+    max-width:
+        470px;
+
+    padding:
+        23px;
+
+    border-radius:
+        23px;
 
     border:
         1px solid #205b38;
@@ -410,9 +635,11 @@ button {
         );
 
     box-shadow:
-        0 30px 100px rgba(0,0,0,.75);
+        0 30px 100px
+        rgba(0,0,0,.75);
 
-    text-align: center;
+    text-align:
+        center;
 
     animation:
         modalIn .25s ease;
@@ -421,42 +648,33 @@ button {
 @keyframes modalIn {
 
     from {
-        transform: scale(.85);
-        opacity: 0;
+        transform:
+            scale(.85);
+
+        opacity:
+            0;
     }
 
     to {
-        transform: scale(1);
-        opacity: 1;
+        transform:
+            scale(1);
+
+        opacity:
+            1;
     }
 
 }
 
 .modal-title {
-    font-size: 22px;
-    font-weight: 1000;
-}
 
-.modal-icon {
-    width: 90px;
-    height: 90px;
+    font-size:
+        22px;
 
-    margin: 15px auto;
+    font-weight:
+        1000;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-icon img {
-    width: 90px;
-    height: 90px;
-
-    object-fit: contain;
-
-    filter:
-        drop-shadow(0 10px 15px rgba(0,0,0,.5))
-        drop-shadow(0 0 20px rgba(40,230,105,.25));
+    margin-bottom:
+        18px;
 }
 
 
@@ -465,14 +683,21 @@ button {
 ========================= */
 
 .roulette {
-    position: relative;
 
-    width: 100%;
-    height: 90px;
+    position:
+        relative;
 
-    overflow: hidden;
+    width:
+        100%;
 
-    border-radius: 13px;
+    height:
+        90px;
+
+    overflow:
+        hidden;
+
+    border-radius:
+        13px;
 
     border:
         1px solid #234631;
@@ -482,17 +707,27 @@ button {
 }
 
 .roulette::before {
-    content: "";
 
-    position: absolute;
+    content:
+        "";
 
-    z-index: 10;
+    position:
+        absolute;
 
-    left: 50%;
-    top: 0;
-    bottom: 0;
+    z-index:
+        10;
 
-    width: 2px;
+    left:
+        50%;
+
+    top:
+        0;
+
+    bottom:
+        0;
+
+    width:
+        2px;
 
     transform:
         translateX(-50%);
@@ -505,15 +740,21 @@ button {
 }
 
 .roulette-line {
-    display: flex;
 
-    align-items: center;
+    display:
+        flex;
 
-    gap: 10px;
+    align-items:
+        center;
 
-    height: 100%;
+    gap:
+        10px;
 
-    padding: 10px;
+    height:
+        100%;
+
+    padding:
+        10px;
 
     transition:
         transform
@@ -522,17 +763,24 @@ button {
 }
 
 .roulette-item {
+
     flex:
         0 0 70px;
 
-    height: 70px;
+    height:
+        70px;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
-    justify-content: center;
+    align-items:
+        center;
 
-    border-radius: 12px;
+    justify-content:
+        center;
+
+    border-radius:
+        12px;
 
     border:
         1px solid #254331;
@@ -540,24 +788,8 @@ button {
     background:
         #101711;
 
-    overflow: hidden;
-
-    font-size: 30px;
-}
-
-.roulette-item img {
-    width: 54px;
-    height: 54px;
-
-    object-fit: contain;
-
-    display: block;
-
-    filter:
-        drop-shadow(
-            0 5px 8px
-            rgba(0,0,0,.5)
-        );
+    font-size:
+        30px;
 }
 
 
@@ -566,9 +798,12 @@ button {
 ========================= */
 
 .result {
-    min-height: 40px;
 
-    margin-top: 15px;
+    min-height:
+        40px;
+
+    margin-top:
+        15px;
 
     color:
         #42ee86;
@@ -581,12 +816,18 @@ button {
 }
 
 .close-button {
-    width: 100%;
-    height: 48px;
 
-    margin-top: 10px;
+    width:
+        100%;
 
-    border-radius: 12px;
+    height:
+        48px;
+
+    margin-top:
+        10px;
+
+    border-radius:
+        12px;
 
     border:
         1px solid #24432f;
@@ -600,10 +841,12 @@ button {
     font-weight:
         1000;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 }
 
 .close-button:hover {
+
     border-color:
         #39dc76;
 }
@@ -614,14 +857,21 @@ button {
 ========================= */
 
 .toast {
-    position: fixed;
 
-    z-index: 700;
+    position:
+        fixed;
 
-    left: 50%;
-    bottom: 25px;
+    z-index:
+        700;
 
-    min-width: 220px;
+    left:
+        50%;
+
+    bottom:
+        25px;
+
+    min-width:
+        220px;
 
     max-width:
         calc(100vw - 30px);
@@ -658,6 +908,7 @@ button {
 }
 
 .toast.show {
+
     transform:
         translate(-50%, 0);
 
@@ -673,6 +924,7 @@ button {
 @media (max-width: 600px) {
 
     .app {
+
         padding:
             14px
             12px
@@ -680,11 +932,13 @@ button {
     }
 
     .logo {
+
         font-size:
             21px;
     }
 
     .balance-box {
+
         min-width:
             125px;
 
@@ -693,11 +947,13 @@ button {
     }
 
     .balance {
+
         font-size:
             17px;
     }
 
     .case-panel {
+
         padding:
             21px 14px;
 
@@ -706,16 +962,24 @@ button {
     }
 
     .case-name {
+
         font-size:
             25px;
     }
 
-    .pepe {
+    .case-image-wrapper {
+
         width:
-            200px;
+            min(320px, 85vw);
 
         height:
-            200px;
+            320px;
+    }
+
+    .open-hint {
+
+        font-size:
+            12px;
     }
 
 }
@@ -726,11 +990,15 @@ button {
 
 <body>
 
+
 <div class="bg-glow one"></div>
 <div class="bg-glow two"></div>
 
 
 <div class="app">
+
+
+    <!-- HEADER -->
 
     <header class="header">
 
@@ -757,7 +1025,11 @@ button {
     </header>
 
 
+
+    <!-- CASE -->
+
     <section class="case-panel">
+
 
         <div class="case-title">
             SPECIAL CASE
@@ -769,25 +1041,34 @@ button {
         </div>
 
 
-        <!-- PEPE -->
 
-        <div class="pepe-wrapper">
+        <!-- CLICKABLE CASE -->
 
-            <div class="pepe-glow"></div>
+        <div
+            class="case-image-wrapper"
+            id="caseImage"
+            onclick="openCase()"
+        >
 
-            <div class="pepe">
+            <div class="case-image-glow"></div>
 
-                <img
-                    src="https://i.ibb.co/svLMYdFn/IMG-0794.png"
-                    alt="Pepe"
-                >
 
-            </div>
+            <img
+                class="case-image"
+                src="https://i.ibb.co/svLMYdFn/IMG-0794.png"
+                alt="PEPE CASE"
+                draggable="false"
+            >
 
         </div>
 
 
-        <!-- INFO -->
+
+        <div class="open-hint">
+            НАЖМИТЕ НА КЕЙС, ЧТОБЫ ОТКРЫТЬ
+        </div>
+
+
 
         <div class="case-info">
 
@@ -802,16 +1083,6 @@ button {
 
         </div>
 
-
-        <!-- OPEN -->
-
-        <button
-            class="open-button"
-            id="openButton"
-            onclick="openCase()"
-        >
-            ОТКРЫТЬ КЕЙС
-        </button>
 
     </section>
 
@@ -828,6 +1099,7 @@ button {
     id="modal"
 >
 
+
     <div class="modal-box">
 
 
@@ -836,15 +1108,8 @@ button {
         </div>
 
 
-        <div class="modal-icon">
 
-            <img
-                src="https://i.ibb.co/svLMYdFn/IMG-0794.png"
-                alt="Pepe"
-            >
-
-        </div>
-
+        <!-- ROULETTE -->
 
         <div class="roulette">
 
@@ -856,12 +1121,14 @@ button {
         </div>
 
 
+
         <div
             class="result"
             id="result"
         >
             Открываем...
         </div>
+
 
 
         <button
@@ -872,11 +1139,14 @@ button {
             ЗАКРЫТЬ
         </button>
 
+
     </div>
 
 </div>
 
 
+
+<!-- TOAST -->
 
 <div
     class="toast"
@@ -886,14 +1156,6 @@ button {
 
 
 <script>
-
-
-/* =========================================================
-   IMAGE
-========================================================= */
-
-const PEPE_IMAGE =
-    "https://i.ibb.co/svLMYdFn/IMG-0794.png";
 
 
 /* =========================================================
@@ -944,9 +1206,8 @@ const rewards = [
     {
         name: "150 💰",
         value: 150,
-        icon: "PEPE",
-        chance: 10,
-        image: PEPE_IMAGE
+        icon: "🐸",
+        chance: 10
     },
 
     {
@@ -981,11 +1242,6 @@ const rouletteLine =
 const result =
     document.getElementById(
         "result"
-    );
-
-const openButton =
-    document.getElementById(
-        "openButton"
     );
 
 const closeButton =
@@ -1245,7 +1501,7 @@ function getReward() {
 
 
 /* =========================================================
-   ROULETTE ITEM
+   CREATE ROULETTE ITEM
 ========================================================= */
 
 function createRouletteItem(
@@ -1262,34 +1518,8 @@ function createRouletteItem(
         "roulette-item";
 
 
-    if (
-        reward.image
-    ) {
-
-        const image =
-            document.createElement(
-                "img"
-            );
-
-
-        image.src =
-            reward.image;
-
-
-        image.alt =
-            reward.name;
-
-
-        element.appendChild(
-            image
-        );
-
-    } else {
-
-        element.textContent =
-            reward.icon;
-
-    }
+    element.textContent =
+        reward.icon;
 
 
     return element;
@@ -1330,10 +1560,6 @@ function openCase() {
     opening = true;
 
 
-    openButton.disabled =
-        true;
-
-
     closeButton.disabled =
         true;
 
@@ -1352,7 +1578,7 @@ function openCase() {
 
 
     /* =========================
-       ITEMS
+       CREATE ITEMS
     ========================= */
 
     const items = [];
@@ -1401,7 +1627,7 @@ function openCase() {
 
 
     /* =========================
-       RESET
+       RESET ROULETTE
     ========================= */
 
     rouletteLine.style.transition =
@@ -1465,6 +1691,7 @@ function openCase() {
 
                                 tickSound();
 
+
                                 ticks++;
 
 
@@ -1522,41 +1749,12 @@ function finishCase(
     updateBalance();
 
 
-    let rewardHTML;
-
-
-    if (
-        reward.image
-    ) {
-
-        rewardHTML =
-            `
-            <img
-                src="${reward.image}"
-                style="
-                    width:45px;
-                    height:45px;
-                    object-fit:contain;
-                    vertical-align:middle;
-                    margin-right:6px;
-                "
-            >
-            ${reward.name}
-            `;
-
-    } else {
-
-        rewardHTML =
-            `${reward.icon} ${reward.name}`;
-
-    }
-
-
     result.innerHTML =
         `
         🎉 Вы получили
         <strong>
-            ${rewardHTML}
+            ${reward.icon}
+            ${reward.name}
         </strong>
         `;
 
@@ -1565,15 +1763,11 @@ function finishCase(
 
 
     showToast(
-        `🎉 ${reward.name}`
+        `🎉 ${reward.icon} ${reward.name}`
     );
 
 
     opening = false;
-
-
-    openButton.disabled =
-        false;
 
 
     closeButton.disabled =
