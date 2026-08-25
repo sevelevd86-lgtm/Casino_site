@@ -1177,7 +1177,7 @@ button { cursor: pointer; }
     background: radial-gradient(circle at 50% 35%, #32101a 0%, #16090e 35%, #07080d 75%);
     z-index: 90;
     overflow-y: auto;
-    padding: 22px 20px 35px;
+    padding: 18px 15px 25px;
 }
 #upgradeGameContainer .app-inner-upgrade {
     width: 100%;
@@ -1200,10 +1200,10 @@ button { cursor: pointer; }
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 28px;
+    margin-bottom: 18px;
 }
 #upgradeGameContainer .logo-upgrade {
-    font-size: 27px;
+    font-size: 24px;
     font-weight: 1000;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -1212,8 +1212,8 @@ button { cursor: pointer; }
 }
 #upgradeGameContainer .logo-upgrade span { color: #ff315d; }
 #upgradeGameContainer .balance-box-upgrade {
-    min-width: 150px;
-    padding: 12px 18px;
+    min-width: 130px;
+    padding: 10px 15px;
     border-radius: 14px;
     border: 1px solid #542633;
     background: linear-gradient(145deg, #1c1117, #0e0b10);
@@ -1229,7 +1229,7 @@ button { cursor: pointer; }
 }
 #upgradeGameContainer .balance-upgrade {
     margin-top: 2px;
-    font-size: 21px;
+    font-size: 19px;
     font-weight: 1000;
     color: #fff;
 }
@@ -1240,13 +1240,13 @@ button { cursor: pointer; }
 #upgradeGameContainer .main-upgrade {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 25px;
+    gap: 18px;
 }
 #upgradeGameContainer .game-panel {
     position: relative;
     border: 1px solid #3b1b25;
-    border-radius: 25px;
-    padding: 25px;
+    border-radius: 20px;
+    padding: 18px 15px 20px;
     background: linear-gradient(145deg, rgba(34,14,21,.96), rgba(11,9,13,.98));
     box-shadow: 0 25px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.04);
 }
@@ -1256,15 +1256,15 @@ button { cursor: pointer; }
     align-items: center;
 }
 #upgradeGameContainer .upgrade-title {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 900;
     letter-spacing: 2px;
     color: #747983;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
     text-transform: uppercase;
 }
 #upgradeGameContainer .wheel-wrapper {
-    width: min(520px, 88vw);
+    width: min(420px, 85vw);
     aspect-ratio: 1 / 1;
     position: relative;
     display: flex;
@@ -1291,24 +1291,24 @@ button { cursor: pointer; }
     width: 0;
     height: 0;
     transform: translateX(-50%);
-    border-left: 14px solid transparent;
-    border-right: 14px solid transparent;
-    border-top: 35px solid #fff;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 30px solid #fff;
     filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 13px #ff315d);
 }
 #upgradeGameContainer .pointer-upgrade::after {
     content: "";
     position: absolute;
-    left: -5px;
-    top: -35px;
-    width: 10px;
-    height: 7px;
+    left: -4px;
+    top: -30px;
+    width: 8px;
+    height: 6px;
     border-radius: 50%;
     background: #ff315d;
 }
 #upgradeGameContainer .center-info {
     position: absolute;
-    width: 42%;
+    width: 40%;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #361720, #160c11 65%, #0a080c);
@@ -1322,24 +1322,24 @@ button { cursor: pointer; }
     pointer-events: none;
 }
 #upgradeGameContainer .win-percent {
-    font-size: clamp(34px, 7vw, 56px);
+    font-size: clamp(28px, 6vw, 48px);
     line-height: 1;
     font-weight: 1000;
     color: #fff;
     text-shadow: 0 0 18px rgba(255,255,255,.15);
 }
 #upgradeGameContainer .chance-text {
-    margin-top: 8px;
-    font-size: 10px;
+    margin-top: 5px;
+    font-size: 9px;
     font-weight: 900;
     letter-spacing: 2px;
     color: #777982;
 }
 #upgradeGameContainer .status-upgrade {
-    min-height: 27px;
-    margin-top: 15px;
+    min-height: 24px;
+    margin-top: 10px;
     text-align: center;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 900;
     color: #737781;
     transition: .2s;
@@ -1347,34 +1347,36 @@ button { cursor: pointer; }
 #upgradeGameContainer .status-upgrade.win { color: #36ef91; text-shadow: 0 0 15px rgba(54,239,145,.45); }
 #upgradeGameContainer .status-upgrade.lose { color: #ff4169; text-shadow: 0 0 15px rgba(255,65,105,.45); }
 #upgradeGameContainer .controls {
-    margin-top: 22px;
+    margin-top: 16px;
 }
 #upgradeGameContainer .control-label {
-    margin-bottom: 9px;
+    margin-bottom: 7px;
     color: #777b84;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 900;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 #upgradeGameContainer .bet-row {
     display: flex;
-    gap: 9px;
+    gap: 7px;
+    flex-wrap: wrap;
 }
 #upgradeGameContainer .bet-input-wrap {
     flex: 1;
+    min-width: 100px;
     position: relative;
 }
 #upgradeGameContainer .bet-input-upgrade {
     width: 100%;
-    height: 52px;
-    padding: 0 48px 0 15px;
+    height: 44px;
+    padding: 0 40px 0 12px;
     outline: none;
-    border-radius: 13px;
+    border-radius: 11px;
     border: 1px solid #4a222d;
     background: #0d0b10;
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 1000;
     transition: .2s;
 }
@@ -1384,24 +1386,24 @@ button { cursor: pointer; }
 }
 #upgradeGameContainer .currency-upgrade {
     position: absolute;
-    right: 14px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
     color: #ffcc42;
-    font-size: 18px;
+    font-size: 16px;
 }
 #upgradeGameContainer .multiplier-buttons {
     display: flex;
-    gap: 7px;
+    gap: 6px;
 }
 #upgradeGameContainer .multiplier-upgrade {
-    width: 57px;
-    height: 52px;
-    border-radius: 12px;
+    width: 50px;
+    height: 44px;
+    border-radius: 10px;
     border: 1px solid #45202b;
     background: linear-gradient(145deg, #201018, #100b10);
     color: #aeb0b7;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 1000;
     cursor: pointer;
     transition: .2s;
@@ -1420,13 +1422,13 @@ button { cursor: pointer; }
 #upgradeGameContainer .multiplier-upgrade:disabled { opacity: .5; cursor: default; }
 #upgradeGameContainer .spin-button-upgrade {
     width: 100%;
-    height: 58px;
-    margin-top: 14px;
+    height: 50px;
+    margin-top: 12px;
     border: none;
-    border-radius: 14px;
+    border-radius: 12px;
     cursor: pointer;
     color: #fff;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 1000;
     letter-spacing: 1px;
     background: linear-gradient(135deg, #ff315d, #b9163f);
@@ -1439,12 +1441,79 @@ button { cursor: pointer; }
 }
 #upgradeGameContainer .spin-button-upgrade:active { transform: scale(.98); }
 #upgradeGameContainer .spin-button-upgrade:disabled { opacity: .45; cursor: default; transform: none; }
+
+/* Выбор предмета */
+#upgradeGameContainer .item-select-area {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+#upgradeGameContainer .select-item-btn {
+    padding: 8px 14px;
+    border: 1px solid #4a222d;
+    border-radius: 10px;
+    background: #0d0b10;
+    color: #aeb0b7;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    transition: .2s;
+    flex: 1;
+    min-width: 80px;
+}
+#upgradeGameContainer .select-item-btn:hover { border-color: #ff315d; color: #fff; }
+#upgradeGameContainer .select-item-btn.active {
+    border-color: #27d878;
+    color: #27d878;
+    background: #0d1a12;
+}
+#upgradeGameContainer .selected-item-display {
+    font-size: 14px;
+    font-weight: 800;
+    color: #ffcc42;
+    padding: 6px 12px;
+    background: #0d0b10;
+    border-radius: 8px;
+    border: 1px solid #3b1b25;
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+}
+
+/* Список предметов для выбора */
+#upgradeGameContainer .item-select-dropdown {
+    margin-top: 8px;
+    background: #0d0b10;
+    border: 1px solid #3b1b25;
+    border-radius: 10px;
+    max-height: 160px;
+    overflow-y: auto;
+    display: none;
+}
+#upgradeGameContainer .item-select-dropdown.open { display: block; }
+#upgradeGameContainer .item-select-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid #24151a;
+    cursor: pointer;
+    transition: .2s;
+}
+#upgradeGameContainer .item-select-option:hover { background: #1a1118; }
+#upgradeGameContainer .item-select-option:last-child { border-bottom: none; }
+#upgradeGameContainer .item-select-option .opt-emoji { font-size: 22px; }
+#upgradeGameContainer .item-select-option .opt-name { font-size: 13px; font-weight: 700; color: #d5d9dd; }
+#upgradeGameContainer .item-select-option .opt-value { font-size: 12px; font-weight: 800; color: #ffd84d; }
+
 #upgradeGameContainer .history-upgrade {
-    margin-top: 25px;
+    margin-top: 18px;
 }
 #upgradeGameContainer .history-title {
-    margin-bottom: 12px;
-    font-size: 12px;
+    margin-bottom: 10px;
+    font-size: 11px;
     font-weight: 1000;
     letter-spacing: 1.5px;
     color: #777b84;
@@ -1453,23 +1522,23 @@ button { cursor: pointer; }
 #upgradeGameContainer .history-list {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 6px;
 }
 #upgradeGameContainer .history-item {
-    min-height: 45px;
-    padding: 8px 11px;
-    border-radius: 11px;
+    min-height: 38px;
+    padding: 6px 10px;
+    border-radius: 10px;
     border: 1px solid #24151a;
     background: #0d0b0f;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 900;
 }
 #upgradeGameContainer .history-left { color: #8e9199; }
 #upgradeGameContainer .history-left strong { color: #fff; }
-#upgradeGameContainer .history-result { font-size: 14px; }
+#upgradeGameContainer .history-result { font-size: 13px; }
 #upgradeGameContainer .history-result.win { color: #36ef91; }
 #upgradeGameContainer .history-result.lose { color: #ff4169; }
 #upgradeGameContainer .flash-upgrade {
@@ -1496,10 +1565,10 @@ button { cursor: pointer; }
     left: 50%;
     bottom: 28px;
     transform: translate(-50%, 100px);
-    min-width: 220px;
+    min-width: 200px;
     max-width: calc(100vw - 35px);
-    padding: 14px 20px;
-    border-radius: 13px;
+    padding: 12px 18px;
+    border-radius: 12px;
     background: #171017;
     border: 1px solid #542530;
     text-align: center;
@@ -1514,15 +1583,15 @@ button { cursor: pointer; }
 #upgradeGameContainer .toast-upgrade.lose { border-color: #c1264b; color: #ff5277; }
 #closeUpgradeBtn {
     position: fixed;
-    top: 18px;
-    right: 18px;
+    top: 14px;
+    right: 14px;
     z-index: 95;
     background: rgba(36,40,45,.85);
     border: 1px solid #542633;
     border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    font-size: 22px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
     color: #fff;
     cursor: pointer;
     box-shadow: 0 4px 20px rgba(0,0,0,.6);
@@ -1531,15 +1600,18 @@ button { cursor: pointer; }
 
 @media (max-width: 650px) {
     #upgradeGameContainer .app-inner-upgrade { padding: 0; }
-    #upgradeGameContainer .header-upgrade { margin-bottom: 15px; }
-    #upgradeGameContainer .logo-upgrade { font-size: 21px; }
-    #upgradeGameContainer .balance-box-upgrade { min-width: 125px; padding: 9px 12px; }
-    #upgradeGameContainer .balance-upgrade { font-size: 17px; }
-    #upgradeGameContainer .game-panel { padding: 17px 12px 20px; border-radius: 20px; }
-    #upgradeGameContainer .wheel-wrapper { width: min(480px, 94vw); }
+    #upgradeGameContainer .header-upgrade { margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    #upgradeGameContainer .logo-upgrade { font-size: 20px; }
+    #upgradeGameContainer .balance-box-upgrade { min-width: 110px; padding: 8px 12px; }
+    #upgradeGameContainer .balance-upgrade { font-size: 16px; }
+    #upgradeGameContainer .game-panel { padding: 14px 10px 16px; border-radius: 16px; }
+    #upgradeGameContainer .wheel-wrapper { width: min(380px, 92vw); }
     #upgradeGameContainer .bet-row { flex-direction: column; }
-    #upgradeGameContainer .multiplier-buttons { width: 100%; }
+    #upgradeGameContainer .multiplier-buttons { width: 100%; justify-content: stretch; }
     #upgradeGameContainer .multiplier-upgrade { flex: 1; }
+    #upgradeGameContainer .item-select-area { flex-direction: column; }
+    #upgradeGameContainer .select-item-btn { width: 100%; }
+    #upgradeGameContainer .selected-item-display { width: 100%; }
 }
 
 @media (max-width: 380px) {
@@ -1573,7 +1645,6 @@ button { cursor: pointer; }
             <div class="page-title">Меню</div>
             <div class="page-subtitle">Выберите игру и испытайте удачу.</div>
 
-            <!-- Шарик -->
             <div class="card game-card">
                 <div class="game-icon">⚪</div>
                 <div class="card-title">Шарик</div>
@@ -1581,7 +1652,6 @@ button { cursor: pointer; }
                 <button class="game-button" id="openGameButton">ИГРАТЬ</button>
             </div>
 
-            <!-- Билеты -->
             <div class="card game-card">
                 <div class="game-icon">🎟️</div>
                 <div class="card-title">Билеты</div>
@@ -1589,7 +1659,6 @@ button { cursor: pointer; }
                 <button class="game-button" id="openTicketsButton">ИГРАТЬ</button>
             </div>
 
-            <!-- Кейсы -->
             <div class="card game-card">
                 <div class="game-icon">📦</div>
                 <div class="card-title">Кейсы</div>
@@ -1597,11 +1666,10 @@ button { cursor: pointer; }
                 <button class="game-button" id="openCasesButton">ИГРАТЬ</button>
             </div>
 
-            <!-- UPGRADE -->
             <div class="card game-card">
                 <div class="game-icon">🎡</div>
                 <div class="card-title">UPGRADE</div>
-                <div class="card-text">Колесо удачи с множителями x2, x5, x10. Выберите ставку и крутите колесо.</div>
+                <div class="card-text">Колесо удачи с множителями x2, x5, x10. Ставьте баланс или предметы из инвентаря.</div>
                 <button class="game-button" id="openUpgradeButton">ИГРАТЬ</button>
             </div>
         </section>
@@ -1610,39 +1678,31 @@ button { cursor: pointer; }
         <section id="inventoryPage" class="page hidden">
             <div class="page-title">Инвентарь</div>
             <div class="page-subtitle">Предметы из кейсов, которые вы сохранили.</div>
-
             <button class="sell-all" id="sellAllButton">ПРОДАТЬ ВСЕ</button>
-
-            <div id="inventoryContainer">
-                <!-- Сюда будут динамически добавляться предметы -->
-            </div>
+            <div id="inventoryContainer"></div>
         </section>
 
         <!-- PROFILE -->
         <section id="profilePage" class="page hidden">
             <div class="page-title">Профиль</div>
             <div class="page-subtitle">Управляйте аккаунтом, наградами и промокодами.</div>
-
             <div class="card">
                 <div class="profile-row"><div class="profile-label">Имя</div><div class="profile-value" id="profileName">Игрок</div></div>
                 <div class="profile-row"><div class="profile-label">ID игрока</div><div class="profile-value" id="profileId">100001</div></div>
                 <div class="profile-row"><div class="profile-label">Баланс</div><div class="profile-value" id="profileBalance">1000.00</div></div>
             </div>
-
             <div class="card">
                 <div class="card-title">Реферальная система</div>
                 <div class="card-text">Приглашайте друзей и получайте по <b>50</b> валюты за каждого приглашённого.</div>
                 <div class="profile-row" style="margin-top:10px;"><div class="profile-label">Приглашено</div><div class="profile-value" id="refCount">0</div></div>
                 <div class="profile-row"><div class="profile-label">Реферальная ссылка</div><div class="profile-value ref-value" id="refLink">drop.example/100001</div></div>
             </div>
-
             <div class="card">
                 <div class="card-title">Ежедневная награда</div>
                 <div class="card-text">Забирайте <b>50</b> валюты каждые 24 часа.</div>
                 <button class="daily-button" id="dailyButton">ЗАБРАТЬ 50</button>
                 <div class="timer hidden" id="dailyTimer">24:00:00</div>
             </div>
-
             <div class="card">
                 <div class="card-title">Промокод</div>
                 <div class="card-text">Введите промокод, чтобы получить награду.</div>
@@ -1650,7 +1710,6 @@ button { cursor: pointer; }
                 <button class="promo-button" id="promoButton">АКТИВИРОВАТЬ</button>
                 <div class="promo-message" id="promoMessage"></div>
             </div>
-
             <div class="card">
                 <div class="card-title">Статистика</div>
                 <div class="profile-row"><div class="profile-label">Игр сыграно</div><div class="profile-value" id="gamesPlayed">0</div></div>
@@ -1673,22 +1732,19 @@ button { cursor: pointer; }
     ====================================================== -->
     <div id="gameScreen" class="hidden">
         <canvas id="gameCanvas"></canvas>
-
         <div class="game-top">
             <div class="game-stat"><div class="game-stat-label">Баланс</div><div class="game-stat-value" id="gameBalance">1000.00</div></div>
             <div class="game-stat"><div class="game-stat-label">Отскоки</div><div class="game-stat-value" id="gameBounces">0</div></div>
             <div class="game-stat"><div class="game-stat-label">Множитель</div><div class="game-stat-value" id="gameMultiplier">1.00x</div></div>
         </div>
-
         <div class="bottom-zones">
             <div id="greenZone" class="green-zone">WIN</div>
             <div id="redZone" class="red-zone">LOSE</div>
         </div>
-
         <div id="gameMenu" class="game-menu">
             <div class="game-menu-title">ESCAPE</div>
             <div class="game-menu-balance" id="gameMenuBalance">1000.00</div>
-            <input id="gameBet" class="bet-input" type="number" min="0.01" step="0.01" placeholder="Введите ставку">
+            <input id="gameBet" class="bet-input" type="number" min="25" step="1" value="100">
             <div id="gameBetError" class="bet-error"></div>
             <div class="difficulty">
                 <button data-difficulty="easy" class="active">Легко</button>
@@ -1698,7 +1754,6 @@ button { cursor: pointer; }
             <button class="start-game" id="startGame">ИГРАТЬ</button>
             <button class="exit-game" id="exitGame">НАЗАД</button>
         </div>
-
         <div id="gameResult" class="result hidden">
             <div id="resultTitle" class="result-title win">WIN</div>
             <div id="resultInfo" class="result-info"></div>
@@ -1713,12 +1768,10 @@ button { cursor: pointer; }
     <div id="ticketGameContainer" class="hidden">
         <button id="closeTicketsBtn">✕</button>
         <div class="app-inner">
-
             <div class="header-ticket">
                 <div class="logo-ticket">🎟️ SCRATCH</div>
                 <div class="balance-ticket">💰 <span id="balanceTicket">1000.00</span></div>
             </div>
-
             <section id="selectScreen" class="screen active">
                 <div class="title">SCRATCH &amp; WIN!</div>
                 <div class="subtitle">Выберите билет и попробуйте получить большой выигрыш</div>
@@ -1746,7 +1799,6 @@ button { cursor: pointer; }
                     <button class="back-button" id="closeChance">НАЗАД К БИЛЕТАМ</button>
                 </div>
             </section>
-
             <section id="gameScreenTicket" class="screen">
                 <div class="game-header-ticket">
                     <div class="game-name-ticket" id="gameNameTicket">MEGA SCRATCH</div>
@@ -1758,7 +1810,6 @@ button { cursor: pointer; }
                     <button class="game-button-ticket" id="backToTicketsTicket">← БИЛЕТЫ</button>
                 </div>
             </section>
-
             <div class="modal-ticket" id="resultModalTicket">
                 <div class="modal-box-ticket">
                     <div class="result-icon-ticket" id="resultIconTicket">🎉</div>
@@ -1768,7 +1819,6 @@ button { cursor: pointer; }
                     <button class="modal-button-ticket" id="newTicketTicket">НОВЫЙ БИЛЕТ</button>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -1777,11 +1827,9 @@ button { cursor: pointer; }
     ====================================================== -->
     <div id="casesGameContainer" class="hidden">
         <button id="closeCasesBtn">✕</button>
-
         <div class="topbar">
             <div class="balance-case">💰 <span id="balanceCase">1000</span></div>
         </div>
-
         <section id="mainScreenCase" class="screen-case main-screen active">
             <button class="main-case-button free-case-button" id="freeCaseBox">
                 <span>CASE FREE</span>
@@ -1797,26 +1845,21 @@ button { cursor: pointer; }
                 <span>CASE 250 💰</span>
             </button>
         </section>
-
         <section id="caseScreenCase" class="screen-case case-screen">
             <div class="case-title-row">
                 <div class="case-title" id="caseTitle">CASE 50 💰</div>
                 <button class="back-case" id="backButtonCase">← Назад</button>
             </div>
-
             <div class="roulette-section">
                 <div class="pointer-case"></div>
                 <div class="roulette-window">
                     <div class="roulette-track" id="rouletteTrack"></div>
                 </div>
             </div>
-
             <button class="open-button" id="openButton">КУПИТЬ ЗА 50 💰</button>
-
             <div class="items-title">ПРЕДМЕТЫ В КЕЙСЕ</div>
             <div class="items-grid" id="itemsGrid"></div>
         </section>
-
         <div class="modal-case" id="resultModalCase">
             <div class="modal-box-case">
                 <div class="result-emoji-case" id="resultEmoji">💎</div>
@@ -1829,7 +1872,6 @@ button { cursor: pointer; }
                 </div>
             </div>
         </div>
-
         <div class="message-case" id="messageCase"></div>
     </div>
 
@@ -1838,12 +1880,9 @@ button { cursor: pointer; }
     ====================================================== -->
     <div id="upgradeGameContainer" class="hidden">
         <button id="closeUpgradeBtn">✕</button>
-
         <div class="bg-glow one"></div>
         <div class="bg-glow two"></div>
-
         <div class="app-inner-upgrade">
-
             <header class="header-upgrade">
                 <div class="logo-upgrade">UPGRADE</div>
                 <div class="balance-box-upgrade">
@@ -1851,73 +1890,54 @@ button { cursor: pointer; }
                     <div class="balance-upgrade" id="balanceUpgrade">1000</div>
                 </div>
             </header>
-
             <main class="main-upgrade">
-
                 <section class="game-panel">
-
                     <div class="wheel-area">
-
                         <div class="upgrade-title">UPGRADE</div>
-
                         <div class="wheel-wrapper">
                             <canvas id="wheel" width="700" height="700"></canvas>
-
                             <div class="pointer-rotator" id="pointerRotator">
                                 <div class="pointer-upgrade"></div>
                             </div>
-
                             <div class="center-info">
                                 <div class="win-percent" id="winPercent">50%</div>
                                 <div class="chance-text">CHANCE</div>
                             </div>
                         </div>
-
                         <div class="status-upgrade" id="statusUpgrade">Выберите множитель и сделайте ставку</div>
-
                     </div>
-
                     <div class="controls">
-
                         <div class="control-label">Сумма ставки</div>
-
                         <div class="bet-row">
-
                             <div class="bet-input-wrap">
                                 <input class="bet-input-upgrade" id="betInputUpgrade" type="number" min="1" step="1" value="100">
                                 <span class="currency-upgrade">💰</span>
                             </div>
-
                             <div class="multiplier-buttons">
                                 <button class="multiplier-upgrade active" data-multiplier="2">x2</button>
                                 <button class="multiplier-upgrade" data-multiplier="5">x5</button>
                                 <button class="multiplier-upgrade" data-multiplier="10">x10</button>
                             </div>
-
                         </div>
+
+                        <!-- ВЫБОР ПРЕДМЕТА ИЗ ИНВЕНТАРЯ -->
+                        <div class="item-select-area">
+                            <button class="select-item-btn" id="selectItemBtn">🎒 Выбрать предмет</button>
+                            <div class="selected-item-display" id="selectedItemDisplay">Баланс</div>
+                        </div>
+                        <div class="item-select-dropdown" id="itemDropdown"></div>
 
                         <button class="spin-button-upgrade" id="spinButtonUpgrade">SPIN</button>
-
                     </div>
-
                     <div class="history-upgrade">
-
                         <div class="history-title">Последние спины</div>
-
                         <div class="history-list" id="historyListUpgrade">
-                            <div class="history-item">
-                                <div class="history-left">История пуста</div>
-                            </div>
+                            <div class="history-item"><div class="history-left">История пуста</div></div>
                         </div>
-
                     </div>
-
                 </section>
-
             </main>
-
         </div>
-
         <div class="flash-upgrade" id="flashUpgrade"></div>
         <div class="toast-upgrade" id="toastUpgrade"></div>
     </div>
@@ -1951,7 +1971,6 @@ function updateBalanceUI() {
 function renderInventory() {
     const container = document.getElementById('inventoryContainer');
     container.innerHTML = '';
-
     if (inventoryItems.length === 0) {
         container.innerHTML = `
             <div class="empty-inventory">
@@ -1963,9 +1982,7 @@ function renderInventory() {
         document.getElementById('sellAllButton').disabled = true;
         return;
     }
-
     document.getElementById('sellAllButton').disabled = false;
-
     inventoryItems.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'inventory-item';
@@ -1981,7 +1998,6 @@ function renderInventory() {
         `;
         container.appendChild(div);
     });
-
     document.querySelectorAll('.inventory-sell-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const index = parseInt(e.target.dataset.index);
@@ -2007,9 +2023,7 @@ function sellInventoryItem(index) {
 document.getElementById('sellAllButton').addEventListener('click', () => {
     if (inventoryItems.length === 0) return;
     let total = 0;
-    for (const item of inventoryItems) {
-        total += item.value;
-    }
+    for (const item of inventoryItems) total += item.value;
     balance += total;
     balance = Math.round(balance * 100) / 100;
     inventoryItems = [];
@@ -2018,7 +2032,7 @@ document.getElementById('sellAllButton').addEventListener('click', () => {
 });
 
 // =====================================================
-// ИГРА ШАРИК (весь код без изменений)
+// ИГРА ШАРИК (с минимальной ставкой 25)
 // =====================================================
 
 let currentBet = 0;
@@ -2041,6 +2055,7 @@ const difficulties = {
     hard: { green: 25, red: 75, hole: 50 * 1.22, step: 0.25 }
 };
 
+// DOM элементы шарика
 const headerBalance = document.getElementById('headerBalance');
 const profileBalance = document.getElementById('profileBalance');
 const menuPage = document.getElementById('menuPage');
@@ -2149,6 +2164,7 @@ function registerBounce(nx, ny) {
 function startRound() {
     let bet = Number(gameBet.value);
     if (!Number.isFinite(bet) || bet <= 0) { gameBetError.textContent = 'Введите ставку больше 0.'; return; }
+    if (bet < 25) { gameBetError.textContent = 'Минимальная ставка 25 💰'; return; }
     bet = Math.round(bet * 100) / 100;
     if (bet > balance) { gameBetError.textContent = 'Недостаточно средств.'; return; }
     currentBet = bet;
@@ -2672,7 +2688,7 @@ document.getElementById('closeTicketsBtn').addEventListener('click', ()=>{
 });
 
 // =====================================================
-// ИГРА КЕЙСЫ (CASES)
+// ИГРА КЕЙСЫ (CASES) — без изменений
 // =====================================================
 
 const CASE_PRICE = 50;
@@ -2917,7 +2933,6 @@ function startRouletteCase(sourceItems, winner) {
             rouletteTrack.style.transform = `translateX(${finalPosition}px)`;
         });
     });
-    // звук прокрутки удалён
     setTimeout(() => {
         showResultCase(winner);
         isOpeningCase = false;
@@ -3127,7 +3142,7 @@ updateFreeButton();
 mainScreenCase.classList.add('active');
 
 // =====================================================
-// ИГРА UPGRADE (без звука вращения)
+// ИГРА UPGRADE (с выбором предмета из инвентаря)
 // =====================================================
 
 let betUpgrade = 100;
@@ -3136,6 +3151,7 @@ let winChanceUpgrade = 50;
 let isSpinningUpgrade = false;
 let pointerRotationUpgrade = 0;
 let historyUpgrade = [];
+let selectedInventoryItem = null; // { emoji, name, value } или null
 
 const canvasUp = document.getElementById('wheel');
 const ctxUp = canvasUp.getContext('2d');
@@ -3149,11 +3165,71 @@ const toastUp = document.getElementById('toastUpgrade');
 const historyListUp = document.getElementById('historyListUpgrade');
 const pointerRotatorUp = document.getElementById('pointerRotator');
 const multiplierButtonsUp = document.querySelectorAll('.multiplier-upgrade');
+const selectItemBtn = document.getElementById('selectItemBtn');
+const selectedItemDisplay = document.getElementById('selectedItemDisplay');
+const itemDropdown = document.getElementById('itemDropdown');
 
 function updateBalanceUpgrade() {
     balanceUpgrade.textContent = balance.toFixed(2);
 }
 
+// ===== ВЫБОР ПРЕДМЕТА =====
+function renderItemDropdown() {
+    itemDropdown.innerHTML = '';
+    if (inventoryItems.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'item-select-option';
+        empty.style.justifyContent = 'center';
+        empty.style.color = '#737781';
+        empty.textContent = 'Инвентарь пуст';
+        itemDropdown.appendChild(empty);
+        return;
+    }
+    inventoryItems.forEach((item, index) => {
+        const opt = document.createElement('div');
+        opt.className = 'item-select-option';
+        opt.innerHTML = `
+            <span class="opt-emoji">${item.emoji}</span>
+            <span class="opt-name">${item.name}</span>
+            <span class="opt-value">+${item.value} 💰</span>
+        `;
+        opt.addEventListener('click', () => {
+            selectItemFromInventory(index);
+        });
+        itemDropdown.appendChild(opt);
+    });
+}
+
+function selectItemFromInventory(index) {
+    const item = inventoryItems[index];
+    selectedInventoryItem = { ...item };
+    inventoryItems.splice(index, 1);
+    renderInventory();
+    renderItemDropdown();
+    selectedItemDisplay.textContent = `${item.emoji} ${item.name} (${item.value}💰)`;
+    selectItemBtn.classList.add('active');
+    itemDropdown.classList.remove('open');
+    showToastUp(`Выбран предмет: ${item.emoji} ${item.name}`, true);
+}
+
+function clearSelectedItem() {
+    if (selectedInventoryItem) {
+        // возвращаем предмет в инвентарь
+        inventoryItems.push({ ...selectedInventoryItem });
+        renderInventory();
+        renderItemDropdown();
+        selectedInventoryItem = null;
+        selectedItemDisplay.textContent = 'Баланс';
+        selectItemBtn.classList.remove('active');
+    }
+}
+
+selectItemBtn.addEventListener('click', () => {
+    renderItemDropdown();
+    itemDropdown.classList.toggle('open');
+});
+
+// ===== CANVAS =====
 function resizeCanvasUp() {
     const rect = canvasUp.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
@@ -3170,8 +3246,6 @@ function drawWheelUp() {
     ctxUp.clearRect(0, 0, w, h);
     const cx = w/2, cy = h/2;
     const radius = Math.min(w, h) * .43;
-
-    // outer glow
     ctxUp.save();
     ctxUp.beginPath();
     ctxUp.arc(cx, cy, radius + 13, 0, Math.PI*2);
@@ -3191,7 +3265,6 @@ function drawWheelUp() {
     ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
     ctxUp.clip();
 
-    // red base
     const redGrad = ctxUp.createRadialGradient(cx - radius*.25, cy - radius*.35, radius*.1, cx, cy, radius);
     redGrad.addColorStop(0, "#ff5877");
     redGrad.addColorStop(.35, "#d71945");
@@ -3202,7 +3275,6 @@ function drawWheelUp() {
     ctxUp.fillStyle = redGrad;
     ctxUp.fill();
 
-    // green
     const greenGrad = ctxUp.createRadialGradient(cx, cy + radius*.2, radius*.05, cx, cy, radius);
     greenGrad.addColorStop(0, "#70ffb2");
     greenGrad.addColorStop(.35, "#17d96f");
@@ -3215,7 +3287,6 @@ function drawWheelUp() {
     ctxUp.fillStyle = greenGrad;
     ctxUp.fill();
 
-    // gloss
     const gloss = ctxUp.createLinearGradient(0, cy - radius, 0, cy);
     gloss.addColorStop(0, "rgba(255,255,255,.17)");
     gloss.addColorStop(.4, "rgba(255,255,255,.04)");
@@ -3225,7 +3296,6 @@ function drawWheelUp() {
     ctxUp.fillStyle = gloss;
     ctxUp.fill();
 
-    // dividers
     ctxUp.beginPath();
     ctxUp.moveTo(cx, cy);
     ctxUp.lineTo(cx + radius * Math.cos(greenStart), cy + radius * Math.sin(greenStart));
@@ -3236,7 +3306,6 @@ function drawWheelUp() {
     ctxUp.stroke();
     ctxUp.restore();
 
-    // outer ring
     ctxUp.beginPath();
     ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
     ctxUp.strokeStyle = "#ff5274";
@@ -3246,14 +3315,12 @@ function drawWheelUp() {
     ctxUp.stroke();
     ctxUp.shadowBlur = 0;
 
-    // inner ring
     ctxUp.beginPath();
     ctxUp.arc(cx, cy, radius * .77, 0, Math.PI*2);
     ctxUp.strokeStyle = "rgba(255,255,255,.08)";
     ctxUp.lineWidth = 2;
     ctxUp.stroke();
 
-    // markers
     for (let i = 0; i < 24; i++) {
         const angle = (Math.PI*2/24) * i;
         const outer = radius + 3, inner = radius - 7;
@@ -3282,19 +3349,42 @@ function getRandomTargetUp() { return Math.random() * 360; }
 
 function spinUpgrade() {
     if (isSpinningUpgrade) return;
-    betUpgrade = Number(betInputUpgrade.value);
-    if (!Number.isFinite(betUpgrade) || betUpgrade <= 0) {
-        showToastUp("Введите корректную ставку", false);
-        return;
+
+    let useItem = selectedInventoryItem !== null;
+    let betValue = 0;
+
+    if (useItem) {
+        betValue = selectedInventoryItem.value;
+    } else {
+        betValue = Number(betInputUpgrade.value);
+        if (!Number.isFinite(betValue) || betValue <= 0) {
+            showToastUp("Введите корректную ставку", false);
+            return;
+        }
+        if (betValue < 25 && !useItem) {
+            showToastUp("Минимальная ставка 25 💰", false);
+            return;
+        }
+        if (betValue > balance) {
+            showToastUp("Недостаточно средств 💰", false);
+            return;
+        }
     }
-    if (betUpgrade > balance) {
-        showToastUp("Недостаточно средств 💰", false);
-        return;
+
+    // Списываем ставку
+    if (useItem) {
+        // предмет уже удалён из инвентаря при выборе
+        // ничего не списываем с баланса
+    } else {
+        balance -= betValue;
+        balance = Math.round(balance * 100) / 100;
     }
+
     isSpinningUpgrade = true;
     spinButtonUp.disabled = true;
     betInputUpgrade.disabled = true;
     multiplierButtonsUp.forEach(b => b.disabled = true);
+    selectItemBtn.disabled = true;
 
     statusUp.className = "status-upgrade";
     statusUp.textContent = "Колесо вращается...";
@@ -3307,7 +3397,6 @@ function spinUpgrade() {
     const distance = targetAbsolute - start;
     const duration = 4300;
     const startTime = performance.now();
-    let lastTickAngle = start;
 
     function animateSpin(currentTime) {
         const elapsed = currentTime - startTime;
@@ -3321,43 +3410,57 @@ function spinUpgrade() {
             pointerRotationUpgrade = normalizeAngleUp(pointerRotationUpgrade);
             pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
             const won = isPointerOnGreenUp();
-            finishSpinUpgrade(won);
+            finishSpinUpgrade(won, useItem, betValue);
         }
     }
     requestAnimationFrame(animateSpin);
 }
 
-function finishSpinUpgrade(won) {
+function finishSpinUpgrade(won, usedItem, betValue) {
+    let winAmount = 0;
     if (won) {
-        const winAmount = betUpgrade * multiplierUpgrade;
+        winAmount = betValue * multiplierUpgrade;
         balance += winAmount;
+        balance = Math.round(balance * 100) / 100;
         statusUp.className = "status-upgrade win";
         statusUp.textContent = `ПОБЕДА +${winAmount.toFixed(2)} 💰`;
-        showToastUp(`🎉 Вы выиграли +${winAmount.toFixed(2)} 💰`, true);
+        showToastUp(`🎉 Выигрыш +${winAmount.toFixed(2)} 💰`, true);
         flashUp.className = "flash-upgrade win";
         void flashUp.offsetWidth;
         flashUp.classList.add("win");
         resultSoundUpgrade(true);
-        addHistoryUpgrade(true, betUpgrade, multiplierUpgrade, winAmount);
+        addHistoryUpgrade(true, betValue, multiplierUpgrade, winAmount);
     } else {
-        balance -= betUpgrade;
         statusUp.className = "status-upgrade lose";
-        statusUp.textContent = `ПОРАЖЕНИЕ -${betUpgrade.toFixed(2)} 💰`;
-        showToastUp(`💥 Вы проиграли -${betUpgrade.toFixed(2)} 💰`, false);
+        statusUp.textContent = `ПОРАЖЕНИЕ -${betValue.toFixed(2)} 💰`;
+        showToastUp(`💥 Проигрыш -${betValue.toFixed(2)} 💰`, false);
         flashUp.className = "flash-upgrade lose";
         void flashUp.offsetWidth;
         flashUp.classList.add("lose");
         resultSoundUpgrade(false);
-        addHistoryUpgrade(false, betUpgrade, multiplierUpgrade, betUpgrade);
+        addHistoryUpgrade(false, betValue, multiplierUpgrade, betValue);
     }
+
+    // Если использовали предмет и проиграли — предмет потерян (уже удалён)
+    // Если использовали предмет и выиграли — предмет удалён, деньги на балансе
+
     updateBalanceUI();
     updateBalanceUpgrade();
+
+    // Сброс выбранного предмета
+    if (usedItem) {
+        selectedInventoryItem = null;
+        selectedItemDisplay.textContent = 'Баланс';
+        selectItemBtn.classList.remove('active');
+        renderItemDropdown();
+    }
 
     setTimeout(() => {
         isSpinningUpgrade = false;
         spinButtonUp.disabled = false;
         betInputUpgrade.disabled = false;
         multiplierButtonsUp.forEach(b => b.disabled = false);
+        selectItemBtn.disabled = false;
     }, 450);
 }
 
@@ -3486,6 +3589,7 @@ updateBalanceUpgrade();
 setTimeout(resizeCanvasUp, 50);
 renderHistoryUpgrade();
 pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
+renderItemDropdown();
 
 // =====================================================
 // ИНИЦИАЛИЗАЦИЯ
