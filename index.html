@@ -169,6 +169,36 @@ button { cursor: pointer; }
 .empty-title { color: #c9cdd1; font-size: 19px; font-weight: 800; margin-bottom: 7px; }
 .empty-text { font-size: 15px; }
 
+.inventory-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #1a1d21;
+    border: 1px solid #292e33;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+.inventory-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.inventory-item-emoji { font-size: 28px; }
+.inventory-item-name { font-weight: 800; font-size: 15px; }
+.inventory-item-value { color: #ffd84d; font-size: 14px; font-weight: 800; }
+.inventory-sell-btn {
+    background: #27d878;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+}
+.inventory-sell-btn:hover { filter: brightness(1.1); }
+
 /* PROFILE */
 .profile-row {
     display: flex;
@@ -1197,14 +1227,12 @@ button { cursor: pointer; }
         <!-- INVENTORY -->
         <section id="inventoryPage" class="page hidden">
             <div class="page-title">Инвентарь</div>
-            <div class="page-subtitle">Здесь будут находиться полученные предметы.</div>
-            <button class="sell-all" id="sellAllButton" disabled>ПРОДАТЬ ВСЕ</button>
-            <div class="card">
-                <div class="empty-inventory">
-                    <div class="empty-icon">📦</div>
-                    <div class="empty-title">Инвентарь пуст</div>
-                    <div class="empty-text">Полученные предметы появятся здесь.</div>
-                </div>
+            <div class="page-subtitle">Предметы из кейсов, которые вы сохранили.</div>
+
+            <button class="sell-all" id="sellAllButton">ПРОДАТЬ ВСЕ</button>
+
+            <div id="inventoryContainer">
+                <!-- Сюда будут динамически добавляться предметы -->
             </div>
         </section>
 
@@ -1415,7 +1443,7 @@ button { cursor: pointer; }
                 <div class="result-value-case" id="resultValue">+100 💰</div>
                 <div class="result-buttons">
                     <button class="result-button sell-button" id="sellResult">ПРОДАТЬ</button>
-                    <button class="result-button back-result-button" id="backResult">НАЗАД</button>
+                    <button class="result-button back-result-button" id="backResult">В ИНВЕНТАРЬ</button>
                 </div>
             </div>
         </div>
@@ -1427,9 +1455,10 @@ button { cursor: pointer; }
 
 <script>
 /* =====================================================
-   ОБЩИЙ БАЛАНС (ШАРИК + БИЛЕТЫ + КЕЙСЫ)
+   ОБЩИЙ БАЛАНС И ИНВЕНТАРЬ
 ===================================================== */
 let balance = 1000;
+let inventoryItems = [];
 
 function updateBalanceUI() {
     const val = balance.toFixed(2);
@@ -1437,13 +1466,85 @@ function updateBalanceUI() {
     document.getElementById('profileBalance').textContent = val;
     document.getElementById('gameBalance').textContent = val;
     document.getElementById('gameMenuBalance').textContent = val;
-    // билеты
     const el = document.getElementById('balanceTicket');
     if (el) el.textContent = val;
-    // кейсы
     const elCase = document.getElementById('balanceCase');
     if (elCase) elCase.textContent = balance.toFixed(2);
 }
+
+// =====================================================
+// ИНВЕНТАРЬ
+// =====================================================
+function renderInventory() {
+    const container = document.getElementById('inventoryContainer');
+    container.innerHTML = '';
+
+    if (inventoryItems.length === 0) {
+        container.innerHTML = `
+            <div class="empty-inventory">
+                <div class="empty-icon">📦</div>
+                <div class="empty-title">Инвентарь пуст</div>
+                <div class="empty-text">Предметы из кейсов появятся здесь, если вы нажмёте «В инвентарь».</div>
+            </div>
+        `;
+        document.getElementById('sellAllButton').disabled = true;
+        return;
+    }
+
+    document.getElementById('sellAllButton').disabled = false;
+
+    inventoryItems.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'inventory-item';
+        div.innerHTML = `
+            <div class="inventory-item-left">
+                <div class="inventory-item-emoji">${item.emoji}</div>
+                <div>
+                    <div class="inventory-item-name">${item.name}</div>
+                    <div class="inventory-item-value">+${item.value} 💰</div>
+                </div>
+            </div>
+            <button class="inventory-sell-btn" data-index="${index}">ПРОДАТЬ</button>
+        `;
+        container.appendChild(div);
+    });
+
+    // Обработчики продажи каждого предмета
+    document.querySelectorAll('.inventory-sell-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            sellInventoryItem(index);
+        });
+    });
+}
+
+function addItemToInventory(item) {
+    inventoryItems.push({ ...item });
+    renderInventory();
+}
+
+function sellInventoryItem(index) {
+    const item = inventoryItems[index];
+    balance += item.value;
+    balance = Math.round(balance * 100) / 100;
+    inventoryItems.splice(index, 1);
+    updateBalanceUI();
+    renderInventory();
+}
+
+// Продать всё
+document.getElementById('sellAllButton').addEventListener('click', () => {
+    if (inventoryItems.length === 0) return;
+    let total = 0;
+    for (const item of inventoryItems) {
+        total += item.value;
+    }
+    balance += total;
+    balance = Math.round(balance * 100) / 100;
+    inventoryItems = [];
+    updateBalanceUI();
+    renderInventory();
+});
 
 // =====================================================
 // ИГРА ШАРИК (весь код без изменений)
@@ -1758,6 +1859,8 @@ document.querySelectorAll('.nav-button').forEach(btn=>{
         document.getElementById(page).classList.remove('hidden');
         document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
+        // Если открыли инвентарь — обновить отображение
+        if (page === 'inventoryPage') renderInventory();
     });
 });
 
@@ -2099,7 +2202,7 @@ document.getElementById('closeTicketsBtn').addEventListener('click', ()=>{
 });
 
 // =====================================================
-// ИГРА КЕЙСЫ (CASES) — весь код без изменений, только balance общий
+// ИГРА КЕЙСЫ (CASES) — С ИНВЕНТАРЁМ
 // =====================================================
 
 const CASE_PRICE = 50;
@@ -2431,9 +2534,12 @@ function getCurrentItemsCase() {
     return itemsCase;
 }
 
+// === ИЗМЕНЁННАЯ ЛОГИКА КНОПОК РЕЗУЛЬТАТА ===
 sellResult.addEventListener("click", () => {
     if (!currentWinnerCase) return;
+    // Продать сразу
     balance += currentWinnerCase.value;
+    balance = Math.round(balance * 100) / 100;
     updateBalanceUI();
     updateBalanceCase();
     resultModalCase.classList.remove("show");
@@ -2442,9 +2548,14 @@ sellResult.addEventListener("click", () => {
 });
 
 backResult.addEventListener("click", () => {
+    if (!currentWinnerCase) return;
+    // Сохранить в инвентарь
+    addItemToInventory(currentWinnerCase);
     resultModalCase.classList.remove("show");
     resetRouletteCase(getCurrentItemsCase());
     currentWinnerCase = null;
+    // Показать уведомление
+    showMessageCase("Предмет сохранён в инвентарь 🎒");
 });
 
 caseBox.addEventListener("click", () => { showCaseCase("paid"); });
@@ -2594,6 +2705,7 @@ resizeCanvas();
 ball.x = circle.x;
 ball.y = circle.y - circle.radius * .35;
 gameLoop();
+renderInventory();
 
 </script>
 
