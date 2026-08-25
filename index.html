@@ -31,6 +31,67 @@ body {
 
 
 /* =========================================
+   ЗВЁЗДЫ
+========================================= */
+
+.stars {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+
+    width: 2px;
+    height: 2px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    opacity: 0.7;
+
+    animation:
+        starMove linear infinite,
+        starTwinkle ease-in-out infinite alternate;
+}
+
+
+/* Движение звёзд */
+
+@keyframes starMove {
+
+    0% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(20px);
+    }
+
+}
+
+
+/* Лёгкое мерцание */
+
+@keyframes starTwinkle {
+
+    0% {
+        opacity: 0.25;
+    }
+
+    100% {
+        opacity: 0.9;
+    }
+
+}
+
+
+/* =========================================
    СТИРАЛЬНАЯ МАШИНА
 ========================================= */
 
@@ -65,11 +126,13 @@ body {
     animation: flyMachine 8s linear infinite;
 
     will-change: left, top, transform;
+
+    z-index: 10;
 }
 
 
 /* =========================================
-   ПАНЕЛЬ УПРАВЛЕНИЯ
+   ПАНЕЛЬ
 ========================================= */
 
 .top-panel {
@@ -200,7 +263,7 @@ body {
 
 
 /* =========================================
-   ОКНО СТИРАЛЬНОЙ МАШИНЫ
+   ОКНО
 ========================================= */
 
 .window {
@@ -265,9 +328,6 @@ body {
     overflow: hidden;
 }
 
-
-/* Блик */
-
 .window-glass::before {
 
     content: '';
@@ -316,8 +376,6 @@ body {
 ========================================= */
 
 @keyframes flyMachine {
-
-    /* СТАРТ — СЛЕВА */
 
     0% {
         left: -100px;
@@ -469,8 +527,6 @@ body {
         transform: rotate(-3deg);
     }
 
-    /* ВЕРШИНА ДУГИ */
-
     50% {
         left: 400px;
         top: 13.7vh;
@@ -621,13 +677,12 @@ body {
         transform: rotate(11.7deg);
     }
 
-    /* ФИНИШ — ТОЧНО ТА ЖЕ ВЫСОТА, ЧТО И В НАЧАЛЕ */
-
     100% {
         left: 900px;
         top: 35vh;
         transform: rotate(12deg);
     }
+
 }
 
 </style>
@@ -636,6 +691,55 @@ body {
 <body>
 
 <div class="scene">
+
+    <!-- ЗВЁЗДЫ -->
+
+    <div class="stars">
+
+        <div class="star" style="left:3%; top:8%; animation-duration:4s,2.1s;"></div>
+        <div class="star" style="left:7%; top:23%; animation-duration:6s,1.7s;"></div>
+        <div class="star" style="left:11%; top:71%; animation-duration:5s,2.5s;"></div>
+        <div class="star" style="left:15%; top:42%; animation-duration:7s,1.9s;"></div>
+        <div class="star" style="left:19%; top:12%; animation-duration:5.5s,2.3s;"></div>
+        <div class="star" style="left:23%; top:83%; animation-duration:4.5s,1.6s;"></div>
+        <div class="star" style="left:27%; top:35%; animation-duration:6.5s,2.2s;"></div>
+        <div class="star" style="left:31%; top:65%; animation-duration:5.2s,1.8s;"></div>
+        <div class="star" style="left:35%; top:5%; animation-duration:7.2s,2.6s;"></div>
+        <div class="star" style="left:39%; top:52%; animation-duration:4.8s,1.5s;"></div>
+
+        <div class="star" style="left:43%; top:18%; animation-duration:6.2s,2s;"></div>
+        <div class="star" style="left:47%; top:76%; animation-duration:5.7s,2.4s;"></div>
+        <div class="star" style="left:51%; top:7%; animation-duration:4.2s,1.9s;"></div>
+        <div class="star" style="left:55%; top:44%; animation-duration:6.8s,2.7s;"></div>
+        <div class="star" style="left:59%; top:91%; animation-duration:5.4s,1.7s;"></div>
+        <div class="star" style="left:63%; top:27%; animation-duration:7.5s,2.1s;"></div>
+        <div class="star" style="left:67%; top:61%; animation-duration:4.6s,2.5s;"></div>
+        <div class="star" style="left:71%; top:14%; animation-duration:6.1s,1.6s;"></div>
+        <div class="star" style="left:75%; top:82%; animation-duration:5.1s,2.2s;"></div>
+        <div class="star" style="left:79%; top:37%; animation-duration:7s,2.8s;"></div>
+
+        <div class="star" style="left:83%; top:6%; animation-duration:4.7s,1.8s;"></div>
+        <div class="star" style="left:87%; top:53%; animation-duration:6.4s,2.3s;"></div>
+        <div class="star" style="left:91%; top:24%; animation-duration:5.8s,1.5s;"></div>
+        <div class="star" style="left:95%; top:72%; animation-duration:7.3s,2.6s;"></div>
+
+        <div class="star" style="left:5%; top:92%; animation-duration:5.3s,2s;"></div>
+        <div class="star" style="left:13%; top:56%; animation-duration:6.7s,2.4s;"></div>
+        <div class="star" style="left:21%; top:48%; animation-duration:4.4s,1.7s;"></div>
+        <div class="star" style="left:29%; top:95%; animation-duration:7.1s,2.5s;"></div>
+        <div class="star" style="left:37%; top:29%; animation-duration:5.6s,1.9s;"></div>
+        <div class="star" style="left:45%; top:68%; animation-duration:6.3s,2.7s;"></div>
+        <div class="star" style="left:53%; top:33%; animation-duration:4.9s,1.6s;"></div>
+        <div class="star" style="left:61%; top:88%; animation-duration:7.4s,2.2s;"></div>
+        <div class="star" style="left:69%; top:46%; animation-duration:5.5s,2.8s;"></div>
+        <div class="star" style="left:77%; top:67%; animation-duration:6.6s,1.8s;"></div>
+        <div class="star" style="left:85%; top:93%; animation-duration:4.3s,2.4s;"></div>
+        <div class="star" style="left:93%; top:41%; animation-duration:7.2s,1.7s;"></div>
+
+    </div>
+
+
+    <!-- СТИРАЛЬНАЯ МАШИНА -->
 
     <div class="washing-machine">
 
