@@ -25,7 +25,7 @@ from aiohttp import web
 # =====================================================
 
 BOT_TOKEN = "8918284594:AAG-h12sJhc7a0qaV5LgS-ea29FNeZVtJvY"
-WEBAPP_URL = "https://твой-сайт.com/index.html"
+WEBAPP_URL = "https://sevelevd86-lgtm.github.io/Casino_site/"
 
 # =====================================================
 # БАЗА ДАННЫХ
