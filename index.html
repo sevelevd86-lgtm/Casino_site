@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Летящая ракета со стикером и огнем</title>
+    <title>Летающая стиральная машина</title>
     <style>
         body {
             margin: 0;
             height: 100vh;
-            background: radial-gradient(circle at center, #1a1a1a, #000000);
+            background: #000000; /* Черный лист */
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -18,274 +18,179 @@
         /* Контейнер для полета по дуге */
         .flight-path {
             position: relative;
-            width: 100px;
-            height: 100px;
-            /* Анимация полета по дуге снизу вверх с наклоном */
+            width: 120px;
+            height: 120px;
+            /* Та же дуга, что и у ракеты */
             animation: flyArc 4s ease-in-out infinite alternate;
         }
 
-        /* Ключевые кадры дуги: меняем позицию и наклон */
+        /* Ключевые кадры дуги */
         @keyframes flyArc {
             0% {
-                transform: translate(150px, 250px) rotate(-45deg); /* Старт снизу, смотрит вверх-вправо */
+                transform: translate(150px, 250px) rotate(-35deg);
             }
             50% {
-                transform: translate(-50px, -100px) rotate(45deg); /* Верхняя точка, смотрит вверх-влево */
+                transform: translate(-50px, -100px) rotate(45deg);
             }
             100% {
-                transform: translate(-150px, -250px) rotate(135deg); /* Улетает влево-вниз, смотрит влево */
+                transform: translate(-150px, -250px) rotate(135deg);
             }
         }
 
-        /* Сама ракета */
-        .rocket {
+        /* Сама стиральная машина */
+        .washer {
             position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 100px;
-            height: 100px;
-            transform-style: preserve-3d;
+            top: -60px;
+            left: -60px;
+            width: 120px;
+            height: 120px;
         }
 
-        /* ===== КОРПУС РАКЕТЫ ===== */
+        /* Корпус (белый квадрат) */
         .body {
             position: absolute;
-            width: 80px;
-            height: 35px;
-            background: linear-gradient(to bottom, #ffffff, #d4d4d4 60%, #a0a0a0);
-            border-radius: 15px 30px 30px 15px;
-            left: 10px;
-            top: 32px;
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(145deg, #ffffff, #d4d4d4);
+            border-radius: 15px;
+            left: 15px;
+            top: 15px;
             box-shadow: 
-                inset -5px 0 10px rgba(0,0,0,0.2),
-                0 5px 15px rgba(0,0,0,0.5);
+                inset -10px -10px 20px rgba(0,0,0,0.1),
+                0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        /* Сверху: панель управления */
+        .panel {
+            position: absolute;
+            width: 70px;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            left: 25px;
+            top: 20px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
             z-index: 2;
         }
 
-        /* Полоска на корпусе */
-        .stripe {
+        /* Кнопки на панели */
+        .knob {
             position: absolute;
-            width: 60px;
-            height: 6px;
+            width: 12px;
+            height: 12px;
+            background: #333;
+            border-radius: 50%;
+            left: 30px;
+            top: 24px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.4);
+        }
+
+        .button {
+            position: absolute;
+            width: 8px;
+            height: 8px;
             background: #e53935;
-            border-radius: 5px;
-            left: 15px;
-            top: 12px;
-            opacity: 0.9;
+            border-radius: 50%;
+            left: 48px;
+            top: 26px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
-        /* ===== НОС (Смотрит вперед) ===== */
-        .nose {
+        .button2 {
+            left: 60px;
+            background: #40c4ff;
+        }
+
+        /* Дверца (окно) */
+        .door {
             position: absolute;
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(135deg, #ff6b6b, #e53935 50%, #b71c1c);
-            border-radius: 0 50% 50% 0;
-            right: 5px;
-            top: 32px;
-            box-shadow: inset -5px 0 10px rgba(0,0,0,0.3);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 40% 40%, #4facfe, #003366);
+            border: 6px solid #b0b0b0;
+            border-radius: 50%;
+            left: 35px;
+            top: 45px;
+            box-shadow: 
+                inset 0 0 15px rgba(0,0,0,0.5),
+                0 5px 15px rgba(0,0,0,0.4);
             z-index: 3;
+            overflow: hidden;
         }
 
-        /* ===== ИЛЛЮМИНАТОР ===== */
-        .window {
+        /* Блик на стекле */
+        .door::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            top: 5px;
+            left: 8px;
+            filter: blur(2px);
+        }
+
+        /* Ручка дверцы */
+        .door-handle {
+            position: absolute;
+            width: 8px;
+            height: 20px;
+            background: #888;
+            border-radius: 5px;
+            right: -2px;
+            top: 15px;
+            transform: rotate(10deg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        /* Сзади (сопло стиралки) */
+        .engine {
             position: absolute;
             width: 20px;
             height: 20px;
-            background: radial-gradient(circle at 30% 30%, #4facfe, #003366);
-            border: 4px solid #e53935;
-            border-radius: 50%;
-            left: 40px;
-            top: 40px;
-            z-index: 4;
-            box-shadow: 0 0 10px rgba(0, 78, 146, 0.8);
-        }
-
-        /* ===== ПЛАВНИКИ ===== */
-        .fin-top {
-            position: absolute;
-            width: 30px;
-            height: 25px;
-            background: linear-gradient(135deg, #ff6b6b, #e53935);
-            border-radius: 5px 0 0 5px;
+            background: #444;
+            border-radius: 5px;
             left: 5px;
-            top: 10px;
-            transform: rotate(30deg);
+            top: 50px;
+            box-shadow: inset 0 0 10px #000;
             z-index: 1;
         }
 
-        .fin-bottom {
-            position: absolute;
-            width: 30px;
-            height: 25px;
-            background: linear-gradient(45deg, #ff6b6b, #e53935);
-            border-radius: 5px 0 0 5px;
-            left: 5px;
-            bottom: 10px;
-            transform: rotate(-30deg);
-            z-index: 1;
-        }
-
-        /* ===== ДВИГАТЕЛЬ (Сопло) ===== */
-        .engine {
+        /* Труба для слива воды (вместо огня) */
+        .drain-pipe {
             position: absolute;
             width: 15px;
-            height: 12px;
-            background: linear-gradient(to bottom, #888, #333);
-            border-radius: 2px 0 0 2px;
-            left: 0px;
-            top: 44px;
+            height: 10px;
+            background: #666;
+            border-radius: 0 5px 5px 0;
+            left: -10px;
+            top: 55px;
             z-index: 1;
-            box-shadow: inset 0 0 5px #000;
-        }
-
-        /* ===== РЕАЛИСТИЧНЫЙ ОГОНЬ ===== */
-        /* Огромное внешнее свечение */
-        .flame-glow {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle, rgba(255, 165, 0, 0.6) 0%, transparent 70%);
-            border-radius: 50%;
-            left: -50px;
-            top: 15px;
-            transform: rotate(180deg);
-            z-index: 0;
-            animation: pulse 0.3s infinite alternate;
-        }
-
-        /* Внешний огонь (оранжевый) */
-        .flame-outer {
-            position: absolute;
-            width: 60px;
-            height: 45px;
-            background: radial-gradient(circle at 30% 50%, #ff9800, #ff5722 60%, transparent);
-            border-radius: 50% 50% 30% 30%;
-            left: -40px;
-            top: 25px;
-            transform: rotate(180deg);
-            filter: blur(2px);
-            z-index: 0;
-            animation: flameFlicker 0.15s infinite alternate;
-        }
-
-        /* Средний огонь (желтый) */
-        .flame-mid {
-            position: absolute;
-            width: 40px;
-            height: 30px;
-            background: radial-gradient(circle at 30% 50%, #ffeb3b, #ff9800 70%, transparent);
-            border-radius: 50% 50% 20% 20%;
-            left: -30px;
-            top: 35px;
-            transform: rotate(180deg);
-            filter: blur(1px);
-            z-index: 1;
-            animation: flameFlicker2 0.1s infinite alternate;
-        }
-
-        /* Ядро огня (белое) */
-        .flame-core {
-            position: absolute;
-            width: 25px;
-            height: 20px;
-            background: radial-gradient(circle, #ffffff, #ffeb3b);
-            border-radius: 50% 50% 10% 10%;
-            left: -20px;
-            top: 40px;
-            transform: rotate(180deg);
-            z-index: 2;
-            filter: blur(0.5px);
-        }
-
-        /* Искры */
-        .spark {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #ffeb3b;
-            border-radius: 50%;
-            box-shadow: 0 0 5px #ff9800;
-            animation: sparkFly 0.5s infinite linear;
-        }
-
-        .spark1 { left: -40px; top: 20px; }
-        .spark2 { left: -55px; top: 50px; animation-delay: 0.2s; }
-        .spark3 { left: -20px; top: 70px; animation-delay: 0.35s; }
-
-        /* Дым (для реалистичности) */
-        .smoke {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background: rgba(150, 150, 150, 0.4);
-            border-radius: 50%;
-            filter: blur(5px);
-            left: -35px;
-            top: 15px;
-            animation: smokeRise 1s infinite linear;
-        }
-        .smoke2 { left: -45px; top: 55px; animation-delay: 0.5s; }
-
-        /* ===== АНИМАЦИИ ОГНЯ ===== */
-        @keyframes flameFlicker {
-            0% { transform: rotate(180deg) scale(1); }
-            100% { transform: rotate(180deg) scale(1.1); }
-        }
-
-        @keyframes flameFlicker2 {
-            0% { transform: rotate(180deg) scale(1); opacity: 0.9; }
-            100% { transform: rotate(180deg) scale(1.2); opacity: 1; }
-        }
-
-        @keyframes pulse {
-            0% { transform: rotate(180deg) scale(0.9); opacity: 0.7; }
-            100% { transform: rotate(180deg) scale(1.2); opacity: 1; }
-        }
-
-        /* Искры */
-        @keyframes sparkFly {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(-15px, -10px) scale(0); opacity: 0; }
-        }
-
-        /* Дым */
-        @keyframes smokeRise {
-            0% { transform: translate(0, 0) scale(0.5); opacity: 0.5; }
-            100% { transform: translate(-20px, -15px) scale(2); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="flight-path">
-        <div class="rocket">
-            
-            <!-- Огонь и дым -->
-            <div class="smoke"></div>
-            <div class="smoke smoke2"></div>
-            
-            <div class="spark spark1"></div>
-            <div class="spark spark2"></div>
-            <div class="spark spark3"></div>
-
-            <div class="flame-glow"></div>
-            <div class="flame-outer"></div>
-            <div class="flame-mid"></div>
-            <div class="flame-core"></div>
-
-            <!-- Части ракеты -->
+        <div class="washer">
+            <!-- Задняя часть -->
             <div class="engine"></div>
-            <div class="fin-top"></div>
-            <div class="fin-bottom"></div>
-            
+            <div class="drain-pipe"></div>
+
+            <!-- Корпус -->
             <div class="body">
-                <div class="stripe"></div>
+                <div class="panel">
+                    <div class="knob"></div>
+                    <div class="button"></div>
+                    <div class="button button2"></div>
+                </div>
+                
+                <!-- Дверца -->
+                <div class="door">
+                    <div class="door-handle"></div>
+                </div>
             </div>
-            
-            <div class="nose"></div>
-            <div class="window"></div>
-            
         </div>
     </div>
 
