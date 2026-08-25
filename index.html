@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐻‍❄️ DROP + SCRATCH + CASES</title>
+<title>🐻‍❄️ DROP + SCRATCH + CASES + UPGRADE</title>
 
 <style>
 /* =====================================================
@@ -950,7 +950,7 @@ button { cursor: pointer; }
     font-weight: 800;
 }
 #casesGameContainer .roulette-section { position: relative; margin-top: 5px; }
-#casesGameContainer .pointer {
+#casesGameContainer .pointer-case {
     position: absolute;
     top: -1px;
     left: 50%;
@@ -1168,6 +1168,380 @@ button { cursor: pointer; }
 }
 #closeCasesBtn:hover { background: #383e44; }
 
+/* =====================================================
+   ИГРА UPGRADE
+===================================================== */
+#upgradeGameContainer {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 35%, #32101a 0%, #16090e 35%, #07080d 75%);
+    z-index: 90;
+    overflow-y: auto;
+    padding: 22px 20px 35px;
+}
+#upgradeGameContainer .app-inner-upgrade {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+#upgradeGameContainer .bg-glow {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(100px);
+    opacity: .18;
+    z-index: -1;
+}
+#upgradeGameContainer .bg-glow.one { left: -180px; top: 10%; background: #ff164f; }
+#upgradeGameContainer .bg-glow.two { right: -180px; bottom: 5%; background: #7b163d; }
+#upgradeGameContainer .header-upgrade {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+#upgradeGameContainer .logo-upgrade {
+    font-size: 27px;
+    font-weight: 1000;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255,39,83,.45);
+}
+#upgradeGameContainer .logo-upgrade span { color: #ff315d; }
+#upgradeGameContainer .balance-box-upgrade {
+    min-width: 150px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: 1px solid #542633;
+    background: linear-gradient(145deg, #1c1117, #0e0b10);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 10px 35px rgba(0,0,0,.35);
+    text-align: right;
+}
+#upgradeGameContainer .balance-label-upgrade {
+    color: #777b86;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+#upgradeGameContainer .balance-upgrade {
+    margin-top: 2px;
+    font-size: 21px;
+    font-weight: 1000;
+    color: #fff;
+}
+#upgradeGameContainer .balance-upgrade::after {
+    content: " 💰";
+    color: #ffcc42;
+}
+#upgradeGameContainer .main-upgrade {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+#upgradeGameContainer .game-panel {
+    position: relative;
+    border: 1px solid #3b1b25;
+    border-radius: 25px;
+    padding: 25px;
+    background: linear-gradient(145deg, rgba(34,14,21,.96), rgba(11,9,13,.98));
+    box-shadow: 0 25px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.04);
+}
+#upgradeGameContainer .wheel-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#upgradeGameContainer .upgrade-title {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #747983;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+}
+#upgradeGameContainer .wheel-wrapper {
+    width: min(520px, 88vw);
+    aspect-ratio: 1 / 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#upgradeGameContainer #wheel {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+#upgradeGameContainer .pointer-rotator {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    transform: rotate(0deg);
+    will-change: transform;
+}
+#upgradeGameContainer .pointer-upgrade {
+    position: absolute;
+    left: 50%;
+    top: -4px;
+    width: 0;
+    height: 0;
+    transform: translateX(-50%);
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 35px solid #fff;
+    filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 13px #ff315d);
+}
+#upgradeGameContainer .pointer-upgrade::after {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: -35px;
+    width: 10px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ff315d;
+}
+#upgradeGameContainer .center-info {
+    position: absolute;
+    width: 42%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #361720, #160c11 65%, #0a080c);
+    border: 2px solid #57232f;
+    box-shadow: inset 0 0 35px rgba(0,0,0,.9), 0 0 30px rgba(255,35,75,.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    pointer-events: none;
+}
+#upgradeGameContainer .win-percent {
+    font-size: clamp(34px, 7vw, 56px);
+    line-height: 1;
+    font-weight: 1000;
+    color: #fff;
+    text-shadow: 0 0 18px rgba(255,255,255,.15);
+}
+#upgradeGameContainer .chance-text {
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #777982;
+}
+#upgradeGameContainer .status-upgrade {
+    min-height: 27px;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 900;
+    color: #737781;
+    transition: .2s;
+}
+#upgradeGameContainer .status-upgrade.win { color: #36ef91; text-shadow: 0 0 15px rgba(54,239,145,.45); }
+#upgradeGameContainer .status-upgrade.lose { color: #ff4169; text-shadow: 0 0 15px rgba(255,65,105,.45); }
+#upgradeGameContainer .controls {
+    margin-top: 22px;
+}
+#upgradeGameContainer .control-label {
+    margin-bottom: 9px;
+    color: #777b84;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+#upgradeGameContainer .bet-row {
+    display: flex;
+    gap: 9px;
+}
+#upgradeGameContainer .bet-input-wrap {
+    flex: 1;
+    position: relative;
+}
+#upgradeGameContainer .bet-input-upgrade {
+    width: 100%;
+    height: 52px;
+    padding: 0 48px 0 15px;
+    outline: none;
+    border-radius: 13px;
+    border: 1px solid #4a222d;
+    background: #0d0b10;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 1000;
+    transition: .2s;
+}
+#upgradeGameContainer .bet-input-upgrade:focus {
+    border-color: #ff315d;
+    box-shadow: 0 0 20px rgba(255,49,93,.12);
+}
+#upgradeGameContainer .currency-upgrade {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffcc42;
+    font-size: 18px;
+}
+#upgradeGameContainer .multiplier-buttons {
+    display: flex;
+    gap: 7px;
+}
+#upgradeGameContainer .multiplier-upgrade {
+    width: 57px;
+    height: 52px;
+    border-radius: 12px;
+    border: 1px solid #45202b;
+    background: linear-gradient(145deg, #201018, #100b10);
+    color: #aeb0b7;
+    font-size: 14px;
+    font-weight: 1000;
+    cursor: pointer;
+    transition: .2s;
+}
+#upgradeGameContainer .multiplier-upgrade:hover {
+    border-color: #ff315d;
+    color: #fff;
+    box-shadow: 0 0 18px rgba(255,49,93,.18);
+}
+#upgradeGameContainer .multiplier-upgrade.active {
+    color: #fff;
+    border-color: #ff315d;
+    background: linear-gradient(145deg, #9c1e3d, #4e1022);
+    box-shadow: 0 0 22px rgba(255,35,75,.25), inset 0 1px 0 rgba(255,255,255,.15);
+}
+#upgradeGameContainer .multiplier-upgrade:disabled { opacity: .5; cursor: default; }
+#upgradeGameContainer .spin-button-upgrade {
+    width: 100%;
+    height: 58px;
+    margin-top: 14px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 1000;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #ff315d, #b9163f);
+    box-shadow: 0 12px 35px rgba(255,35,75,.24), inset 0 1px 0 rgba(255,255,255,.2);
+    transition: .2s;
+}
+#upgradeGameContainer .spin-button-upgrade:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 42px rgba(255,35,75,.35), 0 0 20px rgba(255,35,75,.15);
+}
+#upgradeGameContainer .spin-button-upgrade:active { transform: scale(.98); }
+#upgradeGameContainer .spin-button-upgrade:disabled { opacity: .45; cursor: default; transform: none; }
+#upgradeGameContainer .history-upgrade {
+    margin-top: 25px;
+}
+#upgradeGameContainer .history-title {
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 1000;
+    letter-spacing: 1.5px;
+    color: #777b84;
+    text-transform: uppercase;
+}
+#upgradeGameContainer .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+#upgradeGameContainer .history-item {
+    min-height: 45px;
+    padding: 8px 11px;
+    border-radius: 11px;
+    border: 1px solid #24151a;
+    background: #0d0b0f;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 900;
+}
+#upgradeGameContainer .history-left { color: #8e9199; }
+#upgradeGameContainer .history-left strong { color: #fff; }
+#upgradeGameContainer .history-result { font-size: 14px; }
+#upgradeGameContainer .history-result.win { color: #36ef91; }
+#upgradeGameContainer .history-result.lose { color: #ff4169; }
+#upgradeGameContainer .flash-upgrade {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+}
+#upgradeGameContainer .flash-upgrade.win { animation: winFlash .55s ease; }
+#upgradeGameContainer .flash-upgrade.lose { animation: loseFlash .55s ease; }
+@keyframes winFlash {
+    0% { opacity: 0; background: rgba(34,255,139,.35); }
+    35% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@keyframes loseFlash {
+    0% { opacity: 0; background: rgba(255,30,68,.35); }
+    35% { opacity: 1; }
+    100% { opacity: 0; }
+}
+#upgradeGameContainer .toast-upgrade {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translate(-50%, 100px);
+    min-width: 220px;
+    max-width: calc(100vw - 35px);
+    padding: 14px 20px;
+    border-radius: 13px;
+    background: #171017;
+    border: 1px solid #542530;
+    text-align: center;
+    font-weight: 1000;
+    z-index: 200;
+    opacity: 0;
+    transition: .3s ease;
+    box-shadow: 0 15px 50px rgba(0,0,0,.5);
+}
+#upgradeGameContainer .toast-upgrade.show { transform: translate(-50%, 0); opacity: 1; }
+#upgradeGameContainer .toast-upgrade.win { border-color: #28bd70; color: #4aff9d; }
+#upgradeGameContainer .toast-upgrade.lose { border-color: #c1264b; color: #ff5277; }
+#closeUpgradeBtn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 95;
+    background: rgba(36,40,45,.85);
+    border: 1px solid #542633;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,.6);
+}
+#closeUpgradeBtn:hover { background: #383e44; }
+
+@media (max-width: 650px) {
+    #upgradeGameContainer .app-inner-upgrade { padding: 0; }
+    #upgradeGameContainer .header-upgrade { margin-bottom: 15px; }
+    #upgradeGameContainer .logo-upgrade { font-size: 21px; }
+    #upgradeGameContainer .balance-box-upgrade { min-width: 125px; padding: 9px 12px; }
+    #upgradeGameContainer .balance-upgrade { font-size: 17px; }
+    #upgradeGameContainer .game-panel { padding: 17px 12px 20px; border-radius: 20px; }
+    #upgradeGameContainer .wheel-wrapper { width: min(480px, 94vw); }
+    #upgradeGameContainer .bet-row { flex-direction: column; }
+    #upgradeGameContainer .multiplier-buttons { width: 100%; }
+    #upgradeGameContainer .multiplier-upgrade { flex: 1; }
+}
+
 @media (max-width: 380px) {
     #ticketGameContainer .title { font-size: 26px; }
     #ticketGameContainer .chance-prize { width: 65px; }
@@ -1221,6 +1595,14 @@ button { cursor: pointer; }
                 <div class="card-title">Кейсы</div>
                 <div class="card-text">Открывайте кейсы с предметами. Free-кейс раз в сутки, PLS PEPE, CASE 50 и CASE 250.</div>
                 <button class="game-button" id="openCasesButton">ИГРАТЬ</button>
+            </div>
+
+            <!-- UPGRADE -->
+            <div class="card game-card">
+                <div class="game-icon">🎡</div>
+                <div class="card-title">UPGRADE</div>
+                <div class="card-text">Колесо удачи с множителями x2, x5, x10. Выберите ставку и крутите колесо.</div>
+                <button class="game-button" id="openUpgradeButton">ИГРАТЬ</button>
             </div>
         </section>
 
@@ -1423,7 +1805,7 @@ button { cursor: pointer; }
             </div>
 
             <div class="roulette-section">
-                <div class="pointer"></div>
+                <div class="pointer-case"></div>
                 <div class="roulette-window">
                     <div class="roulette-track" id="rouletteTrack"></div>
                 </div>
@@ -1451,6 +1833,95 @@ button { cursor: pointer; }
         <div class="message-case" id="messageCase"></div>
     </div>
 
+    <!-- =====================================================
+         ИГРА UPGRADE
+    ====================================================== -->
+    <div id="upgradeGameContainer" class="hidden">
+        <button id="closeUpgradeBtn">✕</button>
+
+        <div class="bg-glow one"></div>
+        <div class="bg-glow two"></div>
+
+        <div class="app-inner-upgrade">
+
+            <header class="header-upgrade">
+                <div class="logo-upgrade">UPGRADE</div>
+                <div class="balance-box-upgrade">
+                    <div class="balance-label-upgrade">Ваш баланс</div>
+                    <div class="balance-upgrade" id="balanceUpgrade">1000</div>
+                </div>
+            </header>
+
+            <main class="main-upgrade">
+
+                <section class="game-panel">
+
+                    <div class="wheel-area">
+
+                        <div class="upgrade-title">UPGRADE</div>
+
+                        <div class="wheel-wrapper">
+                            <canvas id="wheel" width="700" height="700"></canvas>
+
+                            <div class="pointer-rotator" id="pointerRotator">
+                                <div class="pointer-upgrade"></div>
+                            </div>
+
+                            <div class="center-info">
+                                <div class="win-percent" id="winPercent">50%</div>
+                                <div class="chance-text">CHANCE</div>
+                            </div>
+                        </div>
+
+                        <div class="status-upgrade" id="statusUpgrade">Выберите множитель и сделайте ставку</div>
+
+                    </div>
+
+                    <div class="controls">
+
+                        <div class="control-label">Сумма ставки</div>
+
+                        <div class="bet-row">
+
+                            <div class="bet-input-wrap">
+                                <input class="bet-input-upgrade" id="betInputUpgrade" type="number" min="1" step="1" value="100">
+                                <span class="currency-upgrade">💰</span>
+                            </div>
+
+                            <div class="multiplier-buttons">
+                                <button class="multiplier-upgrade active" data-multiplier="2">x2</button>
+                                <button class="multiplier-upgrade" data-multiplier="5">x5</button>
+                                <button class="multiplier-upgrade" data-multiplier="10">x10</button>
+                            </div>
+
+                        </div>
+
+                        <button class="spin-button-upgrade" id="spinButtonUpgrade">SPIN</button>
+
+                    </div>
+
+                    <div class="history-upgrade">
+
+                        <div class="history-title">Последние спины</div>
+
+                        <div class="history-list" id="historyListUpgrade">
+                            <div class="history-item">
+                                <div class="history-left">История пуста</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+        <div class="flash-upgrade" id="flashUpgrade"></div>
+        <div class="toast-upgrade" id="toastUpgrade"></div>
+    </div>
+
 </div>
 
 <script>
@@ -1470,6 +1941,8 @@ function updateBalanceUI() {
     if (el) el.textContent = val;
     const elCase = document.getElementById('balanceCase');
     if (elCase) elCase.textContent = balance.toFixed(2);
+    const elUp = document.getElementById('balanceUpgrade');
+    if (elUp) elUp.textContent = balance.toFixed(2);
 }
 
 // =====================================================
@@ -1509,7 +1982,6 @@ function renderInventory() {
         container.appendChild(div);
     });
 
-    // Обработчики продажи каждого предмета
     document.querySelectorAll('.inventory-sell-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const index = parseInt(e.target.dataset.index);
@@ -1532,7 +2004,6 @@ function sellInventoryItem(index) {
     renderInventory();
 }
 
-// Продать всё
 document.getElementById('sellAllButton').addEventListener('click', () => {
     if (inventoryItems.length === 0) return;
     let total = 0;
@@ -1859,7 +2330,6 @@ document.querySelectorAll('.nav-button').forEach(btn=>{
         document.getElementById(page).classList.remove('hidden');
         document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
-        // Если открыли инвентарь — обновить отображение
         if (page === 'inventoryPage') renderInventory();
     });
 });
@@ -2202,7 +2672,7 @@ document.getElementById('closeTicketsBtn').addEventListener('click', ()=>{
 });
 
 // =====================================================
-// ИГРА КЕЙСЫ (CASES) — С ИНВЕНТАРЁМ
+// ИГРА КЕЙСЫ (CASES)
 // =====================================================
 
 const CASE_PRICE = 50;
@@ -2447,7 +2917,7 @@ function startRouletteCase(sourceItems, winner) {
             rouletteTrack.style.transform = `translateX(${finalPosition}px)`;
         });
     });
-    playRollSoundCase(6500);
+    // звук прокрутки удалён
     setTimeout(() => {
         showResultCase(winner);
         isOpeningCase = false;
@@ -2534,10 +3004,8 @@ function getCurrentItemsCase() {
     return itemsCase;
 }
 
-// === ИЗМЕНЁННАЯ ЛОГИКА КНОПОК РЕЗУЛЬТАТА ===
 sellResult.addEventListener("click", () => {
     if (!currentWinnerCase) return;
-    // Продать сразу
     balance += currentWinnerCase.value;
     balance = Math.round(balance * 100) / 100;
     updateBalanceUI();
@@ -2549,12 +3017,10 @@ sellResult.addEventListener("click", () => {
 
 backResult.addEventListener("click", () => {
     if (!currentWinnerCase) return;
-    // Сохранить в инвентарь
     addItemToInventory(currentWinnerCase);
     resultModalCase.classList.remove("show");
     resetRouletteCase(getCurrentItemsCase());
     currentWinnerCase = null;
-    // Показать уведомление
     showMessageCase("Предмет сохранён в инвентарь 🎒");
 });
 
@@ -2618,36 +3084,6 @@ function playClickSoundCase() {
     } catch (error) {}
 }
 
-function playRollSoundCase(duration) {
-    const startTime = Date.now();
-    let lastTick = 0;
-    function tick() {
-        if (Date.now() - startTime >= duration) return;
-        const ctx = getAudioContextCase();
-        if (!ctx) { requestAnimationFrame(tick); return; }
-        const progress = (Date.now() - startTime) / duration;
-        const interval = 55 + progress * 180;
-        if (Date.now() - lastTick >= interval) {
-            lastTick = Date.now();
-            try {
-                const oscillator = ctx.createOscillator();
-                const gain = ctx.createGain();
-                oscillator.type = "triangle";
-                oscillator.frequency.setValueAtTime(950 - progress * 450, ctx.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(480 - progress * 180, ctx.currentTime + 0.045);
-                gain.gain.setValueAtTime(0.075 - progress * 0.035, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.065);
-                oscillator.connect(gain);
-                gain.connect(ctx.destination);
-                oscillator.start();
-                oscillator.stop(ctx.currentTime + 0.07);
-            } catch (error) {}
-        }
-        requestAnimationFrame(tick);
-    }
-    tick();
-}
-
 function playWinSoundCase() {
     const ctx = getAudioContextCase();
     if (!ctx) return;
@@ -2672,14 +3108,12 @@ function playWinSoundCase() {
 
 setInterval(updateFreeButton, 1000);
 
-// Открытие кейсов из меню
 document.getElementById('openCasesButton').addEventListener('click', ()=>{
     document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
     document.getElementById('casesGameContainer').classList.remove('hidden');
     updateBalanceCase();
 });
 
-// Закрытие кейсов (крестик)
 document.getElementById('closeCasesBtn').addEventListener('click', ()=>{
     document.getElementById('casesGameContainer').classList.add('hidden');
     document.getElementById('menuPage').classList.remove('hidden');
@@ -2687,11 +3121,371 @@ document.getElementById('closeCasesBtn').addEventListener('click', ()=>{
     document.querySelector('[data-page="menuPage"]').classList.add('active');
 });
 
-// Инициализация кейсов
 renderItemsCase(itemsCase);
 resetRouletteCase(itemsCase);
 updateFreeButton();
 mainScreenCase.classList.add('active');
+
+// =====================================================
+// ИГРА UPGRADE (без звука вращения)
+// =====================================================
+
+let betUpgrade = 100;
+let multiplierUpgrade = 2;
+let winChanceUpgrade = 50;
+let isSpinningUpgrade = false;
+let pointerRotationUpgrade = 0;
+let historyUpgrade = [];
+
+const canvasUp = document.getElementById('wheel');
+const ctxUp = canvasUp.getContext('2d');
+const balanceUpgrade = document.getElementById('balanceUpgrade');
+const betInputUpgrade = document.getElementById('betInputUpgrade');
+const winPercentUp = document.getElementById('winPercent');
+const spinButtonUp = document.getElementById('spinButtonUpgrade');
+const statusUp = document.getElementById('statusUpgrade');
+const flashUp = document.getElementById('flashUpgrade');
+const toastUp = document.getElementById('toastUpgrade');
+const historyListUp = document.getElementById('historyListUpgrade');
+const pointerRotatorUp = document.getElementById('pointerRotator');
+const multiplierButtonsUp = document.querySelectorAll('.multiplier-upgrade');
+
+function updateBalanceUpgrade() {
+    balanceUpgrade.textContent = balance.toFixed(2);
+}
+
+function resizeCanvasUp() {
+    const rect = canvasUp.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvasUp.width = rect.width * dpr;
+    canvasUp.height = rect.height * dpr;
+    ctxUp.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawWheelUp();
+}
+window.addEventListener('resize', resizeCanvasUp);
+
+function drawWheelUp() {
+    const w = canvasUp.clientWidth, h = canvasUp.clientHeight;
+    if (w <= 0 || h <= 0) return;
+    ctxUp.clearRect(0, 0, w, h);
+    const cx = w/2, cy = h/2;
+    const radius = Math.min(w, h) * .43;
+
+    // outer glow
+    ctxUp.save();
+    ctxUp.beginPath();
+    ctxUp.arc(cx, cy, radius + 13, 0, Math.PI*2);
+    ctxUp.shadowBlur = 35;
+    ctxUp.shadowColor = "rgba(255,35,78,.45)";
+    ctxUp.strokeStyle = "rgba(255,42,82,.55)";
+    ctxUp.lineWidth = 8;
+    ctxUp.stroke();
+    ctxUp.restore();
+
+    const greenAngle = Math.PI * 2 * (winChanceUpgrade / 100);
+    const greenStart = Math.PI/2 - greenAngle/2;
+    const greenEnd = Math.PI/2 + greenAngle/2;
+
+    ctxUp.save();
+    ctxUp.beginPath();
+    ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
+    ctxUp.clip();
+
+    // red base
+    const redGrad = ctxUp.createRadialGradient(cx - radius*.25, cy - radius*.35, radius*.1, cx, cy, radius);
+    redGrad.addColorStop(0, "#ff5877");
+    redGrad.addColorStop(.35, "#d71945");
+    redGrad.addColorStop(.72, "#8c102d");
+    redGrad.addColorStop(1, "#4a0719");
+    ctxUp.beginPath();
+    ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
+    ctxUp.fillStyle = redGrad;
+    ctxUp.fill();
+
+    // green
+    const greenGrad = ctxUp.createRadialGradient(cx, cy + radius*.2, radius*.05, cx, cy, radius);
+    greenGrad.addColorStop(0, "#70ffb2");
+    greenGrad.addColorStop(.35, "#17d96f");
+    greenGrad.addColorStop(.72, "#078d4a");
+    greenGrad.addColorStop(1, "#034b2a");
+    ctxUp.beginPath();
+    ctxUp.moveTo(cx, cy);
+    ctxUp.arc(cx, cy, radius, greenStart, greenEnd);
+    ctxUp.closePath();
+    ctxUp.fillStyle = greenGrad;
+    ctxUp.fill();
+
+    // gloss
+    const gloss = ctxUp.createLinearGradient(0, cy - radius, 0, cy);
+    gloss.addColorStop(0, "rgba(255,255,255,.17)");
+    gloss.addColorStop(.4, "rgba(255,255,255,.04)");
+    gloss.addColorStop(1, "rgba(255,255,255,0)");
+    ctxUp.beginPath();
+    ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
+    ctxUp.fillStyle = gloss;
+    ctxUp.fill();
+
+    // dividers
+    ctxUp.beginPath();
+    ctxUp.moveTo(cx, cy);
+    ctxUp.lineTo(cx + radius * Math.cos(greenStart), cy + radius * Math.sin(greenStart));
+    ctxUp.moveTo(cx, cy);
+    ctxUp.lineTo(cx + radius * Math.cos(greenEnd), cy + radius * Math.sin(greenEnd));
+    ctxUp.strokeStyle = "rgba(255,255,255,.75)";
+    ctxUp.lineWidth = 3;
+    ctxUp.stroke();
+    ctxUp.restore();
+
+    // outer ring
+    ctxUp.beginPath();
+    ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
+    ctxUp.strokeStyle = "#ff5274";
+    ctxUp.lineWidth = 5;
+    ctxUp.shadowBlur = 15;
+    ctxUp.shadowColor = "rgba(255,40,80,.55)";
+    ctxUp.stroke();
+    ctxUp.shadowBlur = 0;
+
+    // inner ring
+    ctxUp.beginPath();
+    ctxUp.arc(cx, cy, radius * .77, 0, Math.PI*2);
+    ctxUp.strokeStyle = "rgba(255,255,255,.08)";
+    ctxUp.lineWidth = 2;
+    ctxUp.stroke();
+
+    // markers
+    for (let i = 0; i < 24; i++) {
+        const angle = (Math.PI*2/24) * i;
+        const outer = radius + 3, inner = radius - 7;
+        ctxUp.beginPath();
+        ctxUp.moveTo(cx + Math.cos(angle)*inner, cy + Math.sin(angle)*inner);
+        ctxUp.lineTo(cx + Math.cos(angle)*outer, cy + Math.sin(angle)*outer);
+        ctxUp.strokeStyle = i % 2 === 0 ? "rgba(255,255,255,.4)" : "rgba(255,255,255,.12)";
+        ctxUp.lineWidth = i % 2 === 0 ? 2 : 1;
+        ctxUp.stroke();
+    }
+}
+
+function normalizeAngleUp(a) { a %= 360; if (a<0) a += 360; return a; }
+
+function isPointerOnGreenUp() {
+    const pointerAngle = normalizeAngleUp(-90 + pointerRotationUpgrade);
+    const greenAngle = 360 * (winChanceUpgrade / 100);
+    const greenStart = 90 - greenAngle/2;
+    const greenEnd = 90 + greenAngle/2;
+    const dist = Math.abs(normalizeAngleUp(pointerAngle - 90));
+    const circular = Math.min(dist, 360 - dist);
+    return circular <= greenAngle/2;
+}
+
+function getRandomTargetUp() { return Math.random() * 360; }
+
+function spinUpgrade() {
+    if (isSpinningUpgrade) return;
+    betUpgrade = Number(betInputUpgrade.value);
+    if (!Number.isFinite(betUpgrade) || betUpgrade <= 0) {
+        showToastUp("Введите корректную ставку", false);
+        return;
+    }
+    if (betUpgrade > balance) {
+        showToastUp("Недостаточно средств 💰", false);
+        return;
+    }
+    isSpinningUpgrade = true;
+    spinButtonUp.disabled = true;
+    betInputUpgrade.disabled = true;
+    multiplierButtonsUp.forEach(b => b.disabled = true);
+
+    statusUp.className = "status-upgrade";
+    statusUp.textContent = "Колесо вращается...";
+
+    const target = getRandomTargetUp();
+    const fullSpins = 5 + Math.floor(Math.random() * 4);
+    const targetAbsolute = pointerRotationUpgrade + fullSpins * 360 + target;
+
+    const start = pointerRotationUpgrade;
+    const distance = targetAbsolute - start;
+    const duration = 4300;
+    const startTime = performance.now();
+    let lastTickAngle = start;
+
+    function animateSpin(currentTime) {
+        const elapsed = currentTime - startTime;
+        let progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        pointerRotationUpgrade = start + distance * eased;
+        pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
+        if (progress < 1) {
+            requestAnimationFrame(animateSpin);
+        } else {
+            pointerRotationUpgrade = normalizeAngleUp(pointerRotationUpgrade);
+            pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
+            const won = isPointerOnGreenUp();
+            finishSpinUpgrade(won);
+        }
+    }
+    requestAnimationFrame(animateSpin);
+}
+
+function finishSpinUpgrade(won) {
+    if (won) {
+        const winAmount = betUpgrade * multiplierUpgrade;
+        balance += winAmount;
+        statusUp.className = "status-upgrade win";
+        statusUp.textContent = `ПОБЕДА +${winAmount.toFixed(2)} 💰`;
+        showToastUp(`🎉 Вы выиграли +${winAmount.toFixed(2)} 💰`, true);
+        flashUp.className = "flash-upgrade win";
+        void flashUp.offsetWidth;
+        flashUp.classList.add("win");
+        resultSoundUpgrade(true);
+        addHistoryUpgrade(true, betUpgrade, multiplierUpgrade, winAmount);
+    } else {
+        balance -= betUpgrade;
+        statusUp.className = "status-upgrade lose";
+        statusUp.textContent = `ПОРАЖЕНИЕ -${betUpgrade.toFixed(2)} 💰`;
+        showToastUp(`💥 Вы проиграли -${betUpgrade.toFixed(2)} 💰`, false);
+        flashUp.className = "flash-upgrade lose";
+        void flashUp.offsetWidth;
+        flashUp.classList.add("lose");
+        resultSoundUpgrade(false);
+        addHistoryUpgrade(false, betUpgrade, multiplierUpgrade, betUpgrade);
+    }
+    updateBalanceUI();
+    updateBalanceUpgrade();
+
+    setTimeout(() => {
+        isSpinningUpgrade = false;
+        spinButtonUp.disabled = false;
+        betInputUpgrade.disabled = false;
+        multiplierButtonsUp.forEach(b => b.disabled = false);
+    }, 450);
+}
+
+function resultSoundUpgrade(win) {
+    try {
+        const audio = getAudioContextCase();
+        if (!audio) return;
+        if (win) {
+            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+            notes.forEach((freq, idx) => {
+                const osc = audio.createOscillator();
+                const gain = audio.createGain();
+                const start = audio.currentTime + idx * 0.075;
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(freq, start);
+                gain.gain.setValueAtTime(0.0001, start);
+                gain.gain.exponentialRampToValueAtTime(0.13, start + 0.018);
+                gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.38);
+                osc.connect(gain);
+                gain.connect(audio.destination);
+                osc.start(start);
+                osc.stop(start + 0.4);
+            });
+        } else {
+            const notes = [220, 165, 110];
+            notes.forEach((freq, idx) => {
+                const osc = audio.createOscillator();
+                const gain = audio.createGain();
+                const start = audio.currentTime + idx * 0.12;
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(freq, start);
+                osc.frequency.exponentialRampToValueAtTime(freq * 0.72, start + 0.18);
+                gain.gain.setValueAtTime(0.0001, start);
+                gain.gain.exponentialRampToValueAtTime(0.11, start + 0.015);
+                gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.25);
+                osc.connect(gain);
+                gain.connect(audio.destination);
+                osc.start(start);
+                osc.stop(start + 0.27);
+            });
+        }
+    } catch (e) {}
+}
+
+function buttonSoundUpgrade() {
+    try {
+        const audio = getAudioContextCase();
+        if (!audio) return;
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(440, audio.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(650, audio.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.0001, audio.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.045, audio.currentTime + 0.008);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audio.destination);
+        osc.start();
+        osc.stop(audio.currentTime + 0.09);
+    } catch (e) {}
+}
+
+multiplierButtonsUp.forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (isSpinningUpgrade) return;
+        buttonSoundUpgrade();
+        multiplierUpgrade = Number(btn.dataset.multiplier);
+        if (multiplierUpgrade === 2) winChanceUpgrade = 50;
+        else if (multiplierUpgrade === 5) winChanceUpgrade = 20;
+        else winChanceUpgrade = 10;
+        multiplierButtonsUp.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        winPercentUp.textContent = `${winChanceUpgrade}%`;
+        drawWheelUp();
+        statusUp.className = "status-upgrade";
+        statusUp.textContent = `Шанс выигрыша ${winChanceUpgrade}%`;
+    });
+});
+
+spinButtonUp.addEventListener('click', spinUpgrade);
+
+function addHistoryUpgrade(won, betVal, mult, amount) {
+    historyUpgrade.unshift({ won, bet: betVal, multiplier: mult, amount });
+    if (historyUpgrade.length > 5) historyUpgrade.pop();
+    renderHistoryUpgrade();
+}
+
+function renderHistoryUpgrade() {
+    if (historyUpgrade.length === 0) {
+        historyListUp.innerHTML = `<div class="history-item"><div class="history-left">История пуста</div></div>`;
+        return;
+    }
+    historyListUp.innerHTML = historyUpgrade.map(item => `
+        <div class="history-item">
+            <div class="history-left">Ставка <strong>${item.bet.toFixed(2)} 💰</strong> &nbsp;×${item.multiplier}</div>
+            <div class="history-result ${item.won ? 'win' : 'lose'}">${item.won ? '+' : '-'}${item.amount.toFixed(2)} 💰</div>
+        </div>
+    `).join('');
+}
+
+function showToastUp(text, won) {
+    clearTimeout(toastUp._timer);
+    toastUp.textContent = text;
+    toastUp.className = `toast-upgrade show ${won ? 'win' : 'lose'}`;
+    toastUp._timer = setTimeout(() => toastUp.classList.remove('show'), 2500);
+}
+
+// открытие и закрытие UPGRADE
+document.getElementById('openUpgradeButton').addEventListener('click', ()=>{
+    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+    document.getElementById('upgradeGameContainer').classList.remove('hidden');
+    updateBalanceUpgrade();
+    setTimeout(resizeCanvasUp, 100);
+});
+
+document.getElementById('closeUpgradeBtn').addEventListener('click', ()=>{
+    document.getElementById('upgradeGameContainer').classList.add('hidden');
+    document.getElementById('menuPage').classList.remove('hidden');
+    document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
+    document.querySelector('[data-page="menuPage"]').classList.add('active');
+});
+
+// инициализация UPGRADE
+updateBalanceUpgrade();
+setTimeout(resizeCanvasUp, 50);
+renderHistoryUpgrade();
+pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
 
 // =====================================================
 // ИНИЦИАЛИЗАЦИЯ
@@ -2699,6 +3493,7 @@ mainScreenCase.classList.add('active');
 updateBalanceUI();
 updateBalanceTicket();
 updateBalanceCase();
+updateBalanceUpgrade();
 updateZones();
 updateProfileStats();
 resizeCanvas();
