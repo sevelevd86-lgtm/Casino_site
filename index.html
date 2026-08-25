@@ -178,6 +178,24 @@ button {
     text-shadow: 0 2px 8px rgba(0,0,0,0.8);
 }
 
+/* CASE 250 */
+
+.case-250-button {
+    border-color: #b56cff;
+    background:
+        linear-gradient(135deg, #7138c9, #32145f 55%, #18092f);
+
+    box-shadow:
+        0 25px 70px rgba(150, 70, 255, 0.28),
+        inset 0 2px 0 rgba(255,255,255,0.25);
+}
+
+.case-250-button::before {
+    background: linear-gradient(180deg, #c084ff, #7138c9);
+    border-color: #d2a5ff;
+    box-shadow: 0 5px 20px rgba(170, 90, 255, 0.45);
+}
+
 @keyframes floatCase {
     0%, 100% {
         transform: translateY(0);
@@ -575,24 +593,36 @@ button {
 
     <section id="mainScreen" class="screen main-screen">
 
-        <!-- FREE ВЫШЕ CASE 50 -->
+        <!-- FREE -->
 
         <button
             class="main-case-button free-case-button"
             id="freeCaseBox"
         >
             <span>CASE FREE</span>
+
             <div
                 class="free-timer"
                 id="freeTimer"
             ></div>
         </button>
 
+        <!-- CASE 50 -->
+
         <button
             class="main-case-button"
             id="caseBox"
         >
             <span>CASE 50 💰</span>
+        </button>
+
+        <!-- CASE 250 -->
+
+        <button
+            class="main-case-button case-250-button"
+            id="case250Box"
+        >
+            <span>CASE 250 💰</span>
         </button>
 
     </section>
@@ -725,6 +755,8 @@ button {
 
 const CASE_PRICE = 50;
 
+const CASE_250_PRICE = 250;
+
 let balance = 1000;
 
 let isOpening = false;
@@ -829,7 +861,7 @@ const items = [
     },
 
     {
-        emoji: "💘",
+        emoji: "🩷",
         name: "Heart",
         value: 15,
         chance: 15,
@@ -953,6 +985,159 @@ const freeItems = [
 
 
 /* =========================
+   ПРЕДМЕТЫ CASE 250
+========================= */
+
+const case250Items = [
+
+    {
+        emoji: "💰",
+        name: "10 на баланс",
+        value: 10,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "15 зв",
+        value: 15,
+        chance: 2.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "15 зв",
+        value: 15,
+        chance: 2.49805,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "25",
+        value: 25,
+        chance: 7.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "25",
+        value: 25,
+        chance: 7.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💐",
+        name: "50",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🚀",
+        name: "50",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "💍",
+        name: "100",
+        value: 100,
+        chance: 11.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💎",
+        name: "100",
+        value: 100,
+        chance: 11.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "200 на баланс",
+        value: 200,
+        chance: 15,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "250 на баланс",
+        value: 250,
+        chance: 7,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "300 на баланс",
+        value: 300,
+        chance: 6,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "350 на баланс",
+        value: 350,
+        chance: 3,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "💰",
+        name: "450 на баланс",
+        value: 450,
+        chance: 3,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.0005,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🍭",
+        name: "Lol Pop",
+        value: 450,
+        chance: 0.0005,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🦩",
+        name: "Pool Float",
+        value: 500,
+        chance: 0.0005,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🐕",
+        name: "Snoop Dogg",
+        value: 550,
+        chance: 0.00045,
+        rarity: "legendary"
+    }
+
+];
+
+
+/* =========================
    НОРМАЛИЗАЦИЯ CASE 50
 ========================= */
 
@@ -1006,6 +1191,11 @@ const caseScreen =
 const caseBox =
     document.getElementById(
         "caseBox"
+    );
+
+const case250Box =
+    document.getElementById(
+        "case250Box"
     );
 
 const freeCaseBox =
@@ -1272,6 +1462,27 @@ function showCase(
             freeItems
         );
 
+    } else if (
+        type === "250"
+    ) {
+
+        caseTitle.textContent =
+            "CASE 250 💰";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 250 💰";
+
+        openButton.classList
+            .remove("free-open");
+
+        renderItems(
+            case250Items
+        );
+
+        resetRoulette(
+            case250Items
+        );
+
     } else {
 
         caseTitle.textContent =
@@ -1374,17 +1585,6 @@ function getRandomItem(
             return item;
         }
     }
-
-    /*
-        Сохраняем ту же технику
-        выбора победителя.
-
-        Для FREE, поскольку указанные
-        шансы занимают не все 100%,
-        оставшаяся вероятность
-        распределяется через fallback
-        на последний предмет.
-    */
 
     return sourceItems[
         sourceItems.length - 1
@@ -1640,8 +1840,173 @@ function openCase() {
 
 
     /* =========================
+       CASE 250
+    ========================= */
+
+    if (
+        currentCaseType ===
+        "250"
+    ) {
+
+        if (
+            balance <
+            CASE_250_PRICE
+        ) {
+
+            showMessage(
+                "Недостаточно валюты 💰"
+            );
+
+            return;
+        }
+
+        isOpening = true;
+
+        openButton.disabled =
+            true;
+
+        balance -=
+            CASE_250_PRICE;
+
+        updateBalance();
+
+        playClickSound();
+
+
+        const winner =
+            getRandomItem(
+                case250Items
+            );
+
+        currentWinner =
+            winner;
+
+
+        rouletteTrack.style.transition =
+            "none";
+
+        rouletteTrack.style.transform =
+            "translateX(0px)";
+
+        rouletteTrack.innerHTML = "";
+
+
+        const totalCards = 45;
+
+        const winnerIndex = 36;
+
+
+        for (
+            let i = 0;
+            i < totalCards;
+            i++
+        ) {
+
+            let item;
+
+            if (
+                i ===
+                winnerIndex
+            ) {
+
+                item =
+                    winner;
+
+            } else {
+
+                item =
+                    case250Items[
+                        Math.floor(
+                            Math.random() *
+                            case250Items.length
+                        )
+                    ];
+            }
+
+
+            rouletteTrack.appendChild(
+                createRouletteCard(
+                    item
+                )
+            );
+        }
+
+
+        const cardWidth =
+            135;
+
+        const windowWidth =
+            rouletteTrack
+                .parentElement
+                .offsetWidth;
+
+        const centerOffset =
+            windowWidth / 2 -
+            62.5;
+
+        const stopPosition =
+            -(
+                winnerIndex *
+                cardWidth -
+                centerOffset
+            );
+
+
+        const finalPosition =
+            stopPosition +
+            (
+                Math.random() *
+                30 -
+                15
+            );
+
+
+        requestAnimationFrame(
+            () => {
+
+                requestAnimationFrame(
+                    () => {
+
+                        rouletteTrack.style.transition =
+                            "transform 6.5s cubic-bezier(.08,.72,.05,1)";
+
+                        rouletteTrack.style.transform =
+                            `translateX(${finalPosition}px)`;
+
+                    }
+                );
+            }
+        );
+
+
+        playRollSound(
+            6500
+        );
+
+
+        setTimeout(
+            () => {
+
+                showResult(
+                    winner
+                );
+
+                isOpening =
+                    false;
+
+                openButton.disabled =
+                    false;
+
+            },
+            6800
+        );
+
+        return;
+    }
+
+
+    /* =========================
        CASE 50
-       НЕ МЕНЯЕМ ЕГО МЕХАНИКУ
     ========================= */
 
     if (
@@ -1852,7 +2217,9 @@ sellResult.addEventListener(
         resetRoulette(
             currentCaseType === "free"
                 ? freeItems
-                : items
+                : currentCaseType === "250"
+                    ? case250Items
+                    : items
         );
 
         currentWinner =
@@ -1876,7 +2243,9 @@ backResult.addEventListener(
         resetRoulette(
             currentCaseType === "free"
                 ? freeItems
-                : items
+                : currentCaseType === "250"
+                    ? case250Items
+                    : items
         );
 
         currentWinner =
@@ -1896,6 +2265,18 @@ caseBox.addEventListener(
 
         showCase(
             "paid"
+        );
+
+    }
+);
+
+
+case250Box.addEventListener(
+    "click",
+    () => {
+
+        showCase(
+            "250"
         );
 
     }
