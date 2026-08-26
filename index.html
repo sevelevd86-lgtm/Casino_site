@@ -3,1106 +3,852 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>White Bear</title>
-
+<title>🐻‍❄️ DROP</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #0a1628; color: #e8f0fe; font-family: Arial, sans-serif; user-select: none; }
+button, input { font-family: inherit; }
+button { cursor: pointer; }
+.hidden { display: none !important; }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html,
-body {
+#app {
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    background: #000;
-}
-
-.scene {
     position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            #111 0%,
-            #050505 45%,
-            #000 100%
-        );
+    background: linear-gradient(145deg, #0a1628, #142a4a, #0d1f38);
 }
 
+/* HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 74px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+    background: rgba(10, 22, 40, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 20;
+}
+.logo { font-size: 22px; font-weight: 900; color: #fff; text-shadow: 0 0 20px rgba(100, 180, 255, 0.3); }
+.logo span { color: #6ab0ff; }
+.header-balance { display: flex; align-items: center; gap: 8px; color: #a8d4ff; font-size: 19px; font-weight: 900; }
+.header-balance span { color: #ffd84d; }
 
-/* =========================================
-   ЗВЁЗДЫ
-========================================= */
-
-.stars {
+/* CONTENT */
+.content {
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
+    top: 74px;
+    left: 0;
+    right: 0;
+    bottom: 82px;
+    overflow-y: auto;
+    padding: 25px 18px 30px;
 }
+.content::-webkit-scrollbar { width: 4px; }
+.content::-webkit-scrollbar-track { background: #0a1628; }
+.content::-webkit-scrollbar-thumb { background: #4a8ecf; border-radius: 4px; }
 
-.star {
-    position: absolute;
+.page { width: 100%; max-width: 620px; margin: 0 auto; }
+.page-title { font-size: 30px; font-weight: 900; margin-bottom: 8px; background: linear-gradient(135deg, #fff, #6ab0ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.page-subtitle { color: #8ab4d8; font-size: 16px; line-height: 1.5; margin-bottom: 24px; }
 
-    width: 2px;
-    height: 2px;
-
-    background: white;
-    border-radius: 50%;
-
-    opacity: 0.6;
-
-    animation:
-        starMove linear infinite,
-        starBlink ease-in-out infinite alternate;
+/* CARDS */
+.card {
+    background: linear-gradient(145deg, rgba(20, 50, 90, 0.6), rgba(10, 22, 40, 0.8));
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 32px rgba(0, 20, 50, 0.3);
 }
+.card-title { font-size: 20px; font-weight: 900; margin-bottom: 7px; color: #c8e4ff; }
+.card-text { color: #8ab4d8; font-size: 15px; line-height: 1.5; }
 
-@keyframes starMove {
-
-    0% {
-        transform: translateY(-15px);
-    }
-
-    50% {
-        transform: translateY(15px);
-    }
-
-    100% {
-        transform: translateY(-15px);
-    }
-
+.game-card {
+    padding: 24px;
+    background: linear-gradient(145deg, rgba(30, 70, 120, 0.4), rgba(10, 30, 60, 0.6));
+    border: 1px solid rgba(100, 180, 255, 0.2);
 }
-
-@keyframes starBlink {
-
-    0% {
-        opacity: 0.25;
-    }
-
-    100% {
-        opacity: 0.9;
-    }
-
+.game-card:hover { border-color: rgba(100, 180, 255, 0.5); box-shadow: 0 8px 40px rgba(50, 150, 255, 0.15); }
+.game-icon {
+    width: 62px; height: 62px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1a3a6a, #0d2240);
+    font-size: 31px;
+    margin-bottom: 17px;
+    border: 1px solid rgba(100, 180, 255, 0.2);
 }
-
-
-/* =========================================
-   БУКВЫ
-========================================= */
-
-.letters {
-    position: absolute;
-    inset: 0;
-
-    z-index: 5;
-
-    pointer-events: none;
-}
-
-.letter {
-
-    position: absolute;
-
+.game-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
     color: #fff;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    font-size: clamp(38px, 7vw, 82px);
-
-    font-weight: 700;
-
-    line-height: 1;
-
-    white-space: nowrap;
-
-    opacity: 0;
-
-    transform:
-        translate(-50%, -50%)
-        scale(0.35);
-
-    filter: blur(8px);
-
-    text-shadow:
-        0 0 5px #fff,
-        0 0 12px #fff,
-        0 0 25px rgba(255,255,255,0.95),
-        0 0 50px rgba(255,255,255,0.7),
-        0 0 90px rgba(255,255,255,0.35);
+    font-size: 16px;
+    font-weight: 900;
+    box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+    transition: 0.2s;
+    opacity: 0.7;
+    cursor: default;
 }
+.game-button:hover { transform: none; box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3); }
 
-.letter.glow {
-
-    animation:
-        neonPulse
-        2.5s
-        ease-in-out
-        infinite
-        alternate;
+/* INVENTORY */
+.sell-all {
+    width: 100%; padding: 14px; border: none; border-radius: 11px;
+    background: linear-gradient(135deg, #1a3a6a, #0d2240);
+    color: #c8e4ff; font-size: 16px; font-weight: 800;
+    margin-bottom: 16px; border: 1px solid rgba(100, 180, 255, 0.2);
 }
-
-@keyframes neonPulse {
-
-    0% {
-        text-shadow:
-            0 0 4px #fff,
-            0 0 10px #fff,
-            0 0 20px rgba(255,255,255,.8),
-            0 0 40px rgba(255,255,255,.35);
-    }
-
-    100% {
-        text-shadow:
-            0 0 7px #fff,
-            0 0 18px #fff,
-            0 0 35px rgba(255,255,255,1),
-            0 0 75px rgba(255,255,255,.65);
-    }
-
+.sell-all:disabled { opacity: .45; cursor: default; }
+.empty-inventory { text-align: center; padding: 45px 15px; color: #5a8aaa; }
+.empty-icon { font-size: 45px; margin-bottom: 13px; }
+.empty-title { color: #8ab4d8; font-size: 19px; font-weight: 800; margin-bottom: 7px; }
+.empty-text { font-size: 15px; }
+.inventory-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(20, 50, 90, 0.4);
+    border: 1px solid rgba(100, 180, 255, 0.15);
+    border-radius: 12px;
+    margin-bottom: 8px;
 }
+.inventory-item-left { display: flex; align-items: center; gap: 12px; }
+.inventory-item-emoji { font-size: 28px; }
+.inventory-item-name { font-weight: 800; font-size: 15px; color: #c8e4ff; }
+.inventory-item-value { color: #ffd84d; font-size: 14px; font-weight: 800; }
+.inventory-sell-btn {
+    background: linear-gradient(135deg, #1a5ab8, #0d3a7a);
+    border: none; border-radius: 8px; padding: 6px 14px;
+    color: #fff; font-weight: 800; font-size: 13px; cursor: pointer;
+}
+.inventory-sell-btn:hover { filter: brightness(1.2); }
 
+/* PROFILE */
+.profile-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 15px 0; border-bottom: 1px solid rgba(100, 180, 255, 0.1);
+}
+.profile-row:last-child { border-bottom: none; }
+.profile-label { color: #8ab4d8; font-size: 15px; }
+.profile-value { font-size: 16px; font-weight: 800; color: #e8f0fe; }
+.ref-value { color: #6ab0ff; word-break: break-all; }
 
-/* =========================================
-   СТИРАЛЬНАЯ МАШИНА
-========================================= */
+.daily-button {
+    width: 100%; padding: 15px; border: none; border-radius: 11px;
+    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+    color: white; font-size: 16px; font-weight: 900;
+    margin-top: 15px; box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+}
+.daily-button:disabled { background: rgba(30, 60, 100, 0.5); color: #5a8aaa; }
+.timer { text-align: center; margin-top: 13px; color: #6ab0ff; font-size: 18px; font-weight: 900; }
 
-.washing-machine {
+.promo-input {
+    width: 100%; padding: 14px;
+    border: 1px solid rgba(100, 180, 255, 0.2); border-radius: 10px;
+    background: rgba(10, 22, 40, 0.8);
+    color: #e8f0fe; outline: none; font-size: 16px; text-align: center;
+}
+.promo-input:focus { border-color: #2a7ad8; box-shadow: 0 0 20px rgba(42, 122, 216, 0.15); }
+.promo-button {
+    width: 100%; margin-top: 11px; padding: 14px; border: none; border-radius: 10px;
+    background: linear-gradient(135deg, #1a3a6a, #0d2240);
+    color: #c8e4ff; font-size: 15px; font-weight: 900;
+    border: 1px solid rgba(100, 180, 255, 0.2);
+}
+.promo-message { min-height: 20px; margin-top: 9px; text-align: center; font-size: 14px; color: #54df87; }
 
+/* BOTTOM NAV */
+.bottom-nav {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 82px;
+    display: flex;
+    background: rgba(10, 22, 40, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(100, 180, 255, 0.15);
+    z-index: 30;
+}
+.nav-button {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+    border: none; background: transparent;
+    color: #5a8aaa; font-size: 13px; font-weight: 800;
+}
+.nav-icon { font-size: 23px; }
+.nav-button.active { color: #6ab0ff; }
+.nav-button.active .nav-icon { transform: translateY(-1px); }
+
+/* =====================================================
+   СТИРАЛКА НА ГЛАВНОМ ЭКРАНЕ (ПОВЕРХ МЕНЮ)
+===================================================== */
+#menuPage {
+    position: relative;
+    overflow: hidden;
+}
+#menuBgScene {
     position: absolute;
-
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: transparent;
+}
+#menuBgScene .letter {
+    position: absolute;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: clamp(38px, 7vw, 82px);
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.35);
+    filter: blur(8px);
+    text-shadow: 0 0 5px #fff, 0 0 12px #fff, 0 0 25px rgba(255,255,255,0.95), 0 0 50px rgba(255,255,255,0.7), 0 0 90px rgba(255,255,255,0.35);
+    animation: neonPulse 2.5s ease-in-out infinite alternate;
+}
+@keyframes neonPulse {
+    0% { text-shadow: 0 0 4px #fff,0 0 10px #fff,0 0 20px rgba(255,255,255,.8),0 0 40px rgba(255,255,255,.35); }
+    100% { text-shadow: 0 0 7px #fff,0 0 18px #fff,0 0 35px rgba(255,255,255,1),0 0 75px rgba(255,255,255,.65); }
+}
+#menuBgScene .machine {
+    position: absolute;
     width: 75px;
     height: 64px;
-
     left: -100px;
     top: 40vh;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff 0%,
-            #f7f7f7 30%,
-            #e5e5e5 65%,
-            #aaa 100%
-        );
-
+    background: linear-gradient(135deg,#fff,#f7f7f7 30%,#e5e5e5 65%,#aaa 100%);
     border: 1px solid #888;
-
     border-radius: 6px;
-
-    box-shadow:
-        inset 4px 4px 8px rgba(255,255,255,.9),
-        inset -5px -5px 10px rgba(0,0,0,.3),
-        0 12px 30px rgba(0,0,0,.8);
-
+    box-shadow: inset 4px 4px 8px rgba(255,255,255,.9), inset -5px -5px 10px rgba(0,0,0,.3), 0 12px 30px rgba(0,0,0,.8);
     z-index: 10;
-
-    will-change:
-        left,
-        top,
-        transform;
+    will-change: left,top,transform;
 }
-
-
-/* =========================================
-   ПАНЕЛЬ
-========================================= */
-
-.top-panel {
-
+#menuBgScene .machine .panel {
     position: absolute;
-
     width: 19px;
     height: 54px;
-
     right: 4px;
     top: 4px;
-
-    background:
-        linear-gradient(
-            to right,
-            #fff,
-            #eee 50%,
-            #c8c8c8
-        );
-
+    background: linear-gradient(to right,#fff,#eee 50%,#c8c8c8);
     border: 1px solid #aaa;
-
     border-radius: 3px;
 }
-
-.display {
-
+#menuBgScene .machine .panel .disp {
     position: absolute;
-
     width: 8px;
     height: 19px;
-
     left: 5px;
     top: 5px;
-
     background: #111;
-
     border: 1px solid #555;
-
     border-radius: 2px;
 }
-
-.button-small {
-
+#menuBgScene .machine .panel .btn-sm {
     position: absolute;
-
     width: 5px;
     height: 5px;
-
     left: 7px;
     top: 30px;
-
     border-radius: 50%;
-
     background: #999;
 }
-
-.button {
-
+#menuBgScene .machine .panel .btn-lg {
     position: absolute;
-
     width: 11px;
     height: 11px;
-
     left: 4px;
     top: 39px;
-
     border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle at 30% 25%,
-            #fff,
-            #ccc 45%,
-            #777
-        );
-
+    background: radial-gradient(circle at 30% 25%,#fff,#ccc 45%,#777);
     border: 1px solid #666;
 }
-
-
-/* =========================================
-   ОКНО
-========================================= */
-
-.window {
-
+#menuBgScene .machine .window {
     position: absolute;
-
     width: 45px;
     height: 45px;
-
     left: 6px;
     top: 10px;
-
     border-radius: 50%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #eee,
-            #aaa,
-            #777
-        );
-
+    background: linear-gradient(145deg,#eee,#aaa,#777);
     border: 2px solid #888;
-
-    box-shadow:
-        0 3px 7px rgba(0,0,0,.5),
-        inset 1px 1px 2px rgba(255,255,255,.8),
-        inset -2px -2px 4px rgba(0,0,0,.4);
+    box-shadow: 0 3px 7px rgba(0,0,0,.5), inset 1px 1px 2px rgba(255,255,255,.8), inset -2px -2px 4px rgba(0,0,0,.4);
 }
-
-.window-glass {
-
+#menuBgScene .machine .window .glass {
     position: absolute;
-
     width: 37px;
     height: 37px;
-
     left: 2px;
     top: 2px;
-
     border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle at 30% 25%,
-            #666,
-            #333 30%,
-            #111 65%,
-            #000
-        );
-
+    background: radial-gradient(circle at 30% 25%,#666,#333 30%,#111 65%,#000);
     border: 1px solid #555;
-
-    box-shadow:
-        inset 0 0 12px #000;
+    box-shadow: inset 0 0 12px #000;
 }
-
-.window-glass::before {
-
+#menuBgScene .machine .window .glass::before {
     content: "";
-
     position: absolute;
-
     width: 24px;
     height: 8px;
-
     left: 4px;
     top: 4px;
-
-    background:
-        rgba(255,255,255,.16);
-
+    background: rgba(255,255,255,.16);
     border-radius: 50%;
-
     transform: rotate(-25deg);
-
     filter: blur(1px);
 }
-
-.bottom-line {
-
+#menuBgScene .machine .bottom-line {
     position: absolute;
-
     left: 5px;
     right: 5px;
-
     bottom: 3px;
-
     height: 2px;
-
     background: #aaa;
-
     border-radius: 3px;
 }
-
-
-/* =========================================
-   МОБИЛЬНАЯ ВЕРСИЯ
-========================================= */
-
-@media (max-width: 600px) {
-
-    .washing-machine {
-        width: 64px;
-        height: 55px;
-    }
-
-    .top-panel {
-        width: 16px;
-        height: 46px;
-    }
-
-    .window {
-        width: 39px;
-        height: 39px;
-        left: 5px;
-        top: 8px;
-    }
-
-    .window-glass {
-        width: 32px;
-        height: 32px;
-    }
-
-    .letter {
-        font-size: 42px;
-    }
+#menuBgScene .casino-title {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: clamp(56px, 12vw, 140px);
+    font-weight: 900;
+    text-shadow: 0 0 20px #fff, 0 0 60px #ffaa00, 0 0 120px #ff8800;
+    letter-spacing: 8px;
+    z-index: 15;
+    opacity: 0;
+    animation: fadeInTitle 2s ease forwards;
+    pointer-events: none;
+}
+@keyframes fadeInTitle {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@media (max-width:600px) {
+    #menuBgScene .machine { width: 64px; height: 55px; }
+    #menuBgScene .machine .panel { width: 16px; height: 46px; }
+    #menuBgScene .machine .window { width: 39px; height: 39px; left: 5px; top: 8px; }
+    #menuBgScene .machine .window .glass { width: 32px; height: 32px; }
+    #menuBgScene .letter { font-size: 42px; }
 }
 
-
-/* =========================================
-   ЗВЁЗДЫ
-========================================= */
-
-.star:nth-child(1)  { left: 3%;  top: 8%; }
-.star:nth-child(2)  { left: 7%;  top: 23%; }
-.star:nth-child(3)  { left: 11%; top: 71%; }
-.star:nth-child(4)  { left: 15%; top: 42%; }
-.star:nth-child(5)  { left: 19%; top: 12%; }
-.star:nth-child(6)  { left: 23%; top: 83%; }
-.star:nth-child(7)  { left: 27%; top: 35%; }
-.star:nth-child(8)  { left: 31%; top: 65%; }
-.star:nth-child(9)  { left: 35%; top: 5%; }
-.star:nth-child(10) { left: 39%; top: 52%; }
-
-.star:nth-child(11) { left: 43%; top: 18%; }
-.star:nth-child(12) { left: 47%; top: 76%; }
-.star:nth-child(13) { left: 51%; top: 7%; }
-.star:nth-child(14) { left: 55%; top: 44%; }
-.star:nth-child(15) { left: 59%; top: 91%; }
-.star:nth-child(16) { left: 63%; top: 27%; }
-.star:nth-child(17) { left: 67%; top: 61%; }
-.star:nth-child(18) { left: 71%; top: 14%; }
-.star:nth-child(19) { left: 75%; top: 82%; }
-.star:nth-child(20) { left: 79%; top: 37%; }
-
-.star:nth-child(21) { left: 83%; top: 6%; }
-.star:nth-child(22) { left: 87%; top: 53%; }
-.star:nth-child(23) { left: 91%; top: 24%; }
-.star:nth-child(24) { left: 95%; top: 72%; }
-.star:nth-child(25) { left: 5%;  top: 92%; }
-.star:nth-child(26) { left: 13%; top: 56%; }
-.star:nth-child(27) { left: 21%; top: 48%; }
-.star:nth-child(28) { left: 29%; top: 95%; }
-.star:nth-child(29) { left: 37%; top: 29%; }
-.star:nth-child(30) { left: 45%; top: 68%; }
-.star:nth-child(31) { left: 53%; top: 33%; }
-.star:nth-child(32) { left: 61%; top: 88%; }
-.star:nth-child(33) { left: 69%; top: 46%; }
-.star:nth-child(34) { left: 77%; top: 67%; }
-.star:nth-child(35) { left: 85%; top: 93%; }
-.star:nth-child(36) { left: 93%; top: 41%; }
-
+#menuPage .page-title,
+#menuPage .page-subtitle,
+#menuPage .card {
+    position: relative;
+    z-index: 2;
+}
 </style>
 </head>
-
 <body>
 
-<div class="scene">
+<div id="app">
 
-    <div class="stars">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">🐻‍❄️ DROP</div>
+        <div class="header-balance">⭐ <span id="headerBalance">0.00</span></div>
+    </header>
 
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
+    <!-- CONTENT -->
+    <main class="content">
 
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
+        <!-- MENU (с анимацией стиралки поверх) -->
+        <section id="menuPage" class="page">
+            <div id="menuBgScene">
+                <div class="machine" id="menuMachine">
+                    <div class="panel"><div class="disp"></div><div class="btn-sm"></div><div class="btn-lg"></div></div>
+                    <div class="window"><div class="glass"></div></div>
+                    <div class="bottom-line"></div>
+                </div>
+                <div id="menuLetters"></div>
+            </div>
 
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
+            <div class="page-title">Меню</div>
+            <div class="page-subtitle">Выберите игру и испытайте удачу.</div>
 
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
+            <div class="card game-card">
+                <div class="game-icon">⚪</div>
+                <div class="card-title">Шарик</div>
+                <div class="card-text">Управляйте ставкой и наблюдайте, как шарик проходит через отверстие.</div>
+                <button class="game-button" style="cursor:default; opacity:0.6;">ИГРАТЬ</button>
+            </div>
 
-    </div>
+            <div class="card game-card">
+                <div class="game-icon">🎟️</div>
+                <div class="card-title">Билеты</div>
+                <div class="card-text">Scratch & Win — выбирайте билет, открывайте ячейки.</div>
+                <button class="game-button" style="cursor:default; opacity:0.6;">ИГРАТЬ</button>
+            </div>
 
+            <div class="card game-card">
+                <div class="game-icon">📦</div>
+                <div class="card-title">Кейсы</div>
+                <div class="card-text">Открывайте кейсы с предметами.</div>
+                <button class="game-button" style="cursor:default; opacity:0.6;">ИГРАТЬ</button>
+            </div>
 
-    <div
-        class="letters"
-        id="letters">
-    </div>
+            <div class="card game-card">
+                <div class="game-icon">🎡</div>
+                <div class="card-title">UPGRADE</div>
+                <div class="card-text">Колесо удачи с множителями x2, x5, x10.</div>
+                <button class="game-button" style="cursor:default; opacity:0.6;">ИГРАТЬ</button>
+            </div>
+        </section>
 
+        <!-- INVENTORY -->
+        <section id="inventoryPage" class="page hidden">
+            <div class="page-title">Инвентарь</div>
+            <div class="page-subtitle">Предметы из кейсов, которые вы сохранили.</div>
+            <button class="sell-all" id="sellAllButton">ПРОДАТЬ ВСЕ</button>
+            <div id="inventoryContainer"></div>
+        </section>
 
-    <div
-        class="washing-machine"
-        id="washingMachine">
+        <!-- PROFILE -->
+        <section id="profilePage" class="page hidden">
+            <div class="page-title">Профиль</div>
+            <div class="page-subtitle">Управляйте аккаунтом, наградами и промокодами.</div>
+            <div class="card">
+                <div class="profile-row"><div class="profile-label">Имя</div><div class="profile-value" id="profileName">Игрок</div></div>
+                <div class="profile-row"><div class="profile-label">ID игрока</div><div class="profile-value" id="profileId">100001</div></div>
+                <div class="profile-row"><div class="profile-label">Баланс</div><div class="profile-value" id="profileBalance">0.00 ⭐</div></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Реферальная система</div>
+                <div class="card-text">Приглашайте друзей и получайте по <b>10</b> звёзд за каждого.</div>
+                <div class="profile-row" style="margin-top:10px;"><div class="profile-label">Приглашено</div><div class="profile-value" id="refCount">0</div></div>
+                <div class="profile-row"><div class="profile-label">Реферальная ссылка</div><div class="profile-value ref-value" id="refLink">https://t.me/White_Bear_ROBOT?start=ref_</div></div>
+                <button onclick="copyRefLink()" class="game-button" style="margin-top:8px; padding:10px; font-size:14px; cursor:pointer; opacity:1;">📋 Скопировать ссылку</button>
+            </div>
+            <div class="card">
+                <div class="card-title">Ежедневная награда</div>
+                <div class="card-text">Забирайте <b>50</b> звёзд каждые 24 часа.</div>
+                <button class="daily-button" id="dailyButton">ЗАБРАТЬ 50 ⭐</button>
+                <div class="timer hidden" id="dailyTimer">24:00:00</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Промокод</div>
+                <div class="card-text">Введите промокод, чтобы получить награду.</div>
+                <input id="promoInput" class="promo-input" type="text" placeholder="Введите промокод" autocomplete="off">
+                <button class="promo-button" id="promoButton">АКТИВИРОВАТЬ</button>
+                <div class="promo-message" id="promoMessage"></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Статистика</div>
+                <div class="profile-row"><div class="profile-label">Игр сыграно</div><div class="profile-value" id="gamesPlayed">0</div></div>
+                <div class="profile-row"><div class="profile-label">Побед</div><div class="profile-value" id="wins">0</div></div>
+                <div class="profile-row"><div class="profile-label">Поражений</div><div class="profile-value" id="losses">0</div></div>
+            </div>
+        </section>
 
-        <div class="top-panel">
+    </main>
 
-            <div class="display"></div>
-
-            <div class="button-small"></div>
-
-            <div class="button"></div>
-
-        </div>
-
-        <div class="window">
-
-            <div class="window-glass"></div>
-
-        </div>
-
-        <div class="bottom-line"></div>
-
-    </div>
+    <!-- NAVIGATION -->
+    <nav class="bottom-nav">
+        <button class="nav-button" data-page="inventoryPage"><span class="nav-icon">⨷</span><span>Инвентарь</span></button>
+        <button class="nav-button active" data-page="menuPage"><span class="nav-icon">⌂</span><span>Меню</span></button>
+        <button class="nav-button" data-page="profilePage"><span class="nav-icon">👤</span><span>Профиль</span></button>
+    </nav>
 
 </div>
 
-
 <script>
+// =====================================================
+// TELEGRAM
+// =====================================================
+const tg = window.Telegram?.WebApp;
+let tgUserId = null;
+let tgUserName = 'Игрок';
+let balance = 0;
+let inventoryItems = [];
+let dailyLastClaim = 0;
+let dailyTimerInterval = null;
 
-/* =========================================
-   ЭЛЕМЕНТЫ
-========================================= */
+function sendToBot(action, data = {}) {
+    if (!tg) return;
+    data.action = action;
+    data.user_id = tgUserId;
+    tg.sendData(JSON.stringify(data));
+}
 
-const machine =
-    document.getElementById("washingMachine");
+function loadSavedData() {
+    if (tgUserId) {
+        const savedBalance = localStorage.getItem(`balance_${tgUserId}`);
+        if (savedBalance !== null) balance = parseFloat(savedBalance);
+        const savedDaily = localStorage.getItem(`daily_${tgUserId}`);
+        if (savedDaily) dailyLastClaim = parseInt(savedDaily);
+        const savedInventory = localStorage.getItem(`inventory_${tgUserId}`);
+        if (savedInventory) {
+            try { inventoryItems = JSON.parse(savedInventory); } catch(e) { inventoryItems = []; }
+        }
+    }
+}
 
-const lettersContainer =
-    document.getElementById("letters");
+function saveBalance() {
+    if (tgUserId) {
+        localStorage.setItem(`balance_${tgUserId}`, balance.toString());
+        sendToBot('updateBalance', { balance: balance });
+    }
+}
 
+function saveDailyTime() {
+    if (tgUserId) localStorage.setItem(`daily_${tgUserId}`, Date.now().toString());
+}
 
-/* =========================================
-   ДВА СЛОВА
-========================================= */
+function saveInventory() {
+    if (tgUserId) localStorage.setItem(`inventory_${tgUserId}`, JSON.stringify(inventoryItems));
+}
 
-const words = [
-    "White",
-    "Bear"
-];
+function updateBalanceUI() {
+    const val = balance.toFixed(2);
+    document.getElementById('headerBalance').textContent = val;
+    document.getElementById('profileBalance').textContent = val + ' ⭐';
+    saveBalance();
+}
 
+function canClaimDaily() {
+    const now = Date.now();
+    const cooldown = 24 * 60 * 60 * 1000;
+    return (now - dailyLastClaim) >= cooldown;
+}
 
-/* =========================================
-   НАСТРОЙКИ
-========================================= */
+function getDailyRemaining() {
+    const now = Date.now();
+    const cooldown = 24 * 60 * 60 * 1000;
+    const remaining = cooldown - (now - dailyLastClaim);
+    return Math.max(0, remaining);
+}
 
-const START_DELAY = 3000;
+function updateDailyTimer() {
+    const remaining = getDailyRemaining();
+    const hours = Math.floor(remaining / (60 * 60 * 1000));
+    const minutes = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
+    const seconds = Math.floor((remaining % (60 * 1000)) / 1000);
+    const timerEl = document.getElementById('dailyTimer');
+    const buttonEl = document.getElementById('dailyButton');
+    if (remaining <= 0) {
+        timerEl.classList.add('hidden');
+        buttonEl.disabled = false;
+        buttonEl.textContent = 'ЗАБРАТЬ 50 ⭐';
+        if (dailyTimerInterval) { clearInterval(dailyTimerInterval); dailyTimerInterval = null; }
+        return;
+    }
+    timerEl.classList.remove('hidden');
+    timerEl.textContent = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+    buttonEl.disabled = true;
+    buttonEl.textContent = '⏳ ДОСТУПНО ЧЕРЕЗ';
+}
 
-const LETTER_DELAY = 430;
+function claimDaily() {
+    if (!canClaimDaily()) { alert('⏳ Ежедневная награда уже получена!'); return; }
+    balance += 50;
+    balance = Math.round(balance * 100) / 100;
+    dailyLastClaim = Date.now();
+    saveDailyTime();
+    saveBalance();
+    updateBalanceUI();
+    if (dailyTimerInterval) clearInterval(dailyTimerInterval);
+    updateDailyTimer();
+    dailyTimerInterval = setInterval(updateDailyTimer, 1000);
+    alert('🎁 Ежедневная награда получена! +50 ⭐');
+}
 
-const WORD_DELAY = 900;
-
-const DURATION = 9500;
-
-const LETTER_FLY_TIME = 850;
-
-
-/* =========================================
-   ВСЕ БУКВЫ
-========================================= */
-
-const letters = [];
-
-words.forEach((word, wordIndex) => {
-
-    [...word].forEach((char) => {
-
-        letters.push({
-            char: char,
-            word: wordIndex
-        });
-
+function copyRefLink() {
+    const link = document.getElementById('refLink').textContent;
+    navigator.clipboard.writeText(link).then(() => alert('📋 Реферальная ссылка скопирована!'))
+    .catch(() => {
+        const input = document.createElement('input');
+        input.value = link;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        alert('📋 Реферальная ссылка скопирована!');
     });
+}
 
+function renderInventory() {
+    const container = document.getElementById('inventoryContainer');
+    container.innerHTML = '';
+    if (inventoryItems.length === 0) {
+        container.innerHTML = `<div class="empty-inventory"><div class="empty-icon">📦</div><div class="empty-title">Инвентарь пуст</div><div class="empty-text">Предметы из кейсов появятся здесь.</div></div>`;
+        document.getElementById('sellAllButton').disabled = true;
+        return;
+    }
+    document.getElementById('sellAllButton').disabled = false;
+    inventoryItems.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'inventory-item';
+        div.innerHTML = `
+            <div class="inventory-item-left">
+                <div class="inventory-item-emoji">${item.emoji}</div>
+                <div><div class="inventory-item-name">${item.name}</div><div class="inventory-item-value">+${item.value} ⭐</div></div>
+            </div>
+            <button class="inventory-sell-btn" data-index="${index}">ПРОДАТЬ</button>
+        `;
+        container.appendChild(div);
+    });
+    document.querySelectorAll('.inventory-sell-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            const item = inventoryItems[index];
+            balance += item.value;
+            balance = Math.round(balance * 100) / 100;
+            inventoryItems.splice(index, 1);
+            saveInventory();
+            updateBalanceUI();
+            renderInventory();
+        });
+    });
+}
+
+document.getElementById('sellAllButton').addEventListener('click', () => {
+    if (inventoryItems.length === 0) return;
+    let total = 0;
+    for (const item of inventoryItems) total += item.value;
+    balance += total;
+    balance = Math.round(balance * 100) / 100;
+    inventoryItems = [];
+    saveInventory();
+    updateBalanceUI();
+    renderInventory();
 });
 
-
-/* =========================================
-   ТРАЕКТОРИЯ МАШИНКИ
-========================================= */
-
-function getMachinePosition(progress) {
-
-    const width =
-        window.innerWidth;
-
-    const height =
-        window.innerHeight;
-
-
-    const startX = -100;
-
-    const endX =
-        width + 100;
-
-
-    const centerY =
-        height * 0.53;
-
-
-    const arcHeight =
-        Math.min(
-            height * 0.30,
-            260
-        );
-
-
-    const x =
-        startX +
-        (endX - startX) *
-        progress;
-
-
-    const y =
-        centerY -
-        Math.sin(
-            progress * Math.PI
-        ) *
-        arcHeight;
-
-
-    const angle =
-        -Math.cos(
-            progress * Math.PI
-        ) * 12;
-
-
-    return {
-        x,
-        y,
-        angle
-    };
-
+if (tg) {
+    tg.expand();
+    tg.ready();
+    const user = tg.initDataUnsafe?.user;
+    if (user) {
+        tgUserId = user.id;
+        tgUserName = user.first_name || 'Игрок';
+        document.getElementById('profileName').textContent = tgUserName;
+        document.getElementById('profileId').textContent = tgUserId;
+        document.getElementById('refLink').textContent = `https://t.me/White_Bear_ROBOT?start=ref_${tgUserId}`;
+        loadSavedData();
+        updateBalanceUI();
+        renderInventory();
+        sendToBot('getBalance');
+        sendToBot('getDailyStatus');
+    }
 }
 
-
-/* =========================================
-   СОЗДАНИЕ БУКВЫ
-========================================= */
-
-function createLetter(
-    character,
-    index,
-    wordIndex,
-    machinePosition
-) {
-
-    const letter =
-        document.createElement("span");
-
-
-    letter.className =
-        "letter glow";
-
-
-    letter.textContent =
-        character;
-
-
-    const startX =
-        machinePosition.x + 35;
-
-    const startY =
-        machinePosition.y + 32;
-
-
-    const width =
-        window.innerWidth;
-
-    const height =
-        window.innerHeight;
-
-
-    const centerX =
-        width * 0.55;
-
-
-    const centerY =
-        height * 0.43;
-
-
-    /*
-       Расстояние между буквами
-       немного уменьшено.
-    */
-
-    const letterSpacing =
-        Math.min(
-            width * 0.088,
-            88
-        );
-
-
-    const word =
-        words[wordIndex];
-
-
-    let sameWordIndex = 0;
-
-    for (
-        let i = 0;
-        i < index;
-        i++
-    ) {
-
-        if (
-            letters[i].word === wordIndex
-        ) {
-
-            sameWordIndex++;
-
-        }
-
-    }
-
-
-    const wordWidth =
-        (word.length - 1) *
-        letterSpacing;
-
-
-    const wordGap =
-        letterSpacing * 1.8;
-
-
-    let wordCenterX;
-
-
-    if (wordIndex === 0) {
-
-        wordCenterX =
-            centerX -
-            wordGap / 2 -
-            wordWidth / 2;
-
-    } else {
-
-        wordCenterX =
-            centerX +
-            wordGap / 2 +
-            wordWidth / 2;
-
-    }
-
-
-    const finalX =
-        wordCenterX -
-        wordWidth / 2 +
-        sameWordIndex *
-        letterSpacing;
-
-
-    const finalY =
-        centerY;
-
-
-    const randomOffset =
-        (Math.random() - 0.5) * 12;
-
-
-    const targetY =
-        finalY +
-        randomOffset;
-
-
-    letter.style.left =
-        startX + "px";
-
-    letter.style.top =
-        startY + "px";
-
-    letter.style.opacity =
-        "0";
-
-    letter.style.filter =
-        "blur(8px)";
-
-    letter.style.transform =
-        "translate(-50%, -50%) scale(0.3)";
-
-
-    lettersContainer.appendChild(
-        letter
-    );
-
-
-    const animationStart =
-        performance.now();
-
-
-    function animateLetter(now) {
-
-        const elapsed =
-            now -
-            animationStart;
-
-
-        let progress =
-            elapsed /
-            LETTER_FLY_TIME;
-
-
-        if (progress > 1) {
-
-            progress = 1;
-
-        }
-
-
-        const eased =
-            1 -
-            Math.pow(
-                1 - progress,
-                3
-            );
-
-
-        const currentX =
-            startX +
-            (finalX - startX) *
-            eased;
-
-
-        const currentY =
-            startY +
-            (targetY - startY) *
-            eased;
-
-
-        letter.style.left =
-            currentX + "px";
-
-        letter.style.top =
-            currentY + "px";
-
-
-        letter.style.opacity =
-            Math.min(
-                1,
-                progress * 4
-            );
-
-
-        const scale =
-            0.3 +
-            0.7 *
-            Math.min(
-                1,
-                progress * 1.5
-            );
-
-
-        letter.style.transform =
-            `translate(-50%, -50%) scale(${scale})`;
-
-
-        const blur =
-            Math.max(
-                0,
-                8 -
-                progress * 10
-            );
-
-
-        letter.style.filter =
-            `blur(${blur}px)`;
-
-
-        if (progress < 1) {
-
-            requestAnimationFrame(
-                animateLetter
-            );
-
-        } else {
-
-            letter.style.left =
-                finalX + "px";
-
-            letter.style.top =
-                targetY + "px";
-
-            letter.style.opacity =
-                "1";
-
-            letter.style.filter =
-                "blur(0)";
-
-            letter.style.transform =
-                "translate(-50%, -50%) scale(1)";
-
-        }
-
-    }
-
-
-    requestAnimationFrame(
-        animateLetter
-    );
-
-}
-
-
-/* =========================================
-   ЗАПУСК ПОЛЁТА
-========================================= */
-
-let startTime = null;
-
-let nextLetterTime =
-    START_DELAY;
-
-let letterIndex = 0;
-
-
-/*
-   ВАЖНО:
-   После завершения полёта
-   больше ничего не запускаем.
-*/
-
-let finished = false;
-
-
-function animate(time) {
-
-    if (finished) {
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('dailyButton').addEventListener('click', claimDaily);
+    updateDailyTimer();
+    dailyTimerInterval = setInterval(updateDailyTimer, 1000);
+});
+
+// ПРОМОКОДЫ
+let promoUsed200 = false;
+let promoUsedMet200 = false;
+document.getElementById('promoButton').addEventListener('click', () => {
+    const code = document.getElementById('promoInput').value.trim().toLowerCase();
+    const messageEl = document.getElementById('promoMessage');
+    if (code === '200') {
+        if (promoUsed200) { messageEl.textContent = '❌ Промокод 200 уже использован!'; messageEl.style.color = '#ef4752'; return; }
+        balance += 200000; balance = Math.round(balance * 100) / 100;
+        promoUsed200 = true;
+        updateBalanceUI();
+        messageEl.textContent = '✅ Промокод активирован! +200000 ⭐';
+        messageEl.style.color = '#54df87';
+        document.getElementById('promoInput').value = '';
+        document.getElementById('promoButton').disabled = true;
         return;
     }
-
-
-    if (startTime === null) {
-
-        startTime = time;
-
-    }
-
-
-    const elapsed =
-        time -
-        startTime;
-
-
-    let progress =
-        elapsed /
-        DURATION;
-
-
-    if (progress > 1) {
-
-        progress = 1;
-
-    }
-
-
-    const position =
-        getMachinePosition(
-            progress
-        );
-
-
-    machine.style.left =
-        position.x + "px";
-
-
-    machine.style.top =
-        position.y + "px";
-
-
-    machine.style.transform =
-        `rotate(${position.angle}deg)`;
-
-
-    /* =====================================
-       ВЫПУСК БУКВ
-    ===================================== */
-
-    if (
-        elapsed >= nextLetterTime &&
-        letterIndex < letters.length
-    ) {
-
-        const item =
-            letters[letterIndex];
-
-
-        if (
-            letterIndex === 4
-        ) {
-
-            nextLetterTime +=
-                WORD_DELAY;
-
-        } else {
-
-            nextLetterTime +=
-                LETTER_DELAY;
-
-        }
-
-
-        createLetter(
-            item.char,
-            letterIndex,
-            item.word,
-            position
-        );
-
-
-        letterIndex++;
-
-    }
-
-
-    /* =====================================
-       КОНЕЦ ПОЛЁТА
-    ===================================== */
-
-    if (progress >= 1) {
-
-        /*
-           Машинка остаётся
-           в конечной точке.
-        */
-
-        const finalPosition =
-            getMachinePosition(1);
-
-
-        machine.style.left =
-            finalPosition.x + "px";
-
-        machine.style.top =
-            finalPosition.y + "px";
-
-        machine.style.transform =
-            `rotate(${finalPosition.angle}deg)`;
-
-
-        /*
-           Полёт полностью прекращается.
-        */
-
-        finished = true;
-
+    if (code === 'met200') {
+        if (promoUsedMet200) { messageEl.textContent = '❌ Промокод met200 уже использован!'; messageEl.style.color = '#ef4752'; return; }
+        balance += 10000; balance = Math.round(balance * 100) / 100;
+        promoUsedMet200 = true;
+        updateBalanceUI();
+        messageEl.textContent = '✅ Промокод met200 активирован! +10000 ⭐';
+        messageEl.style.color = '#54df87';
+        document.getElementById('promoInput').value = '';
+        document.getElementById('promoButton').disabled = true;
         return;
     }
+    messageEl.textContent = '❌ Неверный промокод!';
+    messageEl.style.color = '#ef4752';
+});
 
+// =====================================================
+// НАВИГАЦИЯ
+// =====================================================
+const navButtons = document.querySelectorAll('.nav-button');
+const pages = {
+    menuPage: document.getElementById('menuPage'),
+    inventoryPage: document.getElementById('inventoryPage'),
+    profilePage: document.getElementById('profilePage')
+};
 
-    requestAnimationFrame(
-        animate
-    );
+navButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+        if (this.classList.contains('active')) return;
+        Object.values(pages).forEach(page => page.classList.add('hidden'));
+        const pageId = this.dataset.page;
+        if (pages[pageId]) pages[pageId].classList.remove('hidden');
+        navButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        if (pageId === 'inventoryPage') renderInventory();
+    });
+});
 
-}
+// =====================================================
+// АНИМАЦИЯ СТИРАЛКИ (без фона, поверх меню)
+// =====================================================
+(function() {
+    const machine = document.getElementById('menuMachine');
+    const lettersContainer = document.getElementById('menuLetters');
+    const bgScene = document.getElementById('menuBgScene');
 
+    const words = ['White', 'Bear'];
+    const letters = [];
+    words.forEach((word, wordIndex) => {
+        [...word].forEach((char) => {
+            letters.push({ char, word: wordIndex });
+        });
+    });
 
-/* =========================================
-   СТАРТ
-========================================= */
+    const START_DELAY = 3000;
+    const LETTER_DELAY = 430;
+    const WORD_DELAY = 900;
+    const DURATION = 9500;
+    const LETTER_FLY_TIME = 850;
 
-requestAnimationFrame(
-    animate
-);
+    function getMachinePosition(progress) {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const startX = -100;
+        const endX = width + 100;
+        const centerY = height * 0.53;
+        const arcHeight = Math.min(height * 0.30, 260);
+        const x = startX + (endX - startX) * progress;
+        const y = centerY - Math.sin(progress * Math.PI) * arcHeight;
+        const angle = -Math.cos(progress * Math.PI) * 12;
+        return { x, y, angle };
+    }
 
+    function createLetter(character, index, wordIndex, machinePosition) {
+        const letter = document.createElement('div');
+        letter.className = 'letter';
+        letter.textContent = character;
+        const startX = machinePosition.x + 35;
+        const startY = machinePosition.y + 32;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const centerX = width * 0.55;
+        const centerY = height * 0.43;
+        const letterSpacing = Math.min(width * 0.088, 88);
+        const word = words[wordIndex];
+        let sameWordIndex = 0;
+        for (let i = 0; i < index; i++) {
+            if (letters[i].word === wordIndex) sameWordIndex++;
+        }
+        const wordWidth = (word.length - 1) * letterSpacing;
+        const wordGap = letterSpacing * 1.8;
+        let wordCenterX;
+        if (wordIndex === 0) {
+            wordCenterX = centerX - wordGap/2 - wordWidth/2;
+        } else {
+            wordCenterX = centerX + wordGap/2 + wordWidth/2;
+        }
+        const finalX = wordCenterX - wordWidth/2 + sameWordIndex * letterSpacing;
+        const finalY = centerY + (Math.random() - 0.5) * 12;
+        letter.style.left = startX + 'px';
+        letter.style.top = startY + 'px';
+        letter.style.opacity = '0';
+        letter.style.filter = 'blur(8px)';
+        letter.style.transform = 'translate(-50%, -50%) scale(0.3)';
+        lettersContainer.appendChild(letter);
+        const animationStart = performance.now();
+        function animateLetter(now) {
+            let elapsed = now - animationStart;
+            let progress = Math.min(elapsed / LETTER_FLY_TIME, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const currentX = startX + (finalX - startX) * eased;
+            const currentY = startY + (finalY - startY) * eased;
+            letter.style.left = currentX + 'px';
+            letter.style.top = currentY + 'px';
+            letter.style.opacity = Math.min(1, progress * 4);
+            const scale = 0.3 + 0.7 * Math.min(1, progress * 1.5);
+            letter.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+            const blur = Math.max(0, 8 - progress * 10);
+            letter.style.filter = 'blur(' + blur + 'px)';
+            if (progress < 1) {
+                requestAnimationFrame(animateLetter);
+            } else {
+                letter.style.left = finalX + 'px';
+                letter.style.top = finalY + 'px';
+                letter.style.opacity = '1';
+                letter.style.filter = 'blur(0)';
+                letter.style.transform = 'translate(-50%, -50%) scale(1)';
+            }
+        }
+        requestAnimationFrame(animateLetter);
+    }
+
+    let startTime = null;
+    let nextLetterTime = START_DELAY;
+    let letterIndex = 0;
+    let finished = false;
+
+    function animateBg(time) {
+        if (finished) return;
+        if (startTime === null) startTime = time;
+        const elapsed = time - startTime;
+        let progress = Math.min(elapsed / DURATION, 1);
+        const position = getMachinePosition(progress);
+        machine.style.left = position.x + 'px';
+        machine.style.top = position.y + 'px';
+        machine.style.transform = 'rotate(' + position.angle + 'deg)';
+
+        if (elapsed >= nextLetterTime && letterIndex < letters.length) {
+            const item = letters[letterIndex];
+            if (letterIndex === 4) {
+                nextLetterTime += WORD_DELAY;
+            } else {
+                nextLetterTime += LETTER_DELAY;
+            }
+            createLetter(item.char, letterIndex, item.word, position);
+            letterIndex++;
+        }
+
+        if (progress >= 1) {
+            const finalPosition = getMachinePosition(1);
+            machine.style.left = finalPosition.x + 'px';
+            machine.style.top = finalPosition.y + 'px';
+            machine.style.transform = 'rotate(' + finalPosition.angle + 'deg)';
+            finished = true;
+            const title = document.createElement('div');
+            title.className = 'casino-title';
+            title.textContent = 'WHITE BEAR';
+            bgScene.appendChild(title);
+            return;
+        }
+        requestAnimationFrame(animateBg);
+    }
+
+    if (!document.getElementById('menuPage').classList.contains('hidden')) {
+        requestAnimationFrame(animateBg);
+    }
+
+    const observer = new MutationObserver(() => {
+        if (!document.getElementById('menuPage').classList.contains('hidden') && !finished) {
+            requestAnimationFrame(animateBg);
+        }
+    });
+    observer.observe(document.getElementById('menuPage'), { attributes: true, attributeFilter: ['class'] });
+})();
+
+updateBalanceUI();
+renderInventory();
 </script>
-
 </body>
 </html>
