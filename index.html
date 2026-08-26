@@ -3,391 +3,2532 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Cases</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;min-height:100%;background:#080b12;font-family:Arial,sans-serif;color:#fff}
-body{overflow-x:hidden}
-#casesGameContainer{min-height:100vh;padding:16px 14px 40px;background:radial-gradient(circle at 50% -10%,rgba(110,80,255,.22),transparent 38%),linear-gradient(160deg,#090c14,#101522,#080b12)}
-.topbar{height:52px;display:flex;justify-content:flex-end;align-items:center}
-.balance-case{padding:10px 16px;border-radius:14px;background:#171d2a;border:1px solid rgba(255,255,255,.08);font-size:18px;font-weight:900;box-shadow:0 8px 25px rgba(0,0,0,.3)}
-.balance-case span{color:#ffd84d}
-.screen-case{display:none;width:100%;min-height:calc(100vh - 70px)}
-.screen-case.active{display:flex}
-.main-screen{flex-direction:column;align-items:center;padding-top:18px;gap:16px}
-.main-title{font-size:28px;font-weight:1000;letter-spacing:3px;margin-bottom:4px}
-.free-case-card{width:min(900px,96vw);display:flex;flex-direction:column;align-items:stretch}
-.free-case-image-button{position:relative;z-index:2;touch-action:manipulation;width:100%;height:235px;border:0;border-radius:24px;padding:0;background:transparent;overflow:hidden;cursor:pointer;display:block;box-shadow:0 16px 35px rgba(0,0,0,.42);transition:transform .15s ease}
-.free-image-wrap{position:relative;width:100%;height:100%;overflow:hidden;background:transparent}
-.free-case-image{position:absolute;inset:0;width:100%;height:100%;max-width:none;display:block;object-fit:fill;object-position:center center;user-select:none;pointer-events:none}
-.free-case-image-button:active{transform:scale(.985)}
-.free-status{position:relative;z-index:3;touch-action:manipulation;width:88%;align-self:center;margin-top:10px;padding:11px 12px;border:1px solid rgba(255,255,255,.16);border-radius:12px;background:linear-gradient(135deg,#28bd9c,#14866f);color:#fff;font-size:14px;font-weight:1000;cursor:pointer;box-shadow:0 8px 20px rgba(20,134,111,.22)}
-.free-status.cooldown{background:#182b38;color:#91d7ff;border-color:rgba(117,200,255,.25)}
-.free-status:active{transform:scale(.98)}
-.main-case-button{position:relative;z-index:2;touch-action:manipulation;width:min(430px,94vw);height:100px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;padding:0 18px;text-align:left;box-shadow:0 12px 35px rgba(0,0,0,.3);transition:transform .15s ease,border-color .15s ease}
-.main-case-button:active{transform:scale(.98)}
-.case-icon{width:62px;flex-shrink:0;font-size:30px;text-align:center}
-.case-name{font-size:20px;font-weight:1000}
-.case-description{display:block;color:#aeb8ca;margin-top:6px;font-size:12px;font-weight:700}
-.pls-pepe-button{background:linear-gradient(135deg,#183e3c,#0b2427)}
-.case-50-button{background:linear-gradient(135deg,#3b3018,#211b0e)}
-.case-250-button{background:linear-gradient(135deg,#38245c,#1e1533)}
-.case-screen{flex-direction:column;padding-top:8px}
-.case-title-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.case-title{font-size:24px;font-weight:1000}
-.back-case{padding:10px 14px;border-radius:11px;border:1px solid rgba(255,255,255,.08);background:#171d2a;color:#c4cada;font-weight:800;cursor:pointer}
-.roulette-section{position:relative;width:100%}
-.pointer-case{position:absolute;top:-1px;left:50%;transform:translateX(-50%);z-index:10;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:25px solid #a78bfa;filter:drop-shadow(0 0 8px rgba(167,139,250,.7))}
-.roulette-window{width:100%;height:160px;overflow:hidden;border-radius:17px;background:#0d121e;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 0 40px rgba(0,0,0,.5)}
-.roulette-track{height:100%;display:flex;align-items:center;gap:10px;padding:10px;transform:translateX(0)}
-.roulette-item{min-width:125px;height:125px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:14px;background:#171d2a;border:1px solid rgba(255,255,255,.08);text-align:center}
-.roulette-emoji{font-size:44px}.roulette-name{margin-top:8px;padding:0 5px;font-size:11px;font-weight:800;color:#b8c2d4}
-.open-button{width:100%;margin-top:17px;padding:17px;border:0;border-radius:15px;background:linear-gradient(135deg,#7957ff,#5332d6);color:#fff;font-size:18px;font-weight:1000;cursor:pointer;box-shadow:0 10px 30px rgba(110,80,255,.2)}
-.open-button.free-open{background:linear-gradient(135deg,#28bd9c,#14866f)}.open-button:active{transform:scale(.98)}.open-button:disabled{opacity:.5;cursor:not-allowed}
-.items-title{margin:27px 0 13px;text-align:center;font-size:18px;font-weight:1000;color:#e5e9f2}
-.items-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.item-card{min-height:125px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:14px;background:#141a27;border:1px solid rgba(255,255,255,.07)}
-.item-emoji{font-size:38px;line-height:1}.item-name{margin-top:9px;font-size:11px;font-weight:800;color:#aeb8ca;line-height:1.25}.item-price{margin-top:7px;color:#ffd84d;font-size:13px;font-weight:1000}
-.legendary{border-color:rgba(255,215,70,.5)}.rare{border-color:rgba(100,150,255,.4)}.uncommon{border-color:rgba(60,190,165,.35)}
-.modal-case{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.8)}.modal-case.show{display:flex}
-.modal-box-case{width:100%;max-width:360px;padding:28px 20px 23px;text-align:center;border-radius:23px;background:linear-gradient(145deg,#1a2131,#0d121e);border:1px solid rgba(255,255,255,.1);box-shadow:0 25px 90px rgba(0,0,0,.65)}
-.result-emoji-case{font-size:78px;margin-bottom:12px}.result-label-case{color:#8e99ad;font-size:13px;font-weight:800;letter-spacing:1px}.result-name-case{margin-top:8px;font-size:25px;font-weight:1000}.result-value-case{margin-top:12px;font-size:24px;color:#a78bfa;font-weight:1000}
-.result-buttons{display:flex;gap:10px;margin-top:23px}.result-button{flex:1;padding:14px 8px;border:0;border-radius:13px;color:#fff;font-weight:900;cursor:pointer}.sell-button{background:linear-gradient(135deg,#7957ff,#5332d6)}.back-result-button{background:#1b2232;color:#aeb8ca}
-.message-case{position:fixed;left:50%;bottom:25px;z-index:300;transform:translateX(-50%) translateY(100px);padding:13px 18px;border-radius:13px;background:#d24761;color:#fff;font-weight:800;text-align:center;transition:.3s ease;max-width:90vw}.message-case.show{transform:translateX(-50%) translateY(0)}
-@media(max-width:500px){#casesGameContainer{padding:12px 10px 30px}.main-title{font-size:25px}.free-case-card{width:100%}.free-case-image-button{height:clamp(110px,25vw,175px);border-radius:18px}.main-case-button{width:100%;height:98px}.case-title{font-size:20px}}
+
+/* =====================================================
+   БАЗА
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    background: #080b12;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   ОСНОВНОЙ КОНТЕЙНЕР
+===================================================== */
+
+#casesGameContainer {
+    width: 100%;
+    min-height: 100vh;
+    padding: 18px 14px 40px;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(110, 80, 255, 0.22),
+            transparent 38%
+        ),
+        linear-gradient(
+            160deg,
+            #090c14,
+            #101522,
+            #080b12
+        );
+}
+
+
+/* =====================================================
+   ВЕРХНЯЯ ПАНЕЛЬ
+===================================================== */
+
+.topbar {
+    width: 100%;
+    height: 55px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.balance-case {
+    padding: 10px 16px;
+
+    border-radius: 14px;
+
+    background: #171d2a;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    font-size: 18px;
+    font-weight: 900;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.3);
+}
+
+.balance-case span {
+    color: #ffd84d;
+}
+
+
+/* =====================================================
+   ЭКРАНЫ
+===================================================== */
+
+.screen-case {
+    display: none;
+    width: 100%;
+    min-height: calc(100vh - 73px);
+}
+
+.screen-case.active {
+    display: flex;
+}
+
+
+/* =====================================================
+   ГЛАВНЫЙ ЭКРАН
+===================================================== */
+
+.main-screen {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    gap: 18px;
+}
+
+.main-title {
+    font-size: 28px;
+    font-weight: 1000;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+
+
+/* =====================================================
+   FREE CASE - PNG КЕЙС
+===================================================== */
+
+.free-case-wrapper {
+    width: min(430px, 94vw);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.free-case-image-button {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    transition: transform 0.15s ease;
+}
+
+.free-case-image-button:active {
+    transform: scale(0.97);
+}
+
+.free-case-image-button.disabled {
+    opacity: 0.55;
+}
+
+.free-case-image {
+    display: block;
+
+    width: 100%;
+    max-height: 280px;
+
+    object-fit: contain;
+
+    background: transparent;
+
+    border: none;
+
+    filter:
+        drop-shadow(
+            0 15px 25px
+            rgba(0,0,0,0.45)
+        );
+}
+
+
+/* =====================================================
+   КНОПКА ПОД FREE КЕЙСОМ
+===================================================== */
+
+.free-ready-button {
+    width: min(300px, 80vw);
+
+    padding: 14px 18px;
+
+    border-radius: 15px;
+
+    border: 1px solid rgba(80, 205, 255, 0.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            #173e58,
+            #0d2538
+        );
+
+    color: #76d1ff;
+
+    font-size: 15px;
+    font-weight: 1000;
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.25);
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.free-ready-button:active {
+    transform: scale(0.97);
+}
+
+.free-ready-button.disabled {
+    color: #9ba6bb;
+
+    border-color:
+        rgba(255,255,255,0.08);
+
+    background:
+        #171d2a;
+}
+
+
+/* =====================================================
+   ОБЫЧНЫЕ КАРТОЧКИ КЕЙСОВ
+===================================================== */
+
+.main-case-button {
+    position: relative;
+
+    width: min(430px, 94vw);
+    height: 105px;
+
+    border-radius: 21px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    text-align: left;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.15s ease,
+        border-color 0.15s ease;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.3);
+}
+
+.main-case-button::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+}
+
+.main-case-button:active {
+    transform: scale(0.97);
+}
+
+
+/* =====================================================
+   ИКОНКА
+===================================================== */
+
+.case-icon {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 16px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 16px;
+
+    background: rgba(255,255,255,0.08);
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    font-size: 29px;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   ТЕКСТ
+===================================================== */
+
+.case-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.case-name {
+    font-size: 21px;
+    font-weight: 1000;
+}
+
+.case-description {
+    color: #9ba6bb;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   PLS PEPE
+===================================================== */
+
+.pls-pepe-button {
+    background:
+        linear-gradient(
+            135deg,
+            #183e3c,
+            #0b2427
+        );
+
+    border-color:
+        rgba(50,215,175,0.35);
+}
+
+.pls-pepe-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #39d8ad,
+            #20a895
+        );
+}
+
+
+/* =====================================================
+   CASE 50
+===================================================== */
+
+.case-50-button {
+    background:
+        linear-gradient(
+            135deg,
+            #3b3018,
+            #211b0e
+        );
+
+    border-color:
+        rgba(255,210,70,0.4);
+}
+
+.case-50-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #ffe16a,
+            #f2a900
+        );
+}
+
+
+/* =====================================================
+   CASE 250
+===================================================== */
+
+.case-250-button {
+    background:
+        linear-gradient(
+            135deg,
+            #38245c,
+            #1e1533
+        );
+
+    border-color:
+        rgba(165,130,255,0.42);
+}
+
+.case-250-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #bd9aff,
+            #7650ed
+        );
+}
+
+
+/* =====================================================
+   ЭКРАН КЕЙСА
+===================================================== */
+
+.case-screen {
+    flex-direction: column;
+    padding-top: 8px;
+}
+
+.case-title-row {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.case-title {
+    font-size: 24px;
+    font-weight: 1000;
+}
+
+.back-case {
+    padding: 10px 14px;
+
+    border-radius: 11px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    background: #171d2a;
+
+    color: #c4cada;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   РУЛЕТКА
+===================================================== */
+
+.roulette-section {
+    position: relative;
+    width: 100%;
+}
+
+.pointer-case {
+    position: absolute;
+
+    top: -1px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 10;
+
+    width: 0;
+    height: 0;
+
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+
+    border-top: 25px solid #a78bfa;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(167,139,250,0.7)
+        );
+}
+
+.roulette-window {
+    width: 100%;
+    height: 160px;
+
+    overflow: hidden;
+
+    border-radius: 17px;
+
+    background: #0d121e;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        inset 0 0 40px rgba(0,0,0,0.5);
+}
+
+.roulette-track {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px;
+
+    transform: translateX(0);
+}
+
+.roulette-item {
+    width: 125px;
+    min-width: 125px;
+    height: 125px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #171d2a;
+
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.roulette-emoji {
+    font-size: 46px;
+}
+
+.roulette-name {
+    margin-top: 8px;
+
+    padding: 0 5px;
+
+    text-align: center;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    color: #b8c2d4;
+}
+
+
+/* =====================================================
+   ОТКРЫТЬ
+===================================================== */
+
+.open-button {
+    width: 100%;
+
+    margin-top: 17px;
+
+    padding: 17px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7957ff,
+            #5332d6
+        );
+
+    color: white;
+
+    font-size: 18px;
+    font-weight: 1000;
+
+    cursor: pointer;
+}
+
+.open-button.free-open {
+    background:
+        linear-gradient(
+            135deg,
+            #28bd9c,
+            #14866f
+        );
+}
+
+.open-button:active {
+    transform: scale(0.98);
+}
+
+.open-button:disabled {
+    opacity: 0.5;
+}
+
+
+/* =====================================================
+   ПРЕДМЕТЫ
+===================================================== */
+
+.items-title {
+    margin: 27px 0 13px;
+
+    text-align: center;
+
+    font-size: 18px;
+    font-weight: 1000;
+
+    color: #e5e9f2;
+}
+
+.items-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 9px;
+}
+
+.item-card {
+    min-height: 125px;
+
+    padding: 10px 6px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    border-radius: 14px;
+
+    background: #141a27;
+
+    border: 1px solid rgba(255,255,255,0.07);
+}
+
+.item-emoji {
+    font-size: 38px;
+    line-height: 1;
+}
+
+.item-name {
+    margin-top: 9px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    color: #aeb8ca;
+
+    line-height: 1.25;
+}
+
+.item-price {
+    margin-top: 7px;
+
+    color: #ffd84d;
+
+    font-size: 13px;
+    font-weight: 1000;
+}
+
+.legendary {
+    border-color: rgba(255,215,70,0.5);
+}
+
+.rare {
+    border-color: rgba(100,150,255,0.4);
+}
+
+.uncommon {
+    border-color: rgba(60,190,165,0.35);
+}
+
+
+/* =====================================================
+   РЕЗУЛЬТАТ
+===================================================== */
+
+.modal-case {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0,0,0,0.8);
+}
+
+.modal-case.show {
+    display: flex;
+}
+
+.modal-box-case {
+    width: 100%;
+    max-width: 360px;
+
+    padding: 28px 20px 23px;
+
+    text-align: center;
+
+    border-radius: 23px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1a2131,
+            #0d121e
+        );
+
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.result-emoji-case {
+    font-size: 78px;
+    margin-bottom: 12px;
+}
+
+.result-label-case {
+    color: #8e99ad;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.result-name-case {
+    margin-top: 8px;
+
+    font-size: 25px;
+    font-weight: 1000;
+}
+
+.result-value-case {
+    margin-top: 12px;
+
+    font-size: 24px;
+
+    color: #a78bfa;
+
+    font-weight: 1000;
+}
+
+.result-buttons {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 23px;
+}
+
+.result-button {
+    flex: 1;
+
+    padding: 14px 8px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    color: white;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.sell-button {
+    background:
+        linear-gradient(
+            135deg,
+            #7957ff,
+            #5332d6
+        );
+}
+
+.back-result-button {
+    background: #1b2232;
+    color: #aeb8ca;
+}
+
+
+/* =====================================================
+   СООБЩЕНИЯ
+===================================================== */
+
+.message-case {
+    position: fixed;
+
+    left: 50%;
+    bottom: 25px;
+
+    z-index: 300;
+
+    transform:
+        translateX(-50%)
+        translateY(100px);
+
+    padding: 13px 18px;
+
+    border-radius: 13px;
+
+    background: #d24761;
+
+    color: white;
+
+    font-weight: 800;
+
+    text-align: center;
+
+    transition: 0.3s ease;
+}
+
+.message-case.show {
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* =====================================================
+   КРЕСТИК
+===================================================== */
+
+.close-button {
+    position: fixed;
+
+    top: 18px;
+    left: 18px;
+
+    z-index: 200;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    background: #171d2a;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 500px) {
+
+    #casesGameContainer {
+        padding: 14px 12px 30px;
+    }
+
+    .main-screen {
+        padding-top: 20px;
+    }
+
+    .main-title {
+        font-size: 25px;
+    }
+
+    .main-case-button {
+        width: 100%;
+        height: 98px;
+
+        border-radius: 19px;
+
+        padding: 0 17px;
+    }
+
+    .case-icon {
+        width: 54px;
+        height: 54px;
+
+        margin-right: 14px;
+
+        font-size: 27px;
+    }
+
+    .case-name {
+        font-size: 19px;
+    }
+
+    .case-description {
+        font-size: 10px;
+    }
+
+    .free-case-image {
+        max-height: 240px;
+    }
+
+}
+
 </style>
 </head>
-<body>
-<div id="casesGameContainer">
-<div class="topbar"><div class="balance-case">⭐ <span id="balanceCase">1000.00</span></div></div>
-<section id="mainScreenCase" class="screen-case active main-screen">
-<div class="main-title">КЕЙСЫ</div>
-<div class="free-case-card">
-<button type="button" class="free-case-image-button" id="freeCaseBox" onclick="openCaseScreen('free')" aria-label="Открыть CASE FREE">
-<div class="free-image-wrap"><img class="free-case-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABdEAAAF8CAYAAAAgmPIpAAEAAElEQVR42uz9aZBlW3Yehn1r7X3OvZlZVe/e2O+9ntANdGNoNBozSIEgQTsIDrJoU/QPBk3RtCXLdjikCJuewg4PssKmzZDFCFuUTAdNDWSItmxKpAKkacoUR4MAiZloDN0AuoEeXvebX1Vl5r337L2Wf+xp7X3Ordf4QzaAuo2HrMy8ee4Z9rDWt771fcCT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXk9eT15PXb6bXFz+pCgAqQPoXoASQpq8aATDAw8/L95D0e9L0z/IV5Xj2uGr/HVMiTgSilo4LdJ2s01a6LtB8MFUFKa/en76Wf6f/yr/La+vc7GvrZ0Tpmtd/rxARxBghMX0PZqhq/R3p9nVRfo99ryoQjiFdrQSICIJK9z7v/WPuEUDk6nvHz1XV/hzMfSv/9t5D810sX0W1fq8ikHzz7PtQzlGoO99ybCICSOrnMTOIFMxc/yMixNjuaYyx/rtcT3kfwQEk5tjUXQefuT/e++6el89I9z+dT/p7D3bozs0ef7z/5fzqcZQhJGBlKCscHIQEDgShNqYBhiBC8/hZlgUqVI+jqhAoNAoECgkRYAKjnU85P7DCzZzHPsE5tzr37rjmusv5n7s+zvOqHI+Z6/Gdb8dPc0DNukFp3ShXnD8Pkq4L0ua0QPOxAWYPIoUjD3KAZwdyXO9DWnfS3ysBmj9EYxoT5XMdMcDpuZLj9HmsYLh8nun+QwiK2M2bfqxSvafl/pbzbuNc8b6PuydY45PXb8jXk4H95PXk9eT15PXk9eT15PXk9VX2epDBnXsfS9nJg0+q9iDMY4I76iO93neqgEj6LyE9QIzbYEr5XkJK9EIIKcGuiR33Cb+j+rkpGc9J+RJaYl2TrZTYCaEm0azrBDwdq54qVKkDjsb3FmCq+1lQANwBGaqx+94CJ1wAgABghQRNNzSDJBqBqFKT17iECqZJ+n/QjKQpoYIQNnFv/2GVxI8JqzPgWAHZ+muR7v3EBhgigiohogEEEntAKSXBPZA3glnn7rd9bwF57H+qCkTOY64BNGjDD9M0rcCZDoRZ0v2J5ZwQu88PIZwfD93PyXxqS4AK0DECKYj5usmtxrp9phXcyvNjBF8qUKc9yFCee4zDmB3GJTvXj08DYNi/i9gGf5wBgcQ8s/L5IURzXg3Uc/X9DlAGSIZxp+b8ZXVuDcxzK5AuxgaSbQFv3fMcnvc4P9p949XYTetb3ATByvdt/NAKbC0/74A5oIKd5ecVSR8+n0RRpjSDoaQgpbQ+bL4EqlTBRiGp43YLpFSNQAH+BqBxHAcFhCNy+Xiuuz8jeNgt2mdAZuX+vvTAIFUQVMz6U0BC+zes6Z6u5wcl8HFc82sxI+0z7Xrac2jjHJv349x4Wo1fx/nc2nNWXFlRjRmkj/l6Y31f+VwuxYWIDuQua4hzrq5LbV6351PGuAV4y4ga54z9e+X+Ot0ZyMfuOelYbK7DPHflbm9p44pXY8M+r/pvyUWDchw4kNn0y/mO1zquz+VzxvG6VSQBBFSfHzZB/24tQ35eTHlM0uae3BUh2PXFDB6f4/qzc1Uin6I+tsgDpgqCdyD+MO/GdbnECfbvVLUWblDWNNZVQWQdj6Ty0Bj32Tim/9s0L4gU7ABlhSeGMnVFk1J8qvFWjr/8NGG/28HPHrtdHid5D6rrSI5zS+GCmcGun8PMDNJ8r+BAHiBhKAtYXfpKHs6XAksqujHnuMgB8zzXAon3+euUPvO/8l//zic46hMQ/cnryevJ68nryes34uv0jxPy0zGPYgPTCmgWAhADMqiTgLVMIoIIcnDRALoujpTGvIqakpuSb4gAnJlY5ZhBekCvpgMKEKevieHTzi+G9PMo6eflfGKs+FZOVtIxidJ7VFEDtnIt5feF9EFIn5sCp3Zszj8r12zPV6TGfhWE5DH3zN+TAhLT+8q1l/MYn0MKEHMiEWJmblEFZ0qwWJKzAkTGGAFliAaERVKyBgcRMe9nwAEODqd4ggjgHOX7kR5aSbLL1/KZ9rxijBVQBWpehIk9mKkyUEoSCBBiUPO3UoG70+lUgYzCnJFgAU6AlRGDdqBHYd6VgLqAWelayLDU0rUT90l0ORcFEEOAgjvmUFDpkikhAFGwyAISgnICSCIaU2tMgGJUc90DazAH+OXcexArDc6GqRXAJiXbrAwMgJmI5DHMLdEcwLZ23VIBihhjZbAVQKUkE8fjsV5HA8YjVGNlMaV7nJ6zGABdJFTwaTn1ICcxQPnclKQy+WhIwAvLKcRYmV1bQJG9hyUp78A4pgGUL+enHRBQ5tjEDkETiEqeoEEhBHhiJByAVuMjqIAiQZ2ChREQwMKA4w2AA935VsBgAA/Ls3TaJ6hCOAMeyJAIR8S8iAoBBDeAEW6TZSeZfdbmQ4RorM8DSh3AMYKyCukBgTNgj/37GGNiyTkewBeqBZDxGNEALN34MvM4ygJmRpBQ12vLWOyYmroGcUWkMl23AA67vtrztuewBQLb5zA5X/eUspaU44oIyKVrNfBJB8KsCkdk7r8oSGJjXRJWINy4JmmmT7MCcNwYjaYAZa+/zOl63dzW5bRfuW582OsYx9DI1C3nUuZD+jzu17lujSQDsGyD4vW4ymefXXkOmgOIAtS0a5D+HPN+uwXuhxDAEwGRAKcVxLEs2HauGZxlBQkhIiYmM2K3Z9Q5EANm5/PahQ0gTBrjWTmNRU1gUyk6jHNoDcxhfU/QYo/6M10Xd6JKjjGkKxLZsVZima05UuInO76ccxBVqAjYUwVnC0jN5LvxVsbfVnFrkx1u3iOUYlF2lIqPEDj2UAjCEuvP2RHSlhEAJbAjEPL8LUBzuf8ZOC8xSBq32yDkJqiaj+fy/LXM/HbvpIKvbbatAdet4oGNP1QT+NnWC1n9TQihzr1xDe4AWXAHhqpQt1/XeTAA+zxc+9bxico5D2uvaq0BlTiBGV3cML63MMZL8abskyX+SbGtWaOidMB2PacMTjv0nxWxvvciAjLFJRvnR6Tfz86nvSyk5+2cq8fd2vuCSBpvRBANZq73a1iNf1RW96S/77wusOURUdancR1jNcUtVYhqJSmUseuQinGQADXFW8/MUPbXvA7WAoAZ511hYvi9zcsIDsICp67Gaep0GIcxx619TAVuxYJ1/BZqPB401HXbEUGJQDSBmOHId4z/ch8c89AJkE66vN95dKSPkl8558CO8Oyzz+KZZ+7j/v37uLp7ibt37+LycodLy0tc3buDy8sZz75wH/fv3cPXf+fFE9z3CYj+5PXk9eT1T/L1zj9WLcBqxwo0TMbEVJTEOolrQCSKgAtrK6SgIhwDJOSKtSiITAIdpYIwIkBcQg5gUuAQlnwyOXBnNDYAZ3ANklgwafNHB0S2ZImwm3ZwZILMKIjhlNpRRSBLgPcTHOZ0DhrhZgcwIYiAeIaKAEuExgUiAUEBUQKEQQFwPCXwjwTOTTidTjg9Hhl3JKhAE5FLrXiUEi4/z9CgXYtlUElMSJN8SU722AFhEYR4AsMhSgKgE6OnZ4yI9GyyaD6nMC3L83OgVbCmOZGpQYxyF8SmZ0nQkLKRBGpkplW+lpiRcRuEpyCCcntjSkZsIl8CbKYGciTmHDdw1AR7CUSJ7biRaltlaX8UaGUJPS5Yt4GyRFRGTapMpGCP4AYgwEEFXSKptJ3IdOCWaAW/x8S2DyRTYlmenfce0QBAIlKTthBCA8OALonvEi4DDFvQu9575gSOxwAizoF5qoQ4tKQ9fQjnlmGqwAoRpfmVk3rLFixt3QV8Y7gN9qVtAwdCTEEpMWdQHPDOIUouKJAaRl9ijgVpDLaOjVXHwHjfY5fktPdj1RJOmQFcwIWUnHAuUmlNUkViXvd0MwEtxZUuOcugwta5VWYot/bw8vuSlDeQKY0Jx1NigkMQVWvwrzFWoDK1CzOihjxfYmU2ikjOVLgG+wEBFBPIUsGAnDwX8LyCFFvsx3qf05iySaUqzoAB6/Zr4rLmmHULcbWOFRC9AAItmaHzYFye5yGEbn7YPSbGuMlktIzQMdkfzw2iubjYMnxlTfsvKaRWLu2907QeErBILxuh0rNJ0z6Qize8HusgqcXEyg41bMARkCoRQr1fbJmVBQQFRkZnGQsrgARrRmZJbDEALiPoJBISaFHaAiitT6kQ5GubPCAg7RmY5bOmaarJtQVPbQFPzTyBKMhx2n815LVnzaSs980A9SOIuyxL2tsddwB7GmMpyS7t+6Utvy6KSiAoNMQEMo4gfLlP3Pbdwp7cBJ27H8qqA0Q1XzczQgh1/zm3z4kpnhUmombQjHIF3MpkMBGipOfUZAiojvMkU0CdvMEI2je5AhtnpPWoyBiUeV2eTWU6glJRSmL9PCWUKAKcAUBSrlNVELHEsCpWq0YoO4iEAXxK87AV7SOYHaQylc0+0Y19ge226fcirfvfFpDcF2f6eXquwNEVmurP3aogV8ZGQOtGKh0e5ZoLk/fcq4C4DQTNxYwM3KktxBn5kXFZsPu/ZZTXojS7DZZ6GkuFgKEa4VxaD2LUuo6V55oANfv9uthYCB39XkxdscMytiUiMWxzEbTGlvm8lyhdoameOfXjhQ14XYs+pfjQ7ZutU6HEoUTUybF0nRJBkfA/RkSsxeXCOG5jmzq5kDRP8rwzjGTLCC9AtGX4M1z+u9SVVeehAkKxFqmKjM4ItrNbF6ob0L8u4rBy975RhqcW8dAXmkphJHWjrEH0VTFW+9ilHQuISMWMkg+Pcc5WHB/KG50iooHVJBERuUuGBA4OyprJU0t9/iKo97nsL0rcvrdFgO55In+f5kYqWruVfFXpTinzIRUeUpyjMMVp4iG+GAgEJKvYpyscSV5fN+J0u66ka5buGdf1jbcKfGLGJiDUx0ItB+Juz+2OQzmRZDLFG6nyRHCKRU7dntyt2XUfLmNKa+cFEcFPDPbAxeWEO3cucffeJS6vZuyvdnj+hafx/PPP4H/+v/8XnmDBT0D035yvz+d27/d9bLs/7QufTODn6RS7yR1j2piltN0GXW32aZNOQabjlkz2LZM5aV9C1SazLDEiwsQOMTZWY4yxgkMxZtAutxfTRisnlHG8DRBRnI4Bx+OxbiIhBITTUo9tgSvvPSZ2WCTCwaWqbAYFeGCpWMZAanduG1s4nXA6LCkwj6hAlWppjzOtvcoVfCnBX2Jr9BsuMkDsyDBqkIBW731qeyrgZW4VLW2hzIzD4QgRwXIMtY0zhAAJTR8wxogp02qjyrDppSpmSfzL39j2sGVZcDwu6esSakBYNj3nXE1umX3+nda2xfIspTJm0nMo9ye1+ef7opSr8A1ILeB6+RxSRQyFCZk25ZQk5ftI6T3MnJKpXIEOIQddGcCzAKJGgUOq+DpKQZBHGveegXnaYzd7nG5uoUI4xQBPHheTr4Ge8x6hMBaCJJ3MDAiIpvHhtTFOg0YoLAjHiFHh3YyLi0sclhMePrpJySARlhjqRhkNAFt4i2KBPGU4lzQUl+WIiacE4LDvrr+BAOhA0cK0SBki5/w8Yiobex0/zrC0tAM4x6SMRMFoTD7NyUxZJ4qcg2V6kSIFAgoEiYmVVbX3qEumUsElsQ299x1bzLZAFrZTYZDCMRwSo5QkMY9HRiXQCjt2jamAR2aIQRk8tPnWILgkdBm4K6DiNtNjDZAnoIESaLAC2LBiolgguK7ljlYSAhaQGVlYELNWUWNarIPIouHph3bmRk9nALJkWQHnOyYdwUE0NMa8AafK79PYD3CTH0C7lhRpFNSm1dwOWsEXyoAKoYL8SgyFVPCRuBUguvmBsq6vAUqbrEZotze2tT7/vcss54ExV9qZY+gTgZEla9knZc5ZkLhnkeZEoCav0QBjPBRC2l5Rb1D+WhhDMb83JbWU83vFogugSfszfZ50TDshAWJi0KbxkcEjsqAPzHk2uY5ROoEhtcNhK3Qd25iJep3SlAiFWhAYk68RCE5np1UuYEvyxb5/ZGh2P3dZXzS3Q9tOg1ZUkdq2vbUepAJYWlckgyCWmVVBkW4dEEzsAMc4Ho/DmHJ9N0QuZolhYAkbrd6yNnIrDtl9o3SGtHvUdwk4x91411zsBTnEuFTmly3ylcJojDF3PMSuMFHuy7uB6KqKpTKxbdEiwmeN38JES5zBBqIWWRV2rp+3Zl6OTPQSX2oGnUJmAG5py/bFIu7WoFI0WpalgojjmpBkemIDq0QhhkFXQUM3yPMQV1ChB5IyS5b6IoKNRzv5hW4vamOkB/rx2OsXVXjnKoi+pTVd1vMKogMVZEcmUFhQuxQVyOwR6b46lLainnFKVWZFcrHFAlPecV2HuucLqR0qowxE+V4oEUgoM/otiJ7i5jCw5mPdV1UJQUP3PowAHOK6O8KAom1/6CWttoq+tSNJzXwdNKNHkNwyYttxyXSLRDhHmzEOYVuCw4KJZZ9SQe2GGccrXL8u1Hsh5jxznGbBY85FM+emfn8c9xbEXCzuQfTSoZny2225Fxm6Zc4xZq38iC1mlM8tcVYHnqqVjWmF81I8FNouIpTjO7juuPUZWxA/56tU51krNpXvixZbA8eb9ndf6EwdFg1s5wrixpz/t/vDATUW5hjUyT4/eF/rp30cQNF9IBPjHLCnyTweY2gAuQiTSnWkPJYVUE+9BFOFaeLr3MPR9gB5bFouHEICRgTKBMyLf0MkQ3hI6x2DgohjpHjWc5YD4SUiVhKTEo21+4pjyvzPpch4cEDjexC3LPIe7/0O2T4lsFpEMiYvxDZADtBqYlCGMb45hAQJmSgW7pUxmWyKjSlbPHZDF8YcBx8gYYgVTAWxYNE6Sw6kF/DVhS7N2YS4iLWmpiIQZR4gcJfzx3Cg59KsfVcQdI2W/xtcPDC7VnGzwu3G8K//7W78r/+t+j9/7t/r//w/+R/3v/+P/1H/z//qX+9f/ut/lf/j//r0A////m//Xz3/O6P/+T/4n/t//mf/T/1f/tt/2/+T/+W/nP/fL//5vP/+b/5x/tz/VPHn/5G/7/8PwP/+DyZ7A1fwGQAAAABJRU5ErkJggg==" alt="CASE FREE"></div>
-</button>
-<button type="button" id="freeStatusButton" class="free-status" onclick="openCaseScreen('free')">ГОТОВ К ОТКРЫТИЮ</button>
-</div>
-<button class="main-case-button pls-pepe-button" onclick="openCaseScreen('pls-pepe')"><div class="case-icon">🐸</div><div><div class="case-name">PLS PEPE</div><span class="case-description">Стоимость открытия — 10 ⭐</span></div></button>
-<button class="main-case-button case-50-button" onclick="openCaseScreen('50')"><div class="case-icon">⭐</div><div><div class="case-name">CASE 50</div><span class="case-description">Стоимость открытия — 50 ⭐</span></div></button>
-<button class="main-case-button case-250-button" onclick="openCaseScreen('250')"><div class="case-icon">💎</div><div><div class="case-name">CASE 250</div><span class="case-description">Стоимость открытия — 250 ⭐</span></div></button>
-</section>
-<section id="caseScreenCase" class="screen-case case-screen">
-<div class="case-title-row"><div class="case-title" id="caseTitle">CASE 50 ⭐</div><button class="back-case" onclick="showMainCase()">← Назад</button></div>
-<div class="roulette-section"><div class="pointer-case"></div><div class="roulette-window"><div class="roulette-track" id="rouletteTrack"></div></div></div>
-<button class="open-button" id="openButton" onclick="openCurrentCase()">ОТКРЫТЬ</button>
-<div class="items-title">ПРЕДМЕТЫ В КЕЙСЕ</div><div class="items-grid" id="itemsGrid"></div>
-</section>
-<div class="modal-case" id="resultModalCase"><div class="modal-box-case"><div class="result-emoji-case" id="resultEmoji">💎</div><div class="result-label-case">ВАМ ВЫПАЛО</div><div class="result-name-case" id="resultName"></div><div class="result-value-case" id="resultValue"></div><div class="result-buttons"><button class="result-button sell-button" onclick="sellResult()">ПРОДАТЬ</button><button class="result-button back-result-button" onclick="saveResult()">В ИНВЕНТАРЬ</button></div></div></div>
-<div class="message-case" id="messageCase"></div>
-</div>
-<script>
-// ===================== ДАННЫЕ КЕЙСОВ =====================
-const cases = {
-  free: {
-    title: 'CASE FREE 🎁',
-    price: 0,
-    items: [
-      { emoji: '3 ⭐', name: '3 Stars', value: 3, chance: 23, rarity: '' },
-      { emoji: '5 ⭐', name: '5 Stars', value: 5, chance: 22, rarity: '' },
-      { emoji: '7 ⭐', name: '7 Stars', value: 7, chance: 27, rarity: '' },
-      { emoji: '🐻', name: 'Bear', value: 15, chance: 6, rarity: '' },
-      { emoji: '💘', name: 'Heart', value: 15, chance: 6, rarity: '' },
-      { emoji: '🎁', name: 'Gift', value: 25, chance: 3, rarity: '' },
-      { emoji: '🌹', name: 'Rose', value: 25, chance: 3, rarity: '' },
-      { emoji: '🎂', name: 'Cake', value: 50, chance: 1, rarity: 'uncommon' },
-      { emoji: '🚀', name: 'Rocket', value: 50, chance: 1, rarity: 'uncommon' },
-      { emoji: '🍦', name: 'Vice Cream', value: 450, chance: 0.00001, rarity: 'rare' },
-      { emoji: '🍭', name: 'Lol Pop', value: 450, chance: 0.00001, rarity: 'rare' },
-      { emoji: '🐕', name: 'Snoop Dogg', value: 550, chance: 0.00001, rarity: 'legendary' }
-    ]
-  },
-  'pls-pepe': {
-    title: 'PLS PEPE 🐸',
-    price: 10,
-    items: [
-      { emoji: '💰', name: '0.5 на баланс', value: 0.5, chance: 24.009997, rarity: '' },
-      { emoji: '💰', name: '1 на баланс', value: 1, chance: 25, rarity: '' },
-      { emoji: '💰', name: '3 на баланс', value: 3, chance: 15, rarity: '' },
-      { emoji: '💰', name: '5 на баланс', value: 5, chance: 15, rarity: '' },
-      { emoji: '💰', name: '7 на баланс', value: 7, chance: 10, rarity: '' },
-      { emoji: '💰', name: '10 на баланс', value: 10, chance: 3.33, rarity: '' },
-      { emoji: '💘', name: '15 зв', value: 15, chance: 3.33, rarity: '' },
-      { emoji: '🐻', name: 'Bear', value: 15, chance: 3.33, rarity: '' },
-      { emoji: '🎁', name: '25', value: 25, chance: 0.5, rarity: '' },
-      { emoji: '🌹', name: '25', value: 25, chance: 0.5, rarity: '' },
-      { emoji: '💖', name: 'Heart Locked', value: 500000, chance: 0.000002, rarity: 'legendary' },
-      { emoji: '🐸', name: 'Plush Pepe', value: 800000, chance: 0.000001, rarity: 'legendary' }
-    ]
-  },
-  '50': {
-    title: 'CASE 50 ⭐',
-    price: 50,
-    items: [
-      { emoji: '🐻', name: 'Toy Bear', value: 5000, chance: 0.0001, rarity: 'legendary' },
-      { emoji: '🖊️', name: 'Fine Pen', value: 1000, chance: 0.0001, rarity: 'legendary' },
-      { emoji: '🗽', name: 'Liberty Figure', value: 550, chance: 0.00095, rarity: 'legendary' },
-      { emoji: '🔦', name: 'Chill Flame', value: 450, chance: 0.001, rarity: 'rare' },
-      { emoji: '🍦', name: 'Vice Cream', value: 450, chance: 0.001, rarity: 'rare' },
-      { emoji: '🏆', name: 'Trophy', value: 100, chance: 7.5, rarity: 'rare' },
-      { emoji: '💎', name: 'Diamond', value: 100, chance: 7.5, rarity: 'rare' },
-      { emoji: '🎂', name: 'Cake', value: 50, chance: 10, rarity: 'uncommon' },
-      { emoji: '💐', name: 'Flowers', value: 50, chance: 10, rarity: 'uncommon' },
-      { emoji: '🎁', name: 'Gift', value: 25, chance: 13, rarity: '' },
-      { emoji: '🐻', name: 'Bear', value: 15, chance: 15, rarity: '' },
-      { emoji: '🩷', name: 'Heart', value: 15, chance: 15, rarity: '' },
-      { emoji: '7 ⭐', name: '7 Stars', value: 7, chance: 21.49685, rarity: '' }
-    ]
-  },
-  '250': {
-    title: 'CASE 250 ⭐',
-    price: 250,
-    items: [
-      { emoji: '💰', name: '10 на баланс', value: 10, chance: 3, rarity: '' },
-      { emoji: '🐻', name: '15 зв', value: 15, chance: 2.5, rarity: '' },
-      { emoji: '💘', name: '15 зв', value: 15, chance: 2.49805, rarity: '' },
-      { emoji: '🎁', name: '25', value: 25, chance: 7.5, rarity: '' },
-      { emoji: '🌹', name: '25', value: 25, chance: 7.5, rarity: '' },
-      { emoji: '💐', name: '50', value: 50, chance: 10, rarity: 'uncommon' },
-      { emoji: '🚀', name: '50', value: 50, chance: 10, rarity: 'uncommon' },
-      { emoji: '💍', name: '100', value: 100, chance: 11.5, rarity: 'rare' },
-      { emoji: '💎', name: '100', value: 100, chance: 11.5, rarity: 'rare' },
-      { emoji: '💰', name: '200 на баланс', value: 200, chance: 15, rarity: 'rare' },
-      { emoji: '💰', name: '250 на баланс', value: 250, chance: 7, rarity: 'rare' },
-      { emoji: '💰', name: '300 на баланс', value: 300, chance: 6, rarity: 'rare' },
-      { emoji: '💰', name: '350 на баланс', value: 350, chance: 3, rarity: 'legendary' },
-      { emoji: '💰', name: '450 на баланс', value: 450, chance: 3, rarity: 'legendary' },
-      { emoji: '🍦', name: 'Vice Cream', value: 450, chance: 0.0005, rarity: 'rare' },
-      { emoji: '🍭', name: 'Lol Pop', value: 450, chance: 0.0005, rarity: 'rare' },
-      { emoji: '🦩', name: 'Pool Float', value: 500, chance: 0.0005, rarity: 'legendary' },
-      { emoji: '🐕', name: 'Snoop Dogg', value: 550, chance: 0.00045, rarity: 'legendary' }
-    ]
-  }
-};
 
-// ===================== СОСТОЯНИЕ =====================
-let balance = Number(localStorage.getItem('cases_balance'));
-if (!Number.isFinite(balance)) balance = 1000;
-let currentCaseType = '50';
-let currentItems = cases['50'].items;
+<body>
+
+<div id="casesGameContainer">
+
+<button
+    class="close-button"
+    onclick="closeCases()"
+>
+    ✕
+</button>
+
+
+<!-- =====================================================
+     ВЕРХ
+===================================================== -->
+
+<div class="topbar">
+
+    <div class="balance-case">
+        ⭐ <span id="balanceCase">1000.00</span>
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ГЛАВНЫЙ ЭКРАН
+===================================================== -->
+
+<section
+    id="mainScreenCase"
+    class="screen-case active main-screen"
+>
+
+    <div class="main-title">
+        КЕЙСЫ
+    </div>
+
+
+    <!-- FREE CASE -->
+
+    <div class="free-case-wrapper">
+
+        <button
+            class="free-case-image-button"
+            id="freeCaseBox"
+            onclick="openCaseScreen('free')"
+        >
+
+            <img
+                id="freeCaseImage"
+                class="free-case-image"
+                alt="CASE FREE"
+            >
+
+        </button>
+
+
+        <button
+            class="free-ready-button"
+            id="freeReadyButton"
+            onclick="openCaseScreen('free')"
+        >
+            ГОТОВ К ОТКРЫТИЮ
+        </button>
+
+    </div>
+
+
+    <!-- PLS PEPE -->
+
+    <button
+        class="main-case-button pls-pepe-button"
+        onclick="openCaseScreen('pls-pepe')"
+    >
+
+        <div class="case-icon">
+            🐸
+        </div>
+
+        <div class="case-info">
+
+            <div class="case-name">
+                PLS PEPE
+            </div>
+
+            <div class="case-description">
+                Стоимость открытия — 10 ⭐
+            </div>
+
+        </div>
+
+    </button>
+
+
+    <!-- CASE 50 -->
+
+    <button
+        class="main-case-button case-50-button"
+        onclick="openCaseScreen('50')"
+    >
+
+        <div class="case-icon">
+            ⭐
+        </div>
+
+        <div class="case-info">
+
+            <div class="case-name">
+                CASE 50
+            </div>
+
+            <div class="case-description">
+                Стоимость открытия — 50 ⭐
+            </div>
+
+        </div>
+
+    </button>
+
+
+    <!-- CASE 250 -->
+
+    <button
+        class="main-case-button case-250-button"
+        onclick="openCaseScreen('250')"
+    >
+
+        <div class="case-icon">
+            💎
+        </div>
+
+        <div class="case-info">
+
+            <div class="case-name">
+                CASE 250
+            </div>
+
+            <div class="case-description">
+                Стоимость открытия — 250 ⭐
+            </div>
+
+        </div>
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     ЭКРАН КЕЙСА
+===================================================== -->
+
+<section
+    id="caseScreenCase"
+    class="screen-case case-screen"
+>
+
+    <div class="case-title-row">
+
+        <div
+            class="case-title"
+            id="caseTitle"
+        >
+            CASE
+        </div>
+
+        <button
+            class="back-case"
+            onclick="showMainCase()"
+        >
+            ← Назад
+        </button>
+
+    </div>
+
+
+    <div class="roulette-section">
+
+        <div class="pointer-case"></div>
+
+        <div class="roulette-window">
+
+            <div
+                class="roulette-track"
+                id="rouletteTrack"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="open-button"
+        id="openButton"
+        onclick="openCurrentCase()"
+    >
+        ОТКРЫТЬ
+    </button>
+
+
+    <div class="items-title">
+        ПРЕДМЕТЫ В КЕЙСЕ
+    </div>
+
+    <div
+        class="items-grid"
+        id="itemsGrid"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     РЕЗУЛЬТАТ
+===================================================== -->
+
+<div
+    class="modal-case"
+    id="resultModalCase"
+>
+
+    <div class="modal-box-case">
+
+        <div
+            class="result-emoji-case"
+            id="resultEmoji"
+        >
+            💎
+        </div>
+
+        <div class="result-label-case">
+            ВАМ ВЫПАЛО
+        </div>
+
+        <div
+            class="result-name-case"
+            id="resultName"
+        >
+            Diamond
+        </div>
+
+        <div
+            class="result-value-case"
+            id="resultValue"
+        >
+            +100 ⭐
+        </div>
+
+        <div class="result-buttons">
+
+            <button
+                class="result-button sell-button"
+                onclick="sellResult()"
+            >
+                ПРОДАТЬ
+            </button>
+
+            <button
+                class="result-button back-result-button"
+                onclick="saveResult()"
+            >
+                В ИНВЕНТАРЬ
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="message-case"
+    id="messageCase"
+></div>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+
+/* =====================================================
+   ССЫЛКА НА PNG КЕЙСА
+   ВСТАВЬ СЮДА СВОЮ ПРЯМУЮ ССЫЛКУ НА PNG
+===================================================== */
+
+const FREE_CASE_IMAGE =
+    "https://ibb.co/LX4F0w6F/case-free.png";
+
+
+document.getElementById(
+    "freeCaseImage"
+).src = FREE_CASE_IMAGE;
+
+
+/* =====================================================
+   БАЛАНС
+===================================================== */
+
+let balance =
+    Number(
+        localStorage.getItem("cases_balance")
+    );
+
+if (!Number.isFinite(balance)) {
+    balance = 1000;
+}
+
+
+function updateBalance() {
+
+    document.getElementById(
+        "balanceCase"
+    ).textContent =
+        balance.toFixed(2);
+
+    localStorage.setItem(
+        "cases_balance",
+        balance
+    );
+
+}
+
+
+/* =====================================================
+   CASE 50
+===================================================== */
+
+const itemsCase = [
+
+    {
+        emoji: "🐻",
+        name: "Toy Bear",
+        value: 5000,
+        chance: 0.0001,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🖊️",
+        name: "Fine Pen",
+        value: 1000,
+        chance: 0.0001,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🗽",
+        name: "Liberty Figure",
+        value: 550,
+        chance: 0.00095,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🔦",
+        name: "Chill Flame",
+        value: 450,
+        chance: 0.001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🏆",
+        name: "Trophy",
+        value: 100,
+        chance: 7.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💎",
+        name: "Diamond",
+        value: 100,
+        chance: 7.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🎂",
+        name: "Cake",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "💐",
+        name: "Flowers",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🎁",
+        name: "Gift",
+        value: 25,
+        chance: 13,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "🩷",
+        name: "Heart",
+        value: 15,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "7 ⭐",
+        name: "7 Stars",
+        value: 7,
+        chance: 0,
+        rarity: ""
+    }
+
+];
+
+
+const case50Without7 =
+    itemsCase.filter(
+        item => item.name !== "7 Stars"
+    );
+
+const case50Total =
+    case50Without7.reduce(
+        (sum, item) => sum + item.chance,
+        0
+    );
+
+itemsCase.find(
+    item => item.name === "7 Stars"
+).chance =
+    Math.max(
+        0,
+        100 - case50Total
+    );
+
+
+/* =====================================================
+   FREE
+===================================================== */
+
+const freeItemsCase = [
+
+    {
+        emoji: "3 ⭐",
+        name: "3 Stars",
+        value: 3,
+        chance: 23,
+        rarity: ""
+    },
+
+    {
+        emoji: "5 ⭐",
+        name: "5 Stars",
+        value: 5,
+        chance: 22,
+        rarity: ""
+    },
+
+    {
+        emoji: "7 ⭐",
+        name: "7 Stars",
+        value: 7,
+        chance: 27,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 6,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "Heart",
+        value: 15,
+        chance: 6,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "Gift",
+        value: 25,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "Rose",
+        value: 25,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎂",
+        name: "Cake",
+        value: 50,
+        chance: 1,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🚀",
+        name: "Rocket",
+        value: 50,
+        chance: 1,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.00001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🍭",
+        name: "Lol Pop",
+        value: 450,
+        chance: 0.00001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🐕",
+        name: "Snoop Dogg",
+        value: 550,
+        chance: 0.00001,
+        rarity: "legendary"
+    }
+
+];
+
+
+/* =====================================================
+   CASE 250
+===================================================== */
+
+const case250ItemsCase = [
+
+    {
+        emoji: "💰",
+        name: "10 на баланс",
+        value: 10,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "15 зв",
+        value: 15,
+        chance: 2.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "15 зв",
+        value: 15,
+        chance: 2.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "25",
+        value: 25,
+        chance: 7.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "25",
+        value: 25,
+        chance: 7.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💐",
+        name: "50",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🚀",
+        name: "50",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "💍",
+        name: "100",
+        value: 100,
+        chance: 11.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💎",
+        name: "100",
+        value: 100,
+        chance: 11.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "200 на баланс",
+        value: 200,
+        chance: 15,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "250 на баланс",
+        value: 250,
+        chance: 7,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "300 на баланс",
+        value: 300,
+        chance: 6,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "350 на баланс",
+        value: 350,
+        chance: 3,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "💰",
+        name: "450 на баланс",
+        value: 450,
+        chance: 3,
+        rarity: "legendary"
+    }
+
+];
+
+
+/* =====================================================
+   PLS PEPE
+===================================================== */
+
+const plsPepeItemsCase = [
+
+    {
+        emoji: "💰",
+        name: "0.5 на баланс",
+        value: 0.5,
+        chance: 24,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "1 на баланс",
+        value: 1,
+        chance: 25,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "3 на баланс",
+        value: 3,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "5 на баланс",
+        value: 5,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "7 на баланс",
+        value: 7,
+        chance: 10,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "10 на баланс",
+        value: 10,
+        chance: 3.3,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "15 зв",
+        value: 15,
+        chance: 3.3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 3.3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "25",
+        value: 25,
+        chance: 0.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "25",
+        value: 25,
+        chance: 0.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💖",
+        name: "Heart Locked",
+        value: 500000,
+        chance: 0.000002,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🐸",
+        name: "Plush Pepe",
+        value: 800000,
+        chance: 0.000001,
+        rarity: "legendary"
+    }
+
+];
+
+
+/* =====================================================
+   СОСТОЯНИЕ
+===================================================== */
+
+let currentCaseType = "free";
+let currentItems = freeItemsCase;
 let currentWinner = null;
 let opening = false;
 
-const mainScreen = document.getElementById('mainScreenCase');
-const caseScreen = document.getElementById('caseScreenCase');
-const caseTitle = document.getElementById('caseTitle');
-const openButton = document.getElementById('openButton');
-const rouletteTrack = document.getElementById('rouletteTrack');
-const itemsGrid = document.getElementById('itemsGrid');
-const resultModal = document.getElementById('resultModalCase');
-const message = document.getElementById('messageCase');
 
-// ===================== ФУНКЦИИ =====================
-function updateBalance() {
-  document.getElementById('balanceCase').textContent = balance.toFixed(2);
-  localStorage.setItem('cases_balance', balance);
-}
+/* =====================================================
+   DOM
+===================================================== */
+
+const mainScreen =
+    document.getElementById("mainScreenCase");
+
+const caseScreen =
+    document.getElementById("caseScreenCase");
+
+const caseTitle =
+    document.getElementById("caseTitle");
+
+const openButton =
+    document.getElementById("openButton");
+
+const rouletteTrack =
+    document.getElementById("rouletteTrack");
+
+const itemsGrid =
+    document.getElementById("itemsGrid");
+
+const resultModal =
+    document.getElementById("resultModalCase");
+
+const resultEmoji =
+    document.getElementById("resultEmoji");
+
+const resultName =
+    document.getElementById("resultName");
+
+const resultValue =
+    document.getElementById("resultValue");
+
+const message =
+    document.getElementById("messageCase");
+
+
+/* =====================================================
+   ОТКРЫТЬ ЭКРАН КЕЙСА
+===================================================== */
 
 function openCaseScreen(type) {
-  if (opening) return;
-  currentCaseType = type;
-  currentItems = cases[type].items;
-  caseTitle.textContent = cases[type].title;
-  openButton.textContent = type === 'free' ? 'ОТКРЫТЬ FREE 🎁' : `КУПИТЬ ЗА ${cases[type].price} ⭐`;
-  openButton.className = 'open-button' + (type === 'free' ? ' free-open' : '');
-  mainScreen.classList.remove('active');
-  caseScreen.classList.add('active');
-  renderItems();
-  resetRoulette();
+
+    if (opening) {
+        return;
+    }
+
+    currentCaseType = type;
+
+
+    if (type === "free") {
+
+        currentItems = freeItemsCase;
+
+        caseTitle.textContent =
+            "CASE FREE 🎁";
+
+        openButton.textContent =
+            "ОТКРЫТЬ FREE 🎁";
+
+        openButton.classList.add("free-open");
+
+    }
+
+    else if (type === "pls-pepe") {
+
+        currentItems = plsPepeItemsCase;
+
+        caseTitle.textContent =
+            "PLS PEPE 🐸";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 10 ⭐";
+
+        openButton.classList.remove("free-open");
+
+    }
+
+    else if (type === "250") {
+
+        currentItems = case250ItemsCase;
+
+        caseTitle.textContent =
+            "CASE 250 💎";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 250 ⭐";
+
+        openButton.classList.remove("free-open");
+
+    }
+
+    else {
+
+        currentItems = itemsCase;
+
+        caseTitle.textContent =
+            "CASE 50 ⭐";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 50 ⭐";
+
+        openButton.classList.remove("free-open");
+
+    }
+
+
+    mainScreen.classList.remove("active");
+
+    caseScreen.classList.add("active");
+
+    renderItems();
+
+    resetRoulette();
+
 }
+
+
+/* =====================================================
+   НАЗАД
+===================================================== */
 
 function showMainCase() {
-  if (opening) {
-    showMessage('Подождите окончания открытия кейса');
-    return;
-  }
-  caseScreen.classList.remove('active');
-  mainScreen.classList.add('active');
+
+    if (opening) {
+
+        showMessage(
+            "Подождите окончания открытия кейса"
+        );
+
+        return;
+
+    }
+
+    caseScreen.classList.remove("active");
+
+    mainScreen.classList.add("active");
+
 }
+
+
+/* =====================================================
+   ПРЕДМЕТЫ
+===================================================== */
 
 function renderItems() {
-  itemsGrid.innerHTML = '';
-  [...currentItems]
-    .sort((a, b) => b.value - a.value)
-    .forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'item-card ' + item.rarity;
-      card.innerHTML = `<div class="item-emoji">${item.emoji}</div>
-                        <div class="item-name">${item.name}</div>
-                        <div class="item-price">+${item.value} ⭐</div>`;
-      itemsGrid.appendChild(card);
-    });
+
+    itemsGrid.innerHTML = "";
+
+
+    [...currentItems]
+        .sort(
+            (a, b) => b.value - a.value
+        )
+        .forEach(item => {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "item-card " +
+                item.rarity;
+
+
+            card.innerHTML = `
+                <div class="item-emoji">
+                    ${item.emoji}
+                </div>
+
+                <div class="item-name">
+                    ${item.name}
+                </div>
+
+                <div class="item-price">
+                    +${item.value} ⭐
+                </div>
+            `;
+
+
+            itemsGrid.appendChild(card);
+
+        });
+
 }
+
+
+/* =====================================================
+   ВЫБОР ПОБЕДИТЕЛЯ
+===================================================== */
 
 function getRandomItem() {
-  const total = currentItems.reduce((s, i) => s + i.chance, 0);
-  let random = Math.random() * total;
-  for (const item of currentItems) {
-    random -= item.chance;
-    if (random <= 0) return item;
-  }
-  return currentItems[currentItems.length - 1];
+
+    const totalChance =
+        currentItems.reduce(
+            (sum, item) =>
+                sum + item.chance,
+            0
+        );
+
+
+    let random =
+        Math.random() * totalChance;
+
+
+    for (const item of currentItems) {
+
+        random -= item.chance;
+
+        if (random <= 0) {
+            return item;
+        }
+
+    }
+
+
+    return currentItems[
+        currentItems.length - 1
+    ];
+
 }
+
+
+/* =====================================================
+   КАРТОЧКА РУЛЕТКИ
+===================================================== */
 
 function createRouletteCard(item) {
-  const el = document.createElement('div');
-  el.className = 'roulette-item ' + item.rarity;
-  el.innerHTML = `<div class="roulette-emoji">${item.emoji}</div>
-                  <div class="roulette-name">${item.name}</div>`;
-  return el;
+
+    const element =
+        document.createElement("div");
+
+    element.className =
+        "roulette-item " +
+        item.rarity;
+
+
+    element.innerHTML = `
+        <div class="roulette-emoji">
+            ${item.emoji}
+        </div>
+
+        <div class="roulette-name">
+            ${item.name}
+        </div>
+    `;
+
+
+    return element;
+
 }
+
+
+/* =====================================================
+   СБРОС РУЛЕТКИ
+===================================================== */
 
 function resetRoulette() {
-  rouletteTrack.style.transition = 'none';
-  rouletteTrack.style.transform = 'translateX(0px)';
-  rouletteTrack.innerHTML = '';
-  for (let i = 0; i < 18; i++) {
-    rouletteTrack.appendChild(createRouletteCard(currentItems[Math.floor(Math.random() * currentItems.length)]));
-  }
+
+    rouletteTrack.style.transition = "none";
+
+    rouletteTrack.style.transform =
+        "translateX(0px)";
+
+    rouletteTrack.innerHTML = "";
+
+
+    for (let i = 0; i < 18; i++) {
+
+        const item =
+            currentItems[
+                Math.floor(
+                    Math.random() *
+                    currentItems.length
+                )
+            ];
+
+        rouletteTrack.appendChild(
+            createRouletteCard(item)
+        );
+
+    }
+
 }
+
+
+/* =====================================================
+   ОТКРЫТИЕ КЕЙСА
+===================================================== */
 
 function openCurrentCase() {
-  if (opening) return;
-  if (currentCaseType === 'free') {
-    const last = Number(localStorage.getItem('free_case_time')) || 0;
-    if (Date.now() - last < 86400000) {
-      showMessage('FREE кейс ещё недоступен: ' + formatTime(86400000 - (Date.now() - last)));
-      return;
+
+    if (opening) {
+        return;
     }
-    localStorage.setItem('free_case_time', Date.now());
-    updateFreeTimer();
-  }
-  const price = cases[currentCaseType].price;
-  if (price > 0 && balance < price) {
-    showMessage('Недостаточно ⭐');
-    return;
-  }
-  if (price > 0) {
-    balance -= price;
-    updateBalance();
-  }
-  opening = true;
-  openButton.disabled = true;
-  currentWinner = getRandomItem();
-  startRoulette(currentWinner);
+
+
+    /* FREE */
+
+    if (currentCaseType === "free") {
+
+        const last =
+            Number(
+                localStorage.getItem(
+                    "free_case_time"
+                )
+            ) || 0;
+
+
+        const cooldown =
+            24 * 60 * 60 * 1000;
+
+
+        if (
+            Date.now() - last <
+            cooldown
+        ) {
+
+            const remaining =
+                cooldown -
+                (Date.now() - last);
+
+
+            showMessage(
+                "FREE кейс ещё недоступен: " +
+                formatTime(remaining)
+            );
+
+            return;
+
+        }
+
+
+        localStorage.setItem(
+            "free_case_time",
+            Date.now()
+        );
+
+        updateFreeTimer();
+
+    }
+
+
+    /* ЦЕНА */
+
+    let price = 0;
+
+
+    if (currentCaseType === "pls-pepe") {
+        price = 10;
+    }
+
+    else if (currentCaseType === "50") {
+        price = 50;
+    }
+
+    else if (currentCaseType === "250") {
+        price = 250;
+    }
+
+
+    if (
+        price > 0 &&
+        balance < price
+    ) {
+
+        showMessage(
+            "Недостаточно ⭐"
+        );
+
+        return;
+
+    }
+
+
+    if (price > 0) {
+
+        balance -= price;
+
+        balance =
+            Math.round(
+                balance * 100
+            ) / 100;
+
+        updateBalance();
+
+    }
+
+
+    opening = true;
+
+    openButton.disabled = true;
+
+
+    currentWinner =
+        getRandomItem();
+
+
+    startRoulette(
+        currentWinner
+    );
+
 }
+
+
+/* =====================================================
+   АНИМАЦИЯ РУЛЕТКИ
+===================================================== */
 
 function startRoulette(winner) {
-  rouletteTrack.innerHTML = '';
-  rouletteTrack.style.transition = 'none';
-  rouletteTrack.style.transform = 'translateX(0px)';
-  const total = 45;
-  const winnerIndex = 36;
-  for (let i = 0; i < total; i++) {
-    const item = i === winnerIndex ? winner : currentItems[Math.floor(Math.random() * currentItems.length)];
-    rouletteTrack.appendChild(createRouletteCard(item));
-  }
-  const windowWidth = document.querySelector('.roulette-window').clientWidth;
-  const firstCard = rouletteTrack.querySelector('.roulette-item');
-  const cardWidth = firstCard ? firstCard.offsetWidth : 125;
-  const gap = 10;
-  const center = windowWidth / 2 - cardWidth / 2;
-  const position = -(winnerIndex * (cardWidth + gap) - center);
-  const randomOffset = Math.random() * Math.min(16, cardWidth * 0.12) - Math.min(8, cardWidth * 0.06);
-  requestAnimationFrame(() => {
+
+    rouletteTrack.innerHTML = "";
+
+    rouletteTrack.style.transition = "none";
+
+    rouletteTrack.style.transform =
+        "translateX(0px)";
+
+
+    const total = 45;
+
+    const winnerIndex = 36;
+
+
+    for (let i = 0; i < total; i++) {
+
+        let item;
+
+
+        if (i === winnerIndex) {
+
+            item = winner;
+
+        }
+
+        else {
+
+            item =
+                currentItems[
+                    Math.floor(
+                        Math.random() *
+                        currentItems.length
+                    )
+                ];
+
+        }
+
+
+        rouletteTrack.appendChild(
+            createRouletteCard(item)
+        );
+
+    }
+
+
+    const cardWidth = 135;
+
+
+    const windowWidth =
+        document.querySelector(
+            ".roulette-window"
+        ).offsetWidth;
+
+
+    const center =
+        windowWidth / 2 - 62.5;
+
+
+    const position =
+        -(
+            winnerIndex *
+            cardWidth -
+            center
+        );
+
+
+    const randomOffset =
+        Math.random() * 16 - 8;
+
+
     requestAnimationFrame(() => {
-      rouletteTrack.style.transition = 'transform 6.5s cubic-bezier(.08,.72,.05,1)';
-      rouletteTrack.style.transform = `translateX(${position + randomOffset}px)`;
+
+        requestAnimationFrame(() => {
+
+            rouletteTrack.style.transition =
+                "transform 6.5s cubic-bezier(.08,.72,.05,1)";
+
+            rouletteTrack.style.transform =
+                "translateX(" +
+                (
+                    position +
+                    randomOffset
+                ) +
+                "px)";
+
+        });
+
     });
-  });
-  setTimeout(() => {
-    showResult(winner);
-    opening = false;
-    openButton.disabled = false;
-  }, 6800);
+
+
+    setTimeout(() => {
+
+        showResult(winner);
+
+        opening = false;
+
+        openButton.disabled = false;
+
+    }, 6800);
+
 }
+
+
+/* =====================================================
+   РЕЗУЛЬТАТ
+===================================================== */
 
 function showResult(item) {
-  document.getElementById('resultEmoji').textContent = item.emoji;
-  document.getElementById('resultName').textContent = item.name;
-  document.getElementById('resultValue').textContent = '+' + item.value + ' ⭐';
-  resultModal.classList.add('show');
+
+    resultEmoji.textContent =
+        item.emoji;
+
+    resultName.textContent =
+        item.name;
+
+    resultValue.textContent =
+        "+" +
+        item.value +
+        " ⭐";
+
+
+    resultModal.classList.add("show");
+
 }
+
+
+/* =====================================================
+   ПРОДАТЬ
+===================================================== */
 
 function sellResult() {
-  if (!currentWinner) return;
-  balance = Math.round((balance + currentWinner.value) * 100) / 100;
-  updateBalance();
-  closeResult();
-  showMessage('Предмет продан ⭐');
+
+    if (!currentWinner) {
+        return;
+    }
+
+
+    balance += currentWinner.value;
+
+    balance =
+        Math.round(
+            balance * 100
+        ) / 100;
+
+
+    updateBalance();
+
+
+    resultModal.classList.remove("show");
+
+
+    currentWinner = null;
+
+
+    resetRoulette();
+
 }
+
+
+/* =====================================================
+   СОХРАНИТЬ В ИНВЕНТАРЬ
+===================================================== */
 
 function saveResult() {
-  if (!currentWinner) return;
-  let inventory = [];
-  try { inventory = JSON.parse(localStorage.getItem('case_inventory')) || []; } catch (e) { inventory = []; }
-  inventory.push(currentWinner);
-  localStorage.setItem('case_inventory', JSON.stringify(inventory));
-  closeResult();
-  showMessage('Предмет сохранён в инвентарь 🎒');
+
+    if (!currentWinner) {
+        return;
+    }
+
+
+    let inventory = [];
+
+
+    try {
+
+        inventory =
+            JSON.parse(
+                localStorage.getItem(
+                    "case_inventory"
+                )
+            ) || [];
+
+    }
+
+    catch (e) {
+
+        inventory = [];
+
+    }
+
+
+    inventory.push(currentWinner);
+
+
+    localStorage.setItem(
+        "case_inventory",
+        JSON.stringify(inventory)
+    );
+
+
+    resultModal.classList.remove("show");
+
+
+    currentWinner = null;
+
+
+    resetRoulette();
+
+
+    showMessage(
+        "Предмет сохранён в инвентарь 🎒"
+    );
+
 }
 
-function closeResult() {
-  resultModal.classList.remove('show');
-  currentWinner = null;
-  resetRoulette();
-}
 
-function formatTime(ms) {
-  let seconds = Math.ceil(ms / 1000);
-  const hours = Math.floor(seconds / 3600);
-  seconds %= 3600;
-  const minutes = Math.floor(seconds / 60);
-  seconds %= 60;
-  return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-}
+/* =====================================================
+   FREE TIMER
+===================================================== */
 
 function updateFreeTimer() {
-  const button = document.getElementById('freeStatusButton');
-  const last = Number(localStorage.getItem('free_case_time')) || 0;
-  const remaining = 86400000 - (Date.now() - last);
-  if (remaining <= 0) {
-    button.textContent = 'ГОТОВ К ОТКРЫТИЮ';
-    button.classList.remove('cooldown');
-    return;
-  }
-  button.textContent = 'СНОВА ЧЕРЕЗ ' + formatTime(remaining);
-  button.classList.add('cooldown');
+
+    const readyButton =
+        document.getElementById(
+            "freeReadyButton"
+        );
+
+    const caseButton =
+        document.getElementById(
+            "freeCaseBox"
+        );
+
+
+    const last =
+        Number(
+            localStorage.getItem(
+                "free_case_time"
+            )
+        ) || 0;
+
+
+    const cooldown =
+        24 * 60 * 60 * 1000;
+
+
+    const remaining =
+        cooldown -
+        (Date.now() - last);
+
+
+    if (remaining <= 0) {
+
+        readyButton.textContent =
+            "ГОТОВ К ОТКРЫТИЮ 🎁";
+
+        readyButton.classList.remove(
+            "disabled"
+        );
+
+        caseButton.classList.remove(
+            "disabled"
+        );
+
+        return;
+
+    }
+
+
+    readyButton.textContent =
+        formatTime(remaining);
+
+
+    readyButton.classList.add(
+        "disabled"
+    );
+
+    caseButton.classList.add(
+        "disabled"
+    );
+
 }
+
+
+function formatTime(ms) {
+
+    let seconds =
+        Math.ceil(ms / 1000);
+
+
+    const hours =
+        Math.floor(
+            seconds / 3600
+        );
+
+
+    seconds %= 3600;
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    seconds %= 60;
+
+
+    return (
+        String(hours).padStart(2, "0") +
+        ":" +
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0")
+    );
+
+}
+
+
+/* =====================================================
+   СООБЩЕНИЕ
+===================================================== */
 
 let messageTimer = null;
+
+
 function showMessage(text) {
-  clearTimeout(messageTimer);
-  message.textContent = text;
-  message.classList.add('show');
-  messageTimer = setTimeout(() => message.classList.remove('show'), 2500);
+
+    clearTimeout(messageTimer);
+
+
+    message.textContent = text;
+
+
+    message.classList.add("show");
+
+
+    messageTimer =
+        setTimeout(() => {
+
+            message.classList.remove(
+                "show"
+            );
+
+        }, 2500);
+
 }
 
-// ===================== ИНИЦИАЛИЗАЦИЯ =====================
-updateBalance();
-updateFreeTimer();
-setInterval(updateFreeTimer, 1000);
-renderItems();
-resetRoulette();
 
-// Дополнительная привязка обработчиков (на случай, если inline onclick не сработает)
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('freeCaseBox').addEventListener('click', function() { openCaseScreen('free'); });
-  document.getElementById('freeStatusButton').addEventListener('click', function() { openCaseScreen('free'); });
-  document.querySelectorAll('.main-case-button').forEach(function(btn) {
-    const text = (btn.textContent || '').toUpperCase();
-    if (text.includes('PLS PEPE')) btn.addEventListener('click', function() { openCaseScreen('pls-pepe'); });
-    else if (text.includes('CASE 250')) btn.addEventListener('click', function() { openCaseScreen('250'); });
-    else if (text.includes('CASE 50')) btn.addEventListener('click', function() { openCaseScreen('50'); });
-  });
-  document.getElementById('openButton').addEventListener('click', openCurrentCase);
-  document.querySelectorAll('.back-case').forEach(function(b) { b.addEventListener('click', showMainCase); });
-});
+/* =====================================================
+   ЗАКРЫТЬ
+===================================================== */
+
+function closeCases() {
+
+    if (opening) {
+
+        showMessage(
+            "Подождите окончания открытия кейса"
+        );
+
+        return;
+
+    }
+
+
+    showMainCase();
+
+}
+
+
+/* =====================================================
+   ЗАПУСК
+===================================================== */
+
+updateBalance();
+
+updateFreeTimer();
+
+setInterval(
+    updateFreeTimer,
+    1000
+);
+
+showMainCase();
+
 </script>
+
 </body>
 </html>
