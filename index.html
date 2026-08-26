@@ -603,7 +603,7 @@ button {
 }
 
 /* =====================================================
-   АНИМАЦИЯ СТИРАЛКИ И БУКВ
+   АНИМАЦИЯ
 ===================================================== */
 
 #menuPage {
@@ -613,7 +613,7 @@ button {
 .menu-title-row {
     position: relative;
 
-    height: 95px;
+    height: 105px;
 
     display: flex;
     align-items: flex-start;
@@ -622,8 +622,6 @@ button {
 
     overflow: visible;
 }
-
-/* СЛОВО МЕНЮ */
 
 .menu-title-row .page-title {
     position: relative;
@@ -646,7 +644,7 @@ button {
     top: 0;
 
     width: 100%;
-    height: 95px;
+    height: 105px;
 
     pointer-events: none;
 
@@ -657,7 +655,7 @@ button {
     z-index: 15;
 }
 
-/* БУКВЫ — УВЕЛИЧЕННЫЙ РАЗМЕР */
+/* БУКВЫ */
 
 #menuLetters {
     position: absolute;
@@ -677,8 +675,7 @@ button {
         Helvetica,
         sans-serif;
 
-    /* УВЕЛИЧИЛ РАЗМЕР */
-    font-size: clamp(28px, 7vw, 52px);
+    font-size: clamp(24px, 6vw, 42px);
 
     font-weight: 900;
 
@@ -724,10 +721,11 @@ button {
             0 0 35px rgba(255,255,255,1),
             0 0 65px rgba(255,255,255,.6);
     }
-
 }
 
-/* СТИРАЛЬНАЯ МАШИНА */
+/* =====================================================
+   СТИРАЛЬНАЯ МАШИНА
+===================================================== */
 
 #menuMachine {
     position: absolute;
@@ -786,13 +784,17 @@ button {
     border: 1px solid #aaa;
 
     border-radius: 3px;
+
+    overflow: hidden;
 }
+
+/* ДИСПЛЕЙ */
 
 #menuMachine .disp {
     position: absolute;
 
     width: 6px;
-    height: 13px;
+    height: 9px;
 
     left: 3px;
     top: 3px;
@@ -804,6 +806,8 @@ button {
     border-radius: 2px;
 }
 
+/* МАЛЕНЬКАЯ КНОПКА */
+
 #menuMachine .btn-sm {
     position: absolute;
 
@@ -811,21 +815,23 @@ button {
     height: 4px;
 
     left: 4px;
-    top: 21px;
+    top: 16px;
 
     border-radius: 50%;
 
     background: #999;
 }
 
+/* БОЛЬШАЯ КНОПКА */
+
 #menuMachine .btn-lg {
     position: absolute;
 
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
 
-    left: 2px;
-    top: 28px;
+    left: 3px;
+    top: 27px;
 
     border-radius: 50%;
 
@@ -848,8 +854,8 @@ button {
     width: 34px;
     height: 34px;
 
-    left: 4px;
-    top: 7px;
+    left: 2px;
+    top: 5px;
 
     border-radius: 50%;
 
@@ -864,14 +870,16 @@ button {
     border: 2px solid #888;
 }
 
+/* ЧЁРНЫЙ КРУГ */
+
 #menuMachine .glass {
     position: absolute;
 
     width: 27px;
     height: 27px;
 
-    left: 2px;
-    top: 2px;
+    left: 1px;
+    top: 1px;
 
     border-radius: 50%;
 
@@ -936,7 +944,7 @@ button {
     }
 
     #menuAnimation .letter {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     #menuMachine {
@@ -944,6 +952,47 @@ button {
         height: 42px;
     }
 
+    #menuMachine .panel {
+        width: 13px;
+        height: 35px;
+        right: 2px;
+        top: 2px;
+    }
+
+    #menuMachine .window {
+        width: 31px;
+        height: 31px;
+        left: 2px;
+        top: 4px;
+    }
+
+    #menuMachine .glass {
+        width: 24px;
+        height: 24px;
+        left: 1px;
+        top: 1px;
+    }
+
+    #menuMachine .disp {
+        width: 5px;
+        height: 8px;
+        left: 3px;
+        top: 3px;
+    }
+
+    #menuMachine .btn-sm {
+        width: 4px;
+        height: 4px;
+        left: 3px;
+        top: 14px;
+    }
+
+    #menuMachine .btn-lg {
+        width: 6px;
+        height: 6px;
+        left: 3px;
+        top: 24px;
+    }
 }
 
 /* Содержимое поверх фона */
@@ -992,13 +1041,11 @@ button {
                     Меню
                 </div>
 
-
                 <!-- АНИМАЦИЯ -->
 
                 <div id="menuAnimation">
 
-                    <div
-                        id="menuMachine">
+                    <div id="menuMachine">
 
                         <div class="panel">
 
@@ -1010,22 +1057,17 @@ button {
 
                         </div>
 
-
                         <div class="window">
 
                             <div class="glass"></div>
 
                         </div>
 
-
                         <div class="bottom-line"></div>
 
                     </div>
 
-
-                    <div
-                        id="menuLetters">
-                    </div>
+                    <div id="menuLetters"></div>
 
                 </div>
 
@@ -1060,7 +1102,8 @@ button {
 
                 <button
                     class="game-button"
-                    style="cursor:default;opacity:0.6;">
+                    style="cursor:default;opacity:0.6;"
+                    type="button">
 
                     ИГРАТЬ
 
@@ -1091,7 +1134,8 @@ button {
 
                 <button
                     class="game-button"
-                    style="cursor:default;opacity:0.6;">
+                    style="cursor:default;opacity:0.6;"
+                    type="button">
 
                     ИГРАТЬ
 
@@ -1121,7 +1165,8 @@ button {
 
                 <button
                     class="game-button"
-                    style="cursor:default;opacity:0.6;">
+                    style="cursor:default;opacity:0.6;"
+                    type="button">
 
                     ИГРАТЬ
 
@@ -1151,7 +1196,8 @@ button {
 
                 <button
                     class="game-button"
-                    style="cursor:default;opacity:0.6;">
+                    style="cursor:default;opacity:0.6;"
+                    type="button">
 
                     ИГРАТЬ
 
@@ -1179,7 +1225,6 @@ button {
 
             </div>
 
-
             <button
                 class="sell-all"
                 id="sellAllButton">
@@ -1188,10 +1233,7 @@ button {
 
             </button>
 
-
-            <div
-                id="inventoryContainer">
-            </div>
+            <div id="inventoryContainer"></div>
 
         </section>
 
@@ -2015,7 +2057,6 @@ navButtons.forEach(
 
 (function() {
 
-
     const machine =
         document.getElementById(
             "menuMachine"
@@ -2064,19 +2105,19 @@ navButtons.forEach(
 
 
     /*
-       Настройки анимации
+       НАСТРОЙКИ
     */
 
     const START_DELAY =
-        800;
+        700;
 
 
     const LETTER_DELAY =
-        260;
+        220;
 
 
     const WORD_DELAY =
-        450;
+        350;
 
 
     const DURATION =
@@ -2088,8 +2129,8 @@ navButtons.forEach(
 
 
     /*
-       Стиралка летит
-       рядом со словом Меню
+       Машинка летит
+       сверху над словом
     */
 
     function getMachinePosition(
@@ -2114,12 +2155,17 @@ navButtons.forEach(
             width + 70;
 
 
+        /*
+           Машинка находится
+           выше слова "Меню"
+        */
+
         const centerY =
-            28;
+            10;
 
 
         const arcHeight =
-            18;
+            12;
 
 
         const x =
@@ -2145,7 +2191,7 @@ navButtons.forEach(
                 progress *
                 Math.PI
             ) *
-            10;
+            8;
 
 
         return {
@@ -2153,6 +2199,134 @@ navButtons.forEach(
             x,
             y,
             angle
+
+        };
+
+    }
+
+
+    /*
+       Получаем размеры
+       текста White Bear,
+       чтобы он всегда
+       помещался на экран
+    */
+
+    function getLetterLayout() {
+
+        const containerWidth =
+            lettersContainer.offsetWidth;
+
+
+        const menuTitle =
+            document.querySelector(
+                "#menuPage .page-title"
+            );
+
+
+        const titleWidth =
+            menuTitle.offsetWidth;
+
+
+        /*
+           Минимальный отступ
+           после слова Меню
+        */
+
+        const finalStart =
+            titleWidth +
+            30;
+
+
+        /*
+           Максимальная доступная
+           ширина справа
+        */
+
+        const availableWidth =
+            containerWidth -
+            finalStart -
+            8;
+
+
+        /*
+           White Bear = 9 букв
+           + небольшой промежуток
+        */
+
+        const totalLetters = 9;
+
+
+        /*
+           Подбираем расстояние
+           автоматически
+        */
+
+        let spacing =
+            availableWidth /
+            totalLetters;
+
+
+        /*
+           Не даём буквам
+           стать слишком большими
+        */
+
+        spacing =
+            Math.max(
+                17,
+                Math.min(
+                    spacing,
+                    31
+                )
+            );
+
+
+        /*
+           Размер букв
+           тоже адаптивный
+        */
+
+        let fontSize =
+            Math.min(
+                38,
+                Math.max(
+                    22,
+                    spacing * 0.95
+                )
+            );
+
+
+        /*
+           Если экран совсем узкий —
+           уменьшаем всё ещё сильнее
+        */
+
+        if (
+            availableWidth < 190
+        ) {
+
+            spacing =
+                Math.max(
+                    15,
+                    availableWidth /
+                    totalLetters
+                );
+
+            fontSize =
+                Math.max(
+                    20,
+                    spacing * 0.9
+                );
+
+        }
+
+
+        return {
+
+            finalStart,
+            spacing,
+            fontSize
 
         };
 
@@ -2170,7 +2344,6 @@ navButtons.forEach(
         machinePosition
     ) {
 
-
         const letter =
             document.createElement(
                 "div"
@@ -2187,7 +2360,7 @@ navButtons.forEach(
 
         /*
            Начальная позиция —
-           возле стиралки
+           возле машинки
         */
 
         const startX =
@@ -2197,36 +2370,33 @@ navButtons.forEach(
 
         const startY =
             machinePosition.y +
-            23;
+            20;
 
 
         /*
-           Буквы справа
-           от слова Меню
+           Получаем адаптивную
+           раскладку букв
         */
 
-        const menuTitle =
-            document.querySelector(
-                "#menuPage .page-title"
-            );
-
-
-        const titleWidth =
-            menuTitle.offsetWidth;
+        const layout =
+            getLetterLayout();
 
 
         const finalStart =
-            titleWidth +
-            35;
+            layout.finalStart;
 
 
         const letterSpacing =
-            32; /* увеличил расстояние между буквами */
+            layout.spacing;
+
+
+        letter.style.fontSize =
+            layout.fontSize +
+            "px";
 
 
         /*
-           Считаем позицию буквы
-           внутри слова
+           Индекс внутри слова
         */
 
         let sameWordIndex = 0;
@@ -2251,22 +2421,52 @@ navButtons.forEach(
 
 
         /*
-           White Bear располагаются
-           в одну строку справа
+           Расстояние между
+           White и Bear
         */
 
         const wordOffset =
             wordIndex === 0
                 ? 0
-                : 6 * letterSpacing + 30;
+                : 5 * letterSpacing + 8;
 
 
-        const finalX =
+        /*
+           Финальная позиция
+        */
+
+        let finalX =
             finalStart +
             wordOffset +
             sameWordIndex *
             letterSpacing;
 
+
+        /*
+           Дополнительная защита:
+           буквы никогда не выходят
+           за правый край
+        */
+
+        const maxX =
+            lettersContainer.offsetWidth -
+            8;
+
+
+        if (
+            finalX >
+            maxX
+        ) {
+
+            finalX =
+                maxX;
+
+        }
+
+
+        /*
+           Немного выше центра
+        */
 
         const finalY =
             28;
@@ -2292,7 +2492,6 @@ navButtons.forEach(
         function animateLetter(
             now
         ) {
-
 
             let progress =
                 (
@@ -2401,7 +2600,6 @@ navButtons.forEach(
         time
     ) {
 
-
         if (
             startTime === null
         ) {
@@ -2457,7 +2655,6 @@ navButtons.forEach(
             letters.length
         ) {
 
-
             const item =
                 letters[
                     letterIndex
@@ -2503,9 +2700,8 @@ navButtons.forEach(
         } else {
 
             /*
-               После полёта стиралка
-               скрывается за экраном,
-               буквы остаются.
+               После пролёта
+               машинка исчезает
             */
 
             machine.style.display =
@@ -2514,6 +2710,113 @@ navButtons.forEach(
         }
 
     }
+
+
+    /*
+       Пересчитываем позиции,
+       если экран повернули
+       или изменился размер
+    */
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            const existingLetters =
+                lettersContainer.querySelectorAll(
+                    ".letter"
+                );
+
+
+            if (
+                existingLetters.length === 0
+            ) {
+                return;
+            }
+
+
+            const layout =
+                getLetterLayout();
+
+
+            let visualIndex = 0;
+
+
+            existingLetters.forEach(
+                letter => {
+
+                    const item =
+                        letters[
+                            visualIndex
+                        ];
+
+
+                    if (!item) {
+                        return;
+                    }
+
+
+                    let sameWordIndex = 0;
+
+
+                    for (
+                        let i = 0;
+                        i < visualIndex;
+                        i++
+                    ) {
+
+                        if (
+                            letters[i].word ===
+                            item.word
+                        ) {
+
+                            sameWordIndex++;
+
+                        }
+
+                    }
+
+
+                    const wordOffset =
+                        item.word === 0
+                            ? 0
+                            : 5 * layout.spacing + 8;
+
+
+                    let x =
+                        layout.finalStart +
+                        wordOffset +
+                        sameWordIndex *
+                        layout.spacing;
+
+
+                    const maxX =
+                        lettersContainer.offsetWidth -
+                        8;
+
+
+                    x =
+                        Math.min(
+                            x,
+                            maxX
+                        );
+
+
+                    letter.style.left =
+                        x + "px";
+
+
+                    letter.style.fontSize =
+                        layout.fontSize +
+                        "px";
+
+
+                    visualIndex++;
+
+                });
+
+        }
+    );
 
 
     requestAnimationFrame(
