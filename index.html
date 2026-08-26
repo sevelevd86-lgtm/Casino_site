@@ -187,7 +187,7 @@ button { cursor: pointer; }
 .nav-button.active .nav-icon { transform: translateY(-1px); }
 
 /* =====================================================
-   СТИРАЛКА НА ГЛАВНОМ ЭКРАНЕ (ПОВЕРХ МЕНЮ)
+   СТИРАЛКА НАД ИГРАМИ (без нижней надписи)
 ===================================================== */
 #menuPage {
     position: relative;
@@ -196,7 +196,7 @@ button { cursor: pointer; }
 #menuBgScene {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 5;
     pointer-events: none;
     background: transparent;
 }
@@ -313,25 +313,8 @@ button { cursor: pointer; }
     background: #aaa;
     border-radius: 3px;
 }
-#menuBgScene .casino-title {
-    position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: clamp(56px, 12vw, 140px);
-    font-weight: 900;
-    text-shadow: 0 0 20px #fff, 0 0 60px #ffaa00, 0 0 120px #ff8800;
-    letter-spacing: 8px;
-    z-index: 15;
-    opacity: 0;
-    animation: fadeInTitle 2s ease forwards;
-    pointer-events: none;
-}
-@keyframes fadeInTitle {
-    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
+/* УБРАНА нижняя надпись .casino-title */
+
 @media (max-width:600px) {
     #menuBgScene .machine { width: 64px; height: 55px; }
     #menuBgScene .machine .panel { width: 16px; height: 46px; }
@@ -701,7 +684,7 @@ navButtons.forEach(btn => {
 });
 
 // =====================================================
-// АНИМАЦИЯ СТИРАЛКИ (без фона, поверх меню)
+// АНИМАЦИЯ СТИРАЛКИ (без нижней надписи)
 // =====================================================
 (function() {
     const machine = document.getElementById('menuMachine');
@@ -826,10 +809,7 @@ navButtons.forEach(btn => {
             machine.style.top = finalPosition.y + 'px';
             machine.style.transform = 'rotate(' + finalPosition.angle + 'deg)';
             finished = true;
-            const title = document.createElement('div');
-            title.className = 'casino-title';
-            title.textContent = 'WHITE BEAR';
-            bgScene.appendChild(title);
+            // НИЖНЯЯ НАДПИСЬ УБРАНА
             return;
         }
         requestAnimationFrame(animateBg);
