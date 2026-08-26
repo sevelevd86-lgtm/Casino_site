@@ -187,7 +187,7 @@ button { cursor: pointer; }
 .nav-button.active .nav-icon { transform: translateY(-1px); }
 
 /* =====================================================
-   СТИРАЛКА НАД ИГРАМИ (без нижней надписи)
+   СТИРАЛКА НАД ИГРАМИ (рядом со словом Меню)
 ===================================================== */
 #menuPage {
     position: relative;
@@ -223,7 +223,7 @@ button { cursor: pointer; }
     width: 75px;
     height: 64px;
     left: -100px;
-    top: 40vh;
+    top: 30vh; /* сместил повыше, чтобы была рядом с "Меню" */
     background: linear-gradient(135deg,#fff,#f7f7f7 30%,#e5e5e5 65%,#aaa 100%);
     border: 1px solid #888;
     border-radius: 6px;
@@ -313,10 +313,9 @@ button { cursor: pointer; }
     background: #aaa;
     border-radius: 3px;
 }
-/* УБРАНА нижняя надпись .casino-title */
 
 @media (max-width:600px) {
-    #menuBgScene .machine { width: 64px; height: 55px; }
+    #menuBgScene .machine { width: 64px; height: 55px; top: 28vh; }
     #menuBgScene .machine .panel { width: 16px; height: 46px; }
     #menuBgScene .machine .window { width: 39px; height: 39px; left: 5px; top: 8px; }
     #menuBgScene .machine .window .glass { width: 32px; height: 32px; }
@@ -684,12 +683,11 @@ navButtons.forEach(btn => {
 });
 
 // =====================================================
-// АНИМАЦИЯ СТИРАЛКИ (без нижней надписи)
+// АНИМАЦИЯ СТИРАЛКИ (рядом со словом Меню)
 // =====================================================
 (function() {
     const machine = document.getElementById('menuMachine');
     const lettersContainer = document.getElementById('menuLetters');
-    const bgScene = document.getElementById('menuBgScene');
 
     const words = ['White', 'Bear'];
     const letters = [];
@@ -710,8 +708,9 @@ navButtons.forEach(btn => {
         const height = window.innerHeight;
         const startX = -100;
         const endX = width + 100;
-        const centerY = height * 0.53;
-        const arcHeight = Math.min(height * 0.30, 260);
+        // Поднял траекторию, чтобы стиралка была рядом с "Меню"
+        const centerY = height * 0.30;
+        const arcHeight = Math.min(height * 0.20, 180);
         const x = startX + (endX - startX) * progress;
         const y = centerY - Math.sin(progress * Math.PI) * arcHeight;
         const angle = -Math.cos(progress * Math.PI) * 12;
@@ -727,7 +726,7 @@ navButtons.forEach(btn => {
         const width = window.innerWidth;
         const height = window.innerHeight;
         const centerX = width * 0.55;
-        const centerY = height * 0.43;
+        const centerY = height * 0.30; // поднял буквы выше
         const letterSpacing = Math.min(width * 0.088, 88);
         const word = words[wordIndex];
         let sameWordIndex = 0;
@@ -809,7 +808,6 @@ navButtons.forEach(btn => {
             machine.style.top = finalPosition.y + 'px';
             machine.style.transform = 'rotate(' + finalPosition.angle + 'deg)';
             finished = true;
-            // НИЖНЯЯ НАДПИСЬ УБРАНА
             return;
         }
         requestAnimationFrame(animateBg);
