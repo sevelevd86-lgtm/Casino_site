@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Cases</title>
 
 <style>
+
+/* =====================================================
+   БАЗА
+===================================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,32 +19,38 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     min-height: 100%;
     background: #080b12;
     font-family: Arial, sans-serif;
+    color: white;
 }
 
 body {
     overflow-x: hidden;
-    color: white;
 }
 
 button {
-    font-family: Arial, sans-serif;
+    font-family: inherit;
 }
+
+
+/* =====================================================
+   ОСНОВНОЙ КОНТЕЙНЕР
+===================================================== */
 
 #casesGameContainer {
     width: 100%;
     min-height: 100vh;
-    padding: 14px 12px 40px;
+    padding: 18px 14px 40px;
 
     background:
         radial-gradient(
             circle at 50% -10%,
-            rgba(110,80,255,.22),
-            transparent 40%
+            rgba(110, 80, 255, 0.22),
+            transparent 38%
         ),
         linear-gradient(
             160deg,
@@ -47,6 +59,11 @@ button {
             #080b12
         );
 }
+
+
+/* =====================================================
+   ВЕРХНЯЯ ПАНЕЛЬ
+===================================================== */
 
 .topbar {
     width: 100%;
@@ -59,20 +76,28 @@ button {
 
 .balance-case {
     padding: 10px 16px;
+
     border-radius: 14px;
 
     background: #171d2a;
-    border: 1px solid rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,0.08);
 
     font-size: 18px;
     font-weight: 900;
 
-    box-shadow: 0 8px 25px rgba(0,0,0,.3);
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.3);
 }
 
 .balance-case span {
     color: #ffd84d;
 }
+
+
+/* =====================================================
+   ЭКРАНЫ
+===================================================== */
 
 .screen-case {
     display: none;
@@ -84,38 +109,154 @@ button {
     display: flex;
 }
 
-/* =========================
-   MAIN
-========================= */
+
+/* =====================================================
+   ГЛАВНЫЙ ЭКРАН
+===================================================== */
 
 .main-screen {
     flex-direction: column;
     align-items: center;
-    padding-top: 12px;
+    padding-top: 25px;
+    gap: 18px;
 }
 
 .main-title {
     font-size: 28px;
     font-weight: 1000;
     letter-spacing: 3px;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
-/* =========================
-   CASE CARD
-========================= */
+
+/* =====================================================
+   FREE CASE - PNG КЕЙС
+===================================================== */
+
+.free-case-wrapper {
+    width: min(430px, 94vw);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.free-case-image-button {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    transition: transform 0.15s ease;
+}
+
+.free-case-image-button:active {
+    transform: scale(0.97);
+}
+
+.free-case-image-button.disabled {
+    opacity: 0.55;
+}
+
+.free-case-image {
+    display: block;
+
+    width: 100%;
+    max-height: 280px;
+
+    object-fit: contain;
+
+    background: transparent;
+
+    border: none;
+
+    filter:
+        drop-shadow(
+            0 15px 25px
+            rgba(0,0,0,0.45)
+        );
+}
+
+
+/* =====================================================
+   КНОПКА ПОД FREE КЕЙСОМ
+===================================================== */
+
+.free-ready-button {
+    width: min(300px, 80vw);
+
+    padding: 14px 18px;
+
+    border-radius: 15px;
+
+    border: 1px solid rgba(80, 205, 255, 0.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            #173e58,
+            #0d2538
+        );
+
+    color: #76d1ff;
+
+    font-size: 15px;
+    font-weight: 1000;
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.25);
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.free-ready-button:active {
+    transform: scale(0.97);
+}
+
+.free-ready-button.disabled {
+    color: #9ba6bb;
+
+    border-color:
+        rgba(255,255,255,0.08);
+
+    background:
+        #171d2a;
+}
+
+
+/* =====================================================
+   ОБЫЧНЫЕ КАРТОЧКИ КЕЙСОВ
+===================================================== */
 
 .main-case-button {
     position: relative;
 
     width: min(430px, 94vw);
-    min-height: 175px;
+    height: 105px;
 
-    margin-bottom: 13px;
+    border-radius: 21px;
 
-    border-radius: 22px;
-
-    border: 1px solid rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,0.1);
 
     color: white;
 
@@ -124,18 +265,18 @@ button {
     display: flex;
     align-items: center;
 
-    padding: 18px;
+    padding: 0 20px;
 
     text-align: left;
 
     overflow: hidden;
 
     transition:
-        transform .15s ease,
-        border-color .15s ease;
+        transform 0.15s ease,
+        border-color 0.15s ease;
 
     box-shadow:
-        0 12px 35px rgba(0,0,0,.35);
+        0 12px 35px rgba(0,0,0,0.3);
 }
 
 .main-case-button::after {
@@ -151,173 +292,13 @@ button {
 }
 
 .main-case-button:active {
-    transform: scale(.97);
+    transform: scale(0.97);
 }
 
-/* =========================
-   FREE CASE
-========================= */
 
-.free-case-button {
-    min-height: 250px;
-
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    padding: 10px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #122c43,
-            #0b1827
-        );
-
-    border-color:
-        rgba(70,175,255,.35);
-}
-
-.free-case-button::after {
-    background:
-        linear-gradient(
-            90deg,
-            #54c2ff,
-            #397cff
-        );
-}
-
-/* PNG КЕЙС */
-
-.free-case-image {
-    position: relative;
-    z-index: 2;
-
-    width: min(230px, 70vw);
-    height: 155px;
-
-    object-fit: contain;
-
-    display: block;
-
-    /* У PNG прозрачность сохранится */
-    background: transparent;
-
-    pointer-events: none;
-
-    filter:
-        drop-shadow(
-            0 12px 20px rgba(0,0,0,.45)
-        );
-}
-
-/* =========================
-   FREE BUTTON UNDER IMAGE
-========================= */
-
-.free-ready-button {
-    position: relative;
-    z-index: 5;
-
-    width: min(270px, 82vw);
-
-    margin-top: 5px;
-
-    padding: 10px 14px;
-
-    border-radius: 12px;
-
-    border:
-        1px solid rgba(100,200,255,.3);
-
-    background:
-        linear-gradient(
-            135deg,
-            #1c668e,
-            #164c71
-        );
-
-    color: #fff;
-
-    text-align: center;
-
-    font-size: 12px;
-    font-weight: 1000;
-
-    box-shadow:
-        0 7px 20px rgba(0,0,0,.3);
-}
-
-.free-ready-button.timer {
-    color: #79cfff;
-}
-
-/* =========================
-   OTHER CASES
-========================= */
-
-.pls-pepe-button {
-    background:
-        linear-gradient(
-            135deg,
-            #183e3c,
-            #0b2427
-        );
-
-    border-color:
-        rgba(50,215,175,.35);
-}
-
-.pls-pepe-button::after {
-    background:
-        linear-gradient(
-            90deg,
-            #39d8ad,
-            #20a895
-        );
-}
-
-.case-50-button {
-    background:
-        linear-gradient(
-            135deg,
-            #3b3018,
-            #211b0e
-        );
-
-    border-color:
-        rgba(255,210,70,.4);
-}
-
-.case-50-button::after {
-    background:
-        linear-gradient(
-            90deg,
-            #ffe16a,
-            #f2a900
-        );
-}
-
-.case-250-button {
-    background:
-        linear-gradient(
-            135deg,
-            #38245c,
-            #1e1533
-        );
-
-    border-color:
-        rgba(165,130,255,.42);
-}
-
-.case-250-button::after {
-    background:
-        linear-gradient(
-            90deg,
-            #bd9aff,
-            #7650ed
-        );
-}
+/* =====================================================
+   ИКОНКА
+===================================================== */
 
 .case-icon {
     width: 58px;
@@ -326,20 +307,25 @@ button {
     border-radius: 16px;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
     margin-right: 16px;
 
-    background: rgba(255,255,255,.08);
+    background: rgba(255,255,255,0.08);
 
-    border:
-        1px solid rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,0.1);
 
     font-size: 29px;
 
     flex-shrink: 0;
 }
+
+
+/* =====================================================
+   ТЕКСТ
+===================================================== */
 
 .case-info {
     display: flex;
@@ -358,9 +344,88 @@ button {
     font-weight: 700;
 }
 
-/* =========================
-   CASE SCREEN
-========================= */
+
+/* =====================================================
+   PLS PEPE
+===================================================== */
+
+.pls-pepe-button {
+    background:
+        linear-gradient(
+            135deg,
+            #183e3c,
+            #0b2427
+        );
+
+    border-color:
+        rgba(50,215,175,0.35);
+}
+
+.pls-pepe-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #39d8ad,
+            #20a895
+        );
+}
+
+
+/* =====================================================
+   CASE 50
+===================================================== */
+
+.case-50-button {
+    background:
+        linear-gradient(
+            135deg,
+            #3b3018,
+            #211b0e
+        );
+
+    border-color:
+        rgba(255,210,70,0.4);
+}
+
+.case-50-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #ffe16a,
+            #f2a900
+        );
+}
+
+
+/* =====================================================
+   CASE 250
+===================================================== */
+
+.case-250-button {
+    background:
+        linear-gradient(
+            135deg,
+            #38245c,
+            #1e1533
+        );
+
+    border-color:
+        rgba(165,130,255,0.42);
+}
+
+.case-250-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #bd9aff,
+            #7650ed
+        );
+}
+
+
+/* =====================================================
+   ЭКРАН КЕЙСА
+===================================================== */
 
 .case-screen {
     flex-direction: column;
@@ -387,8 +452,7 @@ button {
 
     border-radius: 11px;
 
-    border:
-        1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,0.08);
 
     background: #171d2a;
 
@@ -399,9 +463,10 @@ button {
     cursor: pointer;
 }
 
-/* =========================
-   ROULETTE
-========================= */
+
+/* =====================================================
+   РУЛЕТКА
+===================================================== */
 
 .roulette-section {
     position: relative;
@@ -423,11 +488,13 @@ button {
 
     border-left: 16px solid transparent;
     border-right: 16px solid transparent;
+
     border-top: 25px solid #a78bfa;
 
     filter:
         drop-shadow(
-            0 0 8px rgba(167,139,250,.7)
+            0 0 8px
+            rgba(167,139,250,0.7)
         );
 }
 
@@ -441,11 +508,10 @@ button {
 
     background: #0d121e;
 
-    border:
-        1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,0.08);
 
     box-shadow:
-        inset 0 0 40px rgba(0,0,0,.5);
+        inset 0 0 40px rgba(0,0,0,0.5);
 }
 
 .roulette-track {
@@ -462,6 +528,7 @@ button {
 }
 
 .roulette-item {
+    width: 125px;
     min-width: 125px;
     height: 125px;
 
@@ -477,8 +544,7 @@ button {
 
     background: #171d2a;
 
-    border:
-        1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
 .roulette-emoji {
@@ -487,6 +553,7 @@ button {
 
 .roulette-name {
     margin-top: 8px;
+
     padding: 0 5px;
 
     text-align: center;
@@ -497,9 +564,10 @@ button {
     color: #b8c2d4;
 }
 
-/* =========================
-   OPEN BUTTON
-========================= */
+
+/* =====================================================
+   ОТКРЫТЬ
+===================================================== */
 
 .open-button {
     width: 100%;
@@ -525,10 +593,6 @@ button {
     font-weight: 1000;
 
     cursor: pointer;
-
-    box-shadow:
-        0 10px 30px
-        rgba(110,80,255,.2);
 }
 
 .open-button.free-open {
@@ -540,13 +604,18 @@ button {
         );
 }
 
-.open-button:disabled {
-    opacity: .5;
+.open-button:active {
+    transform: scale(0.98);
 }
 
-/* =========================
-   ITEMS
-========================= */
+.open-button:disabled {
+    opacity: 0.5;
+}
+
+
+/* =====================================================
+   ПРЕДМЕТЫ
+===================================================== */
 
 .items-title {
     margin: 27px 0 13px;
@@ -585,8 +654,7 @@ button {
 
     background: #141a27;
 
-    border:
-        1px solid rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,0.07);
 }
 
 .item-emoji {
@@ -615,26 +683,25 @@ button {
 }
 
 .legendary {
-    border-color:
-        rgba(255,215,70,.5);
+    border-color: rgba(255,215,70,0.5);
 }
 
 .rare {
-    border-color:
-        rgba(100,150,255,.4);
+    border-color: rgba(100,150,255,0.4);
 }
 
 .uncommon {
-    border-color:
-        rgba(60,190,165,.35);
+    border-color: rgba(60,190,165,0.35);
 }
 
-/* =========================
-   MODAL
-========================= */
+
+/* =====================================================
+   РЕЗУЛЬТАТ
+===================================================== */
 
 .modal-case {
     position: fixed;
+
     inset: 0;
 
     z-index: 100;
@@ -646,8 +713,7 @@ button {
 
     padding: 20px;
 
-    background:
-        rgba(0,0,0,.8);
+    background: rgba(0,0,0,0.8);
 }
 
 .modal-case.show {
@@ -671,11 +737,7 @@ button {
             #0d121e
         );
 
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    box-shadow:
-        0 25px 90px rgba(0,0,0,.65);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .result-emoji-case {
@@ -711,6 +773,7 @@ button {
 
 .result-buttons {
     display: flex;
+
     gap: 10px;
 
     margin-top: 23px;
@@ -722,6 +785,7 @@ button {
     padding: 14px 8px;
 
     border: none;
+
     border-radius: 13px;
 
     color: white;
@@ -745,9 +809,10 @@ button {
     color: #aeb8ca;
 }
 
-/* =========================
-   MESSAGE
-========================= */
+
+/* =====================================================
+   СООБЩЕНИЯ
+===================================================== */
 
 .message-case {
     position: fixed;
@@ -773,7 +838,7 @@ button {
 
     text-align: center;
 
-    transition: .3s ease;
+    transition: 0.3s ease;
 }
 
 .message-case.show {
@@ -781,6 +846,11 @@ button {
         translateX(-50%)
         translateY(0);
 }
+
+
+/* =====================================================
+   КРЕСТИК
+===================================================== */
 
 .close-button {
     position: fixed;
@@ -795,8 +865,7 @@ button {
 
     border-radius: 50%;
 
-    border:
-        1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,0.08);
 
     background: #171d2a;
 
@@ -807,9 +876,10 @@ button {
     cursor: pointer;
 }
 
-/* =========================
+
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
 @media (max-width: 500px) {
 
@@ -817,22 +887,20 @@ button {
         padding: 14px 12px 30px;
     }
 
+    .main-screen {
+        padding-top: 20px;
+    }
+
     .main-title {
         font-size: 25px;
     }
 
-    .free-case-button {
-        min-height: 240px;
-    }
+    .main-case-button {
+        width: 100%;
+        height: 98px;
 
-    .free-case-image {
-        width: 220px;
-        height: 145px;
-    }
-
-    .main-case-button:not(.free-case-button) {
-        min-height: 98px;
         border-radius: 19px;
+
         padding: 0 17px;
     }
 
@@ -852,33 +920,13 @@ button {
     .case-description {
         font-size: 10px;
     }
-}
-
-@media (max-width: 380px) {
-
-    .free-case-button {
-        min-height: 225px;
-    }
 
     .free-case-image {
-        width: 195px;
-        height: 130px;
+        max-height: 240px;
     }
 
-    .case-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-    }
-
-    .case-name {
-        font-size: 17px;
-    }
-
-    .items-grid {
-        gap: 7px;
-    }
 }
+
 </style>
 </head>
 
@@ -893,15 +941,23 @@ button {
     ✕
 </button>
 
+
+<!-- =====================================================
+     ВЕРХ
+===================================================== -->
+
 <div class="topbar">
+
     <div class="balance-case">
         ⭐ <span id="balanceCase">1000.00</span>
     </div>
+
 </div>
 
-<!-- =========================
-     MAIN SCREEN
-========================= -->
+
+<!-- =====================================================
+     ГЛАВНЫЙ ЭКРАН
+===================================================== -->
 
 <section
     id="mainScreenCase"
@@ -912,34 +968,35 @@ button {
         КЕЙСЫ
     </div>
 
+
     <!-- FREE CASE -->
 
-    <button
-        class="main-case-button free-case-button"
-        id="freeCaseBox"
-        onclick="openCaseScreen('free')"
-    >
+    <div class="free-case-wrapper">
 
-        <!--
-        ВАЖНО:
-        Положи PNG рядом с HTML и назови его:
-        FREE_CASE_IMAGE.png
-        -->
-
-        <img
-            src="case-free.png"
-            class="free-case-image"
-            alt="FREE Case"
+        <button
+            class="free-case-image-button"
+            id="freeCaseBox"
+            onclick="openCaseScreen('free')"
         >
 
-        <div
+            <img
+                id="freeCaseImage"
+                class="free-case-image"
+                alt="CASE FREE"
+            >
+
+        </button>
+
+
+        <button
             class="free-ready-button"
-            id="freeTimer"
+            id="freeReadyButton"
+            onclick="openCaseScreen('free')"
         >
             ГОТОВ К ОТКРЫТИЮ
-        </div>
+        </button>
 
-    </button>
+    </div>
 
 
     <!-- PLS PEPE -->
@@ -1022,9 +1079,9 @@ button {
 </section>
 
 
-<!-- =========================
-     CASE SCREEN
-========================= -->
+<!-- =====================================================
+     ЭКРАН КЕЙСА
+===================================================== -->
 
 <section
     id="caseScreenCase"
@@ -1037,7 +1094,7 @@ button {
             class="case-title"
             id="caseTitle"
         >
-            CASE 50 ⭐
+            CASE
         </div>
 
         <button
@@ -1048,6 +1105,7 @@ button {
         </button>
 
     </div>
+
 
     <div class="roulette-section">
 
@@ -1064,6 +1122,7 @@ button {
 
     </div>
 
+
     <button
         class="open-button"
         id="openButton"
@@ -1071,6 +1130,7 @@ button {
     >
         ОТКРЫТЬ
     </button>
+
 
     <div class="items-title">
         ПРЕДМЕТЫ В КЕЙСЕ
@@ -1084,9 +1144,9 @@ button {
 </section>
 
 
-<!-- =========================
-     RESULT
-========================= -->
+<!-- =====================================================
+     РЕЗУЛЬТАТ
+===================================================== -->
 
 <div
     class="modal-case"
@@ -1155,142 +1215,162 @@ button {
 
 "use strict";
 
-/* =========================
-   BALANCE
-========================= */
 
-let balance = Number(
-    localStorage.getItem("cases_balance")
-);
+/* =====================================================
+   ССЫЛКА НА PNG КЕЙСА
+   ВСТАВЬ СЮДА СВОЮ ПРЯМУЮ ССЫЛКУ НА PNG
+===================================================== */
+
+const FREE_CASE_IMAGE =
+    "case-free.png";
+
+
+document.getElementById(
+    "freeCaseImage"
+).src = FREE_CASE_IMAGE;
+
+
+/* =====================================================
+   БАЛАНС
+===================================================== */
+
+let balance =
+    Number(
+        localStorage.getItem("cases_balance")
+    );
 
 if (!Number.isFinite(balance)) {
     balance = 1000;
 }
 
+
 function updateBalance() {
 
     document.getElementById(
         "balanceCase"
-    ).textContent = balance.toFixed(2);
+    ).textContent =
+        balance.toFixed(2);
 
     localStorage.setItem(
         "cases_balance",
         balance
     );
+
 }
 
 
-/* =========================
+/* =====================================================
    CASE 50
-========================= */
+===================================================== */
 
 const itemsCase = [
 
     {
-        emoji:"🐻",
-        name:"Toy Bear",
-        value:5000,
-        chance:.0001,
-        rarity:"legendary"
+        emoji: "🐻",
+        name: "Toy Bear",
+        value: 5000,
+        chance: 0.0001,
+        rarity: "legendary"
     },
 
     {
-        emoji:"🖊️",
-        name:"Fine Pen",
-        value:1000,
-        chance:.0001,
-        rarity:"legendary"
+        emoji: "🖊️",
+        name: "Fine Pen",
+        value: 1000,
+        chance: 0.0001,
+        rarity: "legendary"
     },
 
     {
-        emoji:"🗽",
-        name:"Liberty Figure",
-        value:550,
-        chance:.00095,
-        rarity:"legendary"
+        emoji: "🗽",
+        name: "Liberty Figure",
+        value: 550,
+        chance: 0.00095,
+        rarity: "legendary"
     },
 
     {
-        emoji:"🔦",
-        name:"Chill Flame",
-        value:450,
-        chance:.001,
-        rarity:"rare"
+        emoji: "🔦",
+        name: "Chill Flame",
+        value: 450,
+        chance: 0.001,
+        rarity: "rare"
     },
 
     {
-        emoji:"🍦",
-        name:"Vice Cream",
-        value:450,
-        chance:.001,
-        rarity:"rare"
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.001,
+        rarity: "rare"
     },
 
     {
-        emoji:"🏆",
-        name:"Trophy",
-        value:100,
-        chance:7.5,
-        rarity:"rare"
+        emoji: "🏆",
+        name: "Trophy",
+        value: 100,
+        chance: 7.5,
+        rarity: "rare"
     },
 
     {
-        emoji:"💎",
-        name:"Diamond",
-        value:100,
-        chance:7.5,
-        rarity:"rare"
+        emoji: "💎",
+        name: "Diamond",
+        value: 100,
+        chance: 7.5,
+        rarity: "rare"
     },
 
     {
-        emoji:"🎂",
-        name:"Cake",
-        value:50,
-        chance:10,
-        rarity:"uncommon"
+        emoji: "🎂",
+        name: "Cake",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
     },
 
     {
-        emoji:"💐",
-        name:"Flowers",
-        value:50,
-        chance:10,
-        rarity:"uncommon"
+        emoji: "💐",
+        name: "Flowers",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
     },
 
     {
-        emoji:"🎁",
-        name:"Gift",
-        value:25,
-        chance:13,
-        rarity:""
+        emoji: "🎁",
+        name: "Gift",
+        value: 25,
+        chance: 13,
+        rarity: ""
     },
 
     {
-        emoji:"🐻",
-        name:"Bear",
-        value:15,
-        chance:15,
-        rarity:""
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 15,
+        rarity: ""
     },
 
     {
-        emoji:"🩷",
-        name:"Heart",
-        value:15,
-        chance:15,
-        rarity:""
+        emoji: "🩷",
+        name: "Heart",
+        value: 15,
+        chance: 15,
+        rarity: ""
     },
 
     {
-        emoji:"7 ⭐",
-        name:"7 Stars",
-        value:7,
-        chance:0,
-        rarity:""
+        emoji: "7 ⭐",
+        name: "7 Stars",
+        value: 7,
+        chance: 0,
+        rarity: ""
     }
 
 ];
+
 
 const case50Without7 =
     itemsCase.filter(
@@ -1299,183 +1379,363 @@ const case50Without7 =
 
 const case50Total =
     case50Without7.reduce(
-        (sum,item) => sum + item.chance,
+        (sum, item) => sum + item.chance,
         0
     );
 
 itemsCase.find(
     item => item.name === "7 Stars"
-).chance = 100 - case50Total;
+).chance =
+    Math.max(
+        0,
+        100 - case50Total
+    );
 
 
-/* =========================
+/* =====================================================
    FREE
-========================= */
+===================================================== */
 
 const freeItemsCase = [
 
     {
-        emoji:"3 ⭐",
-        name:"3 Stars",
-        value:3,
-        chance:23,
-        rarity:""
+        emoji: "3 ⭐",
+        name: "3 Stars",
+        value: 3,
+        chance: 23,
+        rarity: ""
     },
 
     {
-        emoji:"5 ⭐",
-        name:"5 Stars",
-        value:5,
-        chance:22,
-        rarity:""
+        emoji: "5 ⭐",
+        name: "5 Stars",
+        value: 5,
+        chance: 22,
+        rarity: ""
     },
 
     {
-        emoji:"7 ⭐",
-        name:"7 Stars",
-        value:7,
-        chance:27,
-        rarity:""
+        emoji: "7 ⭐",
+        name: "7 Stars",
+        value: 7,
+        chance: 27,
+        rarity: ""
     },
 
     {
-        emoji:"🐻",
-        name:"Bear",
-        value:15,
-        chance:6,
-        rarity:""
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 6,
+        rarity: ""
     },
 
     {
-        emoji:"💘",
-        name:"Heart",
-        value:15,
-        chance:6,
-        rarity:""
+        emoji: "💘",
+        name: "Heart",
+        value: 15,
+        chance: 6,
+        rarity: ""
     },
 
     {
-        emoji:"🎁",
-        name:"Gift",
-        value:25,
-        chance:3,
-        rarity:""
+        emoji: "🎁",
+        name: "Gift",
+        value: 25,
+        chance: 3,
+        rarity: ""
     },
 
     {
-        emoji:"🌹",
-        name:"Rose",
-        value:25,
-        chance:3,
-        rarity:""
+        emoji: "🌹",
+        name: "Rose",
+        value: 25,
+        chance: 3,
+        rarity: ""
     },
 
     {
-        emoji:"🎂",
-        name:"Cake",
-        value:50,
-        chance:1,
-        rarity:"uncommon"
+        emoji: "🎂",
+        name: "Cake",
+        value: 50,
+        chance: 1,
+        rarity: "uncommon"
     },
 
     {
-        emoji:"🚀",
-        name:"Rocket",
-        value:50,
-        chance:1,
-        rarity:"uncommon"
+        emoji: "🚀",
+        name: "Rocket",
+        value: 50,
+        chance: 1,
+        rarity: "uncommon"
     },
 
     {
-        emoji:"🍦",
-        name:"Vice Cream",
-        value:450,
-        chance:.00001,
-        rarity:"rare"
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.00001,
+        rarity: "rare"
     },
 
     {
-        emoji:"🍭",
-        name:"Lol Pop",
-        value:450,
-        chance:.00001,
-        rarity:"rare"
+        emoji: "🍭",
+        name: "Lol Pop",
+        value: 450,
+        chance: 0.00001,
+        rarity: "rare"
     },
 
     {
-        emoji:"🐕",
-        name:"Snoop Dogg",
-        value:550,
-        chance:.00001,
-        rarity:"legendary"
+        emoji: "🐕",
+        name: "Snoop Dogg",
+        value: 550,
+        chance: 0.00001,
+        rarity: "legendary"
     }
 
 ];
 
 
-/* =========================
+/* =====================================================
    CASE 250
-========================= */
+===================================================== */
 
 const case250ItemsCase = [
 
-    {emoji:"💰",name:"10 на баланс",value:10,chance:3,rarity:""},
-    {emoji:"🐻",name:"15 зв",value:15,chance:2.5,rarity:""},
-    {emoji:"💘",name:"15 зв",value:15,chance:2.49805,rarity:""},
-    {emoji:"🎁",name:"25",value:25,chance:7.5,rarity:""},
-    {emoji:"🌹",name:"25",value:25,chance:7.5,rarity:""},
-    {emoji:"💐",name:"50",value:50,chance:10,rarity:"uncommon"},
-    {emoji:"🚀",name:"50",value:50,chance:10,rarity:"uncommon"},
-    {emoji:"💍",name:"100",value:100,chance:11.5,rarity:"rare"},
-    {emoji:"💎",name:"100",value:100,chance:11.5,rarity:"rare"},
-    {emoji:"💰",name:"200 на баланс",value:200,chance:15,rarity:"rare"},
-    {emoji:"💰",name:"250 на баланс",value:250,chance:7,rarity:"rare"},
-    {emoji:"💰",name:"300 на баланс",value:300,chance:6,rarity:"rare"},
-    {emoji:"💰",name:"350 на баланс",value:350,chance:3,rarity:"legendary"},
-    {emoji:"💰",name:"450 на баланс",value:450,chance:3,rarity:"legendary"},
-    {emoji:"🍦",name:"Vice Cream",value:450,chance:.0005,rarity:"rare"},
-    {emoji:"🍭",name:"Lol Pop",value:450,chance:.0005,rarity:"rare"},
-    {emoji:"🦩",name:"Pool Float",value:500,chance:.0005,rarity:"legendary"},
-    {emoji:"🐕",name:"Snoop Dogg",value:550,chance:.00045,rarity:"legendary"}
+    {
+        emoji: "💰",
+        name: "10 на баланс",
+        value: 10,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "15 зв",
+        value: 15,
+        chance: 2.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "15 зв",
+        value: 15,
+        chance: 2.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "25",
+        value: 25,
+        chance: 7.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "25",
+        value: 25,
+        chance: 7.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💐",
+        name: "50",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🚀",
+        name: "50",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "💍",
+        name: "100",
+        value: 100,
+        chance: 11.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💎",
+        name: "100",
+        value: 100,
+        chance: 11.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "200 на баланс",
+        value: 200,
+        chance: 15,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "250 на баланс",
+        value: 250,
+        chance: 7,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "300 на баланс",
+        value: 300,
+        chance: 6,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "350 на баланс",
+        value: 350,
+        chance: 3,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "💰",
+        name: "450 на баланс",
+        value: 450,
+        chance: 3,
+        rarity: "legendary"
+    }
 
 ];
 
 
-/* =========================
+/* =====================================================
    PLS PEPE
-========================= */
+===================================================== */
 
 const plsPepeItemsCase = [
 
-    {emoji:"💰",name:"0.5 на баланс",value:.5,chance:24.009997,rarity:""},
-    {emoji:"💰",name:"1 на баланс",value:1,chance:25,rarity:""},
-    {emoji:"💰",name:"3 на баланс",value:3,chance:15,rarity:""},
-    {emoji:"💰",name:"5 на баланс",value:5,chance:15,rarity:""},
-    {emoji:"💰",name:"7 на баланс",value:7,chance:10,rarity:""},
-    {emoji:"💰",name:"10 на баланс",value:10,chance:3.33,rarity:""},
-    {emoji:"💘",name:"15 зв",value:15,chance:3.33,rarity:""},
-    {emoji:"🐻",name:"Bear",value:15,chance:3.33,rarity:""},
-    {emoji:"🎁",name:"25",value:25,chance:.5,rarity:""},
-    {emoji:"🌹",name:"25",value:25,chance:.5,rarity:""},
-    {emoji:"💖",name:"Heart Locked",value:500000,chance:.000002,rarity:"legendary"},
-    {emoji:"🐸",name:"Plush Pepe",value:800000,chance:.000001,rarity:"legendary"}
+    {
+        emoji: "💰",
+        name: "0.5 на баланс",
+        value: 0.5,
+        chance: 24,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "1 на баланс",
+        value: 1,
+        chance: 25,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "3 на баланс",
+        value: 3,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "5 на баланс",
+        value: 5,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "7 на баланс",
+        value: 7,
+        chance: 10,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "10 на баланс",
+        value: 10,
+        chance: 3.3,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "15 зв",
+        value: 15,
+        chance: 3.3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 3.3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "25",
+        value: 25,
+        chance: 0.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "25",
+        value: 25,
+        chance: 0.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💖",
+        name: "Heart Locked",
+        value: 500000,
+        chance: 0.000002,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🐸",
+        name: "Plush Pepe",
+        value: 800000,
+        chance: 0.000001,
+        rarity: "legendary"
+    }
 
 ];
 
 
-/* =========================
-   STATE
-========================= */
+/* =====================================================
+   СОСТОЯНИЕ
+===================================================== */
 
-let currentCaseType = "50";
-let currentItems = itemsCase;
+let currentCaseType = "free";
+let currentItems = freeItemsCase;
 let currentWinner = null;
 let opening = false;
 
 
-/* =========================
+/* =====================================================
    DOM
-========================= */
+===================================================== */
 
 const mainScreen =
     document.getElementById("mainScreenCase");
@@ -1511,15 +1771,18 @@ const message =
     document.getElementById("messageCase");
 
 
-/* =========================
-   OPEN CASE SCREEN
-========================= */
+/* =====================================================
+   ОТКРЫТЬ ЭКРАН КЕЙСА
+===================================================== */
 
 function openCaseScreen(type) {
 
-    if (opening) return;
+    if (opening) {
+        return;
+    }
 
     currentCaseType = type;
+
 
     if (type === "free") {
 
@@ -1531,9 +1794,7 @@ function openCaseScreen(type) {
         openButton.textContent =
             "ОТКРЫТЬ FREE 🎁";
 
-        openButton.classList.add(
-            "free-open"
-        );
+        openButton.classList.add("free-open");
 
     }
 
@@ -1547,9 +1808,7 @@ function openCaseScreen(type) {
         openButton.textContent =
             "КУПИТЬ ЗА 10 ⭐";
 
-        openButton.classList.remove(
-            "free-open"
-        );
+        openButton.classList.remove("free-open");
 
     }
 
@@ -1558,14 +1817,12 @@ function openCaseScreen(type) {
         currentItems = case250ItemsCase;
 
         caseTitle.textContent =
-            "CASE 250 ⭐";
+            "CASE 250 💎";
 
         openButton.textContent =
             "КУПИТЬ ЗА 250 ⭐";
 
-        openButton.classList.remove(
-            "free-open"
-        );
+        openButton.classList.remove("free-open");
 
     }
 
@@ -1579,22 +1836,25 @@ function openCaseScreen(type) {
         openButton.textContent =
             "КУПИТЬ ЗА 50 ⭐";
 
-        openButton.classList.remove(
-            "free-open"
-        );
+        openButton.classList.remove("free-open");
+
     }
 
+
     mainScreen.classList.remove("active");
+
     caseScreen.classList.add("active");
 
     renderItems();
+
     resetRoulette();
+
 }
 
 
-/* =========================
-   BACK
-========================= */
+/* =====================================================
+   НАЗАД
+===================================================== */
 
 function showMainCase() {
 
@@ -1605,24 +1865,28 @@ function showMainCase() {
         );
 
         return;
+
     }
 
     caseScreen.classList.remove("active");
+
     mainScreen.classList.add("active");
+
 }
 
 
-/* =========================
-   ITEMS
-========================= */
+/* =====================================================
+   ПРЕДМЕТЫ
+===================================================== */
 
 function renderItems() {
 
     itemsGrid.innerHTML = "";
 
+
     [...currentItems]
         .sort(
-            (a,b) => b.value - a.value
+            (a, b) => b.value - a.value
         )
         .forEach(item => {
 
@@ -1632,6 +1896,7 @@ function renderItems() {
             card.className =
                 "item-card " +
                 item.rarity;
+
 
             card.innerHTML = `
                 <div class="item-emoji">
@@ -1647,40 +1912,53 @@ function renderItems() {
                 </div>
             `;
 
+
             itemsGrid.appendChild(card);
+
         });
+
 }
 
 
-/* =========================
-   RANDOM
-========================= */
+/* =====================================================
+   ВЫБОР ПОБЕДИТЕЛЯ
+===================================================== */
 
 function getRandomItem() {
 
-    const random =
-        Math.random() * 100;
+    const totalChance =
+        currentItems.reduce(
+            (sum, item) =>
+                sum + item.chance,
+            0
+        );
 
-    let total = 0;
+
+    let random =
+        Math.random() * totalChance;
+
 
     for (const item of currentItems) {
 
-        total += item.chance;
+        random -= item.chance;
 
-        if (random < total) {
+        if (random <= 0) {
             return item;
         }
+
     }
+
 
     return currentItems[
         currentItems.length - 1
     ];
+
 }
 
 
-/* =========================
-   ROULETTE CARD
-========================= */
+/* =====================================================
+   КАРТОЧКА РУЛЕТКИ
+===================================================== */
 
 function createRouletteCard(item) {
 
@@ -1690,6 +1968,7 @@ function createRouletteCard(item) {
     element.className =
         "roulette-item " +
         item.rarity;
+
 
     element.innerHTML = `
         <div class="roulette-emoji">
@@ -1701,23 +1980,25 @@ function createRouletteCard(item) {
         </div>
     `;
 
+
     return element;
+
 }
 
 
-/* =========================
-   RESET ROULETTE
-========================= */
+/* =====================================================
+   СБРОС РУЛЕТКИ
+===================================================== */
 
 function resetRoulette() {
 
-    rouletteTrack.style.transition =
-        "none";
+    rouletteTrack.style.transition = "none";
 
     rouletteTrack.style.transform =
         "translateX(0px)";
 
     rouletteTrack.innerHTML = "";
+
 
     for (let i = 0; i < 18; i++) {
 
@@ -1732,17 +2013,22 @@ function resetRoulette() {
         rouletteTrack.appendChild(
             createRouletteCard(item)
         );
+
     }
+
 }
 
 
-/* =========================
-   OPEN
-========================= */
+/* =====================================================
+   ОТКРЫТИЕ КЕЙСА
+===================================================== */
 
 function openCurrentCase() {
 
-    if (opening) return;
+    if (opening) {
+        return;
+    }
+
 
     /* FREE */
 
@@ -1755,8 +2041,10 @@ function openCurrentCase() {
                 )
             ) || 0;
 
+
         const cooldown =
             24 * 60 * 60 * 1000;
+
 
         if (
             Date.now() - last <
@@ -1765,10 +2053,8 @@ function openCurrentCase() {
 
             const remaining =
                 cooldown -
-                (
-                    Date.now() -
-                    last
-                );
+                (Date.now() - last);
+
 
             showMessage(
                 "FREE кейс ещё недоступен: " +
@@ -1776,29 +2062,35 @@ function openCurrentCase() {
             );
 
             return;
+
         }
+
 
         localStorage.setItem(
             "free_case_time",
             Date.now()
         );
+
+        updateFreeTimer();
+
     }
 
 
-    /* PRICE */
+    /* ЦЕНА */
 
     let price = 0;
+
 
     if (currentCaseType === "pls-pepe") {
         price = 10;
     }
 
-    else if (currentCaseType === "250") {
-        price = 250;
-    }
-
     else if (currentCaseType === "50") {
         price = 50;
+    }
+
+    else if (currentCaseType === "250") {
+        price = 250;
     }
 
 
@@ -1812,6 +2104,7 @@ function openCurrentCase() {
         );
 
         return;
+
     }
 
 
@@ -1819,7 +2112,13 @@ function openCurrentCase() {
 
         balance -= price;
 
+        balance =
+            Math.round(
+                balance * 100
+            ) / 100;
+
         updateBalance();
+
     }
 
 
@@ -1827,41 +2126,49 @@ function openCurrentCase() {
 
     openButton.disabled = true;
 
+
     currentWinner =
         getRandomItem();
+
 
     startRoulette(
         currentWinner
     );
+
 }
 
 
-/* =========================
-   START ROULETTE
-========================= */
+/* =====================================================
+   АНИМАЦИЯ РУЛЕТКИ
+===================================================== */
 
 function startRoulette(winner) {
 
     rouletteTrack.innerHTML = "";
 
-    rouletteTrack.style.transition =
-        "none";
+    rouletteTrack.style.transition = "none";
 
     rouletteTrack.style.transform =
         "translateX(0px)";
 
+
     const total = 45;
+
     const winnerIndex = 36;
+
 
     for (let i = 0; i < total; i++) {
 
         let item;
 
+
         if (i === winnerIndex) {
 
             item = winner;
 
-        } else {
+        }
+
+        else {
 
             item =
                 currentItems[
@@ -1870,41 +2177,40 @@ function startRoulette(winner) {
                         currentItems.length
                     )
                 ];
+
         }
+
 
         rouletteTrack.appendChild(
             createRouletteCard(item)
         );
+
     }
 
 
-    /*
-       ВАЖНО:
-       Реальная ширина карточки + gap.
-       Это делает центрирование стабильнее.
-    */
+    const cardWidth = 135;
 
-    const cardWidth = 125;
-    const gap = 10;
-    const step = cardWidth + gap;
 
     const windowWidth =
         document.querySelector(
             ".roulette-window"
         ).offsetWidth;
 
+
     const center =
-        windowWidth / 2 -
-        cardWidth / 2;
+        windowWidth / 2 - 62.5;
+
 
     const position =
         -(
-            winnerIndex * step -
+            winnerIndex *
+            cardWidth -
             center
         );
 
+
     const randomOffset =
-        Math.random() * 30 - 15;
+        Math.random() * 16 - 8;
 
 
     requestAnimationFrame(() => {
@@ -1921,7 +2227,9 @@ function startRoulette(winner) {
                     randomOffset
                 ) +
                 "px)";
+
         });
+
     });
 
 
@@ -1934,12 +2242,13 @@ function startRoulette(winner) {
         openButton.disabled = false;
 
     }, 6800);
+
 }
 
 
-/* =========================
-   RESULT
-========================= */
+/* =====================================================
+   РЕЗУЛЬТАТ
+===================================================== */
 
 function showResult(item) {
 
@@ -1950,19 +2259,26 @@ function showResult(item) {
         item.name;
 
     resultValue.textContent =
-        "+" + item.value + " ⭐";
+        "+" +
+        item.value +
+        " ⭐";
+
 
     resultModal.classList.add("show");
+
 }
 
 
-/* =========================
-   SELL
-========================= */
+/* =====================================================
+   ПРОДАТЬ
+===================================================== */
 
 function sellResult() {
 
-    if (!currentWinner) return;
+    if (!currentWinner) {
+        return;
+    }
+
 
     balance += currentWinner.value;
 
@@ -1971,25 +2287,34 @@ function sellResult() {
             balance * 100
         ) / 100;
 
+
     updateBalance();
+
 
     resultModal.classList.remove("show");
 
+
     currentWinner = null;
 
+
     resetRoulette();
+
 }
 
 
-/* =========================
-   INVENTORY
-========================= */
+/* =====================================================
+   СОХРАНИТЬ В ИНВЕНТАРЬ
+===================================================== */
 
 function saveResult() {
 
-    if (!currentWinner) return;
+    if (!currentWinner) {
+        return;
+    }
+
 
     let inventory = [];
+
 
     try {
 
@@ -2000,40 +2325,56 @@ function saveResult() {
                 )
             ) || [];
 
-    } catch(e) {
-
-        inventory = [];
     }
 
+    catch (e) {
+
+        inventory = [];
+
+    }
+
+
     inventory.push(currentWinner);
+
 
     localStorage.setItem(
         "case_inventory",
         JSON.stringify(inventory)
     );
 
+
     resultModal.classList.remove("show");
+
 
     currentWinner = null;
 
+
     resetRoulette();
+
 
     showMessage(
         "Предмет сохранён в инвентарь 🎒"
     );
+
 }
 
 
-/* =========================
+/* =====================================================
    FREE TIMER
-========================= */
+===================================================== */
 
 function updateFreeTimer() {
 
-    const timer =
+    const readyButton =
         document.getElementById(
-            "freeTimer"
+            "freeReadyButton"
         );
+
+    const caseButton =
+        document.getElementById(
+            "freeCaseBox"
+        );
+
 
     const last =
         Number(
@@ -2042,81 +2383,101 @@ function updateFreeTimer() {
             )
         ) || 0;
 
+
     const cooldown =
         24 * 60 * 60 * 1000;
 
+
     const remaining =
         cooldown -
-        (
-            Date.now() -
-            last
-        );
+        (Date.now() - last);
+
 
     if (remaining <= 0) {
 
-        timer.textContent =
-            "ГОТОВ К ОТКРЫТИЮ";
+        readyButton.textContent =
+            "ГОТОВ К ОТКРЫТИЮ 🎁";
 
-        timer.classList.remove(
-            "timer"
+        readyButton.classList.remove(
+            "disabled"
+        );
+
+        caseButton.classList.remove(
+            "disabled"
         );
 
         return;
+
     }
 
-    timer.textContent =
+
+    readyButton.textContent =
         formatTime(remaining);
 
-    timer.classList.add("timer");
+
+    readyButton.classList.add(
+        "disabled"
+    );
+
+    caseButton.classList.add(
+        "disabled"
+    );
+
 }
 
-
-/* =========================
-   FORMAT TIME
-========================= */
 
 function formatTime(ms) {
 
     let seconds =
         Math.ceil(ms / 1000);
 
+
     const hours =
         Math.floor(
             seconds / 3600
         );
 
+
     seconds %= 3600;
+
 
     const minutes =
         Math.floor(
             seconds / 60
         );
 
+
     seconds %= 60;
 
+
     return (
-        String(hours).padStart(2,"0") +
+        String(hours).padStart(2, "0") +
         ":" +
-        String(minutes).padStart(2,"0") +
+        String(minutes).padStart(2, "0") +
         ":" +
-        String(seconds).padStart(2,"0")
+        String(seconds).padStart(2, "0")
     );
+
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* =====================================================
+   СООБЩЕНИЕ
+===================================================== */
 
 let messageTimer = null;
+
 
 function showMessage(text) {
 
     clearTimeout(messageTimer);
 
+
     message.textContent = text;
 
+
     message.classList.add("show");
+
 
     messageTimer =
         setTimeout(() => {
@@ -2126,12 +2487,13 @@ function showMessage(text) {
             );
 
         }, 2500);
+
 }
 
 
-/* =========================
-   CLOSE
-========================= */
+/* =====================================================
+   ЗАКРЫТЬ
+===================================================== */
 
 function closeCases() {
 
@@ -2142,15 +2504,18 @@ function closeCases() {
         );
 
         return;
+
     }
 
+
     showMainCase();
+
 }
 
 
-/* =========================
-   START
-========================= */
+/* =====================================================
+   ЗАПУСК
+===================================================== */
 
 updateBalance();
 
