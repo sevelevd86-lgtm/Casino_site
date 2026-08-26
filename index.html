@@ -1,1295 +1,2795 @@
-<!-- =====================================================
-     ИГРА КЕЙСЫ — ТЕЛЕФОН, ЦЕНА ПОД КЕЙСОМ, В КЕЙСЕ ТОЛЬКО НАЗВАНИЕ
-     МЕХАНИКА ПОЛНОСТЬЮ ИЗ ЭТАЛОНА
-===================================================== -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cases</title>
 
 <style>
-/* =====================================================
-   КОНТЕЙНЕР — ТЕМНЫЙ ГРАДИЕНТ
-===================================================== */
-#casesGameContainer {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(145deg, #0a1628, #142a4a);
-    z-index: 90;
-    overflow-y: auto;
-    padding: 14px 12px 30px;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    background: #080b12;
     font-family: Arial, sans-serif;
+}
+
+body {
+    overflow-x: hidden;
     color: white;
 }
 
-#casesGameContainer * {
-    box-sizing: border-box;
-}
 
 /* =====================================================
-   ВЕРХНЯЯ ПАНЕЛЬ
+   ОСНОВНОЙ КОНТЕЙНЕР
 ===================================================== */
-#casesGameContainer .topbar {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+
+#casesGameContainer {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 18px 14px 40px;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(110, 80, 255, 0.20),
+            transparent 38%
+        ),
+        linear-gradient(
+            160deg,
+            #090c14,
+            #101522,
+            #080b12
+        );
+
+    color: white;
 }
 
-#casesGameContainer .balance-case {
-    padding: 8px 16px;
+
+/* =====================================================
+   ВЕРХ
+===================================================== */
+
+.topbar {
+    width: 100%;
+    height: 55px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.balance-case {
+    padding: 10px 16px;
+
     border-radius: 14px;
-    background: rgba(20, 50, 90, 0.5);
-    border: 1px solid rgba(100, 180, 255, 0.15);
+
+    background: #171d2a;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
     font-size: 18px;
     font-weight: 900;
-    color: #a8d4ff;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.3);
 }
 
-#casesGameContainer .balance-case span {
+.balance-case span {
     color: #ffd84d;
 }
+
 
 /* =====================================================
    ЭКРАНЫ
 ===================================================== */
-#casesGameContainer .screen-case {
+
+.screen-case {
     display: none;
-    min-height: calc(100vh - 65px);
+
+    width: 100%;
+    min-height: calc(100vh - 73px);
 }
 
-#casesGameContainer .screen-case.active {
+.screen-case.active {
     display: flex;
-    flex-direction: column;
 }
+
 
 /* =====================================================
-   ГЛАВНЫЙ ЭКРАН — КАРТОЧКИ С ЦЕНОЙ ПОД НАЗВАНИЕМ
+   ГЛАВНЫЙ ЭКРАН
 ===================================================== */
-#casesGameContainer .main-screen {
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 60px;
-    gap: 22px;
-}
 
-#casesGameContainer .main-case-button {
-    width: min(340px, 88vw);
-    height: 180px;
-    border-radius: 25px;
-    cursor: pointer;
-    border: 2px solid #2a7ad8;
-    background: linear-gradient(135deg, #1a3a7a, #0a224a 55%, #051a2a);
-    color: white;
-    position: relative;
-    animation: floatCase 2.5s ease-in-out infinite;
-    transition: 0.2s ease;
-    display: flex;
+.main-screen {
     flex-direction: column;
+
     align-items: center;
-    justify-content: center;
-    padding: 10px 12px;
+
+    padding-top: 25px;
+
+    gap: 14px;
 }
 
-#casesGameContainer .main-case-button::before {
-    content: "";
-    position: absolute;
-    left: -6px;
-    right: -6px;
-    top: 30px;
-    height: 34px;
-    border-radius: 10px;
-    background: linear-gradient(180deg, #4a8ecf, #2a6aaa);
-    border: 2px solid #6ab0ff;
-    box-shadow: 0 5px 20px rgba(42, 122, 216, 0.3);
-}
+.main-title {
+    font-size: 28px;
 
-#casesGameContainer .main-case-button span {
-    position: relative;
-    z-index: 2;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-}
-
-/* НАЗВАНИЕ КЕЙСА */
-#casesGameContainer .case-label {
-    font-size: 32px;
     font-weight: 1000;
-    letter-spacing: 1px;
-    line-height: 1.2;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 8px;
 }
 
-/* ЦЕНА ПОД НАЗВАНИЕМ */
-#casesGameContainer .case-price {
+
+/* =====================================================
+   КАРТОЧКА КЕЙСА
+===================================================== */
+
+.main-case-button {
+
     position: relative;
-    z-index: 2;
-    font-size: 18px;
-    font-weight: 700;
-    color: #ffd84d;
-    margin-top: 6px;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+
+    width: min(430px, 94vw);
+    height: 105px;
+
+    border-radius: 21px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    text-align: left;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.15s ease,
+        border-color 0.15s ease;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.3);
 }
 
-#casesGameContainer .main-case-button:active {
-    transform: scale(0.96);
-}
 
-/* FREE CASE */
-#casesGameContainer .free-case-button {
-    border-color: #6ab0ff;
-    background: linear-gradient(135deg, #1a5a8a, #0a2a5a 55%, #051a3a);
-    box-shadow: 0 20px 60px rgba(42, 122, 216, 0.1);
-}
-#casesGameContainer .free-case-button::before {
-    background: linear-gradient(180deg, #6ab0ff, #3a7acf);
-    border-color: #8ac8ff;
-    box-shadow: 0 5px 20px rgba(42, 122, 216, 0.25);
-}
-#casesGameContainer .free-case-button .case-price {
-    color: #8ac8ff;
-}
-#casesGameContainer .free-case-button.disabled {
-    opacity: 0.45;
-    filter: grayscale(0.5);
-    cursor: default;
-}
-#casesGameContainer .free-case-button.disabled:active {
-    transform: none;
-}
+/* верхняя линия */
 
-/* PLS PEPE */
-#casesGameContainer .pls-pepe-button {
-    border-color: #6ab0ff;
-    background: linear-gradient(135deg, #1a5a6a, #0a2a4a 55%, #051a2a);
-}
-#casesGameContainer .pls-pepe-button::before {
-    background: linear-gradient(180deg, #6ac8ff, #3a8acf);
-    border-color: #8ad8ff;
-}
+.main-case-button::after {
 
-/* CASE 250 */
-#casesGameContainer .case-250-button {
-    border-color: #8a7aff;
-    background: linear-gradient(135deg, #3a2a8a, #1a1a5a 55%, #0a0a3a);
-}
-#casesGameContainer .case-250-button::before {
-    background: linear-gradient(180deg, #aa8aff, #6a4acf);
-    border-color: #ccaaff;
-}
+    content: "";
 
-/* ТАЙМЕР FREE */
-#casesGameContainer .free-timer {
     position: absolute;
-    z-index: 3;
+
+    top: 0;
     left: 0;
     right: 0;
-    bottom: 12px;
-    text-align: center;
-    color: #8ac8ff;
-    font-size: 13px;
-    font-weight: 900;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+
+    height: 3px;
 }
 
-@keyframes floatCase {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+/* иконка */
+
+.case-icon {
+
+    width: 58px;
+    height: 58px;
+
+    border-radius: 16px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 16px;
+
+    background: rgba(255,255,255,0.08);
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    font-size: 29px;
+
+    flex-shrink: 0;
 }
+
+
+/* текст */
+
+.case-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.case-name {
+    font-size: 21px;
+    font-weight: 1000;
+}
+
+.case-description {
+    color: #9ba6bb;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
 
 /* =====================================================
-   ЭКРАН КЕЙСА — В ШАПКЕ ТОЛЬКО НАЗВАНИЕ (БЕЗ ЦЕНЫ)
+   FREE
 ===================================================== */
-#casesGameContainer .case-screen {
-    padding-top: 6px;
+
+.free-case-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #193653,
+            #0c1b2c
+        );
+
+    border-color:
+        rgba(70,175,255,0.35);
 }
 
-#casesGameContainer .case-title-row {
+.free-case-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #54c2ff,
+            #397cff
+        );
+}
+
+.free-case-button:hover {
+    border-color:
+        rgba(70,175,255,0.7);
+}
+
+
+/* =====================================================
+   PLS PEPE
+===================================================== */
+
+.pls-pepe-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #183e3c,
+            #0b2427
+        );
+
+    border-color:
+        rgba(50,215,175,0.35);
+}
+
+.pls-pepe-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #39d8ad,
+            #20a895
+        );
+}
+
+.pls-pepe-button:hover {
+    border-color:
+        rgba(50,215,175,0.7);
+}
+
+
+/* =====================================================
+   CASE 50
+===================================================== */
+
+.case-50-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #3b3018,
+            #211b0e
+        );
+
+    border-color:
+        rgba(255,210,70,0.4);
+}
+
+.case-50-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #ffe16a,
+            #f2a900
+        );
+}
+
+.case-50-button:hover {
+    border-color:
+        rgba(255,215,70,0.75);
+}
+
+
+/* =====================================================
+   CASE 250
+===================================================== */
+
+.case-250-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #38245c,
+            #1e1533
+        );
+
+    border-color:
+        rgba(165,130,255,0.42);
+}
+
+.case-250-button::after {
+    background:
+        linear-gradient(
+            90deg,
+            #bd9aff,
+            #7650ed
+        );
+}
+
+.case-250-button:hover {
+    border-color:
+        rgba(180,145,255,0.75);
+}
+
+
+/* =====================================================
+   НАЖАТИЕ
+===================================================== */
+
+.main-case-button:active {
+    transform: scale(0.97);
+}
+
+
+/* =====================================================
+   FREE TIMER
+===================================================== */
+
+.free-timer {
+
+    position: absolute;
+
+    right: 14px;
+    bottom: 12px;
+
+    padding: 5px 8px;
+
+    border-radius: 7px;
+
+    background:
+        rgba(0,0,0,0.25);
+
+    color: #75c8ff;
+
+    font-size: 9px;
+
+    font-weight: 900;
+}
+
+.free-case-button.disabled {
+    opacity: 0.45;
+
+    filter: grayscale(0.3);
+}
+
+
+/* =====================================================
+   ЭКРАН КЕЙСА
+===================================================== */
+
+.case-screen {
+    flex-direction: column;
+
+    padding-top: 8px;
+}
+
+
+/* =====================================================
+   ЗАГОЛОВОК
+===================================================== */
+
+.case-title-row {
+
+    width: 100%;
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
-    margin: 6px 2px 18px;
+
+    margin-bottom: 20px;
 }
 
-#casesGameContainer .case-title {
+.case-title {
+
     font-size: 24px;
+
     font-weight: 1000;
-    color: #e8f0fe;
 }
 
-#casesGameContainer .back-case {
-    border: none;
-    background: rgba(20, 50, 90, 0.5);
-    color: #8ab4d8;
-    padding: 8px 14px;
+.back-case {
+
+    padding: 10px 14px;
+
     border-radius: 11px;
-    cursor: pointer;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    background:
+        #171d2a;
+
+    color: #c4cada;
+
     font-weight: 800;
-    font-size: 14px;
+
+    cursor: pointer;
 }
+
 
 /* =====================================================
    РУЛЕТКА
 ===================================================== */
-#casesGameContainer .roulette-section {
+
+.roulette-section {
+
     position: relative;
-    margin-top: 4px;
+
+    width: 100%;
 }
 
-#casesGameContainer .pointer-case {
+.pointer-case {
+
     position: absolute;
+
     top: -1px;
+
     left: 50%;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     z-index: 10;
+
     width: 0;
     height: 0;
-    border-left: 16px solid transparent;
-    border-right: 16px solid transparent;
-    border-top: 25px solid #6ab0ff;
-    filter: drop-shadow(0 0 8px rgba(42, 122, 216, 0.5));
+
+    border-left:
+        16px solid transparent;
+
+    border-right:
+        16px solid transparent;
+
+    border-top:
+        25px solid #a78bfa;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(167,139,250,0.7)
+        );
 }
 
-#casesGameContainer .roulette-window {
+.roulette-window {
+
     width: 100%;
-    height: 150px;
+
+    height: 160px;
+
     overflow: hidden;
+
     border-radius: 17px;
-    border: 1px solid rgba(100, 180, 255, 0.15);
-    background: rgba(10, 22, 40, 0.8);
-    position: relative;
-    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+
+    background:
+        #0d121e;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        inset 0 0 40px rgba(0,0,0,0.5);
 }
 
-#casesGameContainer .roulette-track {
+.roulette-track {
+
     height: 100%;
+
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     padding: 10px;
-    transform: translateX(0);
-    will-change: transform;
+
+    transform:
+        translateX(0);
 }
 
-#casesGameContainer .roulette-item {
-    min-width: 120px;
-    height: 120px;
-    border-radius: 14px;
-    background: linear-gradient(145deg, rgba(20, 50, 90, 0.5), rgba(10, 30, 60, 0.5));
-    border: 1px solid rgba(100, 180, 255, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.roulette-item {
+
+    min-width: 125px;
+
+    height: 125px;
+
     flex-shrink: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        #171d2a;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
 }
 
-#casesGameContainer .roulette-emoji {
-    font-size: 44px;
+.roulette-emoji {
+    font-size: 46px;
 }
 
-#casesGameContainer .roulette-name {
-    margin-top: 6px;
-    padding: 0 4px;
+.roulette-name {
+
+    margin-top: 8px;
+
+    padding: 0 5px;
+
     text-align: center;
+
     font-size: 11px;
+
     font-weight: 800;
-    color: #c8e4ff;
+
+    color: #b8c2d4;
 }
+
 
 /* =====================================================
-   КНОПКА ОТКРЫТИЯ
+   ОТКРЫТЬ
 ===================================================== */
-#casesGameContainer .open-button {
+
+.open-button {
+
     width: 100%;
-    margin-top: 16px;
-    padding: 16px;
+
+    margin-top: 17px;
+
+    padding: 17px;
+
     border: none;
+
     border-radius: 15px;
-    cursor: pointer;
-    background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+
+    background:
+        linear-gradient(
+            135deg,
+            #7957ff,
+            #5332d6
+        );
+
     color: white;
+
     font-size: 18px;
+
     font-weight: 1000;
-    box-shadow: 0 8px 30px rgba(42, 122, 216, 0.2);
-    transition: 0.2s ease;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 30px
+        rgba(110,80,255,0.2);
 }
 
-#casesGameContainer .open-button.free-open {
-    background: linear-gradient(135deg, #1a6aaa, #0a4a8a);
-    box-shadow: 0 8px 30px rgba(42, 122, 216, 0.15);
+.open-button.free-open {
+
+    background:
+        linear-gradient(
+            135deg,
+            #28bd9c,
+            #14866f
+        );
 }
 
-#casesGameContainer .open-button:active {
+.open-button:active {
     transform: scale(0.98);
 }
-#casesGameContainer .open-button:disabled {
-    cursor: default;
-    opacity: 0.55;
+
+.open-button:disabled {
+    opacity: 0.5;
 }
+
 
 /* =====================================================
-   ПРЕДМЕТЫ В КЕЙСЕ
+   ПРЕДМЕТЫ
 ===================================================== */
-#casesGameContainer .items-title {
-    margin: 24px 0 12px;
+
+.items-title {
+
+    margin:
+        27px 0 13px;
+
     text-align: center;
+
     font-size: 18px;
-    font-weight: 900;
-    color: #e8f0fe;
+
+    font-weight: 1000;
+
+    color: #e5e9f2;
 }
 
-#casesGameContainer .items-grid {
+.items-grid {
+
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 9px;
 }
 
-#casesGameContainer .item-card {
-    min-height: 115px;
+.item-card {
+
+    min-height: 125px;
+
     padding: 10px 6px;
-    border-radius: 14px;
-    background: rgba(20, 50, 90, 0.3);
-    border: 1px solid rgba(100, 180, 255, 0.1);
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
+
     text-align: center;
-    transition: transform 0.2s ease;
+
+    border-radius: 14px;
+
+    background:
+        #141a27;
+
+    border:
+        1px solid rgba(255,255,255,0.07);
 }
 
-#casesGameContainer .item-card:hover {
-    transform: translateY(-2px);
-}
+.item-emoji {
 
-#casesGameContainer .item-emoji {
-    font-size: 36px;
+    font-size: 38px;
+
     line-height: 1;
 }
 
-#casesGameContainer .item-name {
-    margin-top: 8px;
+.item-name {
+
+    margin-top: 9px;
+
     font-size: 11px;
+
     font-weight: 800;
-    color: #c8e4ff;
+
+    color: #aeb8ca;
+
     line-height: 1.25;
 }
 
-#casesGameContainer .item-price {
-    margin-top: 6px;
+.item-price {
+
+    margin-top: 7px;
+
     color: #ffd84d;
+
     font-size: 13px;
+
     font-weight: 1000;
 }
 
-/* РЕДКОСТИ */
-#casesGameContainer .legendary {
-    border-color: #ffd84d;
-    box-shadow: inset 0 0 20px rgba(255, 216, 77, 0.05);
-}
-#casesGameContainer .rare {
-    border-color: #6ab0ff;
-}
-#casesGameContainer .uncommon {
-    border-color: #4a8aaa;
-}
-#casesGameContainer .free-rarity {
-    border-color: #6ab0ff;
+.legendary {
+
+    border-color:
+        rgba(255,215,70,0.5);
+
+    box-shadow:
+        inset 0 0 20px
+        rgba(255,210,70,0.04);
 }
 
-/* =====================================================
-   МОДАЛЬНОЕ ОКНО РЕЗУЛЬТАТА
-===================================================== */
-#casesGameContainer .modal-case {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 100;
+.rare {
+
+    border-color:
+        rgba(100,150,255,0.4);
 }
-#casesGameContainer .modal-case.show {
+
+.uncommon {
+
+    border-color:
+        rgba(60,190,165,0.35);
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-case {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,0.8);
+}
+
+.modal-case.show {
     display: flex;
 }
 
-#casesGameContainer .modal-box-case {
+.modal-box-case {
+
     width: 100%;
-    max-width: 340px;
-    padding: 28px 18px 22px;
+
+    max-width: 360px;
+
+    padding:
+        28px 20px 23px;
+
     text-align: center;
+
     border-radius: 23px;
-    background: rgba(10, 30, 60, 0.95);
-    border: 1px solid rgba(100, 180, 255, 0.2);
-    animation: modalInCase 0.3s ease;
-    box-shadow: 0 25px 90px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
+
+    background:
+        linear-gradient(
+            145deg,
+            #1a2131,
+            #0d121e
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.1);
+
+    box-shadow:
+        0 25px 90px rgba(0,0,0,0.65);
 }
 
-@keyframes modalInCase {
-    from { opacity: 0; transform: scale(0.82); }
-    to { opacity: 1; transform: scale(1); }
+.result-emoji-case {
+
+    font-size: 78px;
+
+    margin-bottom: 12px;
 }
 
-#casesGameContainer .result-emoji-case {
-    font-size: 74px;
-    animation: resultFloat 1s ease-in-out infinite alternate;
-}
-@keyframes resultFloat {
-    from { transform: translateY(0) rotate(-3deg); }
-    to { transform: translateY(-8px) rotate(3deg); }
-}
+.result-label-case {
 
-#casesGameContainer .result-label-case {
-    margin-top: 14px;
-    color: #8ab4d8;
+    color: #8e99ad;
+
     font-size: 13px;
+
     font-weight: 800;
+
     letter-spacing: 1px;
 }
 
-#casesGameContainer .result-name-case {
+.result-name-case {
+
     margin-top: 8px;
+
+    font-size: 25px;
+
+    font-weight: 1000;
+}
+
+.result-value-case {
+
+    margin-top: 12px;
+
     font-size: 24px;
-    font-weight: 1000;
-    color: #e8f0fe;
-}
 
-#casesGameContainer .result-value-case {
-    margin-top: 10px;
-    font-size: 22px;
-    color: #6ab0ff;
+    color: #a78bfa;
+
     font-weight: 1000;
 }
 
-#casesGameContainer .result-buttons {
+.result-buttons {
+
     display: flex;
+
     gap: 10px;
-    margin-top: 22px;
+
+    margin-top: 23px;
 }
 
-#casesGameContainer .result-button {
+.result-button {
+
     flex: 1;
+
     padding: 14px 8px;
+
     border: none;
+
     border-radius: 13px;
+
     color: white;
+
     font-weight: 900;
+
     cursor: pointer;
-    transition: 0.2s ease;
-    font-size: 15px;
-}
-#casesGameContainer .result-button:active {
-    transform: scale(0.97);
 }
 
-#casesGameContainer .sell-button {
-    background: linear-gradient(135deg, #1a6aaa, #0a4a8a);
-    box-shadow: 0 8px 25px rgba(42, 122, 216, 0.15);
+.sell-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #7957ff,
+            #5332d6
+        );
 }
 
-#casesGameContainer .back-result-button {
-    background: rgba(20, 50, 90, 0.5);
-    color: #8ab4d8;
+.back-result-button {
+
+    background:
+        #1b2232;
+
+    color: #aeb8ca;
 }
+
+
+/* =====================================================
+   INVENTORY
+===================================================== */
+
+.inventory-button {
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 14px;
+
+    border-radius: 13px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    background:
+        #171d2a;
+
+    color: #cbd3e2;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
 
 /* =====================================================
    СООБЩЕНИЯ
 ===================================================== */
-#casesGameContainer .message-case {
+
+.message-case {
+
     position: fixed;
+
     left: 50%;
+
     bottom: 25px;
-    transform: translateX(-50%) translateY(100px);
-    padding: 12px 18px;
-    border-radius: 13px;
-    background: #c04060;
-    color: white;
-    font-weight: 800;
-    transition: 0.3s ease;
+
     z-index: 300;
+
+    transform:
+        translateX(-50%)
+        translateY(100px);
+
+    padding: 13px 18px;
+
+    border-radius: 13px;
+
+    background:
+        #d24761;
+
+    color: white;
+
+    font-weight: 800;
+
     text-align: center;
-    font-size: 15px;
-}
-#casesGameContainer .message-case.show {
-    transform: translateX(-50%) translateY(0);
+
+    transition:
+        0.3s ease;
 }
 
+.message-case.show {
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
 /* =====================================================
-   КНОПКА ЗАКРЫТИЯ
+   ЗАКРЫТИЕ
 ===================================================== */
-#closeCasesBtn {
+
+.close-button {
+
     position: fixed;
-    top: 14px;
-    right: 14px;
-    z-index: 95;
-    background: rgba(20, 50, 90, 0.8);
-    border: 1px solid rgba(100, 180, 255, 0.2);
+
+    top: 18px;
+    left: 18px;
+
+    z-index: 200;
+
+    width: 44px;
+    height: 44px;
+
     border-radius: 50%;
-    width: 42px;
-    height: 42px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    background:
+        #171d2a;
+
+    color: white;
+
     font-size: 20px;
-    color: #e8f0fe;
+
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#closeCasesBtn:hover {
-    background: rgba(30, 70, 120, 0.8);
 }
 
+
 /* =====================================================
-   АДАПТИВ ДЛЯ ТЕЛЕФОНА
+   MOBILE
 ===================================================== */
-@media (max-width: 400px) {
-    #casesGameContainer .main-case-button {
-        height: 160px;
-        width: min(300px, 90vw);
+
+@media (max-width: 500px) {
+
+    #casesGameContainer {
+        padding:
+            14px 12px 30px;
     }
-    #casesGameContainer .case-label {
-        font-size: 26px;
+
+    .main-screen {
+        padding-top: 20px;
     }
-    #casesGameContainer .case-price {
-        font-size: 16px;
+
+    .main-title {
+        font-size: 25px;
     }
-    #casesGameContainer .roulette-item {
-        min-width: 105px;
-        height: 110px;
+
+    .main-case-button {
+
+        width: 100%;
+
+        height: 98px;
+
+        border-radius: 19px;
+
+        padding: 0 17px;
     }
-    #casesGameContainer .roulette-window {
-        height: 140px;
+
+    .case-icon {
+
+        width: 54px;
+        height: 54px;
+
+        margin-right: 14px;
+
+        font-size: 27px;
     }
-    #casesGameContainer .roulette-emoji {
-        font-size: 38px;
+
+    .case-name {
+        font-size: 19px;
     }
-    #casesGameContainer .item-emoji {
-        font-size: 32px;
+
+    .case-description {
+        font-size: 10px;
     }
-    #casesGameContainer .item-card {
-        min-height: 105px;
+
+}
+
+
+@media (max-width: 380px) {
+
+    .main-case-button {
+        height: 92px;
     }
-    #casesGameContainer .result-buttons {
+
+    .case-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+
+    .case-name {
+        font-size: 17px;
+    }
+
+    .items-grid {
         gap: 7px;
     }
-    #casesGameContainer .result-button {
-        font-size: 13px;
-        padding: 12px 6px;
-    }
-    #casesGameContainer .case-title {
-        font-size: 20px;
-    }
+
 }
 </style>
+</head>
 
 
-<!-- =====================================================
-     HTML — ЦЕНА ПОД КЕЙСОМ НА ГЛАВНОМ, В КЕЙСЕ ТОЛЬКО НАЗВАНИЕ
-===================================================== -->
+<body>
+
 
 <div id="casesGameContainer">
 
-    <button id="closeCasesBtn">✕</button>
 
-    <div class="topbar">
-        <div class="balance-case">
-            ⭐ <span id="balanceCase">0.00</span>
-        </div>
+<!-- =====================================================
+     CLOSE
+===================================================== -->
+
+<button
+    class="close-button"
+    onclick="closeCases()"
+>
+    ✕
+</button>
+
+
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
+
+<div class="topbar">
+
+    <div class="balance-case">
+        ⭐ <span id="balanceCase">1000.00</span>
     </div>
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
-    <section id="mainScreenCase" class="screen-case main-screen active">
+</div>
 
-        <button class="main-case-button free-case-button" id="freeCaseBox">
-            <span class="case-label">CASE FREE</span>
-            <span class="case-price">🕒 24h</span>
-            <div class="free-timer" id="freeTimer"></div>
-        </button>
 
-        <button class="main-case-button pls-pepe-button" id="plsPepeBox">
-            <span class="case-label">PLS PEPE 🐸</span>
-            <span class="case-price">⭐ 10</span>
-        </button>
+<!-- =====================================================
+     ГЛАВНЫЙ ЭКРАН
+===================================================== -->
 
-        <button class="main-case-button" id="caseBox">
-            <span class="case-label">CASE 50</span>
-            <span class="case-price">⭐ 50</span>
-        </button>
+<section
+    id="mainScreenCase"
+    class="screen-case active main-screen"
+>
 
-        <button class="main-case-button case-250-button" id="case250Box">
-            <span class="case-label">CASE 250</span>
-            <span class="case-price">⭐ 250</span>
-        </button>
-
-    </section>
-
-    <!-- ЭКРАН КЕЙСА — ТОЛЬКО НАЗВАНИЕ В ШАПКЕ -->
-    <section id="caseScreenCase" class="screen-case case-screen">
-
-        <div class="case-title-row">
-            <div class="case-title" id="caseTitle">CASE 50 ⭐</div>
-            <button class="back-case" id="backButtonCase">← Назад</button>
-        </div>
-
-        <div class="roulette-section">
-            <div class="pointer-case"></div>
-            <div class="roulette-window">
-                <div class="roulette-track" id="rouletteTrack"></div>
-            </div>
-        </div>
-
-        <button class="open-button" id="openButton">КУПИТЬ ЗА 50 ⭐</button>
-
-        <div class="items-title">ПРЕДМЕТЫ В КЕЙСЕ</div>
-        <div class="items-grid" id="itemsGrid"></div>
-
-    </section>
-
-    <!-- ОКНО РЕЗУЛЬТАТА -->
-    <div class="modal-case" id="resultModalCase">
-        <div class="modal-box-case">
-            <div class="result-emoji-case" id="resultEmoji">💎</div>
-            <div class="result-label-case">ВАМ ВЫПАЛО</div>
-            <div class="result-name-case" id="resultName">Diamond</div>
-            <div class="result-value-case" id="resultValue">+100 ⭐</div>
-            <div class="result-buttons">
-                <button class="result-button sell-button" id="sellResult">ПРОДАТЬ</button>
-                <button class="result-button back-result-button" id="backResult">В ИНВЕНТАРЬ</button>
-            </div>
-        </div>
+    <div class="main-title">
+        КЕЙСЫ
     </div>
 
-    <!-- СООБЩЕНИЯ -->
-    <div class="message-case" id="messageCase"></div>
+
+    <!-- FREE -->
+
+    <button
+        class="main-case-button free-case-button"
+        id="freeCaseBox"
+        onclick="openCaseScreen('free')"
+    >
+
+        <div class="case-icon">
+            🎁
+        </div>
+
+        <div class="case-info">
+
+            <div class="case-name">
+                CASE FREE
+            </div>
+
+            <div class="case-description">
+                Бесплатный кейс раз в сутки
+            </div>
+
+        </div>
+
+        <div
+            class="free-timer"
+            id="freeTimer"
+        >
+            ГОТОВ
+        </div>
+
+    </button>
+
+
+    <!-- PLS PEPE -->
+
+    <button
+        class="main-case-button pls-pepe-button"
+        onclick="openCaseScreen('pls-pepe')"
+    >
+
+        <div class="case-icon">
+            🐸
+        </div>
+
+        <div class="case-info">
+
+            <div class="case-name">
+                PLS PEPE
+            </div>
+
+            <div class="case-description">
+                Стоимость открытия — 10 ⭐
+            </div>
+
+        </div>
+
+    </button>
+
+
+    <!-- CASE 50 -->
+
+    <button
+        class="main-case-button case-50-button"
+        onclick="openCaseScreen('50')"
+    >
+
+        <div class="case-icon">
+            ⭐
+        </div>
+
+        <div class="case-info">
+
+            <div class="case-name">
+                CASE 50
+            </div>
+
+            <div class="case-description">
+                Стоимость открытия — 50 ⭐
+            </div>
+
+        </div>
+
+    </button>
+
+
+    <!-- CASE 250 -->
+
+    <button
+        class="main-case-button case-250-button"
+        onclick="openCaseScreen('250')"
+    >
+
+        <div class="case-icon">
+            💎
+        </div>
+
+        <div class="case-info">
+
+            <div class="case-name">
+                CASE 250
+            </div>
+
+            <div class="case-description">
+                Стоимость открытия — 250 ⭐
+            </div>
+
+        </div>
+
+    </button>
+
+
+</section>
+
+
+<!-- =====================================================
+     ЭКРАН КЕЙСА
+===================================================== -->
+
+<section
+    id="caseScreenCase"
+    class="screen-case case-screen"
+>
+
+    <div class="case-title-row">
+
+        <div
+            class="case-title"
+            id="caseTitle"
+        >
+            CASE 50 ⭐
+        </div>
+
+        <button
+            class="back-case"
+            onclick="showMainCase()"
+        >
+            ← Назад
+        </button>
+
+    </div>
+
+
+    <div class="roulette-section">
+
+        <div class="pointer-case"></div>
+
+        <div class="roulette-window">
+
+            <div
+                class="roulette-track"
+                id="rouletteTrack"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="open-button"
+        id="openButton"
+        onclick="openCurrentCase()"
+    >
+        ОТКРЫТЬ
+    </button>
+
+
+    <div class="items-title">
+        ПРЕДМЕТЫ В КЕЙСЕ
+    </div>
+
+    <div
+        class="items-grid"
+        id="itemsGrid"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULT
+===================================================== -->
+
+<div
+    class="modal-case"
+    id="resultModalCase"
+>
+
+    <div class="modal-box-case">
+
+        <div
+            class="result-emoji-case"
+            id="resultEmoji"
+        >
+            💎
+        </div>
+
+        <div class="result-label-case">
+            ВАМ ВЫПАЛО
+        </div>
+
+        <div
+            class="result-name-case"
+            id="resultName"
+        >
+            Diamond
+        </div>
+
+        <div
+            class="result-value-case"
+            id="resultValue"
+        >
+            +100 ⭐
+        </div>
+
+        <div class="result-buttons">
+
+            <button
+                class="result-button sell-button"
+                onclick="sellResult()"
+            >
+                ПРОДАТЬ
+            </button>
+
+            <button
+                class="result-button back-result-button"
+                onclick="saveResult()"
+            >
+                В ИНВЕНТАРЬ
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MESSAGE
+===================================================== -->
+
+<div
+    class="message-case"
+    id="messageCase"
+></div>
+
 
 </div>
 
 
 <script>
-/* =====================================================
-   ПОЛНАЯ МЕХАНИКА КЕЙСОВ — БЕЗ ИЗМЕНЕНИЙ
-===================================================== */
-
-(function () {
 
 "use strict";
+
 
 /* =====================================================
    БАЛАНС
 ===================================================== */
-if (typeof window.balance !== "number" || Number.isNaN(window.balance)) {
-    const savedBalance = localStorage.getItem("cases_balance");
-    window.balance = savedBalance !== null ? Number(savedBalance) : 1000;
+
+let balance =
+    Number(
+        localStorage.getItem("cases_balance")
+    );
+
+if (
+    !Number.isFinite(balance)
+) {
+    balance = 1000;
 }
 
-function saveBalanceCase() {
-    localStorage.setItem("cases_balance", String(window.balance));
+
+function updateBalance() {
+
+    document.getElementById(
+        "balanceCase"
+    ).textContent =
+        balance.toFixed(2);
+
+    localStorage.setItem(
+        "cases_balance",
+        balance
+    );
+
 }
 
-function updateBalanceCase() {
-    const element = document.getElementById("balanceCase");
-    if (!element) return;
-    element.textContent = Number(window.balance).toFixed(2);
-    saveBalanceCase();
-    if (typeof window.updateBalanceUI === "function") {
-        try { window.updateBalanceUI(); } catch (error) {}
-    }
-}
-
-/* =====================================================
-   ИНВЕНТАРЬ
-===================================================== */
-if (!Array.isArray(window.caseInventory)) {
-    try {
-        const savedInventory = localStorage.getItem("case_inventory");
-        window.caseInventory = savedInventory ? JSON.parse(savedInventory) : [];
-    } catch (error) {
-        window.caseInventory = [];
-    }
-}
-
-function saveInventoryCase() {
-    try {
-        localStorage.setItem("case_inventory", JSON.stringify(window.caseInventory));
-    } catch (error) {}
-}
-
-function addItemToInventoryCase(item) {
-    const copy = {
-        emoji: item.emoji,
-        name: item.name,
-        value: item.value,
-        chance: item.chance,
-        rarity: item.rarity
-    };
-    window.caseInventory.push(copy);
-    saveInventoryCase();
-    if (typeof window.addItemToInventory === "function") {
-        try { window.addItemToInventory(copy); } catch (error) {}
-    }
-}
-
-/* =====================================================
-   ЦЕНЫ
-===================================================== */
-const CASE_PRICE = 50;
-const CASE_250_PRICE = 250;
-const PLS_PEPE_PRICE = 10;
-
-/* =====================================================
-   СОСТОЯНИЕ
-===================================================== */
-let isOpeningCase = false;
-let currentWinnerCase = null;
-let currentCaseType = "paid";
 
 /* =====================================================
    CASE 50
 ===================================================== */
+
 const itemsCase = [
-    { emoji: "🐻", name: "Toy Bear", value: 5000, chance: 0.0001, rarity: "legendary" },
-    { emoji: "🖊️", name: "Fine Pen", value: 1000, chance: 0.0001, rarity: "legendary" },
-    { emoji: "🗽", name: "Liberty Figure", value: 550, chance: 0.00095, rarity: "legendary" },
-    { emoji: "🔦", name: "Chill Flame", value: 450, chance: 0.001, rarity: "rare" },
-    { emoji: "🍦", name: "Vice Cream", value: 450, chance: 0.001, rarity: "rare" },
-    { emoji: "🏆", name: "Trophy", value: 100, chance: 7.5, rarity: "rare" },
-    { emoji: "💎", name: "Diamond", value: 100, chance: 7.5, rarity: "rare" },
-    { emoji: "🎂", name: "Cake", value: 50, chance: 10, rarity: "uncommon" },
-    { emoji: "💐", name: "Flowers", value: 50, chance: 10, rarity: "uncommon" },
-    { emoji: "🎁", name: "Gift", value: 25, chance: 13, rarity: "" },
-    { emoji: "🐻", name: "bear", value: 15, chance: 15, rarity: "" },
-    { emoji: "🩷", name: "Heart", value: 15, chance: 15, rarity: "" },
-    { emoji: "7 ⭐", name: "7 Stars", value: 7, chance: 0, rarity: "" }
+
+    {
+        emoji: "🐻",
+        name: "Toy Bear",
+        value: 5000,
+        chance: 0.0001,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🖊️",
+        name: "Fine Pen",
+        value: 1000,
+        chance: 0.0001,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🗽",
+        name: "Liberty Figure",
+        value: 550,
+        chance: 0.00095,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🔦",
+        name: "Chill Flame",
+        value: 450,
+        chance: 0.001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🏆",
+        name: "Trophy",
+        value: 100,
+        chance: 7.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💎",
+        name: "Diamond",
+        value: 100,
+        chance: 7.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🎂",
+        name: "Cake",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "💐",
+        name: "Flowers",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🎁",
+        name: "Gift",
+        value: 25,
+        chance: 13,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "🩷",
+        name: "Heart",
+        value: 15,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "7 ⭐",
+        name: "7 Stars",
+        value: 7,
+        chance: 0,
+        rarity: ""
+    }
+
 ];
 
+
+const case50Without7 =
+    itemsCase.filter(
+        item => item.name !== "7 Stars"
+    );
+
+const case50Total =
+    case50Without7.reduce(
+        (sum, item) =>
+            sum + item.chance,
+        0
+    );
+
+itemsCase.find(
+    item => item.name === "7 Stars"
+).chance =
+    100 - case50Total;
+
+
 /* =====================================================
-   FREE CASE
+   FREE
 ===================================================== */
+
 const freeItemsCase = [
-    { emoji: "3 ⭐", name: "3 Stars", value: 3, chance: 23, rarity: "" },
-    { emoji: "5 ⭐", name: "5 Stars", value: 5, chance: 22, rarity: "" },
-    { emoji: "7 ⭐", name: "7 Stars", value: 7, chance: 27, rarity: "" },
-    { emoji: "🐻", name: "Bear", value: 15, chance: 6, rarity: "" },
-    { emoji: "💘", name: "Heart", value: 15, chance: 6, rarity: "" },
-    { emoji: "🎁", name: "Gift", value: 25, chance: 3, rarity: "" },
-    { emoji: "🌹", name: "Rose", value: 25, chance: 3, rarity: "" },
-    { emoji: "🎂", name: "Cake", value: 50, chance: 1, rarity: "uncommon" },
-    { emoji: "🚀", name: "Rocket", value: 50, chance: 1, rarity: "uncommon" },
-    { emoji: "🍦", name: "Vice Cream", value: 450, chance: 0.00001, rarity: "rare" },
-    { emoji: "🍭", name: "Lol Pop", value: 450, chance: 0.00001, rarity: "rare" },
-    { emoji: "🐕", name: "Snoop Dogg", value: 550, chance: 0.00001, rarity: "legendary" }
+
+    {
+        emoji: "3 ⭐",
+        name: "3 Stars",
+        value: 3,
+        chance: 23,
+        rarity: ""
+    },
+
+    {
+        emoji: "5 ⭐",
+        name: "5 Stars",
+        value: 5,
+        chance: 22,
+        rarity: ""
+    },
+
+    {
+        emoji: "7 ⭐",
+        name: "7 Stars",
+        value: 7,
+        chance: 27,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 6,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "Heart",
+        value: 15,
+        chance: 6,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "Gift",
+        value: 25,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "Rose",
+        value: 25,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎂",
+        name: "Cake",
+        value: 50,
+        chance: 1,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🚀",
+        name: "Rocket",
+        value: 50,
+        chance: 1,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.00001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🍭",
+        name: "Lol Pop",
+        value: 450,
+        chance: 0.00001,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🐕",
+        name: "Snoop Dogg",
+        value: 550,
+        chance: 0.00001,
+        rarity: "legendary"
+    }
+
 ];
+
 
 /* =====================================================
    CASE 250
 ===================================================== */
+
 const case250ItemsCase = [
-    { emoji: "💰", name: "10 на баланс", value: 10, chance: 3, rarity: "" },
-    { emoji: "🐻", name: "15 зв", value: 15, chance: 2.5, rarity: "" },
-    { emoji: "💘", name: "15 зв", value: 15, chance: 2.49805, rarity: "" },
-    { emoji: "🎁", name: "25", value: 25, chance: 7.5, rarity: "" },
-    { emoji: "🌹", name: "25", value: 25, chance: 7.5, rarity: "" },
-    { emoji: "💐", name: "50", value: 50, chance: 10, rarity: "uncommon" },
-    { emoji: "🚀", name: "50", value: 50, chance: 10, rarity: "uncommon" },
-    { emoji: "💍", name: "100", value: 100, chance: 11.5, rarity: "rare" },
-    { emoji: "💎", name: "100", value: 100, chance: 11.5, rarity: "rare" },
-    { emoji: "💰", name: "200 на баланс", value: 200, chance: 15, rarity: "rare" },
-    { emoji: "💰", name: "250 на баланс", value: 250, chance: 7, rarity: "rare" },
-    { emoji: "💰", name: "300 на баланс", value: 300, chance: 6, rarity: "rare" },
-    { emoji: "💰", name: "350 на баланс", value: 350, chance: 3, rarity: "legendary" },
-    { emoji: "💰", name: "450 на баланс", value: 450, chance: 3, rarity: "legendary" },
-    { emoji: "🍦", name: "Vice Cream", value: 450, chance: 0.0005, rarity: "rare" },
-    { emoji: "🍭", name: "Lol Pop", value: 450, chance: 0.0005, rarity: "rare" },
-    { emoji: "🦩", name: "Pool Float", value: 500, chance: 0.0005, rarity: "legendary" },
-    { emoji: "🐕", name: "Snoop Dogg", value: 550, chance: 0.00045, rarity: "legendary" }
+
+    {
+        emoji: "💰",
+        name: "10 на баланс",
+        value: 10,
+        chance: 3,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "15 зв",
+        value: 15,
+        chance: 2.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "15 зв",
+        value: 15,
+        chance: 2.49805,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "25",
+        value: 25,
+        chance: 7.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "25",
+        value: 25,
+        chance: 7.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💐",
+        name: "50",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "🚀",
+        name: "50",
+        value: 50,
+        chance: 10,
+        rarity: "uncommon"
+    },
+
+    {
+        emoji: "💍",
+        name: "100",
+        value: 100,
+        chance: 11.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💎",
+        name: "100",
+        value: 100,
+        chance: 11.5,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "200 на баланс",
+        value: 200,
+        chance: 15,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "250 на баланс",
+        value: 250,
+        chance: 7,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "300 на баланс",
+        value: 300,
+        chance: 6,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "💰",
+        name: "350 на баланс",
+        value: 350,
+        chance: 3,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "💰",
+        name: "450 на баланс",
+        value: 450,
+        chance: 3,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🍦",
+        name: "Vice Cream",
+        value: 450,
+        chance: 0.0005,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🍭",
+        name: "Lol Pop",
+        value: 450,
+        chance: 0.0005,
+        rarity: "rare"
+    },
+
+    {
+        emoji: "🦩",
+        name: "Pool Float",
+        value: 500,
+        chance: 0.0005,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🐕",
+        name: "Snoop Dogg",
+        value: 550,
+        chance: 0.00045,
+        rarity: "legendary"
+    }
+
 ];
+
 
 /* =====================================================
    PLS PEPE
 ===================================================== */
+
 const plsPepeItemsCase = [
-    { emoji: "💰", name: "0.5 на баланс", value: 0.5, chance: 24.009997, rarity: "" },
-    { emoji: "💰", name: "1 на баланс", value: 1, chance: 25, rarity: "" },
-    { emoji: "💰", name: "3 на баланс", value: 3, chance: 15, rarity: "" },
-    { emoji: "💰", name: "5 на баланс", value: 5, chance: 15, rarity: "" },
-    { emoji: "💰", name: "7 на баланс", value: 7, chance: 10, rarity: "" },
-    { emoji: "💰", name: "10 на баланс", value: 10, chance: 3.33, rarity: "" },
-    { emoji: "💘", name: "15 зв", value: 15, chance: 3.33, rarity: "" },
-    { emoji: "🐻", name: "Bear", value: 15, chance: 3.33, rarity: "" },
-    { emoji: "🎁", name: "25", value: 25, chance: 0.5, rarity: "" },
-    { emoji: "🌹", name: "25", value: 25, chance: 0.5, rarity: "" },
-    { emoji: "💖", name: "Heart Locked", value: 500000, chance: 0.000002, rarity: "legendary" },
-    { emoji: "🐸", name: "Plush Pepe", value: 800000, chance: 0.000001, rarity: "legendary" }
+
+    {
+        emoji: "💰",
+        name: "0.5 на баланс",
+        value: 0.5,
+        chance: 24.009997,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "1 на баланс",
+        value: 1,
+        chance: 25,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "3 на баланс",
+        value: 3,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "5 на баланс",
+        value: 5,
+        chance: 15,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "7 на баланс",
+        value: 7,
+        chance: 10,
+        rarity: ""
+    },
+
+    {
+        emoji: "💰",
+        name: "10 на баланс",
+        value: 10,
+        chance: 3.33,
+        rarity: ""
+    },
+
+    {
+        emoji: "💘",
+        name: "15 зв",
+        value: 15,
+        chance: 3.33,
+        rarity: ""
+    },
+
+    {
+        emoji: "🐻",
+        name: "Bear",
+        value: 15,
+        chance: 3.33,
+        rarity: ""
+    },
+
+    {
+        emoji: "🎁",
+        name: "25",
+        value: 25,
+        chance: 0.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "🌹",
+        name: "25",
+        value: 25,
+        chance: 0.5,
+        rarity: ""
+    },
+
+    {
+        emoji: "💖",
+        name: "Heart Locked",
+        value: 500000,
+        chance: 0.000002,
+        rarity: "legendary"
+    },
+
+    {
+        emoji: "🐸",
+        name: "Plush Pepe",
+        value: 800000,
+        chance: 0.000001,
+        rarity: "legendary"
+    }
+
 ];
 
+
 /* =====================================================
-   НОРМАЛИЗАЦИЯ CASE 50
+   СОСТОЯНИЕ
 ===================================================== */
-function normalizeChancesCase() {
-    const stars = itemsCase.find(item => item.name === "7 Stars");
-    const otherItems = itemsCase.filter(item => item.name !== "7 Stars");
-    const total = otherItems.reduce((sum, item) => sum + item.chance, 0);
-    stars.chance = 100 - total;
-}
-normalizeChancesCase();
+
+let currentCaseType = "50";
+
+let currentItems = itemsCase;
+
+let currentWinner = null;
+
+let opening = false;
+
 
 /* =====================================================
    DOM
 ===================================================== */
-const balanceCase = document.getElementById("balanceCase");
-const mainScreenCase = document.getElementById("mainScreenCase");
-const caseScreenCase = document.getElementById("caseScreenCase");
-const caseBox = document.getElementById("caseBox");
-const case250Box = document.getElementById("case250Box");
-const plsPepeBox = document.getElementById("plsPepeBox");
-const freeCaseBox = document.getElementById("freeCaseBox");
-const freeTimer = document.getElementById("freeTimer");
-const backButtonCase = document.getElementById("backButtonCase");
-const caseTitle = document.getElementById("caseTitle");
-const rouletteTrack = document.getElementById("rouletteTrack");
-const openButton = document.getElementById("openButton");
-const itemsGrid = document.getElementById("itemsGrid");
-const resultModalCase = document.getElementById("resultModalCase");
-const resultEmoji = document.getElementById("resultEmoji");
-const resultName = document.getElementById("resultName");
-const resultValue = document.getElementById("resultValue");
-const sellResult = document.getElementById("sellResult");
-const backResult = document.getElementById("backResult");
-const messageElement = document.getElementById("messageCase");
-const closeCasesBtn = document.getElementById("closeCasesBtn");
-const casesContainer = document.getElementById("casesGameContainer");
+
+const mainScreen =
+    document.getElementById(
+        "mainScreenCase"
+    );
+
+const caseScreen =
+    document.getElementById(
+        "caseScreenCase"
+    );
+
+const caseTitle =
+    document.getElementById(
+        "caseTitle"
+    );
+
+const openButton =
+    document.getElementById(
+        "openButton"
+    );
+
+const rouletteTrack =
+    document.getElementById(
+        "rouletteTrack"
+    );
+
+const itemsGrid =
+    document.getElementById(
+        "itemsGrid"
+    );
+
+const resultModal =
+    document.getElementById(
+        "resultModalCase"
+    );
+
+const resultEmoji =
+    document.getElementById(
+        "resultEmoji"
+    );
+
+const resultName =
+    document.getElementById(
+        "resultName"
+    );
+
+const resultValue =
+    document.getElementById(
+        "resultValue"
+    );
+
+const message =
+    document.getElementById(
+        "messageCase"
+    );
+
 
 /* =====================================================
-   FREE CASE
+   ЭКРАН КЕЙСА
 ===================================================== */
-const FREE_COOLDOWN = 24 * 60 * 60 * 1000;
-const FREE_COOLDOWN_KEY = "case_free_last_open";
 
-function getFreeLastOpen() {
-    const value = localStorage.getItem(FREE_COOLDOWN_KEY);
-    if (!value) return 0;
-    const number = Number(value);
-    return Number.isFinite(number) ? number : 0;
-}
+function openCaseScreen(type) {
 
-function canOpenFreeCase() {
-    return Date.now() - getFreeLastOpen() >= FREE_COOLDOWN;
-}
+    if (opening) return;
 
-function setFreeCooldown() {
-    localStorage.setItem(FREE_COOLDOWN_KEY, String(Date.now()));
-    updateFreeButton();
-}
-
-function updateFreeButton() {
-    const remaining = FREE_COOLDOWN - (Date.now() - getFreeLastOpen());
-    if (remaining <= 0) {
-        freeCaseBox.classList.remove("disabled");
-        freeTimer.textContent = "ГОТОВ К ОТКРЫТИЮ";
-        return;
-    }
-    freeCaseBox.classList.add("disabled");
-    freeTimer.textContent = formatTimeCase(remaining);
-}
-
-function formatTimeCase(milliseconds) {
-    let totalSeconds = Math.ceil(milliseconds / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    totalSeconds %= 3600;
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return String(hours).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
-}
-
-/* =====================================================
-   ЭКРАНЫ — В КЕЙСЕ ТОЛЬКО НАЗВАНИЕ
-===================================================== */
-function showMainCase() {
-    if (isOpeningCase) return;
-    caseScreenCase.classList.remove("active");
-    mainScreenCase.classList.add("active");
-    currentCaseType = "paid";
-    updateFreeButton();
-}
-
-function showCaseCase(type = "paid") {
-    mainScreenCase.classList.remove("active");
-    caseScreenCase.classList.add("active");
     currentCaseType = type;
 
+
     if (type === "free") {
-        caseTitle.textContent = "CASE FREE";
-        openButton.textContent = "ОТКРЫТЬ FREE 🎁";
-        openButton.classList.add("free-open");
-        renderItemsCase(freeItemsCase);
-        resetRouletteCase(freeItemsCase);
-    } else if (type === "pls-pepe") {
-        caseTitle.textContent = "PLS PEPE 🐸";
-        openButton.textContent = "КУПИТЬ ЗА 10 ⭐";
-        openButton.classList.remove("free-open");
-        renderItemsCase(plsPepeItemsCase);
-        resetRouletteCase(plsPepeItemsCase);
-    } else if (type === "250") {
-        caseTitle.textContent = "CASE 250";
-        openButton.textContent = "КУПИТЬ ЗА 250 ⭐";
-        openButton.classList.remove("free-open");
-        renderItemsCase(case250ItemsCase);
-        resetRouletteCase(case250ItemsCase);
-    } else {
-        caseTitle.textContent = "CASE 50";
-        openButton.textContent = "КУПИТЬ ЗА 50 ⭐";
-        openButton.classList.remove("free-open");
-        renderItemsCase(itemsCase);
-        resetRouletteCase(itemsCase);
-    }
-}
 
-/* =====================================================
-   ПРЕДМЕТЫ
-===================================================== */
-function renderItemsCase(sourceItems) {
-    itemsGrid.innerHTML = "";
-    const sortedItems = [...sourceItems].sort((a, b) => b.value - a.value);
-    sortedItems.forEach(item => {
-        const card = document.createElement("div");
-        card.className = `item-card ${item.rarity}`;
-        card.innerHTML = `<div class="item-emoji">${item.emoji}</div><div class="item-name">${item.name}</div><div class="item-price">+${item.value} ⭐</div>`;
-        itemsGrid.appendChild(card);
-    });
-}
+        currentItems =
+            freeItemsCase;
 
-/* =====================================================
-   РАНДОМ
-===================================================== */
-function getRandomItemCase(sourceItems) {
-    const random = Math.random() * 100;
-    let accumulated = 0;
-    for (const item of sourceItems) {
-        accumulated += item.chance;
-        if (random < accumulated) return item;
-    }
-    return sourceItems[sourceItems.length - 1];
-}
+        caseTitle.textContent =
+            "CASE FREE 🎁";
 
-/* =====================================================
-   КАРТОЧКА РУЛЕТКИ
-===================================================== */
-function createRouletteCardCase(item) {
-    const element = document.createElement("div");
-    element.className = `roulette-item ${item.rarity}`;
-    element.innerHTML = `<div class="roulette-emoji">${item.emoji}</div><div class="roulette-name">${item.name}</div>`;
-    return element;
-}
+        openButton.textContent =
+            "ОТКРЫТЬ FREE 🎁";
 
-/* =====================================================
-   СБРОС РУЛЕТКИ
-===================================================== */
-function resetRouletteCase(sourceItems = itemsCase) {
-    rouletteTrack.style.transition = "none";
-    rouletteTrack.style.transform = "translateX(0px)";
-    rouletteTrack.innerHTML = "";
-    for (let i = 0; i < 18; i++) {
-        const randomItem = sourceItems[Math.floor(Math.random() * sourceItems.length)];
-        rouletteTrack.appendChild(createRouletteCardCase(randomItem));
-    }
-}
+        openButton.classList.add(
+            "free-open"
+        );
 
-/* =====================================================
-   ЗАПУСК РУЛЕТКИ
-===================================================== */
-function startRouletteCase(sourceItems, winner) {
-    rouletteTrack.style.transition = "none";
-    rouletteTrack.style.transform = "translateX(0px)";
-    rouletteTrack.innerHTML = "";
-    const totalCards = 45;
-    const winnerIndex = 36;
-    for (let i = 0; i < totalCards; i++) {
-        let item;
-        if (i === winnerIndex) {
-            item = winner;
-        } else {
-            item = sourceItems[Math.floor(Math.random() * sourceItems.length)];
-        }
-        rouletteTrack.appendChild(createRouletteCardCase(item));
-    }
-    const cardWidth = 135;
-    const windowWidth = rouletteTrack.parentElement.offsetWidth;
-    const centerOffset = windowWidth / 2 - 62.5;
-    const stopPosition = -(winnerIndex * cardWidth - centerOffset);
-    const finalPosition = stopPosition + (Math.random() * 30 - 15);
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            rouletteTrack.style.transition = "transform 6.5s cubic-bezier(.08,.72,.05,1)";
-            rouletteTrack.style.transform = `translateX(${finalPosition}px)`;
-        });
-    });
-    setTimeout(() => {
-        showResultCase(winner);
-        isOpeningCase = false;
-        openButton.disabled = false;
-    }, 6800);
-}
-
-/* =====================================================
-   ОТКРЫТИЕ
-===================================================== */
-function openCaseCase() {
-    if (isOpeningCase) return;
-
-    /* FREE */
-    if (currentCaseType === "free") {
-        if (!canOpenFreeCase()) {
-            showMessageCase("FREE кейс можно открыть только раз в сутки ⏰");
-            return;
-        }
-        isOpeningCase = true;
-        openButton.disabled = true;
-        setFreeCooldown();
-        playClickSoundCase();
-        const winner = getRandomItemCase(freeItemsCase);
-        currentWinnerCase = winner;
-        startRouletteCase(freeItemsCase, winner);
-        return;
     }
 
-    /* PLS PEPE */
-    if (currentCaseType === "pls-pepe") {
-        if (window.balance < PLS_PEPE_PRICE) {
-            showMessageCase("Недостаточно валюты ⭐");
-            return;
-        }
-        isOpeningCase = true;
-        openButton.disabled = true;
-        window.balance -= PLS_PEPE_PRICE;
-        updateBalanceCase();
-        playClickSoundCase();
-        const winner = getRandomItemCase(plsPepeItemsCase);
-        currentWinnerCase = winner;
-        startRouletteCase(plsPepeItemsCase, winner);
-        return;
+
+    else if (type === "pls-pepe") {
+
+        currentItems =
+            plsPepeItemsCase;
+
+        caseTitle.textContent =
+            "PLS PEPE 🐸";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 10 ⭐";
+
+        openButton.classList.remove(
+            "free-open"
+        );
+
     }
 
-    /* CASE 250 */
-    if (currentCaseType === "250") {
-        if (window.balance < CASE_250_PRICE) {
-            showMessageCase("Недостаточно валюты ⭐");
-            return;
-        }
-        isOpeningCase = true;
-        openButton.disabled = true;
-        window.balance -= CASE_250_PRICE;
-        updateBalanceCase();
-        playClickSoundCase();
-        const winner = getRandomItemCase(case250ItemsCase);
-        currentWinnerCase = winner;
-        startRouletteCase(case250ItemsCase, winner);
-        return;
+
+    else if (type === "250") {
+
+        currentItems =
+            case250ItemsCase;
+
+        caseTitle.textContent =
+            "CASE 250 ⭐";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 250 ⭐";
+
+        openButton.classList.remove(
+            "free-open"
+        );
+
     }
 
-    /* CASE 50 */
-    if (window.balance < CASE_PRICE) {
-        showMessageCase("Недостаточно валюты ⭐");
-        return;
+
+    else {
+
+        currentItems =
+            itemsCase;
+
+        caseTitle.textContent =
+            "CASE 50 ⭐";
+
+        openButton.textContent =
+            "КУПИТЬ ЗА 50 ⭐";
+
+        openButton.classList.remove(
+            "free-open"
+        );
+
     }
-    isOpeningCase = true;
-    openButton.disabled = true;
-    window.balance -= CASE_PRICE;
-    updateBalanceCase();
-    playClickSoundCase();
-    const winner = getRandomItemCase(itemsCase);
-    currentWinnerCase = winner;
-    startRouletteCase(itemsCase, winner);
+
+
+    mainScreen.classList.remove(
+        "active"
+    );
+
+    caseScreen.classList.add(
+        "active"
+    );
+
+
+    renderItems();
+
+    resetRoulette();
+
 }
 
-/* =====================================================
-   РЕЗУЛЬТАТ
-===================================================== */
-function showResultCase(item) {
-    currentWinnerCase = item;
-    resultEmoji.textContent = item.emoji;
-    resultName.textContent = item.name;
-    resultValue.textContent = `+${item.value} ⭐`;
-    resultModalCase.classList.add("show");
-    playWinSoundCase();
-}
-
-/* =====================================================
-   ТЕКУЩИЕ ПРЕДМЕТЫ
-===================================================== */
-function getCurrentItemsCase() {
-    if (currentCaseType === "free") return freeItemsCase;
-    if (currentCaseType === "pls-pepe") return plsPepeItemsCase;
-    if (currentCaseType === "250") return case250ItemsCase;
-    return itemsCase;
-}
-
-/* =====================================================
-   ПРОДАТЬ
-===================================================== */
-sellResult.addEventListener("click", () => {
-    if (!currentWinnerCase) return;
-    window.balance += currentWinnerCase.value;
-    window.balance = Math.round(window.balance * 100) / 100;
-    updateBalanceCase();
-    resultModalCase.classList.remove("show");
-    resetRouletteCase(getCurrentItemsCase());
-    currentWinnerCase = null;
-});
-
-/* =====================================================
-   В ИНВЕНТАРЬ
-===================================================== */
-backResult.addEventListener("click", () => {
-    if (!currentWinnerCase) return;
-    addItemToInventoryCase(currentWinnerCase);
-    resultModalCase.classList.remove("show");
-    resetRouletteCase(getCurrentItemsCase());
-    currentWinnerCase = null;
-    showMessageCase("Предмет сохранён в инвентарь 🎒");
-});
-
-/* =====================================================
-   КНОПКИ КЕЙСОВ
-===================================================== */
-caseBox.addEventListener("click", () => { showCaseCase("paid"); });
-case250Box.addEventListener("click", () => { showCaseCase("250"); });
-plsPepeBox.addEventListener("click", () => { showCaseCase("pls-pepe"); });
-freeCaseBox.addEventListener("click", () => {
-    if (!canOpenFreeCase()) {
-        showMessageCase("FREE кейс можно открыть только раз в сутки ⏰");
-        return;
-    }
-    showCaseCase("free");
-});
 
 /* =====================================================
    НАЗАД
 ===================================================== */
-backButtonCase.addEventListener("click", () => {
-    if (isOpeningCase) {
-        showMessageCase("Подождите окончания открытия кейса");
+
+function showMainCase() {
+
+    if (opening) {
+
+        showMessage(
+            "Подождите окончания открытия кейса"
+        );
+
         return;
     }
-    showMainCase();
-});
 
-/* =====================================================
-   ОТКРЫТЬ
-===================================================== */
-openButton.addEventListener("click", openCaseCase);
 
-/* =====================================================
-   ЗАКРЫТИЕ ИГРЫ
-===================================================== */
-closeCasesBtn.addEventListener("click", () => {
-    if (isOpeningCase) {
-        showMessageCase("Подождите окончания открытия кейса");
-        return;
-    }
-    casesContainer.style.display = "none";
-});
+    caseScreen.classList.remove(
+        "active"
+    );
 
-/* =====================================================
-   СООБЩЕНИЯ
-===================================================== */
-let messageTimeoutCase = null;
+    mainScreen.classList.add(
+        "active"
+    );
 
-function showMessageCase(text) {
-    clearTimeout(messageTimeoutCase);
-    messageElement.textContent = text;
-    messageElement.classList.add("show");
-    messageTimeoutCase = setTimeout(() => {
-        messageElement.classList.remove("show");
-    }, 2500);
 }
 
+
 /* =====================================================
-   ЗВУК
+   РЕНДЕР ПРЕДМЕТОВ
 ===================================================== */
-let audioContextCase = null;
 
-function getAudioContextCase() {
-    try {
-        if (!audioContextCase) {
-            audioContextCase = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioContextCase.state === "suspended") {
-            audioContextCase.resume();
-        }
-        return audioContextCase;
-    } catch (error) {
-        return null;
-    }
-}
+function renderItems() {
 
-function playClickSoundCase() {
-    const ctx = getAudioContextCase();
-    if (!ctx) return;
-    try {
-        const oscillator = ctx.createOscillator();
-        const gain = ctx.createGain();
-        oscillator.type = "square";
-        oscillator.frequency.setValueAtTime(180, ctx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.09);
-        oscillator.connect(gain);
-        gain.connect(ctx.destination);
-        oscillator.start();
-        oscillator.stop(ctx.currentTime + 0.1);
-    } catch (error) {}
-}
+    itemsGrid.innerHTML = "";
 
-function playWinSoundCase() {
-    const ctx = getAudioContextCase();
-    if (!ctx) return;
-    try {
-        const notes = [523.25, 659.25, 783.99, 1046.5];
-        notes.forEach((frequency, index) => {
-            const oscillator = ctx.createOscillator();
-            const gain = ctx.createGain();
-            const start = ctx.currentTime + index * 0.1;
-            oscillator.type = "sine";
-            oscillator.frequency.setValueAtTime(frequency, start);
-            gain.gain.setValueAtTime(0, start);
-            gain.gain.linearRampToValueAtTime(0.12, start + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
-            oscillator.connect(gain);
-            gain.connect(ctx.destination);
-            oscillator.start(start);
-            oscillator.stop(start + 0.4);
+
+    [...currentItems]
+        .sort(
+            (a,b) =>
+                b.value - a.value
+        )
+        .forEach(item => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "item-card " +
+                item.rarity;
+
+
+            card.innerHTML = `
+
+                <div class="item-emoji">
+                    ${item.emoji}
+                </div>
+
+                <div class="item-name">
+                    ${item.name}
+                </div>
+
+                <div class="item-price">
+                    +${item.value} ⭐
+                </div>
+
+            `;
+
+
+            itemsGrid.appendChild(
+                card
+            );
+
         });
-    } catch (error) {}
+
 }
 
-/* =====================================================
-   ТАЙМЕР FREE
-===================================================== */
-setInterval(updateFreeButton, 1000);
 
 /* =====================================================
-   ПЕРВЫЙ ЗАПУСК
+   РАНДОМ
 ===================================================== */
-updateBalanceCase();
-renderItemsCase(itemsCase);
-resetRouletteCase(itemsCase);
-updateFreeButton();
-mainScreenCase.classList.add("active");
 
-/* =====================================================
-   ДОСТУП К ИГРЕ ИЗ ДРУГОГО КОДА
-===================================================== */
-window.openCasesGame = function () {
-    casesContainer.style.display = "block";
-    mainScreenCase.classList.add("active");
-    caseScreenCase.classList.remove("active");
-    updateBalanceCase();
-    updateFreeButton();
-};
+function getRandomItem() {
 
-window.closeCasesGame = function () {
-    if (isOpeningCase) {
-        showMessageCase("Подождите окончания открытия кейса");
-        return;
+    const random =
+        Math.random() * 100;
+
+    let total = 0;
+
+
+    for (
+        const item of currentItems
+    ) {
+
+        total += item.chance;
+
+
+        if (
+            random < total
+        ) {
+
+            return item;
+
+        }
+
     }
-    casesContainer.style.display = "none";
-};
 
-})();
+
+    return currentItems[
+        currentItems.length - 1
+    ];
+
+}
+
+
+/* =====================================================
+   РУЛЕТКА
+===================================================== */
+
+function createRouletteCard(item) {
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+    element.className =
+        "roulette-item " +
+        item.rarity;
+
+
+    element.innerHTML = `
+
+        <div class="roulette-emoji">
+            ${item.emoji}
+        </div>
+
+        <div class="roulette-name">
+            ${item.name}
+        </div>
+
+    `;
+
+
+    return element;
+
+}
+
+
+function resetRoulette() {
+
+    rouletteTrack.style.transition =
+        "none";
+
+    rouletteTrack.style.transform =
+        "translateX(0px)";
+
+    rouletteTrack.innerHTML = "";
+
+
+    for (
+        let i = 0;
+        i < 18;
+        i++
+    ) {
+
+        const item =
+            currentItems[
+                Math.floor(
+                    Math.random() *
+                    currentItems.length
+                )
+            ];
+
+
+        rouletteTrack.appendChild(
+            createRouletteCard(item)
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ОТКРЫТИЕ
+===================================================== */
+
+function openCurrentCase() {
+
+    if (opening) return;
+
+
+    /* FREE */
+
+    if (
+        currentCaseType === "free"
+    ) {
+
+        const last =
+            Number(
+                localStorage.getItem(
+                    "free_case_time"
+                )
+            ) || 0;
+
+
+        const cooldown =
+            24 * 60 * 60 * 1000;
+
+
+        if (
+            Date.now() - last <
+            cooldown
+        ) {
+
+            const remaining =
+                cooldown -
+                (
+                    Date.now() -
+                    last
+                );
+
+
+            showMessage(
+                "FREE кейс ещё недоступен: " +
+                formatTime(remaining)
+            );
+
+            return;
+
+        }
+
+
+        localStorage.setItem(
+            "free_case_time",
+            Date.now()
+        );
+
+    }
+
+
+    /* PRICE */
+
+    let price = 0;
+
+
+    if (
+        currentCaseType ===
+        "pls-pepe"
+    ) {
+
+        price = 10;
+
+    }
+
+
+    else if (
+        currentCaseType ===
+        "250"
+    ) {
+
+        price = 250;
+
+    }
+
+
+    else if (
+        currentCaseType ===
+        "50"
+    ) {
+
+        price = 50;
+
+    }
+
+
+    if (
+        price > 0 &&
+        balance < price
+    ) {
+
+        showMessage(
+            "Недостаточно ⭐"
+        );
+
+        return;
+
+    }
+
+
+    if (price > 0) {
+
+        balance -= price;
+
+        updateBalance();
+
+    }
+
+
+    opening = true;
+
+    openButton.disabled = true;
+
+
+    currentWinner =
+        getRandomItem();
+
+
+    startRoulette(
+        currentWinner
+    );
+
+}
+
+
+/* =====================================================
+   ЗАПУСК РУЛЕТКИ
+===================================================== */
+
+function startRoulette(winner) {
+
+    rouletteTrack.innerHTML = "";
+
+    rouletteTrack.style.transition =
+        "none";
+
+    rouletteTrack.style.transform =
+        "translateX(0px)";
+
+
+    const total = 45;
+
+    const winnerIndex = 36;
+
+
+    for (
+        let i = 0;
+        i < total;
+        i++
+    ) {
+
+        let item;
+
+
+        if (
+            i === winnerIndex
+        ) {
+
+            item = winner;
+
+        } else {
+
+            item =
+                currentItems[
+                    Math.floor(
+                        Math.random() *
+                        currentItems.length
+                    )
+                ];
+
+        }
+
+
+        rouletteTrack.appendChild(
+            createRouletteCard(item)
+        );
+
+    }
+
+
+    const cardWidth = 135;
+
+
+    const windowWidth =
+        document.querySelector(
+            ".roulette-window"
+        ).offsetWidth;
+
+
+    const center =
+        windowWidth / 2 - 62.5;
+
+
+    const position =
+        -(
+            winnerIndex *
+            cardWidth -
+            center
+        );
+
+
+    const randomOffset =
+        Math.random() * 30 - 15;
+
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            rouletteTrack.style.transition =
+                "transform 6.5s cubic-bezier(.08,.72,.05,1)";
+
+            rouletteTrack.style.transform =
+                "translateX(" +
+                (
+                    position +
+                    randomOffset
+                ) +
+                "px)";
+
+        });
+
+    });
+
+
+    setTimeout(() => {
+
+        showResult(winner);
+
+        opening = false;
+
+        openButton.disabled = false;
+
+    }, 6800);
+
+}
+
+
+/* =====================================================
+   РЕЗУЛЬТАТ
+===================================================== */
+
+function showResult(item) {
+
+    resultEmoji.textContent =
+        item.emoji;
+
+    resultName.textContent =
+        item.name;
+
+    resultValue.textContent =
+        "+" +
+        item.value +
+        " ⭐";
+
+
+    resultModal.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   ПРОДАТЬ
+===================================================== */
+
+function sellResult() {
+
+    if (!currentWinner) return;
+
+
+    balance +=
+        currentWinner.value;
+
+
+    balance =
+        Math.round(
+            balance * 100
+        ) / 100;
+
+
+    updateBalance();
+
+
+    resultModal.classList.remove(
+        "show"
+    );
+
+
+    currentWinner = null;
+
+    resetRoulette();
+
+}
+
+
+/* =====================================================
+   ИНВЕНТАРЬ
+===================================================== */
+
+function saveResult() {
+
+    if (!currentWinner) return;
+
+
+    let inventory = [];
+
+
+    try {
+
+        inventory =
+            JSON.parse(
+                localStorage.getItem(
+                    "case_inventory"
+                )
+            ) || [];
+
+    } catch (e) {
+
+        inventory = [];
+
+    }
+
+
+    inventory.push(
+        currentWinner
+    );
+
+
+    localStorage.setItem(
+        "case_inventory",
+        JSON.stringify(
+            inventory
+        )
+    );
+
+
+    resultModal.classList.remove(
+        "show"
+    );
+
+
+    currentWinner = null;
+
+
+    resetRoulette();
+
+
+    showMessage(
+        "Предмет сохранён в инвентарь 🎒"
+    );
+
+}
+
+
+/* =====================================================
+   FREE TIMER
+===================================================== */
+
+function updateFreeTimer() {
+
+    const timer =
+        document.getElementById(
+            "freeTimer"
+        );
+
+    const last =
+        Number(
+            localStorage.getItem(
+                "free_case_time"
+            )
+        ) || 0;
+
+
+    const cooldown =
+        24 * 60 * 60 * 1000;
+
+
+    const remaining =
+        cooldown -
+        (
+            Date.now() -
+            last
+        );
+
+
+    const button =
+        document.getElementById(
+            "freeCaseBox"
+        );
+
+
+    if (
+        remaining <= 0
+    ) {
+
+        timer.textContent =
+            "ГОТОВ К ОТКРЫТИЮ";
+
+        button.classList.remove(
+            "disabled"
+        );
+
+        return;
+
+    }
+
+
+    timer.textContent =
+        formatTime(
+            remaining
+        );
+
+    button.classList.add(
+        "disabled"
+    );
+
+}
+
+
+function formatTime(ms) {
+
+    let seconds =
+        Math.ceil(
+            ms / 1000
+        );
+
+
+    const hours =
+        Math.floor(
+            seconds / 3600
+        );
+
+
+    seconds %= 3600;
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    seconds %= 60;
+
+
+    return (
+        String(hours).padStart(2,"0") +
+        ":" +
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0")
+    );
+
+}
+
+
+/* =====================================================
+   СООБЩЕНИЕ
+===================================================== */
+
+let messageTimer = null;
+
+
+function showMessage(text) {
+
+    clearTimeout(
+        messageTimer
+    );
+
+
+    message.textContent =
+        text;
+
+
+    message.classList.add(
+        "show"
+    );
+
+
+    messageTimer =
+        setTimeout(() => {
+
+            message.classList.remove(
+                "show"
+            );
+
+        }, 2500);
+
+}
+
+
+/* =====================================================
+   CLOSE
+===================================================== */
+
+function closeCases() {
+
+    if (opening) {
+
+        showMessage(
+            "Подождите окончания открытия кейса"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Для самостоятельной страницы
+       просто возвращаемся на главный экран.
+    */
+
+    showMainCase();
+
+}
+
+
+/* =====================================================
+   ЗАПУСК
+===================================================== */
+
+updateBalance();
+
+updateFreeTimer();
+
+setInterval(
+    updateFreeTimer,
+    1000
+);
+
+openCaseScreen("50");
+
+showMainCase();
+
+
 </script>
+
+</body>
+</html>
