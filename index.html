@@ -279,8 +279,6 @@ button {
         0 4px 20px
         rgba(42, 122, 216, 0.3);
 
-    transition: 0.2s;
-
     opacity: 0.7;
 
     cursor: default;
@@ -442,11 +440,6 @@ button {
     color: #e8f0fe;
 }
 
-.ref-value {
-    color: #6ab0ff;
-    word-break: break-all;
-}
-
 .daily-button {
     width: 100%;
 
@@ -603,7 +596,7 @@ button {
 }
 
 /* =====================================================
-   АНИМАЦИЯ
+   АНИМАЦИЯ МЕНЮ
 ===================================================== */
 
 #menuPage {
@@ -626,7 +619,7 @@ button {
 .menu-title-row .page-title {
     position: relative;
 
-    z-index: 10;
+    z-index: 5;
 
     flex-shrink: 0;
 
@@ -635,7 +628,7 @@ button {
     margin-right: 10px;
 }
 
-/* КОНТЕЙНЕР АНИМАЦИИ */
+/* Контейнер */
 
 #menuAnimation {
     position: absolute;
@@ -648,14 +641,12 @@ button {
 
     pointer-events: none;
 
-    background: transparent;
-
     overflow: visible;
 
     z-index: 15;
 }
 
-/* БУКВЫ */
+/* Слой букв */
 
 #menuLetters {
     position: absolute;
@@ -663,7 +654,13 @@ button {
     inset: 0;
 
     pointer-events: none;
+
+    z-index: 12;
 }
+
+/* =====================================================
+   БУКВЫ
+===================================================== */
 
 #menuAnimation .letter {
     position: absolute;
@@ -675,7 +672,7 @@ button {
         Helvetica,
         sans-serif;
 
-    font-size: clamp(24px, 6vw, 42px);
+    font-size: clamp(22px, 6vw, 38px);
 
     font-weight: 900;
 
@@ -687,21 +684,25 @@ button {
 
     transform:
         translate(-50%, -50%)
-        scale(0.35);
+        scale(0.25)
+        rotate(-8deg);
 
-    filter: blur(8px);
+    filter: blur(7px);
 
     text-shadow:
         0 0 5px #fff,
         0 0 12px #fff,
-        0 0 25px rgba(255,255,255,0.9),
-        0 0 45px rgba(255,255,255,0.5);
+        0 0 25px rgba(255,255,255,.9),
+        0 0 45px rgba(255,255,255,.5);
 
-    animation:
-        neonPulse 2.5s
-        ease-in-out
-        infinite
-        alternate;
+    z-index: 12;
+
+    will-change:
+        left,
+        top,
+        transform,
+        opacity,
+        filter;
 }
 
 @keyframes neonPulse {
@@ -762,7 +763,189 @@ button {
         transform;
 }
 
-/* ПАНЕЛЬ */
+/* =====================================================
+   ОГОНЬ
+   Он находится СЗАДИ машинки
+===================================================== */
+
+#menuMachine .flame {
+    position: absolute;
+
+    /*
+       Машинка движется слева направо.
+       Поэтому огонь находится слева.
+    */
+
+    width: 27px;
+    height: 22px;
+
+    left: -24px;
+    top: 14px;
+
+    z-index: -1;
+
+    pointer-events: none;
+
+    transform-origin: right center;
+
+    background:
+        radial-gradient(
+            ellipse at 80% 50%,
+            rgba(255,255,255,.95) 0%,
+            rgba(125,220,255,.95) 15%,
+            rgba(35,150,255,.9) 40%,
+            rgba(30,100,255,.65) 65%,
+            rgba(0,70,255,0) 100%
+        );
+
+    filter:
+        blur(1px);
+
+    border-radius:
+        80% 15% 15% 80%;
+
+    animation:
+        flameMove
+        .14s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+/* Внешнее свечение */
+
+#menuMachine .flame::before {
+    content: "";
+
+    position: absolute;
+
+    left: -8px;
+    top: 3px;
+
+    width: 28px;
+    height: 16px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(0,140,255,.8),
+            rgba(0,100,255,.35) 45%,
+            rgba(0,60,255,0) 75%
+        );
+
+    filter: blur(5px);
+
+    border-radius: 50%;
+
+    animation:
+        flameGlow
+        .2s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+/* Яркое ядро */
+
+#menuMachine .flame::after {
+    content: "";
+
+    position: absolute;
+
+    left: -4px;
+    top: 7px;
+
+    width: 18px;
+    height: 9px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            #fff 0%,
+            #8eeaff 25%,
+            #2299ff 65%,
+            rgba(0,100,255,0) 100%
+        );
+
+    filter: blur(.5px);
+
+    border-radius: 50%;
+
+    animation:
+        flameCore
+        .12s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+@keyframes flameMove {
+
+    0% {
+        transform:
+            scaleX(.85)
+            scaleY(.9)
+            rotate(-2deg);
+
+        opacity: .75;
+    }
+
+    50% {
+        transform:
+            scaleX(1.08)
+            scaleY(1.05)
+            rotate(2deg);
+
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            scaleX(.92)
+            scaleY(.98)
+            rotate(-1deg);
+
+        opacity: .82;
+    }
+}
+
+@keyframes flameGlow {
+
+    0% {
+        transform:
+            scale(.85)
+            translateX(2px);
+
+        opacity: .45;
+    }
+
+    100% {
+        transform:
+            scale(1.2)
+            translateX(-3px);
+
+        opacity: .9;
+    }
+}
+
+@keyframes flameCore {
+
+    0% {
+        transform:
+            scaleX(.8)
+            scaleY(.85);
+    }
+
+    100% {
+        transform:
+            scaleX(1.15)
+            scaleY(1.1);
+    }
+}
+
+/* =====================================================
+   ПАНЕЛЬ
+===================================================== */
 
 #menuMachine .panel {
     position: absolute;
@@ -788,8 +971,6 @@ button {
     overflow: hidden;
 }
 
-/* ДИСПЛЕЙ */
-
 #menuMachine .disp {
     position: absolute;
 
@@ -806,8 +987,6 @@ button {
     border-radius: 2px;
 }
 
-/* МАЛЕНЬКАЯ КНОПКА */
-
 #menuMachine .btn-sm {
     position: absolute;
 
@@ -821,8 +1000,6 @@ button {
 
     background: #999;
 }
-
-/* БОЛЬШАЯ КНОПКА */
 
 #menuMachine .btn-lg {
     position: absolute;
@@ -846,7 +1023,9 @@ button {
     border: 1px solid #666;
 }
 
-/* ОКНО */
+/* =====================================================
+   ОКНО СТИРАЛКИ
+===================================================== */
 
 #menuMachine .window {
     position: absolute;
@@ -869,8 +1048,6 @@ button {
 
     border: 2px solid #888;
 }
-
-/* ЧЁРНЫЙ КРУГ */
 
 #menuMachine .glass {
     position: absolute;
@@ -932,9 +1109,9 @@ button {
     border-radius: 3px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* =====================================================
+   МОБИЛЬНЫЙ
+===================================================== */
 
 @media (max-width: 500px) {
 
@@ -993,9 +1170,17 @@ button {
         left: 3px;
         top: 24px;
     }
+
+    #menuMachine .flame {
+        width: 24px;
+        height: 19px;
+
+        left: -22px;
+        top: 12px;
+    }
 }
 
-/* Содержимое поверх фона */
+/* Контент поверх анимации */
 
 #menuPage .page-subtitle,
 #menuPage .card {
@@ -1010,500 +1195,448 @@ button {
 
 <div id="app">
 
-    <!-- HEADER -->
+<header class="header">
 
-    <header class="header">
+    <div class="logo">
+        🐻‍❄️ DROP
+    </div>
 
-        <div class="logo">
-            🐻‍❄️ DROP
+    <div class="header-balance">
+        ⭐
+        <span id="headerBalance">0.00</span>
+    </div>
+
+</header>
+
+
+<main class="content">
+
+<section id="menuPage" class="page">
+
+    <div class="menu-title-row">
+
+        <div class="page-title">
+            Меню
         </div>
 
-        <div class="header-balance">
-            ⭐
-            <span id="headerBalance">0.00</span>
+        <div id="menuAnimation">
+
+            <div id="menuMachine">
+
+                <!-- ОГОНЬ СЗАДИ -->
+                <div class="flame"></div>
+
+                <div class="panel">
+
+                    <div class="disp"></div>
+
+                    <div class="btn-sm"></div>
+
+                    <div class="btn-lg"></div>
+
+                </div>
+
+                <div class="window">
+
+                    <div class="glass"></div>
+
+                </div>
+
+                <div class="bottom-line"></div>
+
+            </div>
+
+            <div id="menuLetters"></div>
+
         </div>
 
-    </header>
+    </div>
 
 
-    <!-- CONTENT -->
+    <div class="page-subtitle">
+        Выберите игру и испытайте удачу.
+    </div>
 
-    <main class="content">
 
+    <div class="card game-card">
 
-        <!-- MENU -->
+        <div class="game-icon">
+            ⚪
+        </div>
 
-        <section id="menuPage" class="page">
+        <div class="card-title">
+            Шарик
+        </div>
 
-            <div class="menu-title-row">
-
-                <div class="page-title">
-                    Меню
-                </div>
-
-                <!-- АНИМАЦИЯ -->
-
-                <div id="menuAnimation">
-
-                    <div id="menuMachine">
-
-                        <div class="panel">
-
-                            <div class="disp"></div>
-
-                            <div class="btn-sm"></div>
-
-                            <div class="btn-lg"></div>
-
-                        </div>
-
-                        <div class="window">
-
-                            <div class="glass"></div>
-
-                        </div>
-
-                        <div class="bottom-line"></div>
-
-                    </div>
-
-                    <div id="menuLetters"></div>
-
-                </div>
-
-            </div>
-
-
-            <div class="page-subtitle">
-
-                Выберите игру и испытайте удачу.
-
-            </div>
-
-
-            <!-- GAME 1 -->
-
-            <div class="card game-card">
-
-                <div class="game-icon">
-                    ⚪
-                </div>
-
-                <div class="card-title">
-                    Шарик
-                </div>
-
-                <div class="card-text">
-
-                    Управляйте ставкой и наблюдайте,
-                    как шарик проходит через отверстие.
-
-                </div>
-
-                <button
-                    class="game-button"
-                    style="cursor:default;opacity:0.6;"
-                    type="button">
-
-                    ИГРАТЬ
-
-                </button>
-
-            </div>
-
-
-            <!-- GAME 2 -->
-
-            <div class="card game-card">
-
-                <div class="game-icon">
-                    🎟️
-                </div>
-
-                <div class="card-title">
-                    Билеты
-                </div>
-
-                <div class="card-text">
-
-                    Scratch & Win —
-                    выбирайте билет,
-                    открывайте ячейки.
-
-                </div>
-
-                <button
-                    class="game-button"
-                    style="cursor:default;opacity:0.6;"
-                    type="button">
-
-                    ИГРАТЬ
-
-                </button>
-
-            </div>
-
-
-            <!-- GAME 3 -->
-
-            <div class="card game-card">
-
-                <div class="game-icon">
-                    📦
-                </div>
-
-                <div class="card-title">
-                    Кейсы
-                </div>
-
-                <div class="card-text">
-
-                    Открывайте кейсы
-                    с предметами.
-
-                </div>
-
-                <button
-                    class="game-button"
-                    style="cursor:default;opacity:0.6;"
-                    type="button">
-
-                    ИГРАТЬ
-
-                </button>
-
-            </div>
-
-
-            <!-- GAME 4 -->
-
-            <div class="card game-card">
-
-                <div class="game-icon">
-                    🎡
-                </div>
-
-                <div class="card-title">
-                    UPGRADE
-                </div>
-
-                <div class="card-text">
-
-                    Колесо удачи
-                    с множителями x2, x5, x10.
-
-                </div>
-
-                <button
-                    class="game-button"
-                    style="cursor:default;opacity:0.6;"
-                    type="button">
-
-                    ИГРАТЬ
-
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- INVENTORY -->
-
-        <section
-            id="inventoryPage"
-            class="page hidden">
-
-            <div class="page-title">
-                Инвентарь
-            </div>
-
-            <div class="page-subtitle">
-
-                Предметы из кейсов,
-                которые вы сохранили.
-
-            </div>
-
-            <button
-                class="sell-all"
-                id="sellAllButton">
-
-                ПРОДАТЬ ВСЕ
-
-            </button>
-
-            <div id="inventoryContainer"></div>
-
-        </section>
-
-
-        <!-- PROFILE -->
-
-        <section
-            id="profilePage"
-            class="page hidden">
-
-            <div class="page-title">
-                Профиль
-            </div>
-
-            <div class="page-subtitle">
-
-                Управляйте аккаунтом,
-                наградами и промокодами.
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Имя
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="profileName">
-
-                        Игрок
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        ID игрока
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="profileId">
-
-                        100001
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Баланс
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="profileBalance">
-
-                        0.00 ⭐
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- DAILY -->
-
-            <div class="card">
-
-                <div class="card-title">
-                    Ежедневная награда
-                </div>
-
-                <div class="card-text">
-
-                    Забирайте
-                    <b>50</b> звёзд
-                    каждые 24 часа.
-
-                </div>
-
-
-                <button
-                    class="daily-button"
-                    id="dailyButton">
-
-                    ЗАБРАТЬ 50 ⭐
-
-                </button>
-
-
-                <div
-                    class="timer hidden"
-                    id="dailyTimer">
-
-                    24:00:00
-
-                </div>
-
-            </div>
-
-
-            <!-- PROMO -->
-
-            <div class="card">
-
-                <div class="card-title">
-                    Промокод
-                </div>
-
-                <div class="card-text">
-
-                    Введите промокод,
-                    чтобы получить награду.
-
-                </div>
-
-
-                <input
-                    id="promoInput"
-                    class="promo-input"
-                    type="text"
-                    placeholder="Введите промокод"
-                    autocomplete="off">
-
-
-                <button
-                    class="promo-button"
-                    id="promoButton">
-
-                    АКТИВИРОВАТЬ
-
-                </button>
-
-
-                <div
-                    class="promo-message"
-                    id="promoMessage">
-                </div>
-
-            </div>
-
-
-            <!-- STATS -->
-
-            <div class="card">
-
-                <div class="card-title">
-                    Статистика
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Игр сыграно
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="gamesPlayed">
-
-                        0
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Побед
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="wins">
-
-                        0
-
-                    </div>
-
-                </div>
-
-
-                <div class="profile-row">
-
-                    <div class="profile-label">
-                        Поражений
-                    </div>
-
-                    <div
-                        class="profile-value"
-                        id="losses">
-
-                        0
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- NAVIGATION -->
-
-    <nav class="bottom-nav">
+        <div class="card-text">
+            Управляйте ставкой и наблюдайте,
+            как шарик проходит через отверстие.
+        </div>
 
         <button
-            class="nav-button"
-            data-page="inventoryPage">
+            class="game-button"
+            type="button">
 
-            <span class="nav-icon">
-                ⨷
-            </span>
-
-            <span>
-                Инвентарь
-            </span>
+            ИГРАТЬ
 
         </button>
 
+    </div>
+
+
+    <div class="card game-card">
+
+        <div class="game-icon">
+            🎟️
+        </div>
+
+        <div class="card-title">
+            Билеты
+        </div>
+
+        <div class="card-text">
+            Scratch & Win —
+            выбирайте билет,
+            открывайте ячейки.
+        </div>
 
         <button
-            class="nav-button active"
-            data-page="menuPage">
+            class="game-button"
+            type="button">
 
-            <span class="nav-icon">
-                ⌂
-            </span>
-
-            <span>
-                Меню
-            </span>
+            ИГРАТЬ
 
         </button>
 
+    </div>
+
+
+    <div class="card game-card">
+
+        <div class="game-icon">
+            📦
+        </div>
+
+        <div class="card-title">
+            Кейсы
+        </div>
+
+        <div class="card-text">
+            Открывайте кейсы
+            с предметами.
+        </div>
 
         <button
-            class="nav-button"
-            data-page="profilePage">
+            class="game-button"
+            type="button">
 
-            <span class="nav-icon">
-                👤
-            </span>
-
-            <span>
-                Профиль
-            </span>
+            ИГРАТЬ
 
         </button>
 
-    </nav>
+    </div>
+
+
+    <div class="card game-card">
+
+        <div class="game-icon">
+            🎡
+        </div>
+
+        <div class="card-title">
+            UPGRADE
+        </div>
+
+        <div class="card-text">
+            Колесо удачи
+            с множителями x2, x5, x10.
+        </div>
+
+        <button
+            class="game-button"
+            type="button">
+
+            ИГРАТЬ
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- INVENTORY -->
+
+<section
+    id="inventoryPage"
+    class="page hidden">
+
+    <div class="page-title">
+        Инвентарь
+    </div>
+
+    <div class="page-subtitle">
+        Предметы из кейсов,
+        которые вы сохранили.
+    </div>
+
+    <button
+        class="sell-all"
+        id="sellAllButton">
+
+        ПРОДАТЬ ВСЕ
+
+    </button>
+
+    <div id="inventoryContainer"></div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section
+    id="profilePage"
+    class="page hidden">
+
+    <div class="page-title">
+        Профиль
+    </div>
+
+    <div class="page-subtitle">
+        Управляйте аккаунтом,
+        наградами и промокодами.
+    </div>
+
+
+    <div class="card">
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Имя
+            </div>
+
+            <div
+                class="profile-value"
+                id="profileName">
+
+                Игрок
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                ID игрока
+            </div>
+
+            <div
+                class="profile-value"
+                id="profileId">
+
+                100001
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Баланс
+            </div>
+
+            <div
+                class="profile-value"
+                id="profileBalance">
+
+                0.00 ⭐
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Ежедневная награда
+        </div>
+
+        <div class="card-text">
+            Забирайте
+            <b>50</b> звёзд
+            каждые 24 часа.
+        </div>
+
+        <button
+            class="daily-button"
+            id="dailyButton">
+
+            ЗАБРАТЬ 50 ⭐
+
+        </button>
+
+        <div
+            class="timer hidden"
+            id="dailyTimer">
+
+            24:00:00
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Промокод
+        </div>
+
+        <div class="card-text">
+            Введите промокод,
+            чтобы получить награду.
+        </div>
+
+        <input
+            id="promoInput"
+            class="promo-input"
+            type="text"
+            placeholder="Введите промокод"
+            autocomplete="off">
+
+        <button
+            class="promo-button"
+            id="promoButton">
+
+            АКТИВИРОВАТЬ
+
+        </button>
+
+        <div
+            class="promo-message"
+            id="promoMessage">
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Статистика
+        </div>
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Игр сыграно
+            </div>
+
+            <div
+                class="profile-value"
+                id="gamesPlayed">
+
+                0
+
+            </div>
+
+        </div>
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Побед
+            </div>
+
+            <div
+                class="profile-value"
+                id="wins">
+
+                0
+
+            </div>
+
+        </div>
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Поражений
+            </div>
+
+            <div
+                class="profile-value"
+                id="losses">
+
+                0
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+    <button
+        class="nav-button"
+        data-page="inventoryPage">
+
+        <span class="nav-icon">
+            ⨷
+        </span>
+
+        <span>
+            Инвентарь
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-button active"
+        data-page="menuPage">
+
+        <span class="nav-icon">
+            ⌂
+        </span>
+
+        <span>
+            Меню
+        </span>
+
+    </button>
+
+
+    <button
+        class="nav-button"
+        data-page="profilePage">
+
+        <span class="nav-icon">
+            👤
+        </span>
+
+        <span>
+            Профиль
+        </span>
+
+    </button>
+
+</nav>
 
 </div>
 
@@ -1511,7 +1644,7 @@ button {
 <script>
 
 /* =====================================================
-   ОСНОВНЫЕ ДАННЫЕ
+   ДАННЫЕ
 ===================================================== */
 
 let balance = 0;
@@ -1532,15 +1665,12 @@ function updateBalanceUI() {
 
     document.getElementById(
         "headerBalance"
-    ).textContent =
-        value;
-
+    ).textContent = value;
 
     document.getElementById(
         "profileBalance"
     ).textContent =
         value + " ⭐";
-
 }
 
 
@@ -1555,9 +1685,7 @@ function renderInventory() {
             "inventoryContainer"
         );
 
-
     container.innerHTML = "";
-
 
     if (
         inventoryItems.length === 0
@@ -1584,21 +1712,16 @@ function renderInventory() {
 
         `;
 
-
         document.getElementById(
             "sellAllButton"
         ).disabled = true;
 
-
         return;
-
     }
-
 
     document.getElementById(
         "sellAllButton"
     ).disabled = false;
-
 
     inventoryItems.forEach(
         (
@@ -1611,10 +1734,8 @@ function renderInventory() {
                     "div"
                 );
 
-
             div.className =
                 "inventory-item";
-
 
             div.innerHTML = `
 
@@ -1628,7 +1749,6 @@ function renderInventory() {
 
                     </div>
 
-
                     <div>
 
                         <div
@@ -1637,7 +1757,6 @@ function renderInventory() {
                             ${item.name}
 
                         </div>
-
 
                         <div
                             class="inventory-item-value">
@@ -1650,7 +1769,6 @@ function renderInventory() {
 
                 </div>
 
-
                 <button
                     class="inventory-sell-btn"
                     data-index="${index}">
@@ -1661,10 +1779,7 @@ function renderInventory() {
 
             `;
 
-
-            container.appendChild(
-                div
-            );
+            container.appendChild(div);
 
         }
     );
@@ -1686,20 +1801,16 @@ function renderInventory() {
                                 e.target.dataset.index
                             );
 
-
                         const item =
                             inventoryItems[index];
 
-
                         balance +=
                             item.value;
-
 
                         inventoryItems.splice(
                             index,
                             1
                         );
-
 
                         updateBalanceUI();
 
@@ -1728,9 +1839,7 @@ document
                 return;
             }
 
-
             let total = 0;
-
 
             for (
                 const item
@@ -1742,11 +1851,9 @@ document
 
             }
 
-
             balance += total;
 
             inventoryItems = [];
-
 
             updateBalanceUI();
 
@@ -1765,19 +1872,16 @@ function canClaimDaily() {
     const now =
         Date.now();
 
-
     const cooldown =
         24 *
         60 *
         60 *
         1000;
 
-
     return (
         now -
         dailyLastClaim
     ) >= cooldown;
-
 }
 
 
@@ -1792,23 +1896,18 @@ function claimDaily() {
         );
 
         return;
-
     }
-
 
     balance += 50;
 
     dailyLastClaim =
         Date.now();
 
-
     updateBalanceUI();
-
 
     alert(
         "🎁 Вы получили +50 ⭐"
     );
-
 }
 
 
@@ -1844,12 +1943,10 @@ document
                     "promoInput"
                 );
 
-
             const code =
                 input.value
                     .trim()
                     .toLowerCase();
-
 
             const message =
                 document.getElementById(
@@ -1872,29 +1969,22 @@ document
                         "#ef4752";
 
                     return;
-
                 }
-
 
                 balance +=
                     200000;
 
-
                 promoUsed200 =
                     true;
 
-
                 updateBalanceUI();
-
 
                 message.textContent =
                     "✅ +200000 ⭐";
 
-
                 input.value = "";
 
                 return;
-
             }
 
 
@@ -1913,29 +2003,22 @@ document
                         "#ef4752";
 
                     return;
-
                 }
-
 
                 balance +=
                     10000;
 
-
                 promoUsedMet200 =
                     true;
 
-
                 updateBalanceUI();
-
 
                 message.textContent =
                     "✅ +10000 ⭐";
 
-
                 input.value = "";
 
                 return;
-
             }
 
 
@@ -1994,7 +2077,6 @@ navButtons.forEach(
                     return;
                 }
 
-
                 Object
                     .values(pages)
                     .forEach(
@@ -2007,17 +2089,14 @@ navButtons.forEach(
                         }
                     );
 
-
                 const pageId =
                     this.dataset.page;
-
 
                 pages[
                     pageId
                 ].classList.remove(
                     "hidden"
                 );
-
 
                 navButtons.forEach(
                     button => {
@@ -2029,11 +2108,9 @@ navButtons.forEach(
                     }
                 );
 
-
                 this.classList.add(
                     "active"
                 );
-
 
                 if (
                     pageId ===
@@ -2052,7 +2129,7 @@ navButtons.forEach(
 
 
 /* =====================================================
-   АНИМАЦИЯ СТИРАЛКИ
+   АНИМАЦИЯ
 ===================================================== */
 
 (function() {
@@ -2062,12 +2139,20 @@ navButtons.forEach(
             "menuMachine"
         );
 
-
     const lettersContainer =
         document.getElementById(
             "menuLetters"
         );
 
+
+    /*
+       ВАЖНО:
+
+       Буквы идут именно по очереди.
+       Машинка сначала пролетает
+       точку буквы, а только потом
+       выпускает её из задней части.
+    */
 
     const words = [
         "White",
@@ -2104,34 +2189,26 @@ navButtons.forEach(
     );
 
 
-    /*
-       НАСТРОЙКИ
-    */
+    const START_DELAY = 650;
 
-    const START_DELAY =
-        700;
+    const LETTER_DELAY = 330;
 
+    const WORD_DELAY = 500;
 
-    const LETTER_DELAY =
-        220;
-
-
-    const WORD_DELAY =
-        350;
-
-
-    const DURATION =
-        5000;
-
-
-    const LETTER_FLY_TIME =
-        600;
-
+    const DURATION = 5600;
 
     /*
-       Машинка летит
-       сверху над словом
+       Чем меньше значение —
+       тем быстрее буква летит
+       к своему месту.
     */
+
+    const LETTER_FLY_TIME = 850;
+
+
+    /* =================================================
+       ПОЗИЦИЯ МАШИНКИ
+    ================================================= */
 
     function getMachinePosition(
         progress
@@ -2142,31 +2219,25 @@ navButtons.forEach(
                 "menuAnimation"
             );
 
-
         const width =
             container.offsetWidth;
 
-
         const startX =
-            -70;
-
+            -75;
 
         const endX =
-            width + 70;
-
+            width + 75;
 
         /*
-           Машинка находится
-           выше слова "Меню"
+           Машинка летит
+           немного выше букв.
         */
 
         const centerY =
-            10;
-
+            13;
 
         const arcHeight =
-            12;
-
+            10;
 
         const x =
             startX +
@@ -2176,7 +2247,6 @@ navButtons.forEach(
             ) *
             progress;
 
-
         const y =
             centerY -
             Math.sin(
@@ -2185,122 +2255,71 @@ navButtons.forEach(
             ) *
             arcHeight;
 
-
         const angle =
             -Math.cos(
                 progress *
                 Math.PI
             ) *
-            8;
-
+            7;
 
         return {
-
             x,
             y,
             angle
-
         };
 
     }
 
 
-    /*
-       Получаем размеры
-       текста White Bear,
-       чтобы он всегда
-       помещался на экран
-    */
+    /* =================================================
+       РАСКЛАДКА БУКВ
+    ================================================= */
 
     function getLetterLayout() {
 
         const containerWidth =
             lettersContainer.offsetWidth;
 
-
         const menuTitle =
             document.querySelector(
                 "#menuPage .page-title"
             );
 
-
         const titleWidth =
             menuTitle.offsetWidth;
 
-
-        /*
-           Минимальный отступ
-           после слова Меню
-        */
-
         const finalStart =
             titleWidth +
-            30;
-
-
-        /*
-           Максимальная доступная
-           ширина справа
-        */
+            28;
 
         const availableWidth =
             containerWidth -
             finalStart -
-            8;
-
-
-        /*
-           White Bear = 9 букв
-           + небольшой промежуток
-        */
+            5;
 
         const totalLetters = 9;
-
-
-        /*
-           Подбираем расстояние
-           автоматически
-        */
 
         let spacing =
             availableWidth /
             totalLetters;
 
-
-        /*
-           Не даём буквам
-           стать слишком большими
-        */
-
         spacing =
             Math.max(
-                17,
+                16,
                 Math.min(
                     spacing,
-                    31
+                    29
                 )
             );
-
-
-        /*
-           Размер букв
-           тоже адаптивный
-        */
 
         let fontSize =
             Math.min(
-                38,
+                36,
                 Math.max(
-                    22,
-                    spacing * 0.95
+                    20,
+                    spacing * .92
                 )
             );
-
-
-        /*
-           Если экран совсем узкий —
-           уменьшаем всё ещё сильнее
-        */
 
         if (
             availableWidth < 190
@@ -2308,99 +2327,41 @@ navButtons.forEach(
 
             spacing =
                 Math.max(
-                    15,
+                    14,
                     availableWidth /
                     totalLetters
                 );
 
             fontSize =
                 Math.max(
-                    20,
-                    spacing * 0.9
+                    19,
+                    spacing * .88
                 );
 
         }
 
-
         return {
-
             finalStart,
             spacing,
             fontSize
-
         };
 
     }
 
 
-    /*
-       СОЗДАНИЕ БУКВЫ
-    */
+    /* =================================================
+       ФИНАЛЬНАЯ ПОЗИЦИЯ БУКВЫ
+    ================================================= */
 
-    function createLetter(
-        character,
+    function getLetterFinalPosition(
         index,
-        wordIndex,
-        machinePosition
+        wordIndex
     ) {
-
-        const letter =
-            document.createElement(
-                "div"
-            );
-
-
-        letter.className =
-            "letter";
-
-
-        letter.textContent =
-            character;
-
-
-        /*
-           Начальная позиция —
-           возле машинки
-        */
-
-        const startX =
-            machinePosition.x +
-            25;
-
-
-        const startY =
-            machinePosition.y +
-            20;
-
-
-        /*
-           Получаем адаптивную
-           раскладку букв
-        */
 
         const layout =
             getLetterLayout();
 
-
-        const finalStart =
-            layout.finalStart;
-
-
-        const letterSpacing =
-            layout.spacing;
-
-
-        letter.style.fontSize =
-            layout.fontSize +
-            "px";
-
-
-        /*
-           Индекс внутри слова
-        */
-
         let sameWordIndex = 0;
-
 
         for (
             let i = 0;
@@ -2420,61 +2381,101 @@ navButtons.forEach(
         }
 
 
-        /*
-           Расстояние между
-           White и Bear
-        */
-
         const wordOffset =
             wordIndex === 0
                 ? 0
-                : 5 * letterSpacing + 8;
+                : 5 * layout.spacing + 8;
 
-
-        /*
-           Финальная позиция
-        */
 
         let finalX =
-            finalStart +
+            layout.finalStart +
             wordOffset +
             sameWordIndex *
-            letterSpacing;
+            layout.spacing;
 
-
-        /*
-           Дополнительная защита:
-           буквы никогда не выходят
-           за правый край
-        */
 
         const maxX =
             lettersContainer.offsetWidth -
-            8;
+            7;
 
 
-        if (
-            finalX >
-            maxX
-        ) {
+        finalX =
+            Math.min(
+                finalX,
+                maxX
+            );
 
-            finalX =
-                maxX;
 
-        }
+        return {
+            x: finalX,
+            y: 28
+        };
+
+    }
+
+
+    /* =================================================
+       СОЗДАНИЕ БУКВЫ
+    ================================================= */
+
+    function createLetter(
+        item,
+        machinePosition
+    ) {
+
+        const letter =
+            document.createElement(
+                "div"
+            );
+
+        letter.className =
+            "letter";
+
+        letter.textContent =
+            item.char;
+
+
+        const layout =
+            getLetterLayout();
+
+        letter.style.fontSize =
+            layout.fontSize + "px";
 
 
         /*
-           Немного выше центра
+           Буква появляется
+           СЗАДИ машинки.
+
+           Машинка движется слева направо,
+           поэтому задняя часть —
+           её левая сторона.
         */
 
+        const startX =
+            machinePosition.x -
+            18;
+
+        const startY =
+            machinePosition.y +
+            23;
+
+
+        const finalPosition =
+            getLetterFinalPosition(
+                item.index,
+                item.word
+            );
+
+
+        const finalX =
+            finalPosition.x;
+
         const finalY =
-            28;
+            finalPosition.y;
 
 
         letter.style.left =
             startX + "px";
-
 
         letter.style.top =
             startY + "px";
@@ -2485,18 +2486,24 @@ navButtons.forEach(
         );
 
 
-        const animationStart =
+        /*
+           Буква летит плавно,
+           а не телепортируется.
+
+           Используем физически
+           приятную easing-кривую.
+        */
+
+        const startTime =
             performance.now();
 
 
-        function animateLetter(
-            now
-        ) {
+        function animateLetter(now) {
 
             let progress =
                 (
                     now -
-                    animationStart
+                    startTime
                 ) /
                 LETTER_FLY_TIME;
 
@@ -2508,6 +2515,10 @@ navButtons.forEach(
                 );
 
 
+            /*
+               Cubic ease-out
+            */
+
             const eased =
                 1 -
                 Math.pow(
@@ -2516,6 +2527,10 @@ navButtons.forEach(
                     3
                 );
 
+
+            /*
+               Основное движение
+            */
 
             const currentX =
                 startX +
@@ -2526,38 +2541,78 @@ navButtons.forEach(
                 eased;
 
 
+            /*
+               Небольшая дуга.
+
+               В начале буква чуть
+               поднимается, затем
+               садится на место.
+            */
+
+            const arc =
+                Math.sin(
+                    progress *
+                    Math.PI
+                ) *
+                -13;
+
+
             const currentY =
                 startY +
                 (
                     finalY -
                     startY
                 ) *
-                eased;
+                eased +
+                arc;
+
+
+            /*
+               Поворот во время полёта
+            */
+
+            const rotation =
+                -10 +
+                progress *
+                10;
+
+
+            /*
+               Масштаб
+            */
+
+            const scale =
+                .45 +
+                progress *
+                .55;
 
 
             letter.style.left =
-                currentX +
-                "px";
-
+                currentX + "px";
 
             letter.style.top =
-                currentY +
-                "px";
+                currentY + "px";
 
 
             letter.style.opacity =
                 Math.min(
                     1,
-                    progress * 4
+                    progress * 3
                 );
 
 
             letter.style.transform =
-                `translate(-50%, -50%) scale(${0.3 + progress * 0.7})`;
+                `translate(-50%, -50%)
+                 scale(${scale})
+                 rotate(${rotation}deg)`;
 
 
             letter.style.filter =
-                `blur(${Math.max(0, 8 - progress * 10)}px)`;
+                `blur(${Math.max(
+                    0,
+                    6 -
+                    progress * 6
+                )}px)`;
 
 
             if (
@@ -2567,6 +2622,32 @@ navButtons.forEach(
                 requestAnimationFrame(
                     animateLetter
                 );
+
+            } else {
+
+                /*
+                   После прилёта
+                   буква становится
+                   полностью неподвижной.
+                */
+
+                letter.style.left =
+                    finalX + "px";
+
+                letter.style.top =
+                    finalY + "px";
+
+                letter.style.opacity =
+                    "1";
+
+                letter.style.transform =
+                    "translate(-50%, -50%) scale(1) rotate(0deg)";
+
+                letter.style.filter =
+                    "blur(0)";
+
+                letter.style.animation =
+                    "neonPulse 2.5s ease-in-out infinite alternate";
 
             }
 
@@ -2580,25 +2661,21 @@ navButtons.forEach(
     }
 
 
-    /*
-       ОСНОВНАЯ АНИМАЦИЯ
-    */
+    /* =================================================
+       ГЛАВНАЯ АНИМАЦИЯ
+    ================================================= */
 
     let startTime =
         null;
 
-
     let nextLetterTime =
         START_DELAY;
-
 
     let letterIndex =
         0;
 
 
-    function animate(
-        time
-    ) {
+    function animate(time) {
 
         if (
             startTime === null
@@ -2630,27 +2707,22 @@ navButtons.forEach(
 
 
         machine.style.left =
-            position.x +
-            "px";
-
+            position.x + "px";
 
         machine.style.top =
-            position.y +
-            "px";
-
+            position.y + "px";
 
         machine.style.transform =
             `rotate(${position.angle}deg)`;
 
 
         /*
-           Выпускаем буквы
+           Выпускаем следующую букву
+           только после того, как
+           машинка прошла её место.
         */
 
         if (
-            elapsed >=
-            nextLetterTime &&
-
             letterIndex <
             letters.length
         ) {
@@ -2661,30 +2733,61 @@ navButtons.forEach(
                 ];
 
 
+            const letterPosition =
+                getLetterFinalPosition(
+                    letterIndex,
+                    item.word
+                );
+
+
+            /*
+               Позиция машинки,
+               при которой она уже
+               прошла место буквы.
+            */
+
+            const triggerX =
+                letterPosition.x +
+                22;
+
+
             if (
-                letterIndex === 4
+                position.x >
+                triggerX &&
+                elapsed >=
+                nextLetterTime
             ) {
 
-                nextLetterTime +=
-                    WORD_DELAY;
+                item.index =
+                    letterIndex;
 
-            } else {
 
-                nextLetterTime +=
-                    LETTER_DELAY;
+                createLetter(
+                    item,
+                    position
+                );
+
+
+                letterIndex++;
+
+
+                if (
+                    letterIndex === 5
+                ) {
+
+                    nextLetterTime =
+                        elapsed +
+                        WORD_DELAY;
+
+                } else {
+
+                    nextLetterTime =
+                        elapsed +
+                        LETTER_DELAY;
+
+                }
 
             }
-
-
-            createLetter(
-                item.char,
-                letterIndex,
-                item.word,
-                position
-            );
-
-
-            letterIndex++;
 
         }
 
@@ -2699,11 +2802,6 @@ navButtons.forEach(
 
         } else {
 
-            /*
-               После пролёта
-               машинка исчезает
-            */
-
             machine.style.display =
                 "none";
 
@@ -2712,11 +2810,9 @@ navButtons.forEach(
     }
 
 
-    /*
-       Пересчитываем позиции,
-       если экран повернули
-       или изменился размер
-    */
+    /* =================================================
+       RESIZE
+    ================================================= */
 
     window.addEventListener(
         "resize",
@@ -2728,101 +2824,58 @@ navButtons.forEach(
                 );
 
 
-            if (
-                existingLetters.length === 0
-            ) {
-                return;
-            }
-
-
-            const layout =
-                getLetterLayout();
-
-
-            let visualIndex = 0;
-
-
             existingLetters.forEach(
-                letter => {
+                (
+                    letter,
+                    visualIndex
+                ) => {
 
                     const item =
                         letters[
                             visualIndex
                         ];
 
-
                     if (!item) {
                         return;
                     }
 
 
-                    let sameWordIndex = 0;
-
-
-                    for (
-                        let i = 0;
-                        i < visualIndex;
-                        i++
-                    ) {
-
-                        if (
-                            letters[i].word ===
+                    const position =
+                        getLetterFinalPosition(
+                            visualIndex,
                             item.word
-                        ) {
-
-                            sameWordIndex++;
-
-                        }
-
-                    }
-
-
-                    const wordOffset =
-                        item.word === 0
-                            ? 0
-                            : 5 * layout.spacing + 8;
-
-
-                    let x =
-                        layout.finalStart +
-                        wordOffset +
-                        sameWordIndex *
-                        layout.spacing;
-
-
-                    const maxX =
-                        lettersContainer.offsetWidth -
-                        8;
-
-
-                    x =
-                        Math.min(
-                            x,
-                            maxX
                         );
 
 
+                    const layout =
+                        getLetterLayout();
+
+
                     letter.style.left =
-                        x + "px";
+                        position.x + "px";
+
+
+                    letter.style.top =
+                        position.y + "px";
 
 
                     letter.style.fontSize =
-                        layout.fontSize +
-                        "px";
+                        layout.fontSize + "px";
 
-
-                    visualIndex++;
-
-                });
+                }
+            );
 
         }
     );
 
 
+    /*
+       Старт
+    */
+
     requestAnimationFrame(
         animate
     );
-
 
 })();
 
