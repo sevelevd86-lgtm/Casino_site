@@ -3,2687 +3,3821 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐻‍❄️ DROP</title>
 
-<title>Cases</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
+/* =====================================================
+   ОБЩИЕ СБРОСЫ – ЗИМНИЙ ДИЗАЙН
+===================================================== */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-    background: #080b12;
-    font-family: Arial, sans-serif;
-    color: #fff;
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0a1628;
+  color: #e8f0fe;
+  font-family: Arial, sans-serif;
+  user-select: none;
 }
 
-body {
-    overflow-x: hidden;
+button, input { font-family: inherit; }
+button { cursor: pointer; }
+.hidden { display: none !important; }
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(145deg, #0a1628, #142a4a, #0d1f38);
 }
 
-button {
-    font-family: Arial, sans-serif;
+/* =========================
+   HEADER
+========================= */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+  background: rgba(10, 22, 40, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 20;
 }
 
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(100, 180, 255, 0.3);
+}
+.logo span { color: #6ab0ff; }
+
+.header-balance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a8d4ff;
+  font-size: 19px;
+  font-weight: 900;
+}
+.header-balance span { color: #ffd84d; }
+
+/* =========================
+   CONTENT
+========================= */
+.content {
+  position: absolute;
+  top: 74px;
+  left: 0;
+  right: 0;
+  bottom: 82px;
+  overflow-y: auto;
+  padding: 25px 18px 30px;
+}
+.content::-webkit-scrollbar { width: 4px; }
+.content::-webkit-scrollbar-track { background: #0a1628; }
+.content::-webkit-scrollbar-thumb { background: #4a8ecf; border-radius: 4px; }
+
+.page {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #fff, #6ab0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.page-subtitle {
+  color: #8ab4d8;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+/* =========================
+   CARDS
+========================= */
+.card {
+  background: linear-gradient(145deg, rgba(20, 50, 90, 0.6), rgba(10, 22, 40, 0.8));
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 14px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 8px 32px rgba(0, 20, 50, 0.3);
+}
+.card-title {
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 7px;
+  color: #c8e4ff;
+}
+.card-text {
+  color: #8ab4d8;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.game-card {
+  padding: 24px;
+  background: linear-gradient(145deg, rgba(30, 70, 120, 0.4), rgba(10, 30, 60, 0.6));
+  border: 1px solid rgba(100, 180, 255, 0.2);
+}
+.game-card:hover {
+  border-color: rgba(100, 180, 255, 0.5);
+  box-shadow: 0 8px 40px rgba(50, 150, 255, 0.15);
+}
+
+.game-icon {
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1a3a6a, #0d2240);
+  font-size: 31px;
+  margin-bottom: 17px;
+  border: 1px solid rgba(100, 180, 255, 0.2);
+}
+
+.game-button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 15px;
+  border: none;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+  transition: 0.2s;
+}
+.game-button:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(42, 122, 216, 0.5); }
+.game-button:active { transform: scale(.98); }
+
+/* =========================
+   INVENTORY
+========================= */
+.sell-all {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #1a3a6a, #0d2240);
+  color: #c8e4ff;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  border: 1px solid rgba(100, 180, 255, 0.2);
+}
+.sell-all:disabled { opacity: .45; cursor: default; }
+
+.empty-inventory { text-align: center; padding: 45px 15px; color: #5a8aaa; }
+.empty-icon { font-size: 45px; margin-bottom: 13px; }
+.empty-title { color: #8ab4d8; font-size: 19px; font-weight: 800; margin-bottom: 7px; }
+.empty-text { font-size: 15px; }
+
+.inventory-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(20, 50, 90, 0.4);
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+.inventory-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.inventory-item-emoji { font-size: 28px; }
+.inventory-item-name { font-weight: 800; font-size: 15px; color: #c8e4ff; }
+.inventory-item-value { color: #ffd84d; font-size: 14px; font-weight: 800; }
+
+.inventory-sell-btn {
+  background: linear-gradient(135deg, #1a5ab8, #0d3a7a);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* =========================
+   PROFILE
+========================= */
+.profile-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(100, 180, 255, 0.1);
+}
+.profile-row:last-child { border-bottom: none; }
+.profile-label { color: #8ab4d8; font-size: 15px; }
+.profile-value { font-size: 16px; font-weight: 800; color: #e8f0fe; }
+
+.daily-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  margin-top: 15px;
+  box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+}
+.daily-button:disabled { background: rgba(30, 60, 100, 0.5); color: #5a8aaa; }
+
+.timer { text-align: center; margin-top: 13px; color: #6ab0ff; font-size: 18px; font-weight: 900; }
+
+.promo-input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(10, 22, 40, 0.8);
+  color: #e8f0fe;
+  outline: none;
+  font-size: 16px;
+  text-align: center;
+}
+.promo-input:focus { border-color: #2a7ad8; box-shadow: 0 0 20px rgba(42, 122, 216, 0.15); }
+
+.promo-button {
+  width: 100%;
+  margin-top: 11px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1a3a6a, #0d2240);
+  color: #c8e4ff;
+  font-size: 15px;
+  font-weight: 900;
+  border: 1px solid rgba(100, 180, 255, 0.2);
+}
+.promo-message { min-height: 20px; margin-top: 9px; text-align: center; font-size: 14px; color: #54df87; }
+
+/* =========================
+   BOTTOM NAV
+========================= */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 82px;
+  display: flex;
+  background: rgba(10, 22, 40, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(100, 180, 255, 0.15);
+  z-index: 30;
+}
+.nav-button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  color: #5a8aaa;
+  font-size: 13px;
+  font-weight: 800;
+}
+.nav-icon { font-size: 23px; }
+.nav-button.active { color: #6ab0ff; }
+
+/* =====================================================
+   АНИМАЦИЯ МЕНЮ (стиральная машина + буквы)
+===================================================== */
+#menuPage { position: relative; }
+.menu-title-row {
+  position: relative;
+  height: 105px;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  overflow: visible;
+}
+.menu-title-row .page-title {
+  position: relative;
+  z-index: 5;
+  flex-shrink: 0;
+  margin-top: 0;
+  margin-right: 10px;
+}
+#menuAnimation {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 105px;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 15;
+}
+#menuLetters {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 12;
+}
+#menuAnimation .letter {
+  position: absolute;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(22px, 6vw, 38px);
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.25) rotate(-8deg);
+  filter: blur(7px);
+  text-shadow: 0 0 5px #fff, 0 0 12px #fff, 0 0 25px rgba(255,255,255,.9), 0 0 45px rgba(255,255,255,.5);
+  z-index: 12;
+  will-change: left, top, transform, opacity, filter;
+}
+@keyframes neonPulse {
+  0% { text-shadow: 0 0 4px #fff,0 0 10px #fff,0 0 20px rgba(255,255,255,.8),0 0 40px rgba(255,255,255,.35); }
+  100% { text-shadow: 0 0 7px #fff,0 0 18px #fff,0 0 35px rgba(255,255,255,1),0 0 65px rgba(255,255,255,.6); }
+}
+#menuMachine {
+  position: absolute;
+  width: 58px;
+  height: 50px;
+  left: -80px;
+  top: 18px;
+  z-index: 20;
+  will-change: left, top, transform;
+}
+#menuMachine .mm-body {
+  position: absolute;
+  inset: 0 0 6px 0;
+  background: linear-gradient(155deg, #ffffff 0%, #f4f6f9 28%, #dfe6ee 58%, #b9c4d1 100%);
+  border: 1px solid rgba(120, 135, 155, 0.8);
+  border-radius: 7px;
+  box-shadow: inset 2px 2px 4px rgba(255,255,255,.95), inset -5px -6px 9px rgba(30,40,60,.25), 0 10px 22px rgba(0,8,25,.55);
+}
+#menuMachine .mm-lid {
+  position: absolute;
+  left: 2px; right: 2px;
+  top: -3px;
+  height: 5px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(to bottom, #ffffff, #ccd4dd);
+  border: 1px solid rgba(120, 135, 155, .7);
+  border-bottom: none;
+}
+#menuMachine .mm-feet {
+  position: absolute;
+  left: 4px; right: 4px;
+  bottom: -5px;
+  height: 5px;
+}
+#menuMachine .mm-feet span {
+  position: absolute;
+  width: 5px; height: 5px;
+  bottom: 0;
+  border-radius: 1px;
+  background: linear-gradient(180deg, #9aa6b4, #4c5866);
+  box-shadow: 0 2px 3px rgba(0,0,0,.4);
+}
+#menuMachine .mm-feet span:first-child { left: 0; }
+#menuMachine .mm-feet span:last-child { right: 0; }
+#menuMachine .window {
+  position: absolute;
+  width: 36px; height: 36px;
+  left: 2px; top: 6px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fff, #c3cbd4 45%, #8b95a3);
+  border: 2px solid #7c8798;
+  box-shadow: 0 2px 4px rgba(0,0,0,.35);
+}
+#menuMachine .glass {
+  position: absolute;
+  width: 29px; height: 29px;
+  left: 1.5px; top: 1.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #4a5568, #232a36 32%, #0c0f16 68%, #000);
+  border: 1px solid #444;
+  box-shadow: inset 0 0 9px rgba(0,0,0,.9);
+  overflow: hidden;
+}
+#menuMachine .drum {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(rgba(120,160,220,.35) 0deg 8deg, rgba(20,25,35,0) 8deg 32deg);
+  animation: drumSpin .9s linear infinite;
+}
+#menuMachine .glass::before {
+  content: "";
+  position: absolute;
+  width: 19px; height: 7px;
+  left: 3px; top: 3px;
+  background: rgba(255,255,255,.22);
+  border-radius: 50%;
+  transform: rotate(-25deg);
+  z-index: 2;
+}
+@keyframes drumSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#menuMachine .panel {
+  position: absolute;
+  width: 15px; height: 40px;
+  right: 3px; top: 4px;
+  background: linear-gradient(to right, #fff, #eef1f5 50%, #c9d1db);
+  border: 1px solid #9aa6b4;
+  border-radius: 3px;
+  overflow: hidden;
+}
+#menuMachine .disp {
+  position: absolute;
+  width: 9px; height: 8px;
+  left: 3px; top: 3px;
+  background: #0a2e1c;
+  border: 1px solid #333;
+  border-radius: 2px;
+  box-shadow: 0 0 3px rgba(80,255,150,.5) inset;
+}
+#menuMachine .disp::after {
+  content: "88";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5px;
+  font-weight: 900;
+  color: #4dffa0;
+  text-shadow: 0 0 2px #4dffa0;
+  animation: dispFlicker 1.1s steps(2) infinite;
+}
+@keyframes dispFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .55; }
+}
+#menuMachine .btn-sm {
+  position: absolute;
+  width: 4px; height: 4px;
+  left: 5px; top: 15px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #fff, #aab3bf 60%, #7c8798);
+}
+#menuMachine .btn-lg {
+  position: absolute;
+  width: 8px; height: 8px;
+  left: 3.5px; top: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #fff, #ccd4dd 45%, #7c8798);
+  border: 1px solid #6b7686;
+}
+#menuMachine .flame {
+  position: absolute;
+  width: 30px; height: 24px;
+  left: -26px; top: 15px;
+  z-index: -1;
+  pointer-events: none;
+  transform-origin: right center;
+}
+#menuMachine .flame .f-outer {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 82% 50%, rgba(200,235,255,.9) 0%, rgba(110,190,255,.85) 22%, rgba(45,140,255,.7) 48%, rgba(20,90,255,.35) 72%, rgba(10,60,255,0) 100%);
+  filter: blur(1.5px);
+  border-radius: 80% 20% 20% 80%;
+  animation: flameMove .13s ease-in-out infinite alternate;
+}
+#menuMachine .flame .f-mid {
+  position: absolute;
+  width: 68%; height: 66%;
+  left: -6%; top: 17%;
+  background: radial-gradient(ellipse at 85% 50%, #fff 0%, #bdeeff 20%, #4db2ff 55%, rgba(0,110,255,0) 100%);
+  filter: blur(1px);
+  border-radius: 80% 20% 20% 80%;
+  animation: flameMid .17s ease-in-out infinite alternate-reverse;
+}
+#menuMachine .flame .f-core {
+  position: absolute;
+  width: 42%; height: 42%;
+  left: 4%; top: 30%;
+  background: radial-gradient(ellipse, #ffffff 0%, #d8f7ff 30%, #7fd8ff 70%, rgba(0,150,255,0) 100%);
+  border-radius: 50%;
+  animation: flameCore .1s ease-in-out infinite alternate;
+}
+#menuMachine .flame .spark {
+  position: absolute;
+  width: 3px; height: 3px;
+  left: 10%; top: 48%;
+  border-radius: 50%;
+  background: #eaf9ff;
+  box-shadow: 0 0 4px 1px #7fd8ff;
+  opacity: 0;
+  animation: sparkFly .55s ease-out infinite;
+}
+#menuMachine .flame .spark.s2 { top: 30%; animation-delay: .18s; }
+#menuMachine .flame .spark.s3 { top: 66%; animation-delay: .35s; }
+@keyframes flameMove {
+  0% { transform: scaleX(.82) scaleY(.88) rotate(-3deg); opacity: .8; }
+  50% { transform: scaleX(1.12) scaleY(1.08) rotate(3deg); opacity: 1; }
+  100% { transform: scaleX(.9) scaleY(.96) rotate(-1deg); opacity: .85; }
+}
+@keyframes flameMid {
+  0% { transform: scaleX(.85) scaleY(.9); opacity: .85; }
+  100% { transform: scaleX(1.15) scaleY(1.12); opacity: 1; }
+}
+@keyframes flameCore {
+  0% { transform: scaleX(.78) scaleY(.82); }
+  100% { transform: scaleX(1.2) scaleY(1.15); }
+}
+@keyframes sparkFly {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-16px, -3px) scale(.2); opacity: 0; }
+}
+
+@media (max-width: 500px) {
+  .content { padding-left: 14px; padding-right: 14px; }
+  #menuAnimation .letter { font-size: 24px; }
+  #menuMachine { width: 51px; height: 44px; }
+  #menuMachine .panel { width: 13px; height: 35px; right: 2px; top: 3px; }
+  #menuMachine .window { width: 32px; height: 32px; left: 2px; top: 5px; }
+  #menuMachine .glass { width: 26px; height: 26px; left: 1.5px; top: 1.5px; }
+  #menuMachine .disp { width: 7px; height: 7px; left: 3px; top: 3px; }
+  #menuMachine .disp::after { font-size: 4px; }
+  #menuMachine .btn-sm { width: 3.5px; height: 3.5px; left: 4.5px; top: 13px; }
+  #menuMachine .btn-lg { width: 7px; height: 7px; left: 3px; top: 21px; }
+  #menuMachine .flame { width: 26px; height: 20px; left: -23px; top: 13px; }
+}
+
+/* =====================================================
+   СТИЛИ ИГР – из первого файла
+===================================================== */
+
+/* ---- Шарик ---- */
+#gameScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(145deg, #0a1628, #142a4a);
+  z-index: 100;
+}
+#gameCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.game-top {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+  z-index: 110;
+}
+.game-stat {
+  min-width: 75px;
+  text-align: center;
+}
+.game-stat-label {
+  color: #5a8aaa;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+.game-stat-value {
+  margin-top: 4px;
+  color: #e8f0fe;
+  font-size: 20px;
+  font-weight: 900;
+}
+#gameMultiplier { color: #6ab0ff; }
+#gameBalance { color: #ffd84d; }
+
+.bottom-zones {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 90px;
+  display: flex;
+  z-index: 105;
+  pointer-events: none;
+}
+.green-zone, .red-zone {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  overflow: hidden;
+}
+.green-zone {
+  background: linear-gradient(to top, #1a8a5a, #0d6a4a 35%, rgba(26, 138, 90, 0.2));
+}
+.red-zone {
+  background: linear-gradient(to top, #c04060, #a03050 35%, rgba(192, 64, 96, 0.2));
+}
+
+.game-menu {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 40px);
+  max-width: 350px;
+  padding: 25px;
+  background: rgba(10, 30, 60, 0.95);
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  border-radius: 18px;
+  z-index: 120;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.game-menu-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 18px;
+  color: #e8f0fe;
+}
+.game-menu-balance {
+  text-align: center;
+  color: #ffd84d;
+  font-size: 23px;
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+.bet-input {
+  width: 100%;
+  padding: 14px;
+  background: rgba(10, 22, 40, 0.8);
+  color: #e8f0fe;
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  border-radius: 10px;
+  outline: none;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+}
+.bet-input:focus { border-color: #2a7ad8; }
+.bet-error {
+  min-height: 18px;
+  color: #ef4752;
+  text-align: center;
+  font-size: 12px;
+  margin-top: 7px;
+}
+.difficulty {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+.difficulty button {
+  flex: 1;
+  border: none;
+  border-radius: 9px;
+  padding: 10px 5px;
+  background: rgba(20, 50, 90, 0.5);
+  color: #8ab4d8;
+  font-size: 13px;
+  font-weight: 800;
+}
+.difficulty button.active {
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+}
+.start-game {
+  width: 100%;
+  margin-top: 15px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+}
+.exit-game {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #5a8aaa;
+  font-size: 14px;
+  font-weight: 800;
+}
+.result {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 40px);
+  max-width: 330px;
+  padding: 28px;
+  background: rgba(10, 30, 60, 0.95);
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  border-radius: 18px;
+  text-align: center;
+  z-index: 130;
+  backdrop-filter: blur(10px);
+}
+.result-title { font-size: 44px; font-weight: 900; }
+.result-title.win { color: #6ab0ff; }
+.result-title.lose { color: #ef4752; }
+.result-info {
+  color: #8ab4d8;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.result-money {
+  margin-top: 12px;
+  font-size: 23px;
+  font-weight: 900;
+}
+.result-money.win { color: #ffd84d; }
+.result-money.lose { color: #ef4752; }
+.result-close {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+/* ---- Билеты ---- */
+#ticketGameContainer {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(145deg, #0a1628, #142a4a);
+  z-index: 90;
+  overflow-y: auto;
+  padding: 18px 15px 30px;
+}
+#ticketGameContainer .app-inner {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+#ticketGameContainer .header-ticket {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+#ticketGameContainer .logo-ticket {
+  font-size: 22px;
+  font-weight: 900;
+  color: #e8f0fe;
+}
+#ticketGameContainer .balance-ticket {
+  background: rgba(20, 50, 90, 0.5);
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #a8d4ff;
+}
+#ticketGameContainer .balance-ticket span { color: #ffd84d; }
+#ticketGameContainer .screen { display: none; }
+#ticketGameContainer .screen.active { display: block; }
+#ticketGameContainer .title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 900;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #fff, #6ab0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#ticketGameContainer .subtitle {
+  text-align: center;
+  color: #8ab4d8;
+  font-size: 14px;
+  margin-top: 7px;
+  line-height: 1.5;
+}
+#ticketGameContainer .tickets {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 28px;
+}
+#ticketGameContainer .ticket {
+  width: 100%;
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  background: rgba(20, 50, 90, 0.3);
+  border-radius: 17px;
+  padding: 19px;
+  cursor: pointer;
+  transition: .2s ease;
+  position: relative;
+}
+#ticketGameContainer .ticket:hover { border-color: rgba(100, 180, 255, 0.4); transform: translateY(-1px); }
+#ticketGameContainer .ticket:active { transform: scale(.985); }
+#ticketGameContainer .ticket.selected {
+  border: 2px solid #6ab0ff;
+  box-shadow: 0 0 30px rgba(42, 122, 216, 0.2);
+}
+#ticketGameContainer .ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#ticketGameContainer .ticket-name { font-size: 19px; font-weight: 900; color: #e8f0fe; }
+#ticketGameContainer .ticket-price { color: #ffd84d; font-size: 16px; font-weight: 900; }
+#ticketGameContainer .free { color: #6ab0ff; }
+#ticketGameContainer .ticket-description {
+  color: #8ab4d8;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+#ticketGameContainer .chance-panel {
+  margin-top: 20px;
+  background: rgba(20, 50, 90, 0.3);
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  border-radius: 17px;
+  padding: 18px;
+}
+#ticketGameContainer .chance-title { font-size: 18px; font-weight: 900; margin-bottom: 6px; color: #e8f0fe; }
+#ticketGameContainer .chance-subtitle {
+  color: #8ab4d8;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+#ticketGameContainer .start-ticket-button {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(42, 122, 216, 0.3);
+}
+#ticketGameContainer .chance-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(100, 180, 255, 0.08);
+}
+#ticketGameContainer .chance-row:last-child { border-bottom: none; }
+#ticketGameContainer .chance-symbol { font-size: 21px; }
+#ticketGameContainer .chance-name {
+  flex: 1;
+  margin-left: 10px;
+  font-size: 14px;
+  color: #c8e4ff;
+}
+#ticketGameContainer .chance-percent {
+  font-size: 14px;
+  font-weight: 900;
+  color: #6ab0ff;
+  width: 55px;
+  text-align: right;
+}
+#ticketGameContainer .chance-prize {
+  width: 75px;
+  text-align: right;
+  color: #ffd84d;
+  font-weight: 900;
+  font-size: 14px;
+}
+#ticketGameContainer .back-button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 13px;
+  border: none;
+  border-radius: 11px;
+  background: rgba(20, 50, 90, 0.5);
+  color: #8ab4d8;
+  font-weight: 800;
+  cursor: pointer;
+}
+#ticketGameContainer .game-header-ticket {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+#ticketGameContainer .game-name-ticket { font-size: 20px; font-weight: 900; color: #e8f0fe; }
+#ticketGameContainer .game-cost-ticket { color: #ffd84d; font-size: 14px; font-weight: 800; }
+#ticketGameContainer .free-opens-ticket {
+  text-align: center;
+  color: #6ab0ff;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+#ticketGameContainer .card-ticket {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: rgba(10, 30, 60, 0.8);
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  border-radius: 20px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+#ticketGameContainer .cell-ticket {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(20, 50, 90, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+#ticketGameContainer .symbol-ticket {
+  font-size: clamp(30px, 11vw, 54px);
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+}
+#ticketGameContainer .scratch-ticket {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(135deg, #4a6a9a 0px, #4a6a9a 3px, #3a5a8a 3px, #3a5a8a 6px);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05), inset 0 -10px 20px rgba(0, 0, 0, 0.25);
+  transition: opacity .35s ease, transform .35s ease;
+}
+#ticketGameContainer .scratch-ticket::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-25deg, transparent 0px, transparent 9px, rgba(255, 255, 255, 0.08) 10px, transparent 12px);
+}
+#ticketGameContainer .cell-ticket.opened .scratch-ticket {
+  opacity: 0;
+  transform: scale(1.15);
+  pointer-events: none;
+}
+#ticketGameContainer .cell-ticket.opened { animation: openCell .25s ease; }
+@keyframes openCell {
+  0% { transform: scale(.95); }
+  100% { transform: scale(1); }
+}
+#ticketGameContainer .game-bottom-ticket {
+  margin-top: 17px;
+  display: flex;
+  gap: 9px;
+}
+#ticketGameContainer .game-button-ticket {
+  flex: 1;
+  border: none;
+  border-radius: 11px;
+  padding: 13px;
+  background: rgba(20, 50, 90, 0.5);
+  color: #c8e4ff;
+  font-weight: 800;
+  cursor: pointer;
+}
+#ticketGameContainer .game-button-ticket:hover { background: rgba(30, 70, 120, 0.6); }
+#ticketGameContainer .modal-ticket {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+#ticketGameContainer .modal-ticket.show { display: flex; }
+#ticketGameContainer .modal-box-ticket {
+  width: 100%;
+  max-width: 350px;
+  background: rgba(10, 30, 60, 0.95);
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  border-radius: 20px;
+  padding: 28px 22px;
+  text-align: center;
+  animation: modalIn .25s ease;
+  backdrop-filter: blur(10px);
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+#ticketGameContainer .result-icon-ticket { font-size: 55px; }
+#ticketGameContainer .result-title-ticket {
+  margin-top: 10px;
+  font-size: 30px;
+  font-weight: 900;
+}
+#ticketGameContainer .result-title-ticket.win { color: #6ab0ff; }
+#ticketGameContainer .result-title-ticket.lose { color: #ef5350; }
+#ticketGameContainer .result-text-ticket {
+  color: #8ab4d8;
+  margin-top: 9px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+#ticketGameContainer .result-money-ticket {
+  margin-top: 15px;
+  font-size: 27px;
+  font-weight: 900;
+  color: #ffd84d;
+}
+#ticketGameContainer .modal-button-ticket {
+  width: 100%;
+  margin-top: 22px;
+  padding: 13px;
+  border: none;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+#ticketGameContainer .spark-ticket {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6ab0ff;
+  pointer-events: none;
+  z-index: 150;
+  animation: spark 800ms ease-out forwards;
+}
+@keyframes spark {
+  from { transform: translate(0,0) scale(1); opacity: 1; }
+  to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+}
+#closeTicketsBtn {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 95;
+  background: rgba(20, 50, 90, 0.8);
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 22px;
+  color: #e8f0fe;
+  cursor: pointer;
+}
+#closeTicketsBtn:hover { background: rgba(30, 70, 120, 0.8); }
+
+/* ---- Кейсы ---- */
 #casesGameContainer {
-    min-height: 100vh;
-    padding: 16px 14px 40px;
-
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            rgba(110, 80, 255, .22),
-            transparent 38%
-        ),
-        radial-gradient(
-            circle at 100% 40%,
-            rgba(0, 210, 255, .08),
-            transparent 30%
-        ),
-        linear-gradient(
-            160deg,
-            #090c14,
-            #101522,
-            #080b12
-        );
-}
-
-/* =====================================================
-   TOPBAR
-===================================================== */
-
-.topbar {
-    height: 52px;
-
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.balance-case {
-    padding: 10px 16px;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #1b2231,
-            #111622
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    font-size: 18px;
-    font-weight: 900;
-
-    box-shadow:
-        0 8px 25px
-        rgba(0,0,0,.3);
-}
-
-.balance-case span {
-    color: #ffd84d;
-}
-
-
-/* =====================================================
-   SCREENS
-===================================================== */
-
-.screen-case {
-    display: none;
-
-    width: 100%;
-    min-height: calc(100vh - 70px);
-}
-
-.screen-case.active {
-    display: flex;
-}
-
-
-/* =====================================================
-   MAIN SCREEN
-===================================================== */
-
-.main-screen {
-    flex-direction: column;
-
-    align-items: center;
-
-    padding-top: 18px;
-
-    gap: 18px;
-}
-
-.main-title {
-    font-size: 28px;
-    font-weight: 1000;
-
-    letter-spacing: 3px;
-
-    margin-bottom: 3px;
-
-    text-shadow:
-        0 0 20px
-        rgba(167,139,250,.25);
-}
-
-
-/* =====================================================
-   ОБЩИЙ СТИЛЬ ВСЕХ 4 КЕЙСОВ
-===================================================== */
-
-.case-image-card {
-    width: min(900px, 96vw);
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-}
-
-.case-image-button {
-    position: relative;
-
-    z-index: 2;
-
-    touch-action: manipulation;
-
-    width: 100%;
-    height: 175px;
-
-    padding: 0;
-
-    border: 1px solid rgba(255,255,255,.10);
-
-    border-radius: 24px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #171d2b,
-            #0e131f
-        );
-
-    overflow: hidden;
-
-    cursor: pointer;
-
-    display: block;
-
-    box-shadow:
-        0 18px 45px rgba(0,0,0,.48),
-        0 0 0 1px rgba(255,255,255,.025);
-
-    transition:
-        transform .16s ease,
-        box-shadow .16s ease,
-        border-color .16s ease;
-}
-
-.case-image-button::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 3;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            115deg,
-            rgba(255,255,255,.10),
-            transparent 25%,
-            transparent 70%,
-            rgba(255,255,255,.04)
-        );
-
-    opacity: .55;
-}
-
-.case-image-button::after {
-    content: "";
-
-    position: absolute;
-
-    left: 8%;
-    right: 8%;
-    bottom: -18px;
-
-    height: 30px;
-
-    z-index: 1;
-
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(120,90,255,.22),
-            transparent 70%
-        );
-
-    filter: blur(10px);
-}
-
-.case-image-wrap {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: transparent;
-}
-
-.case-main-image {
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    max-width: none;
-
-    display: block;
-
-    object-fit: fill;
-    object-position: center center;
-
-    user-select: none;
-    pointer-events: none;
-
-    transition:
-        transform .2s ease,
-        filter .2s ease;
-}
-
-.case-image-button:hover {
-    transform: translateY(-2px);
-
-    border-color:
-        rgba(167,139,250,.35);
-
-    box-shadow:
-        0 22px 55px rgba(0,0,0,.52),
-        0 0 25px rgba(110,80,255,.10);
-}
-
-.case-image-button:hover .case-main-image {
-    transform: scale(1.015);
-}
-
-.case-image-button:active {
-    transform: scale(.985);
-}
-
-
-/* =====================================================
-   FREE STATUS
-===================================================== */
-
-.free-status {
-    position: relative;
-
-    z-index: 4;
-
-    touch-action: manipulation;
-
-    width: 88%;
-
-    align-self: center;
-
-    margin-top: 10px;
-
-    padding: 11px 12px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.16);
-
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #28bd9c,
-            #14866f
-        );
-
-    color: #fff;
-
-    font-size: 14px;
-    font-weight: 1000;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 20px
-        rgba(20,134,111,.22);
-
-    transition:
-        transform .15s ease,
-        filter .15s ease;
-}
-
-.free-status:hover {
-    filter: brightness(1.08);
-}
-
-.free-status.cooldown {
-    background:
-        linear-gradient(
-            135deg,
-            #182b38,
-            #14202d
-        );
-
-    color: #91d7ff;
-
-    border-color:
-        rgba(117,200,255,.25);
-
-    box-shadow:
-        0 8px 20px
-        rgba(0,120,180,.10);
-}
-
-.free-status:active {
-    transform: scale(.98);
-}
-
-
-/* =====================================================
-   CASE 50 / 250
-===================================================== */
-
-.premium-label {
-    position: relative;
-
-    z-index: 5;
-
-    align-self: center;
-
-    margin-top: -14px;
-
-    padding: 7px 14px;
-
-    border-radius: 999px;
-
-    background:
-        rgba(15,18,28,.92);
-
-    border:
-        1px solid
-        rgba(255,255,255,.10);
-
-    color: #c9d1e2;
-
-    font-size: 11px;
-    font-weight: 1000;
-
-    letter-spacing: .6px;
-
-    box-shadow:
-        0 7px 20px
-        rgba(0,0,0,.35);
-}
-
-
-/* =====================================================
-   ЭКРАН КЕЙСА
-===================================================== */
-
-.case-screen {
-    flex-direction: column;
-
-    padding-top: 8px;
-}
-
-.case-title-row {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 18px;
-}
-
-.case-title {
-    font-size: 24px;
-
-    font-weight: 1000;
-
-    text-shadow:
-        0 0 15px
-        rgba(167,139,250,.2);
-}
-
-.back-case {
-    padding: 10px 14px;
-
-    border-radius: 11px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    background:
-        #171d2a;
-
-    color: #c4cada;
-
-    font-weight: 800;
-
-    cursor: pointer;
-
-    transition:
-        background .15s ease,
-        transform .15s ease;
-}
-
-.back-case:hover {
-    background: #1e2637;
-}
-
-.back-case:active {
-    transform: scale(.97);
-}
-
-
-/* =====================================================
-   РУЛЕТКА
-===================================================== */
-
-.roulette-section {
-    position: relative;
-
-    width: 100%;
-}
-
-.pointer-case {
-    position: absolute;
-
-    top: -1px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    z-index: 10;
-
-    width: 0;
-    height: 0;
-
-    border-left:
-        16px solid transparent;
-
-    border-right:
-        16px solid transparent;
-
-    border-top:
-        25px solid #a78bfa;
-
-    filter:
-        drop-shadow(
-            0 0 8px
-            rgba(167,139,250,.7)
-        );
-}
-
-.roulette-window {
-    width: 100%;
-    height: 160px;
-
-    overflow: hidden;
-
-    border-radius: 17px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #101623,
-            #0b101a
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    box-shadow:
-        inset 0 0 40px
-        rgba(0,0,0,.5),
-        0 12px 30px
-        rgba(0,0,0,.25);
-}
-
-.roulette-track {
-    height: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 10px;
-
-    transform:
-        translateX(0);
-}
-
-.roulette-item {
-    min-width: 125px;
-    height: 125px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #1a2130,
-            #131925
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    text-align: center;
-
-    box-shadow:
-        inset 0 0 20px
-        rgba(0,0,0,.18);
-}
-
-.roulette-emoji {
-    font-size: 44px;
-}
-
-.roulette-name {
-    margin-top: 8px;
-
-    padding: 0 5px;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    color: #b8c2d4;
-}
-
-
-/* =====================================================
-   КНОПКА ОТКРЫТИЯ
-===================================================== */
-
-.open-button {
-    width: 100%;
-
-    margin-top: 17px;
-
-    padding: 17px;
-
-    border: 0;
-
-    border-radius: 15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7957ff,
-            #5332d6
-        );
-
-    color: #fff;
-
-    font-size: 18px;
-
-    font-weight: 1000;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 10px 30px
-        rgba(110,80,255,.25);
-
-    transition:
-        transform .15s ease,
-        filter .15s ease;
-}
-
-.open-button:hover {
-    filter: brightness(1.08);
-}
-
-.open-button.free-open {
-    background:
-        linear-gradient(
-            135deg,
-            #28bd9c,
-            #14866f
-        );
-}
-
-.open-button:active {
-    transform: scale(.98);
-}
-
-.open-button:disabled {
-    opacity: .5;
-
-    cursor: not-allowed;
-}
-
-
-/* =====================================================
-   ПРЕДМЕТЫ
-===================================================== */
-
-.items-title {
-    margin: 27px 0 13px;
-
-    text-align: center;
-
-    font-size: 18px;
-
-    font-weight: 1000;
-
-    color: #e5e9f2;
-}
-
-.items-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 9px;
-}
-
-.item-card {
-    min-height: 125px;
-
-    padding: 10px 6px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #171e2d,
-            #121824
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    transition:
-        transform .15s ease;
-}
-
-.item-card:hover {
-    transform: translateY(-2px);
-}
-
-.item-emoji {
-    font-size: 38px;
-
-    line-height: 1;
-}
-
-.item-name {
-    margin-top: 9px;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    color: #aeb8ca;
-
-    line-height: 1.25;
-}
-
-.item-price {
-    margin-top: 7px;
-
-    color: #ffd84d;
-
-    font-size: 13px;
-
-    font-weight: 1000;
-}
-
-.legendary {
-    border-color:
-        rgba(255,215,70,.5);
-
-    box-shadow:
-        inset 0 0 18px
-        rgba(255,215,70,.04);
-}
-
-.rare {
-    border-color:
-        rgba(100,150,255,.4);
-}
-
-.uncommon {
-    border-color:
-        rgba(60,190,165,.35);
-}
-
-
-/* =====================================================
-   РЕЗУЛЬТАТ
-===================================================== */
-
-.modal-case {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 100;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    background:
-        rgba(0,0,0,.8);
-
-    backdrop-filter:
-        blur(5px);
-}
-
-.modal-case.show {
-    display: flex;
-}
-
-.modal-box-case {
-    width: 100%;
-    max-width: 360px;
-
-    padding: 28px 20px 23px;
-
-    text-align: center;
-
-    border-radius: 23px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #1a2131,
-            #0d121e
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    box-shadow:
-        0 25px 90px
-        rgba(0,0,0,.65);
-}
-
-.result-emoji-case {
-    font-size: 78px;
-
-    margin-bottom: 12px;
-}
-
-.result-label-case {
-    color: #8e99ad;
-
-    font-size: 13px;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-}
-
-.result-name-case {
-    margin-top: 8px;
-
-    font-size: 25px;
-
-    font-weight: 1000;
-}
-
-.result-value-case {
-    margin-top: 12px;
-
-    font-size: 24px;
-
-    color: #a78bfa;
-
-    font-weight: 1000;
-}
-
-.result-buttons {
-    display: flex;
-
-    gap: 10px;
-
-    margin-top: 23px;
-}
-
-.result-button {
-    flex: 1;
-
-    padding: 14px 8px;
-
-    border: 0;
-
-    border-radius: 13px;
-
-    color: #fff;
-
-    font-weight: 900;
-
-    cursor: pointer;
-}
-
-.sell-button {
-    background:
-        linear-gradient(
-            135deg,
-            #7957ff,
-            #5332d6
-        );
-}
-
-.back-result-button {
-    background: #1b2232;
-
-    color: #aeb8ca;
-}
-
-
-/* =====================================================
-   СООБЩЕНИЯ
-===================================================== */
-
-.message-case {
-    position: fixed;
-
-    left: 50%;
-    bottom: 25px;
-
-    z-index: 300;
-
-    transform:
-        translateX(-50%)
-        translateY(100px);
-
-    padding: 13px 18px;
-
-    border-radius: 13px;
-
-    background: #d24761;
-
-    color: #fff;
-
-    font-weight: 800;
-
-    text-align: center;
-
-    transition: .3s ease;
-
-    max-width: 90vw;
-}
-
-.message-case.show {
-    transform:
-        translateX(-50%)
-        translateY(0);
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:500px) {
-
-    #casesGameContainer {
-        padding:
-            12px
-            10px
-            30px;
-    }
-
-    .main-title {
-        font-size: 25px;
-    }
-
-    .case-image-card {
-        width: 100%;
-    }
-
-    .case-image-button {
-        height: clamp(
-            110px,
-            29vw,
-            175px
-        );
-
-        border-radius: 19px;
-    }
-
-    .free-status {
-        width: 88%;
-    }
-
-    .case-title {
-        font-size: 20px;
-    }
-}
-
-@media(max-width:380px) {
-
-    .case-image-button {
-        border-radius: 17px;
-    }
-
-    .items-grid {
-        gap: 7px;
-    }
-
-    .item-card {
-        min-height: 115px;
-    }
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(145deg, #0a1628, #142a4a);
+  z-index: 90;
+  overflow-y: auto;
+  padding: 18px 14px 35px;
+}
+#casesGameContainer .topbar {
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+#casesGameContainer .balance-case {
+  padding: 11px 17px;
+  border-radius: 14px;
+  background: rgba(20, 50, 90, 0.5);
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  font-size: 20px;
+  font-weight: 900;
+  color: #a8d4ff;
+}
+#casesGameContainer .balance-case span { color: #ffd84d; }
+#casesGameContainer .screen-case { display: none; min-height: calc(100vh - 73px); }
+#casesGameContainer .screen-case.active { display: flex; flex-direction: column; }
+#casesGameContainer .main-screen {
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 80px;
+  gap: 25px;
+}
+#casesGameContainer .main-case-button {
+  width: min(330px, 85vw);
+  height: 190px;
+  border-radius: 25px;
+  cursor: pointer;
+  border: 2px solid #2a7ad8;
+  background: linear-gradient(135deg, #1a3a7a, #0a224a 55%, #051a2a);
+  color: white;
+  font-size: 36px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  box-shadow: 0 20px 60px rgba(42, 122, 216, 0.15);
+  position: relative;
+  animation: floatCase 2.5s ease-in-out infinite;
+  transition: 0.2s ease;
+}
+#casesGameContainer .main-case-button::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  top: 35px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #4a8ecf, #2a6aaa);
+  border: 2px solid #6ab0ff;
+  box-shadow: 0 5px 20px rgba(42, 122, 216, 0.3);
+}
+#casesGameContainer .main-case-button span { position: relative; z-index: 2; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7); }
+#casesGameContainer .main-case-button:active { transform: scale(0.96); }
+#casesGameContainer .free-case-button {
+  border-color: #6ab0ff;
+  background: linear-gradient(135deg, #1a5a8a, #0a2a5a 55%, #051a3a);
+  box-shadow: 0 20px 60px rgba(42, 122, 216, 0.1);
+}
+#casesGameContainer .free-case-button::before {
+  background: linear-gradient(180deg, #6ab0ff, #3a7acf);
+  border-color: #8ac8ff;
+  box-shadow: 0 5px 20px rgba(42, 122, 216, 0.25);
+}
+#casesGameContainer .free-case-button.disabled { opacity: 0.45; filter: grayscale(0.5); cursor: default; }
+#casesGameContainer .free-case-button.disabled:active { transform: none; }
+#casesGameContainer .free-timer {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 13px;
+  text-align: center;
+  color: #8ac8ff;
+  font-size: 13px;
+  font-weight: 900;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+#casesGameContainer .pls-pepe-button {
+  border-color: #6ab0ff;
+  background: linear-gradient(135deg, #1a5a6a, #0a2a4a 55%, #051a2a);
+}
+#casesGameContainer .pls-pepe-button::before {
+  background: linear-gradient(180deg, #6ac8ff, #3a8acf);
+  border-color: #8ad8ff;
+}
+#casesGameContainer .case-250-button {
+  border-color: #8a7aff;
+  background: linear-gradient(135deg, #3a2a8a, #1a1a5a 55%, #0a0a3a);
+}
+#casesGameContainer .case-250-button::before {
+  background: linear-gradient(180deg, #aa8aff, #6a4acf);
+  border-color: #ccaaff;
+}
+@keyframes floatCase {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+#casesGameContainer .case-screen { padding-top: 8px; }
+#casesGameContainer .case-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 2px 20px;
+}
+#casesGameContainer .case-title { font-size: 24px; font-weight: 1000; color: #e8f0fe; }
+#casesGameContainer .back-case {
+  border: none;
+  background: rgba(20, 50, 90, 0.5);
+  color: #8ab4d8;
+  padding: 10px 14px;
+  border-radius: 11px;
+  cursor: pointer;
+  font-weight: 800;
+}
+#casesGameContainer .roulette-section { position: relative; margin-top: 5px; }
+#casesGameContainer .pointer-case {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 25px solid #6ab0ff;
+  filter: drop-shadow(0 0 8px rgba(42, 122, 216, 0.5));
+}
+#casesGameContainer .roulette-window {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 17px;
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  background: rgba(10, 22, 40, 0.8);
+  position: relative;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+}
+#casesGameContainer .roulette-track {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  transform: translateX(0);
+  will-change: transform;
+}
+#casesGameContainer .roulette-item {
+  min-width: 125px;
+  height: 125px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(20, 50, 90, 0.5), rgba(10, 30, 60, 0.5));
+  border: 1px solid rgba(100, 180, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+#casesGameContainer .roulette-emoji { font-size: 48px; }
+#casesGameContainer .roulette-name {
+  margin-top: 8px;
+  padding: 0 5px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #c8e4ff;
+}
+#casesGameContainer .open-button {
+  width: 100%;
+  margin-top: 17px;
+  padding: 17px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  color: white;
+  font-size: 18px;
+  font-weight: 1000;
+  box-shadow: 0 8px 30px rgba(42, 122, 216, 0.2);
+  transition: 0.2s ease;
+}
+#casesGameContainer .open-button.free-open {
+  background: linear-gradient(135deg, #1a6aaa, #0a4a8a);
+  box-shadow: 0 8px 30px rgba(42, 122, 216, 0.15);
+}
+#casesGameContainer .open-button:active { transform: scale(0.98); }
+#casesGameContainer .open-button:disabled { cursor: default; opacity: 0.55; }
+#casesGameContainer .items-title {
+  margin: 27px 0 13px;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 900;
+  color: #e8f0fe;
+}
+#casesGameContainer .items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+#casesGameContainer .item-card {
+  min-height: 125px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  background: rgba(20, 50, 90, 0.3);
+  border: 1px solid rgba(100, 180, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+#casesGameContainer .item-card:hover { transform: translateY(-2px); }
+#casesGameContainer .item-emoji { font-size: 39px; line-height: 1; }
+#casesGameContainer .item-name {
+  margin-top: 9px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #c8e4ff;
+  line-height: 1.25;
+}
+#casesGameContainer .item-price {
+  margin-top: 7px;
+  color: #ffd84d;
+  font-size: 13px;
+  font-weight: 1000;
+}
+#casesGameContainer .legendary { border-color: #ffd84d; box-shadow: inset 0 0 20px rgba(255, 216, 77, 0.05); }
+#casesGameContainer .rare { border-color: #6ab0ff; }
+#casesGameContainer .uncommon { border-color: #4a8aaa; }
+#casesGameContainer .free-rarity { border-color: #6ab0ff; }
+#casesGameContainer .modal-case {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+#casesGameContainer .modal-case.show { display: flex; }
+#casesGameContainer .modal-box-case {
+  width: 100%;
+  max-width: 360px;
+  padding: 28px 20px 23px;
+  text-align: center;
+  border-radius: 23px;
+  background: rgba(10, 30, 60, 0.95);
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  animation: modalInCase 0.3s ease;
+  box-shadow: 0 25px 90px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+@keyframes modalInCase {
+  from { opacity: 0; transform: scale(0.82); }
+  to { opacity: 1; transform: scale(1); }
+}
+#casesGameContainer .result-emoji-case { font-size: 78px; animation: resultFloat 1s ease-in-out infinite alternate; }
+@keyframes resultFloat {
+  from { transform: translateY(0) rotate(-3deg); }
+  to { transform: translateY(-8px) rotate(3deg); }
+}
+#casesGameContainer .result-label-case {
+  margin-top: 16px;
+  color: #8ab4d8;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+#casesGameContainer .result-name-case {
+  margin-top: 8px;
+  font-size: 25px;
+  font-weight: 1000;
+  color: #e8f0fe;
+}
+#casesGameContainer .result-value-case {
+  margin-top: 12px;
+  font-size: 24px;
+  color: #6ab0ff;
+  font-weight: 1000;
+}
+#casesGameContainer .result-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 23px;
+}
+#casesGameContainer .result-button {
+  flex: 1;
+  padding: 14px 8px;
+  border: none;
+  border-radius: 13px;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+#casesGameContainer .result-button:active { transform: scale(0.97); }
+#casesGameContainer .sell-button {
+  background: linear-gradient(135deg, #1a6aaa, #0a4a8a);
+  box-shadow: 0 8px 25px rgba(42, 122, 216, 0.15);
+}
+#casesGameContainer .back-result-button { background: rgba(20, 50, 90, 0.5); color: #8ab4d8; }
+#casesGameContainer .message-case {
+  position: fixed;
+  left: 50%;
+  bottom: 25px;
+  transform: translateX(-50%) translateY(100px);
+  padding: 13px 18px;
+  border-radius: 13px;
+  background: #c04060;
+  color: white;
+  font-weight: 800;
+  transition: 0.3s ease;
+  z-index: 300;
+  text-align: center;
+}
+#casesGameContainer .message-case.show { transform: translateX(-50%) translateY(0); }
+#closeCasesBtn {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 95;
+  background: rgba(20, 50, 90, 0.8);
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 22px;
+  color: #e8f0fe;
+  cursor: pointer;
+}
+#closeCasesBtn:hover { background: rgba(30, 70, 120, 0.8); }
+
+/* ---- Upgrade ---- */
+#upgradeGameContainer {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(145deg, #0a1628, #142a4a);
+  z-index: 90;
+  overflow-y: auto;
+  padding: 18px 15px 25px;
+}
+#upgradeGameContainer .app-inner-upgrade {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+#upgradeGameContainer .bg-glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+  opacity: .12;
+  z-index: -1;
+}
+#upgradeGameContainer .bg-glow.one { left: -180px; top: 10%; background: #2a7ad8; }
+#upgradeGameContainer .bg-glow.two { right: -180px; bottom: 5%; background: #1a5aaa; }
+#upgradeGameContainer .header-upgrade {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+#upgradeGameContainer .logo-upgrade {
+  font-size: 24px;
+  font-weight: 1000;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #e8f0fe;
+  text-shadow: 0 0 15px rgba(42, 122, 216, 0.3);
+}
+#upgradeGameContainer .logo-upgrade span { color: #6ab0ff; }
+#upgradeGameContainer .balance-box-upgrade {
+  min-width: 130px;
+  padding: 10px 15px;
+  border-radius: 14px;
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  background: rgba(20, 50, 90, 0.4);
+  text-align: right;
+  backdrop-filter: blur(5px);
+}
+#upgradeGameContainer .balance-label-upgrade {
+  color: #5a8aaa;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+#upgradeGameContainer .balance-upgrade {
+  margin-top: 2px;
+  font-size: 19px;
+  font-weight: 1000;
+  color: #e8f0fe;
+}
+#upgradeGameContainer .balance-upgrade::after {
+  content: " ⭐";
+  color: #ffd84d;
+}
+#upgradeGameContainer .main-upgrade {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+#upgradeGameContainer .game-panel {
+  position: relative;
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  border-radius: 20px;
+  padding: 18px 15px 20px;
+  background: rgba(10, 30, 60, 0.4);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+#upgradeGameContainer .wheel-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#upgradeGameContainer .upgrade-title {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #5a8aaa;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+#upgradeGameContainer .wheel-wrapper {
+  width: min(420px, 85vw);
+  aspect-ratio: 1 / 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#upgradeGameContainer #wheel {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#upgradeGameContainer .pointer-rotator {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  transform: rotate(0deg);
+  will-change: transform;
+}
+#upgradeGameContainer .pointer-upgrade {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 30px solid #e8f0fe;
+  filter: drop-shadow(0 0 10px rgba(42, 122, 216, 0.5));
+}
+#upgradeGameContainer .pointer-upgrade::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -30px;
+  width: 8px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6ab0ff;
+}
+#upgradeGameContainer .center-info {
+  position: absolute;
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #1a3a6a, #0a1a3a 65%, #051020);
+  border: 2px solid rgba(100, 180, 255, 0.2);
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(42, 122, 216, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  pointer-events: none;
+}
+#upgradeGameContainer .win-percent {
+  font-size: clamp(28px, 6vw, 48px);
+  line-height: 1;
+  font-weight: 1000;
+  color: #e8f0fe;
+  text-shadow: 0 0 18px rgba(42, 122, 216, 0.15);
+}
+#upgradeGameContainer .chance-text {
+  margin-top: 5px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #5a8aaa;
+}
+#upgradeGameContainer .status-upgrade {
+  min-height: 24px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: #5a8aaa;
+  transition: .2s;
+}
+#upgradeGameContainer .status-upgrade.win { color: #6ab0ff; text-shadow: 0 0 15px rgba(42, 122, 216, 0.3); }
+#upgradeGameContainer .status-upgrade.lose { color: #ef4752; text-shadow: 0 0 15px rgba(239, 71, 82, 0.3); }
+#upgradeGameContainer .controls {
+  margin-top: 16px;
+}
+#upgradeGameContainer .control-label {
+  margin-bottom: 7px;
+  color: #5a8aaa;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+#upgradeGameContainer .bet-row {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+#upgradeGameContainer .bet-input-wrap {
+  flex: 1;
+  min-width: 100px;
+  position: relative;
+}
+#upgradeGameContainer .bet-input-upgrade {
+  width: 100%;
+  height: 44px;
+  padding: 0 40px 0 12px;
+  outline: none;
+  border-radius: 11px;
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  background: rgba(10, 22, 40, 0.8);
+  color: #e8f0fe;
+  font-size: 16px;
+  font-weight: 1000;
+  transition: .2s;
+}
+#upgradeGameContainer .bet-input-upgrade:focus {
+  border-color: #2a7ad8;
+  box-shadow: 0 0 20px rgba(42, 122, 216, 0.1);
+}
+#upgradeGameContainer .currency-upgrade {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffd84d;
+  font-size: 16px;
+}
+#upgradeGameContainer .multiplier-buttons {
+  display: flex;
+  gap: 6px;
+}
+#upgradeGameContainer .multiplier-upgrade {
+  width: 50px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  background: rgba(20, 50, 90, 0.3);
+  color: #8ab4d8;
+  font-size: 13px;
+  font-weight: 1000;
+  cursor: pointer;
+  transition: .2s;
+}
+#upgradeGameContainer .multiplier-upgrade:hover {
+  border-color: #2a7ad8;
+  color: #e8f0fe;
+}
+#upgradeGameContainer .multiplier-upgrade.active {
+  color: #fff;
+  border-color: #2a7ad8;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  box-shadow: 0 4px 20px rgba(42, 122, 216, 0.2);
+}
+#upgradeGameContainer .multiplier-upgrade:disabled { opacity: .5; cursor: default; }
+#upgradeGameContainer .spin-button-upgrade {
+  width: 100%;
+  height: 50px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #2a7ad8, #1a5ab8);
+  box-shadow: 0 8px 30px rgba(42, 122, 216, 0.2);
+  transition: .2s;
+}
+#upgradeGameContainer .spin-button-upgrade:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(42, 122, 216, 0.3);
+}
+#upgradeGameContainer .spin-button-upgrade:active { transform: scale(.98); }
+#upgradeGameContainer .spin-button-upgrade:disabled { opacity: .45; cursor: default; transform: none; }
+#upgradeGameContainer .item-select-area {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+#upgradeGameContainer .select-item-btn {
+  padding: 8px 14px;
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  border-radius: 10px;
+  background: rgba(10, 22, 40, 0.8);
+  color: #8ab4d8;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: .2s;
+  flex: 1;
+  min-width: 80px;
+}
+#upgradeGameContainer .select-item-btn:hover { border-color: #2a7ad8; color: #e8f0fe; }
+#upgradeGameContainer .select-item-btn.active {
+  border-color: #6ab0ff;
+  color: #6ab0ff;
+  background: rgba(42, 122, 216, 0.1);
+}
+#upgradeGameContainer .selected-item-display {
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffd84d;
+  padding: 6px 12px;
+  background: rgba(10, 22, 40, 0.8);
+  border-radius: 8px;
+  border: 1px solid rgba(100, 180, 255, 0.1);
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+}
+#upgradeGameContainer .item-select-dropdown {
+  margin-top: 8px;
+  background: rgba(10, 22, 40, 0.95);
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  border-radius: 10px;
+  max-height: 160px;
+  overflow-y: auto;
+  display: none;
+}
+#upgradeGameContainer .item-select-dropdown.open { display: block; }
+#upgradeGameContainer .item-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(100, 180, 255, 0.05);
+  cursor: pointer;
+  transition: .2s;
+}
+#upgradeGameContainer .item-select-option:hover { background: rgba(42, 122, 216, 0.1); }
+#upgradeGameContainer .item-select-option:last-child { border-bottom: none; }
+#upgradeGameContainer .item-select-option .opt-emoji { font-size: 22px; }
+#upgradeGameContainer .item-select-option .opt-name { font-size: 13px; font-weight: 700; color: #c8e4ff; }
+#upgradeGameContainer .item-select-option .opt-value { font-size: 12px; font-weight: 800; color: #ffd84d; }
+#upgradeGameContainer .history-upgrade { margin-top: 18px; }
+#upgradeGameContainer .history-title {
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 1000;
+  letter-spacing: 1.5px;
+  color: #5a8aaa;
+  text-transform: uppercase;
+}
+#upgradeGameContainer .history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#upgradeGameContainer .history-item {
+  min-height: 38px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(100, 180, 255, 0.05);
+  background: rgba(10, 22, 40, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 900;
+}
+#upgradeGameContainer .history-left { color: #5a8aaa; }
+#upgradeGameContainer .history-left strong { color: #e8f0fe; }
+#upgradeGameContainer .history-result { font-size: 13px; }
+#upgradeGameContainer .history-result.win { color: #6ab0ff; }
+#upgradeGameContainer .history-result.lose { color: #ef4752; }
+#upgradeGameContainer .flash-upgrade {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+}
+#upgradeGameContainer .flash-upgrade.win { animation: winFlash .55s ease; }
+#upgradeGameContainer .flash-upgrade.lose { animation: loseFlash .55s ease; }
+@keyframes winFlash {
+  0% { opacity: 0; background: rgba(42, 122, 216, 0.35); }
+  35% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes loseFlash {
+  0% { opacity: 0; background: rgba(239, 71, 82, 0.35); }
+  35% { opacity: 1; }
+  100% { opacity: 0; }
+}
+#upgradeGameContainer .toast-upgrade {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translate(-50%, 100px);
+  min-width: 200px;
+  max-width: calc(100vw - 35px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(10, 30, 60, 0.95);
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  text-align: center;
+  font-weight: 1000;
+  z-index: 200;
+  opacity: 0;
+  transition: .3s ease;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+}
+#upgradeGameContainer .toast-upgrade.show { transform: translate(-50%, 0); opacity: 1; }
+#upgradeGameContainer .toast-upgrade.win { border-color: #6ab0ff; color: #6ab0ff; }
+#upgradeGameContainer .toast-upgrade.lose { border-color: #ef4752; color: #ef4752; }
+#closeUpgradeBtn {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 95;
+  background: rgba(20, 50, 90, 0.8);
+  border: 1px solid rgba(100, 180, 255, 0.2);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  color: #e8f0fe;
+  cursor: pointer;
+}
+#closeUpgradeBtn:hover { background: rgba(30, 70, 120, 0.8); }
+
+@media (max-width: 650px) {
+  #upgradeGameContainer .app-inner-upgrade { padding: 0; }
+  #upgradeGameContainer .header-upgrade { margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+  #upgradeGameContainer .logo-upgrade { font-size: 20px; }
+  #upgradeGameContainer .balance-box-upgrade { min-width: 110px; padding: 8px 12px; }
+  #upgradeGameContainer .balance-upgrade { font-size: 16px; }
+  #upgradeGameContainer .game-panel { padding: 14px 10px 16px; border-radius: 16px; }
+  #upgradeGameContainer .wheel-wrapper { width: min(380px, 92vw); }
+  #upgradeGameContainer .bet-row { flex-direction: column; }
+  #upgradeGameContainer .multiplier-buttons { width: 100%; justify-content: stretch; }
+  #upgradeGameContainer .multiplier-upgrade { flex: 1; }
+  #upgradeGameContainer .item-select-area { flex-direction: column; }
+  #upgradeGameContainer .select-item-btn { width: 100%; }
+  #upgradeGameContainer .selected-item-display { width: 100%; }
+}
+
+@media (max-width: 380px) {
+  #ticketGameContainer .title { font-size: 26px; }
+  #ticketGameContainer .chance-prize { width: 65px; }
+  #ticketGameContainer .chance-percent { width: 48px; }
+  #casesGameContainer .roulette-item { min-width: 110px; height: 115px; }
+  #casesGameContainer .roulette-window { height: 145px; }
+  #casesGameContainer .item-emoji { font-size: 34px; }
+  #casesGameContainer .item-card { min-height: 115px; }
+  #casesGameContainer .result-buttons { gap: 7px; }
+  #casesGameContainer .result-button { font-size: 13px; }
 }
 </style>
 </head>
-
 <body>
 
-<div id="casesGameContainer">
+<div id="app">
 
-    <!-- =================================================
-         TOPBAR
-    ================================================= -->
+<header class="header">
+    <div class="logo">🐻‍❄️ DROP</div>
+    <div class="header-balance">⭐ <span id="headerBalance">0.00</span></div>
+</header>
 
+<main class="content">
+
+    <section id="menuPage" class="page">
+        <div class="menu-title-row">
+            <div class="page-title">Меню</div>
+            <div id="menuAnimation">
+                <div id="menuMachine">
+                    <div class="flame">
+                        <div class="f-outer"></div>
+                        <div class="f-mid"></div>
+                        <div class="f-core"></div>
+                        <div class="spark s1"></div>
+                        <div class="spark s2"></div>
+                        <div class="spark s3"></div>
+                    </div>
+                    <div class="mm-body">
+                        <div class="mm-lid"></div>
+                        <div class="panel">
+                            <div class="disp"></div>
+                            <div class="btn-sm"></div>
+                            <div class="btn-lg"></div>
+                        </div>
+                        <div class="window">
+                            <div class="glass">
+                                <div class="drum"></div>
+                            </div>
+                        </div>
+                        <div class="mm-feet">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="menuLetters"></div>
+            </div>
+        </div>
+        <div class="page-subtitle">Выберите игру и испытайте удачу.</div>
+
+        <div class="card game-card">
+            <div class="game-icon">⚪</div>
+            <div class="card-title">Шарик</div>
+            <div class="card-text">Управляйте ставкой и наблюдайте, как шарик проходит через отверстие.</div>
+            <button class="game-button" id="openGameButton">ИГРАТЬ</button>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🎟️</div>
+            <div class="card-title">Билеты</div>
+            <div class="card-text">Scratch & Win — выбирайте билет, открывайте ячейки.</div>
+            <button class="game-button" id="openTicketsButton">ИГРАТЬ</button>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">📦</div>
+            <div class="card-title">Кейсы</div>
+            <div class="card-text">Открывайте кейсы с предметами.</div>
+            <button class="game-button" id="openCasesButton">ИГРАТЬ</button>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🎡</div>
+            <div class="card-title">UPGRADE</div>
+            <div class="card-text">Колесо удачи с множителями x2, x5, x10.</div>
+            <button class="game-button" id="openUpgradeButton">ИГРАТЬ</button>
+        </div>
+    </section>
+
+    <section id="inventoryPage" class="page hidden">
+        <div class="page-title">Инвентарь</div>
+        <div class="page-subtitle">Предметы из кейсов, которые вы сохранили.</div>
+        <button class="sell-all" id="sellAllButton">ПРОДАТЬ ВСЕ</button>
+        <div id="inventoryContainer"></div>
+    </section>
+
+    <section id="profilePage" class="page hidden">
+        <div class="page-title">Профиль</div>
+        <div class="page-subtitle">Управляйте аккаунтом, наградами и промокодами.</div>
+        <div class="card">
+            <div class="profile-row"><div class="profile-label">Имя</div><div class="profile-value" id="profileName">Игрок</div></div>
+            <div class="profile-row"><div class="profile-label">ID игрока</div><div class="profile-value" id="profileId">100001</div></div>
+            <div class="profile-row"><div class="profile-label">Баланс</div><div class="profile-value" id="profileBalance">0.00 ⭐</div></div>
+        </div>
+        <div class="card">
+            <div class="card-title">Ежедневная награда</div>
+            <div class="card-text">Забирайте <b>50</b> звёзд каждые 24 часа.</div>
+            <button class="daily-button" id="dailyButton">ЗАБРАТЬ 50 ⭐</button>
+            <div class="timer hidden" id="dailyTimer">24:00:00</div>
+        </div>
+        <div class="card">
+            <div class="card-title">Промокод</div>
+            <div class="card-text">Введите промокод, чтобы получить награду.</div>
+            <input id="promoInput" class="promo-input" type="text" placeholder="Введите промокод" autocomplete="off">
+            <button class="promo-button" id="promoButton">АКТИВИРОВАТЬ</button>
+            <div class="promo-message" id="promoMessage"></div>
+        </div>
+        <div class="card">
+            <div class="card-title">Статистика</div>
+            <div class="profile-row"><div class="profile-label">Игр сыграно</div><div class="profile-value" id="gamesPlayed">0</div></div>
+            <div class="profile-row"><div class="profile-label">Побед</div><div class="profile-value" id="wins">0</div></div>
+            <div class="profile-row"><div class="profile-label">Поражений</div><div class="profile-value" id="losses">0</div></div>
+        </div>
+    </section>
+
+</main>
+
+<nav class="bottom-nav">
+    <button class="nav-button" data-page="inventoryPage"><span class="nav-icon">⨷</span><span>Инвентарь</span></button>
+    <button class="nav-button active" data-page="menuPage"><span class="nav-icon">⌂</span><span>Меню</span></button>
+    <button class="nav-button" data-page="profilePage"><span class="nav-icon">👤</span><span>Профиль</span></button>
+</nav>
+
+<!-- =====================================================
+     ИГРЫ (все контейнеры из первого файла)
+====================================================== -->
+
+<!-- Шарик -->
+<div id="gameScreen" class="hidden">
+    <canvas id="gameCanvas"></canvas>
+    <div class="game-top">
+        <div class="game-stat"><div class="game-stat-label">Баланс</div><div class="game-stat-value" id="gameBalance">0.00</div></div>
+        <div class="game-stat"><div class="game-stat-label">Отскоки</div><div class="game-stat-value" id="gameBounces">0</div></div>
+        <div class="game-stat"><div class="game-stat-label">Множитель</div><div class="game-stat-value" id="gameMultiplier">1.00x</div></div>
+    </div>
+    <div class="bottom-zones">
+        <div id="greenZone" class="green-zone">WIN</div>
+        <div id="redZone" class="red-zone">LOSE</div>
+    </div>
+    <div id="gameMenu" class="game-menu">
+        <div class="game-menu-title">ESCAPE</div>
+        <div class="game-menu-balance" id="gameMenuBalance">0.00</div>
+        <input id="gameBet" class="bet-input" type="number" min="25" step="1" value="100">
+        <div id="gameBetError" class="bet-error"></div>
+        <div class="difficulty">
+            <button data-difficulty="easy" class="active">Легко</button>
+            <button data-difficulty="medium">Средне</button>
+            <button data-difficulty="hard">Сложно</button>
+        </div>
+        <button class="start-game" id="startGame">ИГРАТЬ</button>
+        <button class="exit-game" id="exitGame">НАЗАД</button>
+    </div>
+    <div id="gameResult" class="result hidden">
+        <div id="resultTitle" class="result-title win">WIN</div>
+        <div id="resultInfo" class="result-info"></div>
+        <div id="resultMoney" class="result-money win"></div>
+        <button id="resultClose" class="result-close">ЗАКРЫТЬ</button>
+    </div>
+</div>
+
+<!-- Билеты -->
+<div id="ticketGameContainer" class="hidden">
+    <button id="closeTicketsBtn">✕</button>
+    <div class="app-inner">
+        <div class="header-ticket">
+            <div class="logo-ticket">🎟️ SCRATCH</div>
+            <div class="balance-ticket">⭐ <span id="balanceTicket">0.00</span></div>
+        </div>
+        <section id="selectScreen" class="screen active">
+            <div class="title">SCRATCH &amp; WIN!</div>
+            <div class="subtitle">Выберите билет и попробуйте получить большой выигрыш</div>
+            <div class="tickets">
+                <div class="ticket" id="paidTicket">
+                    <div class="ticket-header">
+                        <div class="ticket-name">💎 MEGA SCRATCH</div>
+                        <div class="ticket-price">100 ⭐</div>
+                    </div>
+                    <div class="ticket-description">2 бесплатных открытия. Следующие открытия — 50 ⭐. До 2000 ⭐ за комбинацию.</div>
+                </div>
+                <div class="ticket" id="freeTicket">
+                    <div class="ticket-header">
+                        <div class="ticket-name">🎫 FREE SCRATCH</div>
+                        <div class="ticket-price free">БЕСПЛАТНО</div>
+                    </div>
+                    <div class="ticket-description">Каждое открытие стоит 5 ⭐. Максимальный обычный приз — 100 ⭐.</div>
+                </div>
+            </div>
+            <div id="chancePanel" class="chance-panel" style="display:none;">
+                <button class="start-ticket-button" id="startTicketButton">🎟️ ИГРАТЬ В ЭТОТ БИЛЕТ</button>
+                <div class="chance-title">Шансы и выигрыши</div>
+                <div class="chance-subtitle">Вероятность выпадения каждого символа в отдельной ячейке</div>
+                <div id="chanceList"></div>
+                <button class="back-button" id="closeChance">НАЗАД К БИЛЕТАМ</button>
+            </div>
+        </section>
+        <section id="gameScreenTicket" class="screen">
+            <div class="game-header-ticket">
+                <div class="game-name-ticket" id="gameNameTicket">MEGA SCRATCH</div>
+                <div class="game-cost-ticket" id="gameCostTicket">50 ⭐</div>
+            </div>
+            <div class="free-opens-ticket" id="freeOpensTicket"></div>
+            <div class="card-ticket" id="cardTicket"></div>
+            <div class="game-bottom-ticket">
+                <button class="game-button-ticket" id="backToTicketsTicket">← БИЛЕТЫ</button>
+            </div>
+        </section>
+        <div class="modal-ticket" id="resultModalTicket">
+            <div class="modal-box-ticket">
+                <div class="result-icon-ticket" id="resultIconTicket">🎉</div>
+                <div class="result-title-ticket" id="resultTitleTicket">ПОБЕДА!</div>
+                <div class="result-text-ticket" id="resultTextTicket"></div>
+                <div class="result-money-ticket" id="resultMoneyTicket">+500 ⭐</div>
+                <button class="modal-button-ticket" id="newTicketTicket">НОВЫЙ БИЛЕТ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Кейсы -->
+<div id="casesGameContainer" class="hidden">
+    <button id="closeCasesBtn">✕</button>
     <div class="topbar">
-
-        <div class="balance-case">
-            ⭐
-            <span id="balanceCase">
-                1000.00
-            </span>
-        </div>
-
+        <div class="balance-case">⭐ <span id="balanceCase">0</span></div>
     </div>
-
-
-    <!-- =================================================
-         ГЛАВНЫЙ ЭКРАН
-    ================================================= -->
-
-    <section
-        id="mainScreenCase"
-        class="screen-case active main-screen"
-    >
-
-        <div class="main-title">
-            КЕЙСЫ
-        </div>
-
-
-        <!-- =================================================
-             CASE FREE
-        ================================================= -->
-
-        <div class="case-image-card">
-
-            <button
-                type="button"
-                class="case-image-button"
-                id="freeCaseBox"
-                aria-label="Открыть CASE FREE"
-            >
-
-                <div class="case-image-wrap">
-
-                    <img
-                        class="case-main-image"
-                        src="https://i.ibb.co/S4qj6T0j/5-E5-AD32-B-4-D2-A-44-EF-AB0-A-B5-CD3218-DACE.png"
-                        alt="CASE FREE"
-                    >
-
-                </div>
-
-            </button>
-
-
-            <button
-                type="button"
-                id="freeStatusButton"
-                class="free-status"
-            >
-                ГОТОВ К ОТКРЫТИЮ
-            </button>
-
-        </div>
-
-
-        <!-- =================================================
-             PLS PEPE
-        ================================================= -->
-
-        <div class="case-image-card">
-
-            <button
-                type="button"
-                class="case-image-button"
-                id="plsPepeCaseBox"
-                aria-label="Открыть PLS PEPE за 10 звёзд"
-            >
-
-                <div class="case-image-wrap">
-
-                    <img
-                        class="case-main-image"
-                        src="https://i.ibb.co/zHPtMMRs/IMG-0845.png"
-                        alt="PLS PEPE 10 Stars"
-                    >
-
-                </div>
-
-            </button>
-
-            <div class="premium-label">
-                🐸 ОТКРЫТИЕ — 10 ⭐
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             CASE 50
-        ================================================= -->
-
-        <div class="case-image-card">
-
-            <button
-                type="button"
-                class="case-image-button"
-                id="case50Button"
-                aria-label="Открыть CASE 50 за 50 звёзд"
-            >
-
-                <div class="case-image-wrap">
-
-                    <img
-                        class="case-main-image"
-                        src="https://i.ibb.co/RkygJ7Kz/IMG-0839.png"
-                        alt="CASE 50"
-                    >
-
-                </div>
-
-            </button>
-
-            <div class="premium-label">
-                ⭐ ОТКРЫТИЕ — 50 ⭐
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             CASE 250
-        ================================================= -->
-
-        <div class="case-image-card">
-
-            <button
-                type="button"
-                class="case-image-button"
-                id="case250Button"
-                aria-label="Открыть CASE 250 за 250 звёзд"
-            >
-
-                <div class="case-image-wrap">
-
-                    <img
-                        class="case-main-image"
-                        src="https://i.ibb.co/NgN9yZYJ/IMG-0841.png"
-                        alt="CASE 250"
-                    >
-
-                </div>
-
-            </button>
-
-            <div class="premium-label">
-                💎 ОТКРЫТИЕ — 250 ⭐
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =================================================
-         ЭКРАН КЕЙСА
-    ================================================= -->
-
-    <section
-        id="caseScreenCase"
-        class="screen-case case-screen"
-    >
-
-        <div class="case-title-row">
-
-            <div
-                class="case-title"
-                id="caseTitle"
-            >
-                CASE 50 ⭐
-            </div>
-
-            <button
-                type="button"
-                class="back-case"
-                id="backCaseButton"
-            >
-                ← Назад
-            </button>
-
-        </div>
-
-
-        <!-- =================================================
-             РУЛЕТКА
-        ================================================= -->
-
-        <div class="roulette-section">
-
-            <div class="pointer-case"></div>
-
-            <div class="roulette-window">
-
-                <div
-                    class="roulette-track"
-                    id="rouletteTrack"
-                ></div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             OPEN
-        ================================================= -->
-
-        <button
-            type="button"
-            class="open-button"
-            id="openButton"
-        >
-            ОТКРЫТЬ
+    <section id="mainScreenCase" class="screen-case main-screen active">
+        <button class="main-case-button free-case-button" id="freeCaseBox">
+            <span>CASE FREE</span>
+            <div class="free-timer" id="freeTimer"></div>
         </button>
-
-
-        <div class="items-title">
-            ПРЕДМЕТЫ В КЕЙСЕ
-        </div>
-
-
-        <div
-            class="items-grid"
-            id="itemsGrid"
-        ></div>
-
+        <button class="main-case-button pls-pepe-button" id="plsPepeBox">
+            <span>PLS PEPE 🐸</span>
+        </button>
+        <button class="main-case-button" id="caseBox">
+            <span>CASE 50 ⭐</span>
+        </button>
+        <button class="main-case-button case-250-button" id="case250Box">
+            <span>CASE 250 ⭐</span>
+        </button>
     </section>
-
-
-    <!-- =================================================
-         РЕЗУЛЬТАТ
-    ================================================= -->
-
-    <div
-        class="modal-case"
-        id="resultModalCase"
-    >
-
-        <div class="modal-box-case">
-
-            <div
-                class="result-emoji-case"
-                id="resultEmoji"
-            >
-                💎
-            </div>
-
-
-            <div class="result-label-case">
-                ВАМ ВЫПАЛО
-            </div>
-
-
-            <div
-                class="result-name-case"
-                id="resultName"
-            ></div>
-
-
-            <div
-                class="result-value-case"
-                id="resultValue"
-            ></div>
-
-
-            <div class="result-buttons">
-
-                <button
-                    type="button"
-                    class="result-button sell-button"
-                    id="sellResultButton"
-                >
-                    ПРОДАТЬ
-                </button>
-
-
-                <button
-                    type="button"
-                    class="result-button back-result-button"
-                    id="saveResultButton"
-                >
-                    В ИНВЕНТАРЬ
-                </button>
-
-            </div>
-
+    <section id="caseScreenCase" class="screen-case case-screen">
+        <div class="case-title-row">
+            <div class="case-title" id="caseTitle">CASE 50 ⭐</div>
+            <button class="back-case" id="backButtonCase">← Назад</button>
         </div>
-
+        <div class="roulette-section">
+            <div class="pointer-case"></div>
+            <div class="roulette-window">
+                <div class="roulette-track" id="rouletteTrack"></div>
+            </div>
+        </div>
+        <button class="open-button" id="openButton">КУПИТЬ ЗА 50 ⭐</button>
+        <div class="items-title">ПРЕДМЕТЫ В КЕЙСЕ</div>
+        <div class="items-grid" id="itemsGrid"></div>
+    </section>
+    <div class="modal-case" id="resultModalCase">
+        <div class="modal-box-case">
+            <div class="result-emoji-case" id="resultEmoji">💎</div>
+            <div class="result-label-case">ВАМ ВЫПАЛО</div>
+            <div class="result-name-case" id="resultName">Diamond</div>
+            <div class="result-value-case" id="resultValue">+100 ⭐</div>
+            <div class="result-buttons">
+                <button class="result-button sell-button" id="sellResult">ПРОДАТЬ</button>
+                <button class="result-button back-result-button" id="backResult">В ИНВЕНТАРЬ</button>
+            </div>
+        </div>
     </div>
+    <div class="message-case" id="messageCase"></div>
+</div>
 
-
-    <!-- =================================================
-         СООБЩЕНИЕ
-    ================================================= -->
-
-    <div
-        class="message-case"
-        id="messageCase"
-    ></div>
+<!-- Upgrade -->
+<div id="upgradeGameContainer" class="hidden">
+    <button id="closeUpgradeBtn">✕</button>
+    <div class="bg-glow one"></div>
+    <div class="bg-glow two"></div>
+    <div class="app-inner-upgrade">
+        <header class="header-upgrade">
+            <div class="logo-upgrade">UPGRADE</div>
+            <div class="balance-box-upgrade">
+                <div class="balance-label-upgrade">Ваш баланс</div>
+                <div class="balance-upgrade" id="balanceUpgrade">0</div>
+            </div>
+        </header>
+        <main class="main-upgrade">
+            <section class="game-panel">
+                <div class="wheel-area">
+                    <div class="upgrade-title">UPGRADE</div>
+                    <div class="wheel-wrapper">
+                        <canvas id="wheel" width="700" height="700"></canvas>
+                        <div class="pointer-rotator" id="pointerRotator">
+                            <div class="pointer-upgrade"></div>
+                        </div>
+                        <div class="center-info">
+                            <div class="win-percent" id="winPercent">50%</div>
+                            <div class="chance-text">CHANCE</div>
+                        </div>
+                    </div>
+                    <div class="status-upgrade" id="statusUpgrade">Выберите множитель и сделайте ставку</div>
+                </div>
+                <div class="controls">
+                    <div class="control-label">Сумма ставки</div>
+                    <div class="bet-row">
+                        <div class="bet-input-wrap">
+                            <input class="bet-input-upgrade" id="betInputUpgrade" type="number" min="1" step="1" value="100">
+                            <span class="currency-upgrade">⭐</span>
+                        </div>
+                        <div class="multiplier-buttons">
+                            <button class="multiplier-upgrade active" data-multiplier="2">x2</button>
+                            <button class="multiplier-upgrade" data-multiplier="5">x5</button>
+                            <button class="multiplier-upgrade" data-multiplier="10">x10</button>
+                        </div>
+                    </div>
+                    <div class="item-select-area">
+                        <button class="select-item-btn" id="selectItemBtn">🎒 Выбрать предмет</button>
+                        <div class="selected-item-display" id="selectedItemDisplay">Баланс</div>
+                    </div>
+                    <div class="item-select-dropdown" id="itemDropdown"></div>
+                    <button class="spin-button-upgrade" id="spinButtonUpgrade">SPIN</button>
+                </div>
+                <div class="history-upgrade">
+                    <div class="history-title">Последние спины</div>
+                    <div class="history-list" id="historyListUpgrade">
+                        <div class="history-item"><div class="history-left">История пуста</div></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="flash-upgrade" id="flashUpgrade"></div>
+    <div class="toast-upgrade" id="toastUpgrade"></div>
+</div>
 
 </div>
 
-
 <script>
-"use strict";
-
-
-/* =====================================================
-   ДАННЫЕ КЕЙСОВ
-===================================================== */
-
-const cases = {
-
-    /* =================================================
-       FREE
-    ================================================= */
-
-    free: {
-
-        title: "CASE FREE 🎁",
-
-        price: 0,
-
-        items: [
-
-            {
-                emoji: "3 ⭐",
-                name: "3 Stars",
-                value: 3,
-                chance: 23,
-                rarity: ""
-            },
-
-            {
-                emoji: "5 ⭐",
-                name: "5 Stars",
-                value: 5,
-                chance: 22,
-                rarity: ""
-            },
-
-            {
-                emoji: "7 ⭐",
-                name: "7 Stars",
-                value: 7,
-                chance: 27,
-                rarity: ""
-            },
-
-            {
-                emoji: "🐻",
-                name: "Bear",
-                value: 15,
-                chance: 6,
-                rarity: ""
-            },
-
-            {
-                emoji: "💘",
-                name: "Heart",
-                value: 15,
-                chance: 6,
-                rarity: ""
-            },
-
-            {
-                emoji: "🎁",
-                name: "Gift",
-                value: 25,
-                chance: 3,
-                rarity: ""
-            },
-
-            {
-                emoji: "🌹",
-                name: "Rose",
-                value: 25,
-                chance: 3,
-                rarity: ""
-            },
-
-            {
-                emoji: "🎂",
-                name: "Cake",
-                value: 50,
-                chance: 1,
-                rarity: "uncommon"
-            },
-
-            {
-                emoji: "🚀",
-                name: "Rocket",
-                value: 50,
-                chance: 1,
-                rarity: "uncommon"
-            },
-
-            {
-                emoji: "🍦",
-                name: "Vice Cream",
-                value: 450,
-                chance: 0.00001,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "🍭",
-                name: "Lol Pop",
-                value: 450,
-                chance: 0.00001,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "🐕",
-                name: "Snoop Dogg",
-                value: 550,
-                chance: 0.00001,
-                rarity: "legendary"
-            }
-
-        ]
-    },
-
-
-    /* =================================================
-       PLS PEPE
-    ================================================= */
-
-    "pls-pepe": {
-
-        title: "PLS PEPE 🐸",
-
-        price: 10,
-
-        items: [
-
-            {
-                emoji: "💰",
-                name: "0.5 на баланс",
-                value: 0.5,
-                chance: 24.009997,
-                rarity: ""
-            },
-
-            {
-                emoji: "💰",
-                name: "1 на баланс",
-                value: 1,
-                chance: 25,
-                rarity: ""
-            },
-
-            {
-                emoji: "💰",
-                name: "3 на баланс",
-                value: 3,
-                chance: 15,
-                rarity: ""
-            },
-
-            {
-                emoji: "💰",
-                name: "5 на баланс",
-                value: 5,
-                chance: 15,
-                rarity: ""
-            },
-
-            {
-                emoji: "💰",
-                name: "7 на баланс",
-                value: 7,
-                chance: 10,
-                rarity: ""
-            },
-
-            {
-                emoji: "💰",
-                name: "10 на баланс",
-                value: 10,
-                chance: 3.33,
-                rarity: ""
-            },
-
-            {
-                emoji: "💘",
-                name: "15 зв",
-                value: 15,
-                chance: 3.33,
-                rarity: ""
-            },
-
-            {
-                emoji: "🐻",
-                name: "Bear",
-                value: 15,
-                chance: 3.33,
-                rarity: ""
-            },
-
-            {
-                emoji: "🎁",
-                name: "25",
-                value: 25,
-                chance: 0.5,
-                rarity: ""
-            },
-
-            {
-                emoji: "🌹",
-                name: "25",
-                value: 25,
-                chance: 0.5,
-                rarity: ""
-            },
-
-            {
-                emoji: "💖",
-                name: "Heart Locked",
-                value: 500000,
-                chance: 0.000002,
-                rarity: "legendary"
-            },
-
-            {
-                emoji: "🐸",
-                name: "Plush Pepe",
-                value: 800000,
-                chance: 0.000001,
-                rarity: "legendary"
-            }
-
-        ]
-    },
-
-
-    /* =================================================
-       CASE 50
-    ================================================= */
-
-    "50": {
-
-        title: "CASE 50 ⭐",
-
-        price: 50,
-
-        items: [
-
-            {
-                emoji: "🐻",
-                name: "Toy Bear",
-                value: 5000,
-                chance: 0.0001,
-                rarity: "legendary"
-            },
-
-            {
-                emoji: "🖊️",
-                name: "Fine Pen",
-                value: 1000,
-                chance: 0.0001,
-                rarity: "legendary"
-            },
-
-            {
-                emoji: "🗽",
-                name: "Liberty Figure",
-                value: 550,
-                chance: 0.00095,
-                rarity: "legendary"
-            },
-
-            {
-                emoji: "🔦",
-                name: "Chill Flame",
-                value: 450,
-                chance: 0.001,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "🍦",
-                name: "Vice Cream",
-                value: 450,
-                chance: 0.001,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "🏆",
-                name: "Trophy",
-                value: 100,
-                chance: 7.5,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "💎",
-                name: "Diamond",
-                value: 100,
-                chance: 7.5,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "🎂",
-                name: "Cake",
-                value: 50,
-                chance: 10,
-                rarity: "uncommon"
-            },
-
-            {
-                emoji: "💐",
-                name: "Flowers",
-                value: 50,
-                chance: 10,
-                rarity: "uncommon"
-            },
-
-            {
-                emoji: "🎁",
-                name: "Gift",
-                value: 25,
-                chance: 13,
-                rarity: ""
-            },
-
-            {
-                emoji: "🐻",
-                name: "Bear",
-                value: 15,
-                chance: 15,
-                rarity: ""
-            },
-
-            {
-                emoji: "🩷",
-                name: "Heart",
-                value: 15,
-                chance: 15,
-                rarity: ""
-            },
-
-            {
-                emoji: "7 ⭐",
-                name: "7 Stars",
-                value: 7,
-                chance: 21.49685,
-                rarity: ""
-            }
-
-        ]
-    },
-
-
-    /* =================================================
-       CASE 250
-    ================================================= */
-
-    "250": {
-
-        title: "CASE 250 ⭐",
-
-        price: 250,
-
-        items: [
-
-            {
-                emoji: "💰",
-                name: "10 на баланс",
-                value: 10,
-                chance: 3,
-                rarity: ""
-            },
-
-            {
-                emoji: "🐻",
-                name: "15 зв",
-                value: 15,
-                chance: 2.5,
-                rarity: ""
-            },
-
-            {
-                emoji: "💘",
-                name: "15 зв",
-                value: 15,
-                chance: 2.49805,
-                rarity: ""
-            },
-
-            {
-                emoji: "🎁",
-                name: "25",
-                value: 25,
-                chance: 7.5,
-                rarity: ""
-            },
-
-            {
-                emoji: "🌹",
-                name: "25",
-                value: 25,
-                chance: 7.5,
-                rarity: ""
-            },
-
-            {
-                emoji: "💐",
-                name: "50",
-                value: 50,
-                chance: 10,
-                rarity: "uncommon"
-            },
-
-            {
-                emoji: "🚀",
-                name: "50",
-                value: 50,
-                chance: 10,
-                rarity: "uncommon"
-            },
-
-            {
-                emoji: "💍",
-                name: "100",
-                value: 100,
-                chance: 11.5,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "💎",
-                name: "100",
-                value: 100,
-                chance: 11.5,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "💰",
-                name: "200 на баланс",
-                value: 200,
-                chance: 15,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "💰",
-                name: "250 на баланс",
-                value: 250,
-                chance: 7,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "💰",
-                name: "300 на баланс",
-                value: 300,
-                chance: 6,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "💰",
-                name: "350 на баланс",
-                value: 350,
-                chance: 3,
-                rarity: "legendary"
-            },
-
-            {
-                emoji: "💰",
-                name: "450 на баланс",
-                value: 450,
-                chance: 3,
-                rarity: "legendary"
-            },
-
-            {
-                emoji: "🍦",
-                name: "Vice Cream",
-                value: 450,
-                chance: 0.0005,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "🍭",
-                name: "Lol Pop",
-                value: 450,
-                chance: 0.0005,
-                rarity: "rare"
-            },
-
-            {
-                emoji: "🦩",
-                name: "Pool Float",
-                value: 500,
-                chance: 0.0005,
-                rarity: "legendary"
-            },
-
-            {
-                emoji: "🐕",
-                name: "Snoop Dogg",
-                value: 550,
-                chance: 0.00045,
-                rarity: "legendary"
-            }
-
-        ]
-    }
-
-};
-
-
-/* =====================================================
-   СОСТОЯНИЕ
-===================================================== */
-
-let balance =
-    Number(
-        localStorage.getItem(
-            "cases_balance"
-        )
-    );
-
-if (!Number.isFinite(balance)) {
-    balance = 1000;
+// =====================================================
+// ОБЩИЕ ДАННЫЕ И ФУНКЦИИ (из второго файла)
+// =====================================================
+
+let balance = 0;
+let inventoryItems = [];
+let dailyLastClaim = 0;
+
+function updateBalanceUI() {
+    const value = balance.toFixed(2);
+    document.getElementById('headerBalance').textContent = value;
+    document.getElementById('profileBalance').textContent = value + ' ⭐';
+    // также обновим везде, где есть свои балансы
+    const elGame = document.getElementById('gameBalance');
+    if (elGame) elGame.textContent = value;
+    const elGameMenu = document.getElementById('gameMenuBalance');
+    if (elGameMenu) elGameMenu.textContent = value;
+    const elTicket = document.getElementById('balanceTicket');
+    if (elTicket) elTicket.textContent = value;
+    const elCase = document.getElementById('balanceCase');
+    if (elCase) elCase.textContent = balance.toFixed(2);
+    const elUp = document.getElementById('balanceUpgrade');
+    if (elUp) elUp.textContent = balance.toFixed(2);
 }
 
-let currentCaseType = "50";
-
-let currentItems =
-    cases["50"].items;
-
-let currentWinner = null;
-
-let opening = false;
-
-
-/* =====================================================
-   DOM
-===================================================== */
-
-const mainScreen =
-    document.getElementById(
-        "mainScreenCase"
-    );
-
-const caseScreen =
-    document.getElementById(
-        "caseScreenCase"
-    );
-
-const caseTitle =
-    document.getElementById(
-        "caseTitle"
-    );
-
-const openButton =
-    document.getElementById(
-        "openButton"
-    );
-
-const rouletteTrack =
-    document.getElementById(
-        "rouletteTrack"
-    );
-
-const itemsGrid =
-    document.getElementById(
-        "itemsGrid"
-    );
-
-const resultModal =
-    document.getElementById(
-        "resultModalCase"
-    );
-
-const message =
-    document.getElementById(
-        "messageCase"
-    );
-
-
-/* =====================================================
-   БАЛАНС
-===================================================== */
-
-function updateBalance() {
-
-    document.getElementById(
-        "balanceCase"
-    ).textContent =
-        balance.toFixed(2);
-
-    localStorage.setItem(
-        "cases_balance",
-        balance
-    );
-
-}
-
-
-/* =====================================================
-   ОТКРЫТИЕ ЭКРАНА КЕЙСА
-===================================================== */
-
-function openCaseScreen(type) {
-
-    if (opening) return;
-
-    if (!cases[type]) return;
-
-    currentCaseType = type;
-
-    currentItems =
-        cases[type].items;
-
-    caseTitle.textContent =
-        cases[type].title;
-
-    if (type === "free") {
-
-        openButton.textContent =
-            "ОТКРЫТЬ FREE 🎁";
-
-        openButton.className =
-            "open-button free-open";
-
-    } else {
-
-        openButton.textContent =
-            "КУПИТЬ ЗА " +
-            cases[type].price +
-            " ⭐";
-
-        openButton.className =
-            "open-button";
-    }
-
-    mainScreen.classList.remove(
-        "active"
-    );
-
-    caseScreen.classList.add(
-        "active"
-    );
-
-    renderItems();
-
-    resetRoulette();
-
-}
-
-
-/* =====================================================
-   НАЗАД
-===================================================== */
-
-function showMainCase() {
-
-    if (opening) {
-
-        showMessage(
-            "Подождите окончания открытия кейса"
-        );
-
+function renderInventory() {
+    const container = document.getElementById('inventoryContainer');
+    container.innerHTML = '';
+    if (inventoryItems.length === 0) {
+        container.innerHTML = `<div class="empty-inventory"><div class="empty-icon">📦</div><div class="empty-title">Инвентарь пуст</div><div class="empty-text">Предметы из кейсов появятся здесь.</div></div>`;
+        document.getElementById('sellAllButton').disabled = true;
         return;
     }
-
-    caseScreen.classList.remove(
-        "active"
-    );
-
-    mainScreen.classList.add(
-        "active"
-    );
-
-}
-
-
-/* =====================================================
-   ПРЕДМЕТЫ
-===================================================== */
-
-function renderItems() {
-
-    itemsGrid.innerHTML = "";
-
-    [...currentItems]
-        .sort(
-            (a, b) =>
-                b.value - a.value
-        )
-        .forEach(item => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-            card.className =
-                "item-card " +
-                item.rarity;
-
-            card.innerHTML = `
-                <div class="item-emoji">
-                    ${item.emoji}
+    document.getElementById('sellAllButton').disabled = false;
+    inventoryItems.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'inventory-item';
+        div.innerHTML = `
+            <div class="inventory-item-left">
+                <div class="inventory-item-emoji">${item.emoji}</div>
+                <div>
+                    <div class="inventory-item-name">${item.name}</div>
+                    <div class="inventory-item-value">+${item.value} ⭐</div>
                 </div>
-
-                <div class="item-name">
-                    ${item.name}
-                </div>
-
-                <div class="item-price">
-                    +${item.value} ⭐
-                </div>
-            `;
-
-            itemsGrid.appendChild(
-                card
-            );
-
+            </div>
+            <button class="inventory-sell-btn" data-index="${index}">ПРОДАТЬ</button>
+        `;
+        container.appendChild(div);
+    });
+    document.querySelectorAll('.inventory-sell-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            const item = inventoryItems[index];
+            balance += item.value;
+            balance = Math.round(balance * 100) / 100;
+            inventoryItems.splice(index, 1);
+            updateBalanceUI();
+            renderInventory();
         });
-
+    });
 }
 
+document.getElementById('sellAllButton').addEventListener('click', () => {
+    if (inventoryItems.length === 0) return;
+    let total = 0;
+    for (const item of inventoryItems) total += item.value;
+    balance += total;
+    balance = Math.round(balance * 100) / 100;
+    inventoryItems = [];
+    updateBalanceUI();
+    renderInventory();
+});
 
-/* =====================================================
-   ВЫБОР ВЫИГРЫША
-===================================================== */
+function canClaimDaily() {
+    const now = Date.now();
+    const cooldown = 24 * 60 * 60 * 1000;
+    return (now - dailyLastClaim) >= cooldown;
+}
 
-function getRandomItem() {
+function claimDaily() {
+    if (!canClaimDaily()) {
+        alert('⏳ Награда уже получена!');
+        return;
+    }
+    balance += 50;
+    balance = Math.round(balance * 100) / 100;
+    dailyLastClaim = Date.now();
+    updateBalanceUI();
+    alert('🎁 Вы получили +50 ⭐');
+}
 
-    const total =
-        currentItems.reduce(
-            (sum, item) =>
-                sum + item.chance,
-            0
-        );
+document.getElementById('dailyButton').addEventListener('click', claimDaily);
 
-    let random =
-        Math.random() * total;
+let promoUsed200 = false;
+let promoUsedMet200 = false;
+document.getElementById('promoButton').addEventListener('click', () => {
+    const input = document.getElementById('promoInput');
+    const code = input.value.trim().toLowerCase();
+    const message = document.getElementById('promoMessage');
+    if (code === '200') {
+        if (promoUsed200) { message.textContent = '❌ Уже использован!'; message.style.color = '#ef4752'; return; }
+        balance += 200000;
+        promoUsed200 = true;
+        updateBalanceUI();
+        message.textContent = '✅ +200000 ⭐';
+        input.value = '';
+        return;
+    }
+    if (code === 'met200') {
+        if (promoUsedMet200) { message.textContent = '❌ Уже использован!'; message.style.color = '#ef4752'; return; }
+        balance += 10000;
+        promoUsedMet200 = true;
+        updateBalanceUI();
+        message.textContent = '✅ +10000 ⭐';
+        input.value = '';
+        return;
+    }
+    message.textContent = '❌ Неверный промокод!';
+    message.style.color = '#ef4752';
+});
 
-    for (
-        const item of currentItems
-    ) {
+// Навигация
+const navButtons = document.querySelectorAll('.nav-button');
+const pages = {
+    menuPage: document.getElementById('menuPage'),
+    inventoryPage: document.getElementById('inventoryPage'),
+    profilePage: document.getElementById('profilePage')
+};
+navButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+        if (this.classList.contains('active')) return;
+        Object.values(pages).forEach(p => p.classList.add('hidden'));
+        const pageId = this.dataset.page;
+        if (pages[pageId]) pages[pageId].classList.remove('hidden');
+        navButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        if (pageId === 'inventoryPage') renderInventory();
+    });
+});
 
-        random -= item.chance;
+// =====================================================
+// АНИМАЦИЯ МЕНЮ (стиральная машина)
+// =====================================================
+(function() {
+    const machine = document.getElementById('menuMachine');
+    const lettersContainer = document.getElementById('menuLetters');
+    const words = ['White', 'Bear'];
+    const letters = [];
+    words.forEach((word, wordIndex) => {
+        [...word].forEach(char => letters.push({ char, word: wordIndex }));
+    });
+    const START_DELAY = 650;
+    const LETTER_DELAY = 330;
+    const WORD_DELAY = 500;
+    const DURATION = 5600;
+    const LETTER_FLY_TIME = 850;
 
-        if (random <= 0) {
-            return item;
+    function getMachinePosition(progress) {
+        const container = document.getElementById('menuAnimation');
+        const width = container.offsetWidth;
+        const startX = -75;
+        const endX = width + 75;
+        const centerY = 13;
+        const arcHeight = 10;
+        const x = startX + (endX - startX) * progress;
+        const y = centerY - Math.sin(progress * Math.PI) * arcHeight;
+        const angle = -Math.cos(progress * Math.PI) * 7;
+        return { x, y, angle };
+    }
+
+    function getLetterLayout() {
+        const containerWidth = lettersContainer.offsetWidth;
+        const menuTitle = document.querySelector('#menuPage .page-title');
+        const titleWidth = menuTitle.offsetWidth;
+        const finalStart = titleWidth + 28;
+        const availableWidth = containerWidth - finalStart - 5;
+        const totalLetters = 9;
+        let spacing = Math.max(16, Math.min(availableWidth / totalLetters, 29));
+        let fontSize = Math.min(36, Math.max(20, spacing * .92));
+        if (availableWidth < 190) {
+            spacing = Math.max(14, availableWidth / totalLetters);
+            fontSize = Math.max(19, spacing * .88);
         }
-
+        return { finalStart, spacing, fontSize };
     }
 
-    return currentItems[
-        currentItems.length - 1
-    ];
-
-}
-
-
-/* =====================================================
-   КАРТОЧКА РУЛЕТКИ
-===================================================== */
-
-function createRouletteCard(item) {
-
-    const element =
-        document.createElement(
-            "div"
-        );
-
-    element.className =
-        "roulette-item " +
-        item.rarity;
-
-    element.innerHTML = `
-        <div class="roulette-emoji">
-            ${item.emoji}
-        </div>
-
-        <div class="roulette-name">
-            ${item.name}
-        </div>
-    `;
-
-    return element;
-
-}
-
-
-/* =====================================================
-   СБРОС РУЛЕТКИ
-===================================================== */
-
-function resetRoulette() {
-
-    rouletteTrack.style.transition =
-        "none";
-
-    rouletteTrack.style.transform =
-        "translateX(0px)";
-
-    rouletteTrack.innerHTML = "";
-
-    for (
-        let i = 0;
-        i < 18;
-        i++
-    ) {
-
-        const item =
-            currentItems[
-                Math.floor(
-                    Math.random() *
-                    currentItems.length
-                )
-            ];
-
-        rouletteTrack.appendChild(
-            createRouletteCard(item)
-        );
-
+    function getLetterFinalPosition(index, wordIndex) {
+        const layout = getLetterLayout();
+        let sameWordIndex = 0;
+        for (let i = 0; i < index; i++) {
+            if (letters[i].word === wordIndex) sameWordIndex++;
+        }
+        const wordOffset = wordIndex === 0 ? 0 : 5 * layout.spacing + 8;
+        let finalX = layout.finalStart + wordOffset + sameWordIndex * layout.spacing;
+        const maxX = lettersContainer.offsetWidth - 7;
+        finalX = Math.min(finalX, maxX);
+        return { x: finalX, y: 28 };
     }
 
-}
+    function createLetter(item, machinePosition) {
+        const letter = document.createElement('div');
+        letter.className = 'letter';
+        letter.textContent = item.char;
+        const layout = getLetterLayout();
+        letter.style.fontSize = layout.fontSize + 'px';
+        const startX = machinePosition.x - 18;
+        const startY = machinePosition.y + 23;
+        const finalPosition = getLetterFinalPosition(item.index, item.word);
+        const finalX = finalPosition.x;
+        const finalY = finalPosition.y;
+        letter.style.left = startX + 'px';
+        letter.style.top = startY + 'px';
+        lettersContainer.appendChild(letter);
+        const startTime = performance.now();
+        function animateLetter(now) {
+            let progress = (now - startTime) / LETTER_FLY_TIME;
+            progress = Math.min(progress, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const currentX = startX + (finalX - startX) * eased;
+            const arc = Math.sin(progress * Math.PI) * -13;
+            const currentY = startY + (finalY - startY) * eased + arc;
+            const rotation = -10 + progress * 10;
+            const scale = .45 + progress * .55;
+            letter.style.left = currentX + 'px';
+            letter.style.top = currentY + 'px';
+            letter.style.opacity = Math.min(1, progress * 3);
+            letter.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
+            letter.style.filter = `blur(${Math.max(0, 6 - progress * 6)}px)`;
+            if (progress < 1) {
+                requestAnimationFrame(animateLetter);
+            } else {
+                letter.style.left = finalX + 'px';
+                letter.style.top = finalY + 'px';
+                letter.style.opacity = '1';
+                letter.style.transform = 'translate(-50%, -50%) scale(1) rotate(0deg)';
+                letter.style.filter = 'blur(0)';
+                letter.style.animation = 'neonPulse 2.5s ease-in-out infinite alternate';
+            }
+        }
+        requestAnimationFrame(animateLetter);
+    }
 
+    let startTime = null;
+    let nextLetterTime = START_DELAY;
+    let letterIndex = 0;
 
-/* =====================================================
-   ОТКРЫТИЕ КЕЙСА
-===================================================== */
+    function animate(time) {
+        if (startTime === null) startTime = time;
+        const elapsed = time - startTime;
+        const progress = Math.min(elapsed / DURATION, 1);
+        const position = getMachinePosition(progress);
+        machine.style.left = position.x + 'px';
+        machine.style.top = position.y + 'px';
+        machine.style.transform = `rotate(${position.angle}deg)`;
 
-function openCurrentCase() {
+        if (letterIndex < letters.length) {
+            const item = letters[letterIndex];
+            const letterPosition = getLetterFinalPosition(letterIndex, item.word);
+            const triggerX = letterPosition.x + 22;
+            if (position.x > triggerX && elapsed >= nextLetterTime) {
+                item.index = letterIndex;
+                createLetter(item, position);
+                letterIndex++;
+                if (letterIndex === 5) {
+                    nextLetterTime = elapsed + WORD_DELAY;
+                } else {
+                    nextLetterTime = elapsed + LETTER_DELAY;
+                }
+            }
+        }
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            machine.style.display = 'none';
+        }
+    }
+    requestAnimationFrame(animate);
+})();
 
-    if (opening) return;
+// =====================================================
+// ВСЕ ИГРЫ – из первого файла (сокращённо, но полностью)
+// =====================================================
 
+// ---- Шарик ----
+(function() {
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = 0, height = 0;
+    const circle = { x: 0, y: 0, radius: 205, wallWidth: 10 };
+    const ball = { x: 0, y: 0, vx: 0, vy: 0, radius: 13 };
+    const GRAVITY = 0.20;
+    const MAX_SPEED = 6.2;
+    const MAX_HORIZONTAL_SPEED = 3.8;
+    const SIDE_WALL = 7;
+    const ZONE_HEIGHT = 90;
+    const HOLE_SPEED = 0.018;
+    let holeAngle = 0;
+    let gameRunning = false, escaped = false, gameFinished = false;
+    let bounceCount = 0, multiplier = 1, currentBet = 0;
+    let difficulty = 'easy';
+    let gamesPlayed = 0, wins = 0, losses = 0;
 
-    /* FREE */
+    const difficulties = {
+        easy: { green: 70, red: 30, hole: 50, step: 0.05 },
+        medium: { green: 50, red: 50, hole: 50, step: 0.15 },
+        hard: { green: 25, red: 75, hole: 50 * 1.22, step: 0.25 }
+    };
 
-    if (
-        currentCaseType === "free"
-    ) {
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        circle.radius = Math.min(205, width * .33, height * .30);
+        circle.x = width / 2;
+        circle.y = height * .39;
+        if (!gameRunning) {
+            ball.x = circle.x;
+            ball.y = circle.y - circle.radius * .35;
+        }
+    }
+    window.addEventListener('resize', resizeCanvas);
 
-        const last =
-            Number(
-                localStorage.getItem(
-                    "free_case_time"
-                )
-            ) || 0;
+    function updateZones() {
+        const s = difficulties[difficulty];
+        document.getElementById('greenZone').style.width = s.green + '%';
+        document.getElementById('redZone').style.width = s.red + '%';
+    }
 
-        const cooldown =
-            24 * 60 * 60 * 1000;
-
-        if (
-            Date.now() - last <
-            cooldown
-        ) {
-
-            showMessage(
-                "FREE кейс ещё недоступен: " +
-                formatTime(
-                    cooldown -
-                    (
-                        Date.now() - last
-                    )
-                )
-            );
-
+    function randomRange(min, max) { return min + Math.random() * (max - min); }
+    function normalizeAngle(a) { a %= Math.PI*2; if (a<0) a += Math.PI*2; return a; }
+    function angleDifference(a,b) { let d = Math.abs(normalizeAngle(a)-normalizeAngle(b)); if (d>Math.PI) d=Math.PI*2-d; return d; }
+    function isHole(angle) { const h = difficulties[difficulty].hole * Math.PI / 180; return angleDifference(angle, holeAngle) <= h/2; }
+    function limitSpeed() {
+        ball.vx = Math.max(-MAX_HORIZONTAL_SPEED, Math.min(MAX_HORIZONTAL_SPEED, ball.vx));
+        const sp = Math.sqrt(ball.vx**2 + ball.vy**2);
+        if (sp > MAX_SPEED) { const sc = MAX_SPEED / sp; ball.vx *= sc; ball.vy *= sc; }
+    }
+    function chooseStartVelocity() {
+        const dir = Math.random() < .5 ? -1 : 1;
+        ball.vx = dir * randomRange(1.0, 2.3);
+        ball.vy = randomRange(1.8, 3.0);
+    }
+    function registerBounce(nx, ny) {
+        bounceCount++;
+        multiplier = 1 + bounceCount * difficulties[difficulty].step;
+        multiplier = Math.round(multiplier * 100) / 100;
+        const jumpPower = randomRange(4.2, 5.9);
+        const randomSide = randomRange(-2.8, 2.8);
+        if (ny > .12) { ball.vy = -jumpPower; ball.vx += randomSide; }
+        else if (ny < -.12) { ball.vy = randomRange(2.8, 4.7); ball.vx += randomSide; }
+        else {
+            ball.vy = Math.random() < .5 ? -randomRange(3.6, 5.7) : randomRange(3.4, 5.4);
+            ball.vx += randomSide;
+        }
+        ball.vx += -nx * randomRange(.15, .75);
+        if (Math.abs(ball.vx) < .65) ball.vx = Math.random() < .5 ? -.65 : .65;
+        limitSpeed();
+        updateGameUI();
+    }
+    function updateGameUI() {
+        document.getElementById('gameBounces').textContent = bounceCount;
+        document.getElementById('gameMultiplier').textContent = multiplier.toFixed(2) + 'x';
+        updateBalanceUI();
+    }
+    function startRound() {
+        let bet = Number(document.getElementById('gameBet').value);
+        if (!Number.isFinite(bet) || bet <= 0) { document.getElementById('gameBetError').textContent = 'Введите ставку больше 0.'; return; }
+        if (bet < 25) { document.getElementById('gameBetError').textContent = 'Минимальная ставка 25 ⭐'; return; }
+        bet = Math.round(bet * 100) / 100;
+        if (bet > balance) { document.getElementById('gameBetError').textContent = 'Недостаточно средств.'; return; }
+        currentBet = bet;
+        balance -= currentBet;
+        balance = Math.round(balance * 100) / 100;
+        document.getElementById('gameBetError').textContent = '';
+        gameRunning = true;
+        escaped = false;
+        gameFinished = false;
+        bounceCount = 0;
+        multiplier = 1;
+        ball.x = circle.x;
+        ball.y = circle.y - circle.radius * .35;
+        chooseStartVelocity();
+        document.getElementById('gameMenu').classList.add('hidden');
+        document.getElementById('gameResult').classList.add('hidden');
+        updateGameUI();
+    }
+    function escapeThroughHole(nx, ny) {
+        const oldVx = ball.vx, oldVy = ball.vy;
+        ball.x = circle.x + nx * (circle.radius + ball.radius + 5);
+        ball.y = circle.y + ny * (circle.radius + ball.radius + 5);
+        ball.vx = oldVx;
+        ball.vy = oldVy;
+        escaped = true;
+    }
+    function bounceFromWall(nx, ny) {
+        const safeRadius = circle.radius - circle.wallWidth/2 - ball.radius - 1.5;
+        ball.x = circle.x + nx * safeRadius;
+        ball.y = circle.y + ny * safeRadius;
+        const dot = ball.vx * nx + ball.vy * ny;
+        if (dot > 0) { ball.vx -= 2 * dot * nx; ball.vy -= 2 * dot * ny; }
+        registerBounce(nx, ny);
+    }
+    function finishGame(win) {
+        if (gameFinished) return;
+        gameFinished = true;
+        gameRunning = false;
+        gamesPlayed++;
+        if (win) {
+            wins++;
+            const payout = currentBet * multiplier;
+            balance += payout;
+            balance = Math.round(balance * 100) / 100;
+            const profit = payout - currentBet;
+            document.getElementById('resultTitle').textContent = 'WIN';
+            document.getElementById('resultTitle').className = 'result-title win';
+            document.getElementById('resultMoney').textContent = '+' + profit.toFixed(2) + ' ⭐';
+            document.getElementById('resultMoney').className = 'result-money win';
+            document.getElementById('resultInfo').innerHTML = 'Ставка: ' + currentBet.toFixed(2) + ' ⭐<br>Множитель: ' + multiplier.toFixed(2) + 'x<br>Выплата: ' + payout.toFixed(2) + ' ⭐';
+        } else {
+            losses++;
+            document.getElementById('resultTitle').textContent = 'LOSE';
+            document.getElementById('resultTitle').className = 'result-title lose';
+            document.getElementById('resultMoney').textContent = '-' + currentBet.toFixed(2) + ' ⭐';
+            document.getElementById('resultMoney').className = 'result-money lose';
+            document.getElementById('resultInfo').innerHTML = 'Ставка: ' + currentBet.toFixed(2) + ' ⭐<br>Множитель: ' + multiplier.toFixed(2) + 'x<br>Ставка проиграна.';
+        }
+        updateGameUI();
+        document.getElementById('gamesPlayed').textContent = gamesPlayed;
+        document.getElementById('wins').textContent = wins;
+        document.getElementById('losses').textContent = losses;
+        document.getElementById('gameResult').classList.remove('hidden');
+    }
+    function updatePhysics() {
+        holeAngle += HOLE_SPEED;
+        holeAngle = normalizeAngle(holeAngle);
+        if (!gameRunning) return;
+        if (escaped) {
+            ball.vy += GRAVITY;
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+            limitSpeed();
+            if (ball.x - ball.radius < SIDE_WALL) { ball.x = SIDE_WALL + ball.radius; ball.vx = Math.abs(ball.vx); }
+            if (ball.x + ball.radius > width - SIDE_WALL) { ball.x = width - SIDE_WALL - ball.radius; ball.vx = -Math.abs(ball.vx); }
+            const zoneTop = height - ZONE_HEIGHT;
+            if (ball.y + ball.radius >= zoneTop) {
+                const greenWidth = width * difficulties[difficulty].green / 100;
+                if (ball.x <= greenWidth) finishGame(true);
+                else finishGame(false);
+                return;
+            }
             return;
         }
-
-        localStorage.setItem(
-            "free_case_time",
-            Date.now()
-        );
-
-        updateFreeTimer();
+        ball.vy += GRAVITY;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        limitSpeed();
+        const dx = ball.x - circle.x, dy = ball.y - circle.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        const collisionRadius = circle.radius - circle.wallWidth/2 - ball.radius;
+        if (dist >= collisionRadius && dist > 0.0001) {
+            const nx = dx/dist, ny = dy/dist;
+            const angle = Math.atan2(dy, dx);
+            if (isHole(angle)) {
+                const outward = ball.vx * nx + ball.vy * ny;
+                if (outward >= 0) { escapeThroughHole(nx, ny); return; }
+            }
+            bounceFromWall(nx, ny);
+        }
     }
-
-
-    /* ЦЕНА */
-
-    const price =
-        cases[
-            currentCaseType
-        ].price;
-
-    if (
-        price > 0 &&
-        balance < price
-    ) {
-
-        showMessage(
-            "Недостаточно ⭐"
-        );
-
-        return;
+    function draw() {
+        ctx.clearRect(0,0,width,height);
+        ctx.fillStyle = '#252a2f';
+        ctx.fillRect(0,0,SIDE_WALL,height);
+        ctx.fillRect(width-SIDE_WALL,0,SIDE_WALL,height);
+        const radius = circle.radius;
+        const holeRadians = difficulties[difficulty].hole * Math.PI / 180;
+        const holeStart = holeAngle - holeRadians/2;
+        const holeEnd = holeAngle + holeRadians/2;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(circle.x, circle.y, radius, holeEnd, holeStart + Math.PI*2);
+        ctx.strokeStyle = '#1478e8';
+        ctx.lineWidth = circle.wallWidth;
+        ctx.lineCap = 'round';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = 'rgba(20,120,235,.8)';
+        ctx.stroke();
+        ctx.restore();
+        ctx.save();
+        ctx.strokeStyle = '#1478e8';
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        function holeEdge(ang) {
+            const inner = radius - 6, outer = radius + 3;
+            ctx.beginPath();
+            ctx.moveTo(circle.x + Math.cos(ang)*inner, circle.y + Math.sin(ang)*inner);
+            ctx.lineTo(circle.x + Math.cos(ang)*outer, circle.y + Math.sin(ang)*outer);
+            ctx.stroke();
+        }
+        holeEdge(holeStart);
+        holeEdge(holeEnd);
+        ctx.restore();
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+        ctx.fillStyle = '#fff';
+        ctx.shadowBlur = 16;
+        ctx.shadowColor = 'rgba(255,255,255,.95)';
+        ctx.fill();
+        ctx.restore();
+        ctx.beginPath();
+        ctx.arc(ball.x-4, ball.y-4, 3, 0, Math.PI*2);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
     }
+    function gameLoop() { updatePhysics(); draw(); requestAnimationFrame(gameLoop); }
 
-    if (price > 0) {
+    // Инициализация шарика
+    resizeCanvas();
+    updateZones();
+    ball.x = circle.x;
+    ball.y = circle.y - circle.radius * .35;
+    gameLoop();
 
-        balance -= price;
-
-        updateBalance();
-    }
-
-    opening = true;
-
-    openButton.disabled = true;
-
-    currentWinner =
-        getRandomItem();
-
-    startRoulette(
-        currentWinner
-    );
-
-}
-
-
-/* =====================================================
-   ЗАПУСК РУЛЕТКИ
-===================================================== */
-
-function startRoulette(winner) {
-
-    rouletteTrack.innerHTML = "";
-
-    rouletteTrack.style.transition =
-        "none";
-
-    rouletteTrack.style.transform =
-        "translateX(0px)";
-
-    const total = 45;
-
-    const winnerIndex = 36;
-
-    for (
-        let i = 0;
-        i < total;
-        i++
-    ) {
-
-        const item =
-            i === winnerIndex
-                ? winner
-                : currentItems[
-                    Math.floor(
-                        Math.random() *
-                        currentItems.length
-                    )
-                ];
-
-        rouletteTrack.appendChild(
-            createRouletteCard(item)
-        );
-
-    }
-
-    const rouletteWindow =
-        document.querySelector(
-            ".roulette-window"
-        );
-
-    const windowWidth =
-        rouletteWindow.clientWidth;
-
-    const firstCard =
-        rouletteTrack.querySelector(
-            ".roulette-item"
-        );
-
-    const cardWidth =
-        firstCard
-            ? firstCard.offsetWidth
-            : 125;
-
-    const gap = 10;
-
-    const center =
-        windowWidth / 2 -
-        cardWidth / 2;
-
-    const position =
-        -(
-            winnerIndex *
-            (cardWidth + gap) -
-            center
-        );
-
-    const offsetRange =
-        Math.min(
-            16,
-            cardWidth * .12
-        );
-
-    const randomOffset =
-        Math.random() *
-        offsetRange -
-        offsetRange / 2;
-
-    requestAnimationFrame(() => {
-
-        requestAnimationFrame(() => {
-
-            rouletteTrack.style.transition =
-                "transform 6.5s cubic-bezier(.08,.72,.05,1)";
-
-            rouletteTrack.style.transform =
-                `translateX(${
-                    position +
-                    randomOffset
-                }px)`;
-
+    // Обработчики
+    document.getElementById('openGameButton').addEventListener('click', function() {
+        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+        document.getElementById('gameScreen').classList.remove('hidden');
+        updateBalanceUI();
+        updateZones();
+        resizeCanvas();
+        document.getElementById('gameMenu').classList.remove('hidden');
+    });
+    document.getElementById('startGame').addEventListener('click', startRound);
+    document.getElementById('exitGame').addEventListener('click', function() {
+        if (gameRunning) return;
+        document.getElementById('gameScreen').classList.add('hidden');
+        document.getElementById('menuPage').classList.remove('hidden');
+    });
+    document.getElementById('resultClose').addEventListener('click', function() {
+        document.getElementById('gameResult').classList.add('hidden');
+        document.getElementById('gameMenu').classList.remove('hidden');
+        gameRunning = false;
+        gameFinished = false;
+        escaped = false;
+        bounceCount = 0;
+        multiplier = 1;
+        ball.x = circle.x;
+        ball.y = circle.y - circle.radius * .35;
+        ball.vx = 0;
+        ball.vy = 0;
+        updateGameUI();
+    });
+    document.querySelectorAll('.difficulty button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.difficulty button').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            difficulty = this.dataset.difficulty;
+            updateZones();
         });
+    });
+})();
 
+// ---- Билеты ----
+(function() {
+    const paidSymbols = [
+        { symbol: "🧲", name: "Магнит", chance: 25, prize: 250 },
+        { symbol: "🪙", name: "Монета", chance: 20, prize: 500 },
+        { symbol: "⭐", name: "Звезда", chance: 15, prize: 300 },
+        { symbol: "🍀", name: "Клевер", chance: 12, prize: 400 },
+        { symbol: "💎", name: "Алмаз", chance: 10, prize: 750 },
+        { symbol: "🎰", name: "Слот", chance: 8, prize: 600 },
+        { symbol: "❤️", name: "Сердце", chance: 5, prize: 1000 },
+        { symbol: "💰", name: "Деньги", chance: 3, prize: 1500 },
+        { symbol: "👑", name: "Корона", chance: 2, prize: 2000 }
+    ];
+    const freeSymbols = [
+        { symbol: "🪙", name: "Монета", chance: 24, prize: 50 },
+        { symbol: "⭐", name: "Звезда", chance: 20, prize: 40 },
+        { symbol: "🍀", name: "Клевер", chance: 18, prize: 60 },
+        { symbol: "🧲", name: "Магнит", chance: 15, prize: 75 },
+        { symbol: "💎", name: "Алмаз", chance: 10, prize: 100 },
+        { symbol: "🎰", name: "Слот", chance: 7, prize: 80 },
+        { symbol: "🌟", name: "Золотая звезда", chance: 5, prize: 90 },
+        { symbol: "💔", name: "Разбитое сердце", chance: 1, prize: 500 }
+    ];
+
+    let currentTicket = null;
+    let cells = [];
+    let openedCount = 0;
+    let freeOpens = 0;
+    let gameEndedTicket = false;
+    let lastBoardSignature = "";
+
+    const paidTicket = document.getElementById('paidTicket');
+    const freeTicket = document.getElementById('freeTicket');
+    const selectScreen = document.getElementById('selectScreen');
+    const gameScreenTicket = document.getElementById('gameScreenTicket');
+    const chancePanel = document.getElementById('chancePanel');
+    const chanceList = document.getElementById('chanceList');
+    const cardTicket = document.getElementById('cardTicket');
+    const gameNameTicket = document.getElementById('gameNameTicket');
+    const gameCostTicket = document.getElementById('gameCostTicket');
+    const freeOpensTicket = document.getElementById('freeOpensTicket');
+    const resultModalTicket = document.getElementById('resultModalTicket');
+    const resultIconTicket = document.getElementById('resultIconTicket');
+    const resultTitleTicket = document.getElementById('resultTitleTicket');
+    const resultTextTicket = document.getElementById('resultTextTicket');
+    const resultMoneyTicket = document.getElementById('resultMoneyTicket');
+
+    function shuffle(arr) {
+        for (let i = arr.length-1; i>0; i--) {
+            const j = Math.floor(Math.random()*(i+1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+    function getRandomSymbol(symbols) {
+        let val = Math.random() * 100, cur = 0;
+        for (const item of symbols) {
+            cur += item.chance;
+            if (val <= cur) return item;
+        }
+        return symbols[symbols.length-1];
+    }
+    function generateBoard(symbols) {
+        let board, attempts=0;
+        do {
+            board = [];
+            for (let i=0; i<9; i++) board.push(getRandomSymbol(symbols));
+            shuffle(board);
+            attempts++;
+        } while (!isValidBoard(board) && attempts<100);
+        const sig = board.map(i=>i.symbol).sort().join('|');
+        if (sig === lastBoardSignature) return generateBoard(symbols);
+        lastBoardSignature = sig;
+        return board;
+    }
+    function isValidBoard(board) {
+        const counts = {};
+        for (const item of board) {
+            const s = item.symbol;
+            counts[s] = (counts[s]||0) + 1;
+        }
+        let triples=0;
+        for (const s in counts) {
+            if (counts[s] > 3) return false;
+            if (counts[s] === 3) triples++;
+            if (triples > 1) return false;
+        }
+        return true;
+    }
+    function checkWinTicket() {
+        const counts = {};
+        for (const cell of cells) {
+            if (!cell.opened) continue;
+            const s = cell.item.symbol;
+            counts[s] = (counts[s]||0) + 1;
+        }
+        for (const s in counts) {
+            if (counts[s] >= 3) {
+                const item = currentTicket.symbols.find(x => x.symbol === s);
+                if (item) return item;
+            }
+        }
+        return null;
+    }
+    function showChances(ticket) {
+        chanceList.innerHTML = '';
+        const sorted = [...ticket.symbols].sort((a,b)=>b.chance-a.chance);
+        for (const item of sorted) {
+            const row = document.createElement('div');
+            row.className = 'chance-row';
+            row.innerHTML = `<div class="chance-symbol">${item.symbol}</div>
+                             <div class="chance-name">${item.name}</div>
+                             <div class="chance-percent">${item.chance}%</div>
+                             <div class="chance-prize">+${item.prize} ⭐</div>`;
+            chanceList.appendChild(row);
+        }
+        chancePanel.style.display = 'block';
+    }
+    function selectTicket(el) {
+        paidTicket.classList.remove('selected');
+        freeTicket.classList.remove('selected');
+        el.classList.add('selected');
+    }
+    paidTicket.addEventListener('click', ()=>{
+        selectTicket(paidTicket);
+        currentTicket = { name: '💎 MEGA SCRATCH', price: 100, openPrice: 50, freeOpens: 2, symbols: paidSymbols };
+        showChances(currentTicket);
+    });
+    freeTicket.addEventListener('click', ()=>{
+        selectTicket(freeTicket);
+        currentTicket = { name: '🎫 FREE SCRATCH', price: 0, openPrice: 5, freeOpens: 0, symbols: freeSymbols };
+        showChances(currentTicket);
+    });
+    document.getElementById('closeChance').addEventListener('click', ()=>{
+        chancePanel.style.display = 'none';
+        paidTicket.classList.remove('selected');
+        freeTicket.classList.remove('selected');
+        currentTicket = null;
+    });
+    document.getElementById('startTicketButton').addEventListener('click', startTicket);
+
+    function startTicket() {
+        if (!currentTicket) return;
+        if (currentTicket.price > 0) {
+            if (balance < currentTicket.price) {
+                alert('Недостаточно валюты для покупки билета.');
+                return;
+            }
+            balance -= currentTicket.price;
+        }
+        updateBalanceUI();
+        selectScreen.classList.remove('active');
+        gameScreenTicket.classList.add('active');
+        chancePanel.style.display = 'none';
+        openedCount = 0;
+        gameEndedTicket = false;
+        freeOpens = currentTicket.freeOpens;
+        gameNameTicket.textContent = currentTicket.name;
+        updateGameInfoTicket();
+        createBoardTicket();
+    }
+    function updateGameInfoTicket() {
+        if (freeOpens > 0) {
+            freeOpensTicket.textContent = `🎁 Бесплатных открытий: ${freeOpens}`;
+            gameCostTicket.textContent = 'Первые 2 бесплатно';
+        } else {
+            freeOpensTicket.textContent = `Открытие ячейки: ${currentTicket.openPrice} ⭐`;
+            gameCostTicket.textContent = `${currentTicket.openPrice} ⭐`;
+        }
+    }
+    function createBoardTicket() {
+        cardTicket.innerHTML = '';
+        cells = [];
+        const board = generateBoard(currentTicket.symbols);
+        for (let i=0; i<9; i++) {
+            const item = board[i];
+            const cell = document.createElement('div');
+            cell.className = 'cell-ticket';
+            const symbol = document.createElement('div');
+            symbol.className = 'symbol-ticket';
+            symbol.textContent = item.symbol;
+            const scratch = document.createElement('div');
+            scratch.className = 'scratch-ticket';
+            cell.appendChild(symbol);
+            cell.appendChild(scratch);
+            const cellData = { element: cell, item: item, opened: false };
+            cells.push(cellData);
+            cell.addEventListener('click', ()=> openCellTicket(cellData));
+            cardTicket.appendChild(cell);
+        }
+    }
+    function openCellTicket(cell) {
+        if (gameEndedTicket || cell.opened) return;
+        if (freeOpens > 0) {
+            freeOpens--;
+        } else {
+            if (balance < currentTicket.openPrice) {
+                alert('Недостаточно валюты для открытия ячейки.');
+                return;
+            }
+            balance -= currentTicket.openPrice;
+            updateBalanceUI();
+        }
+        cell.opened = true;
+        cell.element.classList.add('opened');
+        openedCount++;
+        updateGameInfoTicket();
+        const win = checkWinTicket();
+        if (win) { finishGameTicket(true, win); return; }
+        if (openedCount >= 9) finishGameTicket(false, null);
+    }
+    function finishGameTicket(won, item) {
+        if (gameEndedTicket) return;
+        gameEndedTicket = true;
+        const delay = 1200;
+        if (won) {
+            const prize = item.prize;
+            balance += prize;
+            updateBalanceUI();
+            resultIconTicket.textContent = item.symbol;
+            resultTitleTicket.textContent = 'ПОБЕДА!';
+            resultTitleTicket.className = 'result-title-ticket win';
+            resultTextTicket.innerHTML = `Вы нашли 3 одинаковых символа <b>${item.symbol}</b>.<br>Комбинация найдена в любых местах билета.`;
+            resultMoneyTicket.textContent = `+${prize} ⭐`;
+            setTimeout(()=>{ resultModalTicket.classList.add('show'); }, delay);
+        } else {
+            resultIconTicket.textContent = '😔';
+            resultTitleTicket.textContent = 'ПОПРОБУЙ СНОВА';
+            resultTitleTicket.className = 'result-title-ticket lose';
+            resultTextTicket.textContent = 'Все 9 ячеек открыты, но трёх одинаковых символов найти не удалось.';
+            resultMoneyTicket.textContent = '0 ⭐';
+            setTimeout(()=>{ resultModalTicket.classList.add('show'); }, delay);
+        }
+    }
+    document.getElementById('newTicketTicket').addEventListener('click', ()=>{
+        resultModalTicket.classList.remove('show');
+        gameScreenTicket.classList.remove('active');
+        selectScreen.classList.add('active');
+        currentTicket = null;
+        cells = [];
+        openedCount = 0;
+        freeOpens = 0;
+        gameEndedTicket = false;
+        paidTicket.classList.remove('selected');
+        freeTicket.classList.remove('selected');
+        chancePanel.style.display = 'none';
+    });
+    document.getElementById('backToTicketsTicket').addEventListener('click', ()=>{
+        if (!gameEndedTicket && openedCount > 0) {
+            const canAfford = balance >= currentTicket.openPrice;
+            if (canAfford) {
+                alert('Вы не можете выйти из билета, пока можете продолжать открытие.');
+                return;
+            }
+        }
+        gameScreenTicket.classList.remove('active');
+        selectScreen.classList.add('active');
+        currentTicket = null;
+        cells = [];
+        openedCount = 0;
+        freeOpens = 0;
+        gameEndedTicket = false;
+        paidTicket.classList.remove('selected');
+        freeTicket.classList.remove('selected');
+        chancePanel.style.display = 'none';
     });
 
-    setTimeout(() => {
+    // Открытие билетов из меню
+    document.getElementById('openTicketsButton').addEventListener('click', function() {
+        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+        document.getElementById('ticketGameContainer').classList.remove('hidden');
+        updateBalanceUI();
+    });
+    document.getElementById('closeTicketsBtn').addEventListener('click', function() {
+        document.getElementById('ticketGameContainer').classList.add('hidden');
+        document.getElementById('menuPage').classList.remove('hidden');
+        navButtons.forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-page="menuPage"]').classList.add('active');
+    });
+})();
 
-        showResult(
-            winner
-        );
+// ---- Кейсы ----
+(function() {
+    const itemsCase = [
+        { emoji: "🐻", name: "Toy Bear", value: 5000, chance: 0.0001, rarity: "legendary" },
+        { emoji: "🖊️", name: "Fine Pen", value: 1000, chance: 0.0001, rarity: "legendary" },
+        { emoji: "🗽", name: "Liberty Figure", value: 550, chance: 0.00095, rarity: "legendary" },
+        { emoji: "🔦", name: "Chill Flame", value: 450, chance: 0.001, rarity: "rare" },
+        { emoji: "🍦", name: "Vice Cream", value: 450, chance: 0.001, rarity: "rare" },
+        { emoji: "🏆", name: "Trophy", value: 100, chance: 7.5, rarity: "rare" },
+        { emoji: "💎", name: "Diamond", value: 100, chance: 7.5, rarity: "rare" },
+        { emoji: "🎂", name: "Cake", value: 50, chance: 10, rarity: "uncommon" },
+        { emoji: "💐", name: "Flowers", value: 50, chance: 10, rarity: "uncommon" },
+        { emoji: "🎁", name: "Gift", value: 25, chance: 13, rarity: "" },
+        { emoji: "🐻", name: "bear", value: 15, chance: 15, rarity: "" },
+        { emoji: "🩷", name: "Heart", value: 15, chance: 15, rarity: "" },
+        { emoji: "7 ⭐", name: "7 Stars", value: 7, chance: 0, rarity: "" }
+    ];
+    const freeItemsCase = [
+        { emoji: "3 ⭐", name: "3 Stars", value: 3, chance: 23, rarity: "" },
+        { emoji: "5 ⭐", name: "5 Stars", value: 5, chance: 22, rarity: "" },
+        { emoji: "7 ⭐", name: "7 Stars", value: 7, chance: 27, rarity: "" },
+        { emoji: "🐻", name: "Bear", value: 15, chance: 6, rarity: "" },
+        { emoji: "💘", name: "Heart", value: 15, chance: 6, rarity: "" },
+        { emoji: "🎁", name: "Gift", value: 25, chance: 3, rarity: "" },
+        { emoji: "🌹", name: "Rose", value: 25, chance: 3, rarity: "" },
+        { emoji: "🎂", name: "Cake", value: 50, chance: 1, rarity: "uncommon" },
+        { emoji: "🚀", name: "Rocket", value: 50, chance: 1, rarity: "uncommon" },
+        { emoji: "🍦", name: "Vice Cream", value: 450, chance: 0.00001, rarity: "rare" },
+        { emoji: "🍭", name: "Lol Pop", value: 450, chance: 0.00001, rarity: "rare" },
+        { emoji: "🐕", name: "Snoop Dogg", value: 550, chance: 0.00001, rarity: "legendary" }
+    ];
+    const case250ItemsCase = [
+        { emoji: "💰", name: "10 на баланс", value: 10, chance: 3, rarity: "" },
+        { emoji: "🐻", name: "15 зв", value: 15, chance: 2.5, rarity: "" },
+        { emoji: "💘", name: "15 зв", value: 15, chance: 2.49805, rarity: "" },
+        { emoji: "🎁", name: "25", value: 25, chance: 7.5, rarity: "" },
+        { emoji: "🌹", name: "25", value: 25, chance: 7.5, rarity: "" },
+        { emoji: "💐", name: "50", value: 50, chance: 10, rarity: "uncommon" },
+        { emoji: "🚀", name: "50", value: 50, chance: 10, rarity: "uncommon" },
+        { emoji: "💍", name: "100", value: 100, chance: 11.5, rarity: "rare" },
+        { emoji: "💎", name: "100", value: 100, chance: 11.5, rarity: "rare" },
+        { emoji: "💰", name: "200 на баланс", value: 200, chance: 15, rarity: "rare" },
+        { emoji: "💰", name: "250 на баланс", value: 250, chance: 7, rarity: "rare" },
+        { emoji: "💰", name: "300 на баланс", value: 300, chance: 6, rarity: "rare" },
+        { emoji: "💰", name: "350 на баланс", value: 350, chance: 3, rarity: "legendary" },
+        { emoji: "💰", name: "450 на баланс", value: 450, chance: 3, rarity: "legendary" },
+        { emoji: "🍦", name: "Vice Cream", value: 450, chance: 0.0005, rarity: "rare" },
+        { emoji: "🍭", name: "Lol Pop", value: 450, chance: 0.0005, rarity: "rare" },
+        { emoji: "🦩", name: "Pool Float", value: 500, chance: 0.0005, rarity: "legendary" },
+        { emoji: "🐕", name: "Snoop Dogg", value: 550, chance: 0.00045, rarity: "legendary" }
+    ];
+    const plsPepeItemsCase = [
+        { emoji: "💰", name: "0.5 на баланс", value: 0.5, chance: 24.009997, rarity: "" },
+        { emoji: "💰", name: "1 на баланс", value: 1, chance: 25, rarity: "" },
+        { emoji: "💰", name: "3 на баланс", value: 3, chance: 15, rarity: "" },
+        { emoji: "💰", name: "5 на баланс", value: 5, chance: 15, rarity: "" },
+        { emoji: "💰", name: "7 на баланс", value: 7, chance: 10, rarity: "" },
+        { emoji: "💰", name: "10 на баланс", value: 10, chance: 3.33, rarity: "" },
+        { emoji: "💘", name: "15 зв", value: 15, chance: 3.33, rarity: "" },
+        { emoji: "🐻", name: "Bear", value: 15, chance: 3.33, rarity: "" },
+        { emoji: "🎁", name: "25", value: 25, chance: 0.5, rarity: "" },
+        { emoji: "🌹", name: "25", value: 25, chance: 0.5, rarity: "" },
+        { emoji: "💖", name: "Heart Locked", value: 500000, chance: 0.000002, rarity: "legendary" },
+        { emoji: "🐸", name: "Plush Pepe", value: 800000, chance: 0.000001, rarity: "legendary" }
+    ];
 
-        opening = false;
+    function normalizeChancesCase() {
+        const stars = itemsCase.find(item => item.name === "7 Stars");
+        const otherItems = itemsCase.filter(item => item.name !== "7 Stars");
+        const total = otherItems.reduce((sum, item) => sum + item.chance, 0);
+        stars.chance = 100 - total;
+    }
+    normalizeChancesCase();
 
-        openButton.disabled = false;
+    let isOpeningCase = false;
+    let currentWinnerCase = null;
+    let currentCaseType = "paid";
 
-    }, 6800);
+    const mainScreenCase = document.getElementById('mainScreenCase');
+    const caseScreenCase = document.getElementById('caseScreenCase');
+    const caseTitle = document.getElementById('caseTitle');
+    const openButton = document.getElementById('openButton');
+    const rouletteTrack = document.getElementById('rouletteTrack');
+    const itemsGrid = document.getElementById('itemsGrid');
+    const resultModalCase = document.getElementById('resultModalCase');
+    const resultEmoji = document.getElementById('resultEmoji');
+    const resultName = document.getElementById('resultName');
+    const resultValue = document.getElementById('resultValue');
+    const sellResult = document.getElementById('sellResult');
+    const backResult = document.getElementById('backResult');
+    const messageElement = document.getElementById('messageCase');
 
-}
+    const FREE_COOLDOWN = 24 * 60 * 60 * 1000;
+    const FREE_COOLDOWN_KEY = "case_free_last_open";
 
-
-/* =====================================================
-   РЕЗУЛЬТАТ
-===================================================== */
-
-function showResult(item) {
-
-    document.getElementById(
-        "resultEmoji"
-    ).textContent =
-        item.emoji;
-
-    document.getElementById(
-        "resultName"
-    ).textContent =
-        item.name;
-
-    document.getElementById(
-        "resultValue"
-    ).textContent =
-        "+" +
-        item.value +
-        " ⭐";
-
-    resultModal.classList.add(
-        "show"
-    );
-
-}
-
-
-/* =====================================================
-   ПРОДАТЬ
-===================================================== */
-
-function sellResult() {
-
-    if (!currentWinner) return;
-
-    balance =
-        Math.round(
-            (
-                balance +
-                currentWinner.value
-            ) * 100
-        ) / 100;
-
-    updateBalance();
-
-    closeResult();
-
-    showMessage(
-        "Предмет продан ⭐"
-    );
-
-}
-
-
-/* =====================================================
-   В ИНВЕНТАРЬ
-===================================================== */
-
-function saveResult() {
-
-    if (!currentWinner) return;
-
-    let inventory = [];
-
-    try {
-
-        inventory =
-            JSON.parse(
-                localStorage.getItem(
-                    "case_inventory"
-                )
-            ) || [];
-
-    } catch (error) {
-
-        inventory = [];
-
+    function getFreeLastOpen() {
+        const value = localStorage.getItem(FREE_COOLDOWN_KEY);
+        if (!value) return 0;
+        return Number(value);
+    }
+    function canOpenFreeCase() {
+        const lastOpen = getFreeLastOpen();
+        return (Date.now() - lastOpen >= FREE_COOLDOWN);
+    }
+    function setFreeCooldown() {
+        localStorage.setItem(FREE_COOLDOWN_KEY, String(Date.now()));
+        updateFreeButton();
+    }
+    function updateFreeButton() {
+        const lastOpen = getFreeLastOpen();
+        const remaining = FREE_COOLDOWN - (Date.now() - lastOpen);
+        const el = document.getElementById('freeTimer');
+        const btn = document.getElementById('freeCaseBox');
+        if (remaining <= 0) {
+            btn.classList.remove('disabled');
+            if (el) el.textContent = 'ГОТОВ К ОТКРЫТИЮ';
+            return;
+        }
+        btn.classList.add('disabled');
+        if (el) el.textContent = formatTimeCase(remaining);
+    }
+    function formatTimeCase(milliseconds) {
+        let totalSeconds = Math.ceil(milliseconds / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        totalSeconds %= 3600;
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return String(hours).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
     }
 
-    inventory.push(
-        currentWinner
-    );
-
-    localStorage.setItem(
-        "case_inventory",
-        JSON.stringify(
-            inventory
-        )
-    );
-
-    closeResult();
-
-    showMessage(
-        "Предмет сохранён в инвентарь 🎒"
-    );
-
-}
-
-
-/* =====================================================
-   ЗАКРЫТЬ РЕЗУЛЬТАТ
-===================================================== */
-
-function closeResult() {
-
-    resultModal.classList.remove(
-        "show"
-    );
-
-    currentWinner = null;
-
-    resetRoulette();
-
-}
-
-
-/* =====================================================
-   ФОРМАТ ВРЕМЕНИ
-===================================================== */
-
-function formatTime(ms) {
-
-    let seconds =
-        Math.ceil(
-            ms / 1000
-        );
-
-    const hours =
-        Math.floor(
-            seconds / 3600
-        );
-
-    seconds %= 3600;
-
-    const minutes =
-        Math.floor(
-            seconds / 60
-        );
-
-    seconds %= 60;
-
-    return (
-        String(hours).padStart(2, "0") +
-        ":" +
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(seconds).padStart(2, "0")
-    );
-
-}
-
-
-/* =====================================================
-   ТАЙМЕР FREE
-===================================================== */
-
-function updateFreeTimer() {
-
-    const button =
-        document.getElementById(
-            "freeStatusButton"
-        );
-
-    const last =
-        Number(
-            localStorage.getItem(
-                "free_case_time"
-            )
-        ) || 0;
-
-    const cooldown =
-        24 * 60 * 60 * 1000;
-
-    const remaining =
-        cooldown -
-        (
-            Date.now() -
-            last
-        );
-
-    if (remaining <= 0) {
-
-        button.textContent =
-            "ГОТОВ К ОТКРЫТИЮ";
-
-        button.classList.remove(
-            "cooldown"
-        );
-
-        return;
+    function showMainCase() {
+        caseScreenCase.classList.remove('active');
+        mainScreenCase.classList.add('active');
+        currentCaseType = 'paid';
+        updateFreeButton();
     }
 
-    button.textContent =
-        "СНОВА ЧЕРЕЗ " +
-        formatTime(
-            remaining
-        );
+    function showCaseCase(type = "paid") {
+        mainScreenCase.classList.remove('active');
+        caseScreenCase.classList.add('active');
+        currentCaseType = type;
+        let items, title, price, freeOpen = false;
+        if (type === 'free') {
+            items = freeItemsCase;
+            title = 'CASE FREE';
+            price = 0;
+            freeOpen = true;
+        } else if (type === 'pls-pepe') {
+            items = plsPepeItemsCase;
+            title = 'PLS PEPE 🐸';
+            price = 10;
+        } else if (type === '250') {
+            items = case250ItemsCase;
+            title = 'CASE 250 ⭐';
+            price = 250;
+        } else {
+            items = itemsCase;
+            title = 'CASE 50 ⭐';
+            price = 50;
+        }
+        caseTitle.textContent = title;
+        openButton.textContent = freeOpen ? 'ОТКРЫТЬ FREE 🎁' : `КУПИТЬ ЗА ${price} ⭐`;
+        openButton.className = 'open-button' + (freeOpen ? ' free-open' : '');
+        renderItemsCase(items);
+        resetRouletteCase(items);
+    }
 
-    button.classList.add(
-        "cooldown"
-    );
+    function renderItemsCase(sourceItems) {
+        itemsGrid.innerHTML = '';
+        const sortedItems = [...sourceItems].sort((a, b) => b.value - a.value);
+        sortedItems.forEach(item => {
+            const card = document.createElement('div');
+            card.className = `item-card ${item.rarity}`;
+            card.innerHTML = `<div class="item-emoji">${item.emoji}</div><div class="item-name">${item.name}</div><div class="item-price">+${item.value} ⭐</div>`;
+            itemsGrid.appendChild(card);
+        });
+    }
 
-}
+    function getRandomItemCase(sourceItems) {
+        const random = Math.random() * 100;
+        let accumulated = 0;
+        for (const item of sourceItems) {
+            accumulated += item.chance;
+            if (random < accumulated) return item;
+        }
+        return sourceItems[sourceItems.length - 1];
+    }
 
+    function createRouletteCardCase(item) {
+        const element = document.createElement('div');
+        element.className = `roulette-item ${item.rarity}`;
+        element.innerHTML = `<div class="roulette-emoji">${item.emoji}</div><div class="roulette-name">${item.name}</div>`;
+        return element;
+    }
 
-/* =====================================================
-   СООБЩЕНИЯ
-===================================================== */
+    function resetRouletteCase(sourceItems = itemsCase) {
+        rouletteTrack.style.transition = 'none';
+        rouletteTrack.style.transform = 'translateX(0px)';
+        rouletteTrack.innerHTML = '';
+        for (let i = 0; i < 18; i++) {
+            const randomItem = sourceItems[Math.floor(Math.random() * sourceItems.length)];
+            rouletteTrack.appendChild(createRouletteCardCase(randomItem));
+        }
+    }
 
-let messageTimer = null;
-
-function showMessage(text) {
-
-    clearTimeout(
-        messageTimer
-    );
-
-    message.textContent =
-        text;
-
-    message.classList.add(
-        "show"
-    );
-
-    messageTimer =
+    function startRouletteCase(sourceItems, winner) {
+        rouletteTrack.style.transition = 'none';
+        rouletteTrack.style.transform = 'translateX(0px)';
+        rouletteTrack.innerHTML = '';
+        const totalCards = 45;
+        const winnerIndex = 36;
+        for (let i = 0; i < totalCards; i++) {
+            let item;
+            if (i === winnerIndex) item = winner;
+            else item = sourceItems[Math.floor(Math.random() * sourceItems.length)];
+            rouletteTrack.appendChild(createRouletteCardCase(item));
+        }
+        const cardWidth = 135;
+        const windowWidth = rouletteTrack.parentElement.offsetWidth;
+        const centerOffset = windowWidth / 2 - 62.5;
+        const stopPosition = -(winnerIndex * cardWidth - centerOffset);
+        const finalPosition = stopPosition + (Math.random() * 30 - 15);
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                rouletteTrack.style.transition = 'transform 6.5s cubic-bezier(.08,.72,.05,1)';
+                rouletteTrack.style.transform = `translateX(${finalPosition}px)`;
+            });
+        });
         setTimeout(() => {
+            showResultCase(winner);
+            isOpeningCase = false;
+            openButton.disabled = false;
+        }, 6800);
+    }
 
-            message.classList.remove(
-                "show"
-            );
+    function showResultCase(item) {
+        currentWinnerCase = item;
+        resultEmoji.textContent = item.emoji;
+        resultName.textContent = item.name;
+        resultValue.textContent = `+${item.value} ⭐`;
+        resultModalCase.classList.add('show');
+        // звуки можно добавить
+    }
 
+    function getCurrentItemsCase() {
+        if (currentCaseType === 'free') return freeItemsCase;
+        if (currentCaseType === 'pls-pepe') return plsPepeItemsCase;
+        if (currentCaseType === '250') return case250ItemsCase;
+        return itemsCase;
+    }
+
+    function openCaseCase() {
+        if (isOpeningCase) return;
+        if (currentCaseType === 'free') {
+            if (!canOpenFreeCase()) {
+                showMessageCase('FREE кейс можно открыть только раз в сутки ⏰');
+                return;
+            }
+            isOpeningCase = true;
+            openButton.disabled = true;
+            setFreeCooldown();
+            const winner = getRandomItemCase(freeItemsCase);
+            currentWinnerCase = winner;
+            startRouletteCase(freeItemsCase, winner);
+            return;
+        }
+        let price = 0;
+        if (currentCaseType === 'pls-pepe') price = 10;
+        else if (currentCaseType === '250') price = 250;
+        else price = 50;
+        if (balance < price) {
+            showMessageCase('Недостаточно валюты ⭐');
+            return;
+        }
+        isOpeningCase = true;
+        openButton.disabled = true;
+        balance -= price;
+        balance = Math.round(balance * 100) / 100;
+        updateBalanceUI();
+        let items = getCurrentItemsCase();
+        const winner = getRandomItemCase(items);
+        currentWinnerCase = winner;
+        startRouletteCase(items, winner);
+    }
+
+    function showMessageCase(text) {
+        clearTimeout(messageElement._timer);
+        messageElement.textContent = text;
+        messageElement.classList.add('show');
+        messageElement._timer = setTimeout(() => {
+            messageElement.classList.remove('show');
         }, 2500);
+    }
 
-}
+    sellResult.addEventListener('click', () => {
+        if (!currentWinnerCase) return;
+        balance += currentWinnerCase.value;
+        balance = Math.round(balance * 100) / 100;
+        updateBalanceUI();
+        resultModalCase.classList.remove('show');
+        resetRouletteCase(getCurrentItemsCase());
+        currentWinnerCase = null;
+    });
 
+    backResult.addEventListener('click', () => {
+        if (!currentWinnerCase) return;
+        inventoryItems.push({ ...currentWinnerCase });
+        renderInventory();
+        resultModalCase.classList.remove('show');
+        resetRouletteCase(getCurrentItemsCase());
+        currentWinnerCase = null;
+        showMessageCase('Предмет сохранён в инвентарь 🎒');
+    });
 
-/* =====================================================
-   ОБРАБОТЧИКИ КЛИКОВ
-===================================================== */
+    document.getElementById('caseBox').addEventListener('click', () => showCaseCase('paid'));
+    document.getElementById('case250Box').addEventListener('click', () => showCaseCase('250'));
+    document.getElementById('plsPepeBox').addEventListener('click', () => showCaseCase('pls-pepe'));
+    document.getElementById('freeCaseBox').addEventListener('click', () => {
+        if (!canOpenFreeCase()) {
+            showMessageCase('FREE кейс можно открыть только раз в сутки ⏰');
+            return;
+        }
+        showCaseCase('free');
+    });
+    document.getElementById('backButtonCase').addEventListener('click', () => {
+        if (isOpeningCase) {
+            showMessageCase('Подождите окончания открытия кейса');
+            return;
+        }
+        showMainCase();
+    });
+    openButton.addEventListener('click', openCaseCase);
 
-document.getElementById(
-    "freeCaseBox"
-).addEventListener(
-    "click",
-    () => openCaseScreen("free")
-);
+    renderItemsCase(itemsCase);
+    resetRouletteCase(itemsCase);
+    updateFreeButton();
+    mainScreenCase.classList.add('active');
 
+    document.getElementById('openCasesButton').addEventListener('click', function() {
+        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+        document.getElementById('casesGameContainer').classList.remove('hidden');
+        updateBalanceUI();
+        updateFreeButton();
+    });
+    document.getElementById('closeCasesBtn').addEventListener('click', function() {
+        document.getElementById('casesGameContainer').classList.add('hidden');
+        document.getElementById('menuPage').classList.remove('hidden');
+        navButtons.forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-page="menuPage"]').classList.add('active');
+    });
+})();
 
-document.getElementById(
-    "freeStatusButton"
-).addEventListener(
-    "click",
-    () => openCaseScreen("free")
-);
+// ---- Upgrade ----
+(function() {
+    let betUpgrade = 100;
+    let multiplierUpgrade = 2;
+    let winChanceUpgrade = 50;
+    let isSpinningUpgrade = false;
+    let pointerRotationUpgrade = 0;
+    let historyUpgrade = [];
+    let selectedInventoryItem = null;
 
+    const canvasUp = document.getElementById('wheel');
+    const ctxUp = canvasUp.getContext('2d');
+    const balanceUpgrade = document.getElementById('balanceUpgrade');
+    const betInputUpgrade = document.getElementById('betInputUpgrade');
+    const winPercentUp = document.getElementById('winPercent');
+    const spinButtonUp = document.getElementById('spinButtonUpgrade');
+    const statusUp = document.getElementById('statusUpgrade');
+    const flashUp = document.getElementById('flashUpgrade');
+    const toastUp = document.getElementById('toastUpgrade');
+    const historyListUp = document.getElementById('historyListUpgrade');
+    const pointerRotatorUp = document.getElementById('pointerRotator');
+    const multiplierButtonsUp = document.querySelectorAll('.multiplier-upgrade');
+    const selectItemBtn = document.getElementById('selectItemBtn');
+    const selectedItemDisplay = document.getElementById('selectedItemDisplay');
+    const itemDropdown = document.getElementById('itemDropdown');
 
-document.getElementById(
-    "plsPepeCaseBox"
-).addEventListener(
-    "click",
-    () => openCaseScreen("pls-pepe")
-);
+    function updateBalanceUpgrade() {
+        balanceUpgrade.textContent = balance.toFixed(2);
+    }
 
+    function renderItemDropdown() {
+        itemDropdown.innerHTML = '';
+        if (inventoryItems.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'item-select-option';
+            empty.style.justifyContent = 'center';
+            empty.style.color = '#737781';
+            empty.textContent = 'Инвентарь пуст';
+            itemDropdown.appendChild(empty);
+            return;
+        }
+        inventoryItems.forEach((item, index) => {
+            const opt = document.createElement('div');
+            opt.className = 'item-select-option';
+            opt.innerHTML = `
+                <span class="opt-emoji">${item.emoji}</span>
+                <span class="opt-name">${item.name}</span>
+                <span class="opt-value">+${item.value} ⭐</span>
+            `;
+            opt.addEventListener('click', () => {
+                selectItemFromInventory(index);
+            });
+            itemDropdown.appendChild(opt);
+        });
+    }
 
-document.getElementById(
-    "case50Button"
-).addEventListener(
-    "click",
-    () => openCaseScreen("50")
-);
+    function selectItemFromInventory(index) {
+        const item = inventoryItems[index];
+        selectedInventoryItem = { ...item };
+        inventoryItems.splice(index, 1);
+        renderInventory();
+        renderItemDropdown();
+        selectedItemDisplay.textContent = `${item.emoji} ${item.name} (${item.value}⭐)`;
+        selectItemBtn.classList.add('active');
+        itemDropdown.classList.remove('open');
+        showToastUp(`Выбран предмет: ${item.emoji} ${item.name}`, true);
+    }
 
+    function clearSelectedItem() {
+        if (selectedInventoryItem) {
+            inventoryItems.push({ ...selectedInventoryItem });
+            renderInventory();
+            renderItemDropdown();
+            selectedInventoryItem = null;
+            selectedItemDisplay.textContent = 'Баланс';
+            selectItemBtn.classList.remove('active');
+        }
+    }
 
-document.getElementById(
-    "case250Button"
-).addEventListener(
-    "click",
-    () => openCaseScreen("250")
-);
+    selectItemBtn.addEventListener('click', () => {
+        renderItemDropdown();
+        itemDropdown.classList.toggle('open');
+    });
 
+    function resizeCanvasUp() {
+        const rect = canvasUp.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvasUp.width = rect.width * dpr;
+        canvasUp.height = rect.height * dpr;
+        ctxUp.setTransform(dpr, 0, 0, dpr, 0, 0);
+        drawWheelUp();
+    }
+    window.addEventListener('resize', resizeCanvasUp);
 
-document.getElementById(
-    "openButton"
-).addEventListener(
-    "click",
-    openCurrentCase
-);
+    function drawWheelUp() {
+        const w = canvasUp.clientWidth, h = canvasUp.clientHeight;
+        if (w <= 0 || h <= 0) return;
+        ctxUp.clearRect(0, 0, w, h);
+        const cx = w/2, cy = h/2;
+        const radius = Math.min(w, h) * .43;
+        ctxUp.save();
+        ctxUp.beginPath();
+        ctxUp.arc(cx, cy, radius + 13, 0, Math.PI*2);
+        ctxUp.shadowBlur = 35;
+        ctxUp.shadowColor = "rgba(255,35,78,.45)";
+        ctxUp.strokeStyle = "rgba(255,42,82,.55)";
+        ctxUp.lineWidth = 8;
+        ctxUp.stroke();
+        ctxUp.restore();
 
+        const greenAngle = Math.PI * 2 * (winChanceUpgrade / 100);
+        const greenStart = Math.PI/2 - greenAngle/2;
+        const greenEnd = Math.PI/2 + greenAngle/2;
 
-document.getElementById(
-    "backCaseButton"
-).addEventListener(
-    "click",
-    showMainCase
-);
+        ctxUp.save();
+        ctxUp.beginPath();
+        ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
+        ctxUp.clip();
 
+        const redGrad = ctxUp.createRadialGradient(cx - radius*.25, cy - radius*.35, radius*.1, cx, cy, radius);
+        redGrad.addColorStop(0, "#ff5877");
+        redGrad.addColorStop(.35, "#d71945");
+        redGrad.addColorStop(.72, "#8c102d");
+        redGrad.addColorStop(1, "#4a0719");
+        ctxUp.beginPath();
+        ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
+        ctxUp.fillStyle = redGrad;
+        ctxUp.fill();
 
-document.getElementById(
-    "sellResultButton"
-).addEventListener(
-    "click",
-    sellResult
-);
+        const greenGrad = ctxUp.createRadialGradient(cx, cy + radius*.2, radius*.05, cx, cy, radius);
+        greenGrad.addColorStop(0, "#70ffb2");
+        greenGrad.addColorStop(.35, "#17d96f");
+        greenGrad.addColorStop(.72, "#078d4a");
+        greenGrad.addColorStop(1, "#034b2a");
+        ctxUp.beginPath();
+        ctxUp.moveTo(cx, cy);
+        ctxUp.arc(cx, cy, radius, greenStart, greenEnd);
+        ctxUp.closePath();
+        ctxUp.fillStyle = greenGrad;
+        ctxUp.fill();
 
+        const gloss = ctxUp.createLinearGradient(0, cy - radius, 0, cy);
+        gloss.addColorStop(0, "rgba(255,255,255,.17)");
+        gloss.addColorStop(.4, "rgba(255,255,255,.04)");
+        gloss.addColorStop(1, "rgba(255,255,255,0)");
+        ctxUp.beginPath();
+        ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
+        ctxUp.fillStyle = gloss;
+        ctxUp.fill();
 
-document.getElementById(
-    "saveResultButton"
-).addEventListener(
-    "click",
-    saveResult
-);
+        ctxUp.beginPath();
+        ctxUp.moveTo(cx, cy);
+        ctxUp.lineTo(cx + radius * Math.cos(greenStart), cy + radius * Math.sin(greenStart));
+        ctxUp.moveTo(cx, cy);
+        ctxUp.lineTo(cx + radius * Math.cos(greenEnd), cy + radius * Math.sin(greenEnd));
+        ctxUp.strokeStyle = "rgba(255,255,255,.75)";
+        ctxUp.lineWidth = 3;
+        ctxUp.stroke();
+        ctxUp.restore();
 
+        ctxUp.beginPath();
+        ctxUp.arc(cx, cy, radius, 0, Math.PI*2);
+        ctxUp.strokeStyle = "#ff5274";
+        ctxUp.lineWidth = 5;
+        ctxUp.shadowBlur = 15;
+        ctxUp.shadowColor = "rgba(255,40,80,.55)";
+        ctxUp.stroke();
+        ctxUp.shadowBlur = 0;
 
-/* =====================================================
-   ЗАПУСК
-===================================================== */
+        ctxUp.beginPath();
+        ctxUp.arc(cx, cy, radius * .77, 0, Math.PI*2);
+        ctxUp.strokeStyle = "rgba(255,255,255,.08)";
+        ctxUp.lineWidth = 2;
+        ctxUp.stroke();
 
-updateBalance();
+        for (let i = 0; i < 24; i++) {
+            const angle = (Math.PI*2/24) * i;
+            const outer = radius + 3, inner = radius - 7;
+            ctxUp.beginPath();
+            ctxUp.moveTo(cx + Math.cos(angle)*inner, cy + Math.sin(angle)*inner);
+            ctxUp.lineTo(cx + Math.cos(angle)*outer, cy + Math.sin(angle)*outer);
+            ctxUp.strokeStyle = i % 2 === 0 ? "rgba(255,255,255,.4)" : "rgba(255,255,255,.12)";
+            ctxUp.lineWidth = i % 2 === 0 ? 2 : 1;
+            ctxUp.stroke();
+        }
+    }
 
-updateFreeTimer();
+    function normalizeAngleUp(a) { a %= 360; if (a<0) a += 360; return a; }
 
-setInterval(
-    updateFreeTimer,
-    1000
-);
+    function isPointerOnGreenUp() {
+        const pointerAngle = normalizeAngleUp(-90 + pointerRotationUpgrade);
+        const greenAngle = 360 * (winChanceUpgrade / 100);
+        const greenStart = 90 - greenAngle/2;
+        const greenEnd = 90 + greenAngle/2;
+        const dist = Math.abs(normalizeAngleUp(pointerAngle - 90));
+        const circular = Math.min(dist, 360 - dist);
+        return circular <= greenAngle/2;
+    }
 
-renderItems();
+    function getRandomTargetUp() { return Math.random() * 360; }
 
-resetRoulette();
+    function spinUpgrade() {
+        if (isSpinningUpgrade) return;
 
+        let useItem = selectedInventoryItem !== null;
+        let betValue = 0;
+
+        if (useItem) {
+            betValue = selectedInventoryItem.value;
+        } else {
+            betValue = Number(betInputUpgrade.value);
+            if (!Number.isFinite(betValue) || betValue <= 0) {
+                showToastUp("Введите корректную ставку", false);
+                return;
+            }
+            if (betValue < 25) {
+                showToastUp("Минимальная ставка 25 ⭐", false);
+                return;
+            }
+            if (betValue > balance) {
+                showToastUp("Недостаточно средств ⭐", false);
+                return;
+            }
+        }
+
+        if (!useItem) {
+            balance -= betValue;
+            balance = Math.round(balance * 100) / 100;
+        }
+
+        isSpinningUpgrade = true;
+        spinButtonUp.disabled = true;
+        betInputUpgrade.disabled = true;
+        multiplierButtonsUp.forEach(b => b.disabled = true);
+        selectItemBtn.disabled = true;
+
+        statusUp.className = "status-upgrade";
+        statusUp.textContent = "Колесо вращается...";
+
+        const target = getRandomTargetUp();
+        const fullSpins = 5 + Math.floor(Math.random() * 4);
+        const targetAbsolute = pointerRotationUpgrade + fullSpins * 360 + target;
+
+        const start = pointerRotationUpgrade;
+        const distance = targetAbsolute - start;
+        const duration = 4300;
+        const startTime = performance.now();
+
+        function animateSpin(currentTime) {
+            const elapsed = currentTime - startTime;
+            let progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 4);
+            pointerRotationUpgrade = start + distance * eased;
+            pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
+            if (progress < 1) {
+                requestAnimationFrame(animateSpin);
+            } else {
+                pointerRotationUpgrade = normalizeAngleUp(pointerRotationUpgrade);
+                pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
+                const won = isPointerOnGreenUp();
+                finishSpinUpgrade(won, useItem, betValue);
+            }
+        }
+        requestAnimationFrame(animateSpin);
+    }
+
+    function finishSpinUpgrade(won, usedItem, betValue) {
+        let winAmount = 0;
+        if (won) {
+            winAmount = betValue * multiplierUpgrade;
+            balance += winAmount;
+            balance = Math.round(balance * 100) / 100;
+            statusUp.className = "status-upgrade win";
+            statusUp.textContent = `ПОБЕДА +${winAmount.toFixed(2)} ⭐`;
+            showToastUp(`🎉 Выигрыш +${winAmount.toFixed(2)} ⭐`, true);
+            flashUp.className = "flash-upgrade win";
+            void flashUp.offsetWidth;
+            flashUp.classList.add("win");
+            addHistoryUpgrade(true, betValue, multiplierUpgrade, winAmount);
+        } else {
+            statusUp.className = "status-upgrade lose";
+            statusUp.textContent = `ПОРАЖЕНИЕ -${betValue.toFixed(2)} ⭐`;
+            showToastUp(`💥 Проигрыш -${betValue.toFixed(2)} ⭐`, false);
+            flashUp.className = "flash-upgrade lose";
+            void flashUp.offsetWidth;
+            flashUp.classList.add("lose");
+            addHistoryUpgrade(false, betValue, multiplierUpgrade, betValue);
+        }
+
+        updateBalanceUI();
+        updateBalanceUpgrade();
+
+        if (usedItem) {
+            selectedInventoryItem = null;
+            selectedItemDisplay.textContent = 'Баланс';
+            selectItemBtn.classList.remove('active');
+            renderItemDropdown();
+        }
+
+        setTimeout(() => {
+            isSpinningUpgrade = false;
+            spinButtonUp.disabled = false;
+            betInputUpgrade.disabled = false;
+            multiplierButtonsUp.forEach(b => b.disabled = false);
+            selectItemBtn.disabled = false;
+        }, 450);
+    }
+
+    function addHistoryUpgrade(won, betVal, mult, amount) {
+        historyUpgrade.unshift({ won, bet: betVal, multiplier: mult, amount });
+        if (historyUpgrade.length > 5) historyUpgrade.pop();
+        renderHistoryUpgrade();
+    }
+
+    function renderHistoryUpgrade() {
+        if (historyUpgrade.length === 0) {
+            historyListUp.innerHTML = `<div class="history-item"><div class="history-left">История пуста</div></div>`;
+            return;
+        }
+        historyListUp.innerHTML = historyUpgrade.map(item => `
+            <div class="history-item">
+                <div class="history-left">Ставка <strong>${item.bet.toFixed(2)} ⭐</strong> &nbsp;×${item.multiplier}</div>
+                <div class="history-result ${item.won ? 'win' : 'lose'}">${item.won ? '+' : '-'}${item.amount.toFixed(2)} ⭐</div>
+            </div>
+        `).join('');
+    }
+
+    function showToastUp(text, won) {
+        clearTimeout(toastUp._timer);
+        toastUp.textContent = text;
+        toastUp.className = `toast-upgrade show ${won ? 'win' : 'lose'}`;
+        toastUp._timer = setTimeout(() => toastUp.classList.remove('show'), 2500);
+    }
+
+    multiplierButtonsUp.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (isSpinningUpgrade) return;
+            multiplierUpgrade = Number(btn.dataset.multiplier);
+            if (multiplierUpgrade === 2) winChanceUpgrade = 50;
+            else if (multiplierUpgrade === 5) winChanceUpgrade = 20;
+            else winChanceUpgrade = 10;
+            multiplierButtonsUp.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            winPercentUp.textContent = `${winChanceUpgrade}%`;
+            drawWheelUp();
+            statusUp.className = "status-upgrade";
+            statusUp.textContent = `Шанс выигрыша ${winChanceUpgrade}%`;
+        });
+    });
+
+    spinButtonUp.addEventListener('click', spinUpgrade);
+
+    updateBalanceUpgrade();
+    setTimeout(resizeCanvasUp, 50);
+    renderHistoryUpgrade();
+    pointerRotatorUp.style.transform = `rotate(${pointerRotationUpgrade}deg)`;
+    renderItemDropdown();
+
+    document.getElementById('openUpgradeButton').addEventListener('click', function() {
+        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+        document.getElementById('upgradeGameContainer').classList.remove('hidden');
+        updateBalanceUI();
+        updateBalanceUpgrade();
+        setTimeout(resizeCanvasUp, 100);
+    });
+    document.getElementById('closeUpgradeBtn').addEventListener('click', function() {
+        document.getElementById('upgradeGameContainer').classList.add('hidden');
+        document.getElementById('menuPage').classList.remove('hidden');
+        navButtons.forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-page="menuPage"]').classList.add('active');
+    });
+})();
+
+// =====================================================
+// СТАРТ
+// =====================================================
+updateBalanceUI();
+renderInventory();
+document.getElementById('gamesPlayed').textContent = 0;
+document.getElementById('wins').textContent = 0;
+document.getElementById('losses').textContent = 0;
 </script>
 
 </body>
