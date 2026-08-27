@@ -90,6 +90,7 @@ body {
     margin-bottom: 4px;
 }
 
+
 /* =====================================================
    CASE FREE
 ===================================================== */
@@ -263,7 +264,79 @@ body {
 
 
 /* =====================================================
-   CASE 50 / CASE 250
+   CASE 50 — ИЗОБРАЖЕНИЕ
+===================================================== */
+
+.case-50-card {
+    width: min(900px, 96vw);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.case-50-image-button {
+    position: relative;
+    z-index: 2;
+    touch-action: manipulation;
+
+    width: 100%;
+    aspect-ratio: 1477 / 457;
+
+    border: 0;
+    border-radius: 24px;
+    padding: 0;
+
+    background: transparent;
+    overflow: hidden;
+
+    cursor: pointer;
+    display: block;
+
+    box-shadow:
+        0 16px 35px
+        rgba(0,0,0,.42);
+
+    transition:
+        transform .15s ease,
+        filter .15s ease;
+}
+
+.case-50-image-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+}
+
+.case-50-image {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    max-width: none;
+
+    display: block;
+
+    object-fit: fill;
+    object-position: center center;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+.case-50-image-button:hover {
+    filter: brightness(1.06);
+}
+
+.case-50-image-button:active {
+    transform: scale(.985);
+}
+
+
+/* =====================================================
+   CASE 250 — ИЗОБРАЖЕНИЕ/КНОПКА
 ===================================================== */
 
 .main-case-button {
@@ -321,15 +394,6 @@ body {
     margin-top: 6px;
     font-size: 12px;
     font-weight: 700;
-}
-
-.case-50-button {
-    background:
-        linear-gradient(
-            135deg,
-            #3b3018,
-            #211b0e
-        );
 }
 
 .case-250-button {
@@ -815,11 +879,23 @@ body {
     .pls-pepe-image-button {
         border-radius: 19px;
     }
+
+    .case-50-card {
+        width: 100%;
+    }
+
+    .case-50-image-button {
+        border-radius: 19px;
+    }
 }
 
 @media(max-width:380px) {
 
     .pls-pepe-image-button {
+        border-radius: 17px;
+    }
+
+    .case-50-image-button {
         border-radius: 17px;
     }
 }
@@ -837,7 +913,9 @@ body {
     </div>
 
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <!-- =================================================
+         ГЛАВНЫЙ ЭКРАН
+    ================================================= -->
 
     <section
         id="mainScreenCase"
@@ -849,7 +927,9 @@ body {
         </div>
 
 
-        <!-- CASE FREE -->
+        <!-- =================================================
+             CASE FREE
+        ================================================= -->
 
         <div class="free-case-card">
 
@@ -884,7 +964,9 @@ body {
         </div>
 
 
-        <!-- PLS PEPE -->
+        <!-- =================================================
+             PLS PEPE
+        ================================================= -->
 
         <div class="pls-pepe-card">
 
@@ -910,30 +992,37 @@ body {
         </div>
 
 
-        <!-- CASE 50 -->
+        <!-- =================================================
+             CASE 50 — ТВОЯ НОВАЯ КАРТИНКА
+        ================================================= -->
 
-        <button
-            type="button"
-            class="main-case-button case-50-button"
-            id="case50Button"
-        >
+        <div class="case-50-card">
 
-            <div class="case-icon">⭐</div>
+            <button
+                type="button"
+                class="case-50-image-button"
+                id="case50Button"
+                aria-label="Открыть CASE 50 за 50 звёзд"
+            >
 
-            <div>
-                <div class="case-name">
-                    CASE 50
+                <div class="case-50-image-wrap">
+
+                    <img
+                        class="case-50-image"
+                        src="https://i.ibb.co/RkygJ7Kz/IMG-0839.png"
+                        alt="CASE 50"
+                    >
+
                 </div>
 
-                <span class="case-description">
-                    Стоимость открытия — 50 ⭐
-                </span>
-            </div>
+            </button>
 
-        </button>
+        </div>
 
 
-        <!-- CASE 250 -->
+        <!-- =================================================
+             CASE 250
+        ================================================= -->
 
         <button
             type="button"
@@ -941,9 +1030,12 @@ body {
             id="case250Button"
         >
 
-            <div class="case-icon">💎</div>
+            <div class="case-icon">
+                💎
+            </div>
 
             <div>
+
                 <div class="case-name">
                     CASE 250
                 </div>
@@ -951,6 +1043,7 @@ body {
                 <span class="case-description">
                     Стоимость открытия — 250 ⭐
                 </span>
+
             </div>
 
         </button>
@@ -958,7 +1051,9 @@ body {
     </section>
 
 
-    <!-- ЭКРАН КЕЙСА -->
+    <!-- =================================================
+         ЭКРАН КЕЙСА
+    ================================================= -->
 
     <section
         id="caseScreenCase"
@@ -985,7 +1080,9 @@ body {
         </div>
 
 
-        <!-- РУЛЕТКА -->
+        <!-- =================================================
+             РУЛЕТКА
+        ================================================= -->
 
         <div class="roulette-section">
 
@@ -1003,6 +1100,10 @@ body {
         </div>
 
 
+        <!-- =================================================
+             КНОПКА ОТКРЫТИЯ
+        ================================================= -->
+
         <button
             type="button"
             class="open-button"
@@ -1011,6 +1112,10 @@ body {
             ОТКРЫТЬ
         </button>
 
+
+        <!-- =================================================
+             ПРЕДМЕТЫ
+        ================================================= -->
 
         <div class="items-title">
             ПРЕДМЕТЫ В КЕЙСЕ
@@ -1025,7 +1130,9 @@ body {
     </section>
 
 
-    <!-- РЕЗУЛЬТАТ -->
+    <!-- =================================================
+         РЕЗУЛЬТАТ
+    ================================================= -->
 
     <div
         class="modal-case"
@@ -1085,7 +1192,9 @@ body {
     </div>
 
 
-    <!-- СООБЩЕНИЕ -->
+    <!-- =================================================
+         СООБЩЕНИЕ
+    ================================================= -->
 
     <div
         class="message-case"
@@ -1105,8 +1214,14 @@ body {
 
 const cases = {
 
+    /* =================================================
+       FREE
+    ================================================= */
+
     free: {
+
         title: "CASE FREE 🎁",
+
         price: 0,
 
         items: [
@@ -1208,11 +1323,18 @@ const cases = {
             }
 
         ]
+
     },
 
 
+    /* =================================================
+       PLS PEPE
+    ================================================= */
+
     "pls-pepe": {
+
         title: "PLS PEPE 🐸",
+
         price: 10,
 
         items: [
@@ -1314,11 +1436,18 @@ const cases = {
             }
 
         ]
+
     },
 
 
+    /* =================================================
+       CASE 50
+    ================================================= */
+
     "50": {
+
         title: "CASE 50 ⭐",
+
         price: 50,
 
         items: [
@@ -1428,11 +1557,18 @@ const cases = {
             }
 
         ]
+
     },
 
 
+    /* =================================================
+       CASE 250
+    ================================================= */
+
     "250": {
+
         title: "CASE 250 ⭐",
+
         price: 250,
 
         items: [
@@ -1582,6 +1718,7 @@ const cases = {
             }
 
         ]
+
     }
 
 };
@@ -1599,7 +1736,9 @@ let balance =
     );
 
 if (!Number.isFinite(balance)) {
+
     balance = 1000;
+
 }
 
 
@@ -1669,6 +1808,7 @@ function updateBalance() {
     ).textContent =
         balance.toFixed(2);
 
+
     localStorage.setItem(
         "cases_balance",
         balance
@@ -1703,6 +1843,7 @@ function openCaseScreen(type) {
         openButton.textContent =
             "ОТКРЫТЬ FREE 🎁";
 
+
         openButton.className =
             "open-button free-open";
 
@@ -1713,14 +1854,17 @@ function openCaseScreen(type) {
             cases[type].price +
             " ⭐";
 
+
         openButton.className =
             "open-button";
+
     }
 
 
     mainScreen.classList.remove(
         "active"
     );
+
 
     caseScreen.classList.add(
         "active"
@@ -1747,12 +1891,14 @@ function showMainCase() {
         );
 
         return;
+
     }
 
 
     caseScreen.classList.remove(
         "active"
     );
+
 
     mainScreen.classList.add(
         "active"
@@ -1789,6 +1935,7 @@ function renderItems() {
 
 
             card.innerHTML = `
+
                 <div class="item-emoji">
                     ${item.emoji}
                 </div>
@@ -1800,6 +1947,7 @@ function renderItems() {
                 <div class="item-price">
                     +${item.value} ⭐
                 </div>
+
             `;
 
 
@@ -1838,7 +1986,9 @@ function getRandomItem() {
 
 
         if (random <= 0) {
+
             return item;
+
         }
 
     }
@@ -1869,6 +2019,7 @@ function createRouletteCard(item) {
 
 
     element.innerHTML = `
+
         <div class="roulette-emoji">
             ${item.emoji}
         </div>
@@ -1876,6 +2027,7 @@ function createRouletteCard(item) {
         <div class="roulette-name">
             ${item.name}
         </div>
+
     `;
 
 
@@ -1892,6 +2044,7 @@ function resetRoulette() {
 
     rouletteTrack.style.transition =
         "none";
+
 
     rouletteTrack.style.transform =
         "translateX(0px)";
@@ -1933,7 +2086,9 @@ function openCurrentCase() {
     if (opening) return;
 
 
-    /* FREE */
+    /* =================================================
+       FREE
+    ================================================= */
 
     if (
         currentCaseType === "free"
@@ -1966,7 +2121,9 @@ function openCurrentCase() {
                 )
             );
 
+
             return;
+
         }
 
 
@@ -1975,11 +2132,15 @@ function openCurrentCase() {
             Date.now()
         );
 
+
         updateFreeTimer();
+
     }
 
 
-    /* ЦЕНА */
+    /* =================================================
+       ЦЕНА
+    ================================================= */
 
     const price =
         cases[
@@ -1996,7 +2157,9 @@ function openCurrentCase() {
             "Недостаточно ⭐"
         );
 
+
         return;
+
     }
 
 
@@ -2005,6 +2168,7 @@ function openCurrentCase() {
         balance -= price;
 
         updateBalance();
+
     }
 
 
@@ -2035,6 +2199,7 @@ function startRoulette(winner) {
 
     rouletteTrack.style.transition =
         "none";
+
 
     rouletteTrack.style.transform =
         "translateX(0px)";
@@ -2320,11 +2485,20 @@ function formatTime(ms) {
 
 
     return (
-        String(hours).padStart(2, "0") +
-        ":" +
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(seconds).padStart(2, "0")
+
+        String(hours)
+            .padStart(2, "0")
+
+        + ":" +
+
+        String(minutes)
+            .padStart(2, "0")
+
+        + ":" +
+
+        String(seconds)
+            .padStart(2, "0")
+
     );
 
 }
@@ -2372,7 +2546,9 @@ function updateFreeTimer() {
             "cooldown"
         );
 
+
         return;
+
     }
 
 
@@ -2426,8 +2602,11 @@ function showMessage(text) {
 
 
 /* =====================================================
-   НАДЁЖНЫЕ ОБРАБОТЧИКИ КЛИКОВ
+   ОБРАБОТЧИКИ КЛИКОВ
 ===================================================== */
+
+
+/* FREE */
 
 document.getElementById(
     "freeCaseBox"
@@ -2445,6 +2624,8 @@ document.getElementById(
 );
 
 
+/* PLS PEPE */
+
 document.getElementById(
     "plsPepeCaseBox"
 ).addEventListener(
@@ -2452,6 +2633,8 @@ document.getElementById(
     () => openCaseScreen("pls-pepe")
 );
 
+
+/* CASE 50 */
 
 document.getElementById(
     "case50Button"
@@ -2461,6 +2644,8 @@ document.getElementById(
 );
 
 
+/* CASE 250 */
+
 document.getElementById(
     "case250Button"
 ).addEventListener(
@@ -2468,6 +2653,8 @@ document.getElementById(
     () => openCaseScreen("250")
 );
 
+
+/* OPEN */
 
 document.getElementById(
     "openButton"
@@ -2477,6 +2664,8 @@ document.getElementById(
 );
 
 
+/* BACK */
+
 document.getElementById(
     "backCaseButton"
 ).addEventListener(
@@ -2485,6 +2674,8 @@ document.getElementById(
 );
 
 
+/* SELL */
+
 document.getElementById(
     "sellResultButton"
 ).addEventListener(
@@ -2492,6 +2683,8 @@ document.getElementById(
     sellResult
 );
 
+
+/* SAVE */
 
 document.getElementById(
     "saveResultButton"
@@ -2508,6 +2701,7 @@ document.getElementById(
 updateBalance();
 
 updateFreeTimer();
+
 
 setInterval(
     updateFreeTimer,
